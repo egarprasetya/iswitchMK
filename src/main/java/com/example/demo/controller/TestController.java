@@ -23,99 +23,74 @@ public class TestController {
 	stringkoneksi sk = new stringkoneksi();
 AllQuery query_string= new AllQuery();
 	
-	@GetMapping("/LoginUser2/{nama}/{email}")
-	public int cekuser2(@PathVariable("nama") String nama, @PathVariable("email") String email)
-	{
-		if(nama=="tossa" || email=="tes@gmail.com")
-		{
-			return 0;
-		}
-		else
-			
-		{
-			return 1;
-		}
-		
-		
-	}
-	
-	PreparedStatement queryselect=null;
-	PreparedStatement queryselectnamaEmail=null;
-	
-	@GetMapping("/sqlparam/{nama}")
-	
-	public String ceksql(@PathVariable("nama") String nama) throws SQLException
-	{	        String namaw="Tidak Ditemukan";
 
-		try
-		{
-		
 	
-		 Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-	        queryselect= Connection1.prepareStatement(query_string.query_select_user);
-	        queryselect.setString(1, nama);
-	        ResultSet rs = queryselect.executeQuery();
-	        while(rs.next())
-	        {
-	       
-	        	String nama2;
-	        	nama2="tossa";
-	        	return nama2;
-	        
-	        }
-	       Connection1.close();
-
-		}
-	        catch (SQLException e ) {
-	            String error;
-	            error=e.getMessage();
-	            return error;
-	            }
-	        return namaw;
-	}
+	PreparedStatement queryselect_alembic_version=null;
+	PreparedStatement queryselect_alembic_version_config=null;
+	
+//	@GetMapping("/sqlparam/{nama}")
+//	public String Collection_alembic_version() throws SQLException
+//	{	        String namaw="Tidak Ditemukan";
+//
+//		try
+//		{
+//		
+//	
+//		 Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+//		 queryselect_alembic_version= Connection1.prepareStatement(query_string.query_select_user);
+//		 queryselect_alembic_version.setString(1, nama);
+//	        ResultSet rs = queryselect.executeQuery();
+//	        while(rs.next())
+//	        {
+//	       
+//	        	String nama2;
+//	        	nama2="tossa";
+//	        	return nama2;
+//	        
+//	        }
+//	       Connection1.close();
+//
+//		}
+//	        catch (SQLException e ) {
+//	            String error;
+//	            error=e.getMessage();
+//	            return error;
+//	            }
+//	        return namaw;
+//	}
 	
 	
-	
-	@GetMapping("/LoginUser/{nama}/{email}")
-	public int cekuser(@PathVariable("nama") String nama, @PathVariable("email") String email)
-	{
-		int rows=-1;
-			try
-		     {
-		        Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-		        queryselectnamaEmail=Connection1.prepareStatement(query_string.query_select_nama_email);
-		        queryselect.setString(1, nama);
-		        queryselect.setString(2, email);
-		        ResultSet Cursor1= queryselect.executeQuery();
-
-		        {
-		          while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
-		          {   
-		        	  if(Cursor1.wasNull())
-		        	  {
-		        		   
-		        		  rows=0;
-		        		  return rows;
-		        	  }
-		        	  else
-		        		  
-		        	  {
-		        		  
-		        		  rows=1;
-		        		  return rows;
-		        	  }
-
-		          }
-		          Connection1.close(); // close (Connected_Expression1) -> close Cursor1
-		        }
-		      }
-		      catch (SQLException e)
-		      {
-		    	 return e.getErrorCode();
-		      }
-			return rows;		
-	}
-	
+//	
+//	@GetMapping("/cekuser22/{confno}/{recordingfilename}")
+//	public int cekuser22(@PathVariable("confno") String confno,@PathVariable("recordingfilename") String recordingfilename)
+//	{
+//		int rows=0;
+//			try
+//		     {
+//		        Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+//		        queryselectnamaEmail=Connection1.prepareStatement(query_string.query_select_nama_email);
+//		        queryselectnamaEmail.setString(1, confno);
+//		        queryselectnamaEmail.setString(2, recordingfilename);
+//
+//		        ResultSet Cursor1= queryselectnamaEmail.executeQuery();
+//
+//		       
+//		          while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
+//		          {   
+//		        	  rows=1;
+//		        	return rows;
+//		        	 
+//		          }
+//		          Connection1.close(); // close (Connected_Expression1) -> close Cursor1
+//		        
+//		      }
+//		      catch (SQLException e)
+//		      {
+//		    	 return e.getErrorCode();
+//		      }
+//			return rows;		
+//	}
+//	
 	
 	@GetMapping("/TambahUser/{id_register}/{nama_user}/{umur_user}/{alamat_user}/{provinsi}/{kota}/{zipcode}/{email}/{phone}")
 	public String TambahUser(@PathVariable("id_register") int id_register, @PathVariable("nama_user") String nama_user,@PathVariable("umur_user") int umur,@PathVariable("alamat_user") String alamat,
