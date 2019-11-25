@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.query.*;
 import com.example.demo.model.UserModel;
 import com.example.demo.connection.*;
 @RestController
@@ -20,7 +21,7 @@ import com.example.demo.connection.*;
 public class TestController {
 	
 	stringkoneksi sk = new stringkoneksi();
-
+AllQuery query_string= new AllQuery();
 	
 	@GetMapping("/LoginUser2/{nama}/{email}")
 	public int cekuser2(@PathVariable("nama") String nama, @PathVariable("email") String email)
@@ -39,34 +40,28 @@ public class TestController {
 	}
 	
 	PreparedStatement queryselect=null;
-	public String query1="select nama_user from user_collection where nama_user=?";
+	PreparedStatement queryselectnamaEmail=null;
+	
 	@GetMapping("/sqlparam/{nama}")
+	
 	public String ceksql(@PathVariable("nama") String nama) throws SQLException
-	{	        String namaw=" ";
+	{	        String namaw="Tidak Ditemukan";
 
 		try
 		{
 		
 	
 		 Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-	        queryselect= Connection1.prepareStatement(query1);
+	        queryselect= Connection1.prepareStatement(query_string.query_select_user);
 	        queryselect.setString(1, nama);
 	        ResultSet rs = queryselect.executeQuery();
 	        while(rs.next())
 	        {
-	        if(rs.wasNull())
-	        {
-	        	String nama2;
-	        	nama2="null";
-	        	return nama2;
-	        }
-	        else
-	        	
-	        {
+	       
 	        	String nama2;
 	        	nama2="tossa";
 	        	return nama2;
-	        }
+	        
 	        }
 	       Connection1.close();
 
@@ -88,9 +83,11 @@ public class TestController {
 			try
 		     {
 		        Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-		        Statement Connected_Expression1 = Connection1.createStatement(); // Create_Expression (Connection1);
-		        ResultSet Cursor1 = Connected_Expression1.executeQuery // Evaluate (Connected_Expression1)
-		          ("select * from user_collection where nama='"+nama+"' OR email='"+email+"'");
+		        queryselectnamaEmail=Connection1.prepareStatement(query_string.query_select_nama_email);
+		        queryselect.setString(1, nama);
+		        queryselect.setString(2, email);
+		        ResultSet Cursor1= queryselect.executeQuery();
+
 		        {
 		          while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 		          {   
@@ -109,7 +106,7 @@ public class TestController {
 		        	  }
 
 		          }
-		          Connected_Expression1.close(); // close (Connected_Expression1) -> close Cursor1
+		          Connection1.close(); // close (Connected_Expression1) -> close Cursor1
 		        }
 		      }
 		      catch (SQLException e)
