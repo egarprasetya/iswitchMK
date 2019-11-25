@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -37,6 +38,46 @@ public class TestController {
 		
 	}
 	
+	PreparedStatement queryselect=null;
+	public String query1="select nama_user from user_collection where nama_user=?";
+	@GetMapping("/sqlparam/{nama}")
+	public String ceksql(@PathVariable("nama") String nama) throws SQLException
+	{	        String namaw=" ";
+
+		try
+		{
+		
+	
+		 Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+	        queryselect= Connection1.prepareStatement(query1);
+	        queryselect.setString(1, nama);
+	        ResultSet rs = queryselect.executeQuery();
+	        while(rs.next())
+	        {
+	        if(rs.wasNull())
+	        {
+	        	String nama2;
+	        	nama2="null";
+	        	return nama2;
+	        }
+	        else
+	        	
+	        {
+	        	String nama2;
+	        	nama2="tossa";
+	        	return nama2;
+	        }
+	        }
+	       Connection1.close();
+
+		}
+	        catch (SQLException e ) {
+	            String error;
+	            error=e.getMessage();
+	            return error;
+	            }
+	        return namaw;
+	}
 	
 	
 	
@@ -108,12 +149,12 @@ String hasil="Sukses";
 	        ResultSet Cursor1 = Connected_Expression1.executeQuery // Evaluate (Connected_Expression1)
 	          ("select * from user_collection");
 	        
-	     
+	      	  ArrayList<UserModel> ListUser1 = new ArrayList<UserModel>();
+
       	  int count=0;
 	          while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 	          {        UserModel UserModel1=new UserModel();
 
-	      	  ArrayList<UserModel> ListUser1 = new ArrayList<UserModel>();
 	        		count++;
 	        	  UserModel1.nama=Cursor1.getString(2);
 	        	  UserModel1.umur=Cursor1.getInt(3);
@@ -127,17 +168,15 @@ String hasil="Sukses";
 	        	  
 	        	  ListUser1.add(UserModel1);
 	        	  
-	        	  return ListUser1;
-	        	  
+	        	
 	        	  
 	          }
+	          
 	          Connected_Expression1.close();
-	         
-	           // close (Connected_Expression1) -> close Cursor1
-	          UserModel UserModel1=new UserModel();
-
-	      	  ArrayList<UserModel> ListUser1 = new ArrayList<UserModel>();
 	          return ListUser1;
+        	  
+	           // close (Connected_Expression1) -> close Cursor1
+	         
 		
 
 }
