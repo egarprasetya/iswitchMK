@@ -31,7 +31,7 @@ public class ps_globalController {
 	      	  ArrayList<ps_globalsModel> ListUser1 = new ArrayList<ps_globalsModel>();
 	          while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 	          {       
-	        	  ps_globalsModel ModelAlembic=new ps_globalsModel();	
+	        	  ps_globalsModel ModelAlembic=new ps_globalsModel();
 	         ListUser1.add(ModelAlembic);  
 	          return ListUser1;
 
