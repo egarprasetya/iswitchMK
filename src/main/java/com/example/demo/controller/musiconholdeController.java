@@ -34,7 +34,8 @@ public class musiconholdeController
       	  ArrayList<musiconholdeModel> ListUser1 = new ArrayList<musiconholdeModel>();
           while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
           {       
-        	  musiconholdeModel Modelmusiconhold=new musiconholdeModel();	        	  
+        	  musiconholdeModel Modelmusiconhold=new musiconholdeModel();
+        	  Modelmusiconhold.digit=Cursor1.getString(1);
          ListUser1.add(Modelmusiconhold);  
           return ListUser1;
           }         
