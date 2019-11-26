@@ -1,10 +1,14 @@
 package com.example.demo.controller;
-
+import com.example.demo.connection.stringkoneksi;
+import com.example.demo.model.UserModel;
+import com.example.demo.model.*;
+import com.example.demo.query.AllQuery;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,29 +16,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
-import com.example.demo.query.*;
-import com.example.demo.model.UserModel;
-import com.example.demo.model.*;
-import com.example.demo.connection.*;
 @RestController
-@RequestMapping("/Sippeers")
-public class SippeersController {
-	
+@RequestMapping("/queues")
+public class queuesContoller {
 	stringkoneksi sk = new stringkoneksi();
 	AllQuery query_string= new AllQuery();
-	PreparedStatement queryselect_sippeers=null;
-	@GetMapping("/GetSippeers")
-	public ArrayList<SippeersModel> TampilSippeers() throws SQLException
+	PreparedStatement queryselect_queues=null;
+	@GetMapping("/Getqueues")
+	public ArrayList<queuesModel> Tampilqueues() throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-		queryselect_sippeers=Connection1.prepareStatement(query_string.query_select_sippeers);
-        ResultSet Cursor1 = queryselect_sippeers.executeQuery();// Evaluate (Connected_Expression1)
+		queryselect_queues=Connection1.prepareStatement(query_string.query_select_queues);
+        ResultSet Cursor1 = queryselect_queues.executeQuery();// Evaluate (Connected_Expression1)
 
-      	  ArrayList<SippeersModel> ListUser1 = new ArrayList<SippeersModel>();
+      	  ArrayList<queuesModel> ListUser1 = new ArrayList<queuesModel>();
           while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
           {       
-        	  SippeersModel ModelAlembic=new SippeersModel();	
-         
+        	  queuesModel ModelAlembic=new queuesModel();	
+        
          ListUser1.add(ModelAlembic);  
           return ListUser1;
 

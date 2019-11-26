@@ -15,24 +15,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 @RestController
-@RequestMapping("/ps_contact")
-public class ps_contactsController 
-{
+@RequestMapping("/psendpointsid")
+public class ps_endpoints_id_ipsController {
 	stringkoneksi sk = new stringkoneksi();
 	AllQuery query_string= new AllQuery();
-	PreparedStatement queryselect_ps_contact=null;
-	@GetMapping("/GETpscontact")
-	public ArrayList<ps_contactsModel> TampilAlembicVersionConfig() throws SQLException
+	PreparedStatement queryselect_psendpointsid=null;
+	@GetMapping("/Getpsendpointsid")
+	public ArrayList<ps_endpoints_id_ipsModel> TampilAlembicVersionConfig() throws SQLException
 	{
-		
-		   Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-		   queryselect_ps_contact=Connection1.prepareStatement(query_string.query_select_ps_contacts);
-	        ResultSet Cursor1 = queryselect_ps_contact.executeQuery();// Evaluate (Connected_Expression1)
+		  Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+		  queryselect_psendpointsid=Connection1.prepareStatement(query_string.query_select_ps_endpoints_id);
+	        ResultSet Cursor1 = queryselect_psendpointsid.executeQuery();// Evaluate (Connected_Expression1)
 
-	      	  ArrayList<ps_contactsModel> ListUser1 = new ArrayList<ps_contactsModel>();
+	      	  ArrayList<ps_endpoints_id_ipsModel> ListUser1 = new ArrayList<ps_endpoints_id_ipsModel>();
 	          while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 	          {       
-	        	  ps_contactsModel ModelAlembic=new ps_contactsModel();	
+	        	  ps_endpoints_id_ipsModel ModelAlembic=new ps_endpoints_id_ipsModel();	
 	         ListUser1.add(ModelAlembic);  
 	          return ListUser1;
 
@@ -41,6 +39,5 @@ public class ps_contactsController
 	          Connection1.close();
 	          
 	          return ListUser1;
-
-}
+	}
 }

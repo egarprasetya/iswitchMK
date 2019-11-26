@@ -15,24 +15,24 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 @RestController
-@RequestMapping("/ps_contact")
-public class ps_contactsController 
+@RequestMapping("/ps_transport")
+public class ps_transportController 
 {
 	stringkoneksi sk = new stringkoneksi();
 	AllQuery query_string= new AllQuery();
-	PreparedStatement queryselect_ps_contact=null;
-	@GetMapping("/GETpscontact")
-	public ArrayList<ps_contactsModel> TampilAlembicVersionConfig() throws SQLException
+	PreparedStatement queryselect_ps_transport=null;
+	@GetMapping("/Getpstransport")
+	public ArrayList<ps_transportModel> TampilAlembicVersionConfig() throws SQLException
 	{
 		
 		   Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-		   queryselect_ps_contact=Connection1.prepareStatement(query_string.query_select_ps_contacts);
-	        ResultSet Cursor1 = queryselect_ps_contact.executeQuery();// Evaluate (Connected_Expression1)
+	        queryselect_ps_transport=Connection1.prepareStatement(query_string.query_select_ps_transports);
+	        ResultSet Cursor1 = queryselect_ps_transport.executeQuery();// Evaluate (Connected_Expression1)
 
-	      	  ArrayList<ps_contactsModel> ListUser1 = new ArrayList<ps_contactsModel>();
+	      	  ArrayList<ps_transportModel> ListUser1 = new ArrayList<ps_transportModel>();
 	          while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 	          {       
-	        	  ps_contactsModel ModelAlembic=new ps_contactsModel();	
+	        	  ps_transportModel ModelAlembic=new ps_transportModel();	
 	         ListUser1.add(ModelAlembic);  
 	          return ListUser1;
 

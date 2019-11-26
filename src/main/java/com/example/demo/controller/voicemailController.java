@@ -14,25 +14,26 @@ import java.util.ArrayList;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 @RestController
-@RequestMapping("/ps_contact")
-public class ps_contactsController 
+@RequestMapping("/voicemail")
+public class voicemailController 
 {
 	stringkoneksi sk = new stringkoneksi();
 	AllQuery query_string= new AllQuery();
-	PreparedStatement queryselect_ps_contact=null;
-	@GetMapping("/GETpscontact")
-	public ArrayList<ps_contactsModel> TampilAlembicVersionConfig() throws SQLException
+	PreparedStatement queryselect_voicemail=null;
+	@GetMapping("/Getvoicemail")
+	public ArrayList<VoiceMailModel> TampilvoicemailConfig() throws SQLException
 	{
-		
 		   Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-		   queryselect_ps_contact=Connection1.prepareStatement(query_string.query_select_ps_contacts);
-	        ResultSet Cursor1 = queryselect_ps_contact.executeQuery();// Evaluate (Connected_Expression1)
+		   queryselect_voicemail=Connection1.prepareStatement(query_string.query_select_voicemail);
+	        ResultSet Cursor1 = queryselect_voicemail.executeQuery();// Evaluate (Connected_Expression1)
 
-	      	  ArrayList<ps_contactsModel> ListUser1 = new ArrayList<ps_contactsModel>();
+	      	  ArrayList<VoiceMailModel> ListUser1 = new ArrayList<VoiceMailModel>();
 	          while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 	          {       
-	        	  ps_contactsModel ModelAlembic=new ps_contactsModel();	
+	        	  VoiceMailModel ModelAlembic=new VoiceMailModel();	
+	       
 	         ListUser1.add(ModelAlembic);  
 	          return ListUser1;
 
@@ -42,5 +43,5 @@ public class ps_contactsController
 	          
 	          return ListUser1;
 
-}
+	}
 }
