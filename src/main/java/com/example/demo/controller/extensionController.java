@@ -28,7 +28,6 @@ public class extensionController {
 		  Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		  queryselect_extension=Connection1.prepareStatement(query_string.query_select_extension);
 	        ResultSet Cursor1 = queryselect_extension.executeQuery();// Evaluate (Connected_Expression1)
-
 	      	  ArrayList<extensionModel> ListUser1 = new ArrayList<extensionModel>();
 	          while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 	          {       
@@ -41,11 +40,10 @@ public class extensionController {
 	        	  Modelextension.appdata=Cursor1.getString(6);
 	         ListUser1.add(Modelextension);  
 	          return ListUser1;
-
-	          }
-	          
+	          }	          
 	          Connection1.close();
-	          
+        	  extensionModel Modelextension=new extensionModel();	
+ 	         ListUser1.add(Modelextension);  
 	          return ListUser1;
 	}
 

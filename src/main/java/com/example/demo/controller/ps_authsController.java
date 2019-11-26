@@ -31,7 +31,6 @@ public class ps_authsController {
 		   Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 	        queryselect_ps_auths=Connection1.prepareStatement(query_string.query_select_ps_auths);
 	        ResultSet Cursor1 = queryselect_ps_auths.executeQuery();// Evaluate (Connected_Expression1)
-
 	      	  ArrayList<ps_authsModel> ListUser1 = new ArrayList<ps_authsModel>();
 	          while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 	          {       
@@ -42,16 +41,13 @@ public class ps_authsController {
 	        	 Modelpsauths.md5_cred=Cursor1.getString(4);
 	        	 Modelpsauths.password=Cursor1.getString(5);
 	        	 Modelpsauths.realm=Cursor1.getString(6);
-	        	 Modelpsauths.username=Cursor1.getString(7);
-	        	  
-	        	  
+	        	 Modelpsauths.username=Cursor1.getString(7);	        	  	        	  
 	         ListUser1.add(Modelpsauths);  
 	          return ListUser1;
-
-	          }
-	          
+	          }	          
 	          Connection1.close();
-	          
+	          ps_authsModel Modelpsauths=new ps_authsModel();
+		         ListUser1.add(Modelpsauths);  		       
 	          return ListUser1;
 
 }

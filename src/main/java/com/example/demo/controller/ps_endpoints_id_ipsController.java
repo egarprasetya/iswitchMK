@@ -26,18 +26,16 @@ public class ps_endpoints_id_ipsController {
 		  Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		  queryselect_psendpointsid=Connection1.prepareStatement(query_string.query_select_ps_endpoints_id);
 	        ResultSet Cursor1 = queryselect_psendpointsid.executeQuery();// Evaluate (Connected_Expression1)
-
 	      	  ArrayList<ps_endpoints_id_ipsModel> ListUser1 = new ArrayList<ps_endpoints_id_ipsModel>();
 	          while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 	          {       
 	        	  ps_endpoints_id_ipsModel ModelAlembic=new ps_endpoints_id_ipsModel();	
 	         ListUser1.add(ModelAlembic);  
 	          return ListUser1;
-
-	          }
-	          
+	          }	          
 	          Connection1.close();
-	          
+	          ps_endpoints_id_ipsModel ModelAlembic=new ps_endpoints_id_ipsModel();	
+		         ListUser1.add(ModelAlembic);  
 	          return ListUser1;
 	}
 }

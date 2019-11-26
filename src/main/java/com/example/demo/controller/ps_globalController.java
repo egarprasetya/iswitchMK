@@ -22,23 +22,20 @@ public class ps_globalController {
 	PreparedStatement queryselect_ps_globals=null;
 	@GetMapping("/Getps_global")
 	public ArrayList<ps_globalsModel> TampilAlembicVersionConfig() throws SQLException
-	{
-		
+	{		
 		   Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 	        queryselect_ps_globals=Connection1.prepareStatement(query_string.query_select_alembic_version);
 	        ResultSet Cursor1 = queryselect_ps_globals.executeQuery();// Evaluate (Connected_Expression1)
-
 	      	  ArrayList<ps_globalsModel> ListUser1 = new ArrayList<ps_globalsModel>();
 	          while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 	          {       
 	        	  ps_globalsModel ModelAlembic=new ps_globalsModel();
 	         ListUser1.add(ModelAlembic);  
 	          return ListUser1;
-
-	          }
-	          
+	          }	          
 	          Connection1.close();
-	          
+	          ps_globalsModel ModelAlembic=new ps_globalsModel();
+		         ListUser1.add(ModelAlembic);  
 	          return ListUser1;
 
 }

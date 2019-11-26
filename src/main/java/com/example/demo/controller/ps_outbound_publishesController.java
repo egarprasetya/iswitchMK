@@ -26,18 +26,16 @@ public class ps_outbound_publishesController {
 		   Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		   queryselect_psoutbond=Connection1.prepareStatement(query_string.query_select_ps_outbound_publishes);
 	        ResultSet Cursor1 = queryselect_psoutbond.executeQuery();// Evaluate (Connected_Expression1)
-
 	      	  ArrayList<ps_OutboundModel> ListUser1 = new ArrayList<ps_OutboundModel>();
 	          while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 	          {       
 	        	  ps_OutboundModel ModelAlembic=new ps_OutboundModel();	
 	         ListUser1.add(ModelAlembic);  
 	          return ListUser1;
-
-	          }
-	          
+	          }	          
 	          Connection1.close();
-	          
+	          ps_OutboundModel ModelAlembic=new ps_OutboundModel();	
+		         ListUser1.add(ModelAlembic);  
 	          return ListUser1;
 	}
 }

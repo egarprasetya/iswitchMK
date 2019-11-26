@@ -23,23 +23,20 @@ public class ps_transportController
 	PreparedStatement queryselect_ps_transport=null;
 	@GetMapping("/Getpstransport")
 	public ArrayList<ps_transportModel> TampilAlembicVersionConfig() throws SQLException
-	{
-		
+	{		
 		   Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 	        queryselect_ps_transport=Connection1.prepareStatement(query_string.query_select_ps_transports);
 	        ResultSet Cursor1 = queryselect_ps_transport.executeQuery();// Evaluate (Connected_Expression1)
-
 	      	  ArrayList<ps_transportModel> ListUser1 = new ArrayList<ps_transportModel>();
 	          while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 	          {       
 	        	  ps_transportModel ModelAlembic=new ps_transportModel();	
 	         ListUser1.add(ModelAlembic);  
 	          return ListUser1;
-
-	          }
-	          
+	          }	          
 	          Connection1.close();
-	          
+	          ps_transportModel ModelAlembic=new ps_transportModel();	
+		         ListUser1.add(ModelAlembic);  
 	          return ListUser1;
 
 }

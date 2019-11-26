@@ -26,18 +26,16 @@ PreparedStatement queryselect_queue_rules=null;
 		 Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 	        queryselect_queue_rules=Connection1.prepareStatement(query_string.query_select_queue_rules);
 	        ResultSet Cursor1 = queryselect_queue_rules.executeQuery();// Evaluate (Connected_Expression1)
-
 	      	  ArrayList<queue_rulesModel> ListUser1 = new ArrayList<queue_rulesModel>();
 	          while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 	          {       
-	        	  queue_rulesModel ModelAlembic=new queue_rulesModel();	
+	        queue_rulesModel ModelAlembic=new queue_rulesModel();	
 	         ListUser1.add(ModelAlembic);  
 	          return ListUser1;
-
-	          }
-	          
+	          }	          
 	          Connection1.close();
-	          
+	          queue_rulesModel ModelAlembic=new queue_rulesModel();	
+		         ListUser1.add(ModelAlembic); 
 	          return ListUser1;
 	}
 }

@@ -32,7 +32,6 @@ public class alembic_Version_configController {
 		   Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 	        queryselect_alembic_version_config=Connection1.prepareStatement(query_string.query_select_alembic_version);
 	        ResultSet Cursor1 = queryselect_alembic_version_config.executeQuery();// Evaluate (Connected_Expression1)
-
 	      	  ArrayList<alembic_version_configModel> ListUser1 = new ArrayList<alembic_version_configModel>();
 	          while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 	          {       
@@ -40,11 +39,10 @@ public class alembic_Version_configController {
 	         ModelAlembic.version_num=Cursor1.getString(1);
 	         ListUser1.add(ModelAlembic);  
 	          return ListUser1;
-
-	          }
-	          
+	          }	          
 	          Connection1.close();
-	          
+		        alembic_version_configModel ModelAlembic=new alembic_version_configModel();	
+		         ListUser1.add(ModelAlembic);  
 	          return ListUser1;
 
 }

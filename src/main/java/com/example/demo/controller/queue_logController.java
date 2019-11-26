@@ -26,18 +26,16 @@ public class queue_logController {
 		 Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		 queryselect_queuelog=Connection1.prepareStatement(query_string.query_select_queue_log);
 	        ResultSet Cursor1 = queryselect_queuelog.executeQuery();// Evaluate (Connected_Expression1)
-
 	      	  ArrayList<queue_logModel> ListUser1 = new ArrayList<queue_logModel>();
 	          while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 	          {       
 	        	  queue_logModel ModelAlembic=new queue_logModel();	
 	         ListUser1.add(ModelAlembic);  
 	          return ListUser1;
-
-	          }
-	          
+	          }	          
 	          Connection1.close();
-	          
+	          queue_logModel ModelAlembic=new queue_logModel();	
+		         ListUser1.add(ModelAlembic);
 	          return ListUser1;
 	}
 }

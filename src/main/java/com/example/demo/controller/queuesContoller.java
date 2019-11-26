@@ -28,19 +28,16 @@ public class queuesContoller {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_queues=Connection1.prepareStatement(query_string.query_select_queues);
         ResultSet Cursor1 = queryselect_queues.executeQuery();// Evaluate (Connected_Expression1)
-
       	  ArrayList<queuesModel> ListUser1 = new ArrayList<queuesModel>();
           while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
           {       
-        	  queuesModel ModelAlembic=new queuesModel();	
-        
+        	  queuesModel ModelAlembic=new queuesModel();	        
          ListUser1.add(ModelAlembic);  
           return ListUser1;
-
-          }
-          
+          }          
           Connection1.close();
-          
+          queuesModel ModelAlembic=new queuesModel();	         
+          ListUser1.add(ModelAlembic);  
           return ListUser1;
 	}
 }

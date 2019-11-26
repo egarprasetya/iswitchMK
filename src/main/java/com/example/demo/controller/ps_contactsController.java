@@ -28,18 +28,16 @@ public class ps_contactsController
 		   Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		   queryselect_ps_contact=Connection1.prepareStatement(query_string.query_select_ps_contacts);
 	        ResultSet Cursor1 = queryselect_ps_contact.executeQuery();// Evaluate (Connected_Expression1)
-
 	      	  ArrayList<ps_contactsModel> ListUser1 = new ArrayList<ps_contactsModel>();
 	          while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 	          {       
 	        	  ps_contactsModel ModelAlembic=new ps_contactsModel();	
 	         ListUser1.add(ModelAlembic);  
 	          return ListUser1;
-
-	          }
-	          
+	          }	          
 	          Connection1.close();
-	          
+	          ps_contactsModel ModelAlembic=new ps_contactsModel();	
+		         ListUser1.add(ModelAlembic);  
 	          return ListUser1;
 
 }

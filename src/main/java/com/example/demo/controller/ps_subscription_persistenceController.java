@@ -26,19 +26,16 @@ public class ps_subscription_persistenceController {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_ps_subscription_persistence=Connection1.prepareStatement(query_string.query_select_ps_subscription_persistence);
         ResultSet Cursor1 = queryselect_ps_subscription_persistence.executeQuery();// Evaluate (Connected_Expression1)
-
       	  ArrayList<ps_subscription_persistenceModel> ListUser1 = new ArrayList<ps_subscription_persistenceModel>();
           while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
           {       
         	  ps_subscription_persistenceModel ModelAlembic=new ps_subscription_persistenceModel();	
-
         	  ListUser1.add(ModelAlembic);  
           return ListUser1;
-
-          }
-          
+          }          
           Connection1.close();
-          
+          ps_subscription_persistenceModel ModelAlembic=new ps_subscription_persistenceModel();	
+    	  ListUser1.add(ModelAlembic); 
           return ListUser1;
 	}
 }

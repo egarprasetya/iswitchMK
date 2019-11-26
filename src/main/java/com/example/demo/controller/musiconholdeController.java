@@ -31,19 +31,16 @@ public class musiconholdeController
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
         queryselect_musiconhold=Connection1.prepareStatement(query_string.query_select_musiconhold);
         ResultSet Cursor1 = queryselect_musiconhold.executeQuery();// Evaluate (Connected_Expression1)
-
       	  ArrayList<musiconholdeModel> ListUser1 = new ArrayList<musiconholdeModel>();
           while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
           {       
-        	  musiconholdeModel Modelmusiconhold=new musiconholdeModel();	
-        	  
+        	  musiconholdeModel Modelmusiconhold=new musiconholdeModel();	        	  
          ListUser1.add(Modelmusiconhold);  
           return ListUser1;
-
-          }
-          
+          }         
           Connection1.close();
-          
+          musiconholdeModel Modelmusiconhold=new musiconholdeModel();	    	  
+          ListUser1.add(Modelmusiconhold);
           return ListUser1;
 
 	}

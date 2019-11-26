@@ -26,18 +26,16 @@ public class ps_systemController {
 		 Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		 queryselect_ps_systems=Connection1.prepareStatement(query_string.query_select_ps_systems);
 	        ResultSet Cursor1 = queryselect_ps_systems.executeQuery();// Evaluate (Connected_Expression1)
-
 	      	  ArrayList<ps_SystemsModel> ListUser1 = new ArrayList<ps_SystemsModel>();
 	          while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 	          {       
 	        	  ps_SystemsModel ModelAlembic=new ps_SystemsModel();	
 	         ListUser1.add(ModelAlembic);  
 	          return ListUser1;
-
-	          }
-	          
+	          }	          
 	          Connection1.close();
-	          
+	          ps_SystemsModel ModelAlembic=new ps_SystemsModel();	
+		         ListUser1.add(ModelAlembic);  
 	          return ListUser1;
 	}
 }

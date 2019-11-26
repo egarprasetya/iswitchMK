@@ -12,6 +12,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,18 +29,16 @@ public class queue_memberController
 		 Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 	        queryselect_queuemember=Connection1.prepareStatement(query_string.query_select_queue_members);
 	        ResultSet Cursor1 = queryselect_queuemember.executeQuery();// Evaluate (Connected_Expression1)
-
 	      	  ArrayList<queue_memberModel> ListUser1 = new ArrayList<queue_memberModel>();
 	          while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 	          {       
 	        	  queue_memberModel ModelAlembic=new queue_memberModel();	
 	         ListUser1.add(ModelAlembic);  
 	          return ListUser1;
-
-	          }
-	          
+	          }	          
 	          Connection1.close();
-	          
+	          queue_memberModel ModelAlembic=new queue_memberModel();	
+		         ListUser1.add(ModelAlembic);
 	          return ListUser1;
 	}
 }

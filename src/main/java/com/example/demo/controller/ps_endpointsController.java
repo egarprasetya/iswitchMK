@@ -26,18 +26,16 @@ public class ps_endpointsController {
 		 Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		 queryselect_psendpoint=Connection1.prepareStatement(query_string.query_select_ps_endpoints);
 	        ResultSet Cursor1 = queryselect_psendpoint.executeQuery();// Evaluate (Connected_Expression1)
-
 	      	  ArrayList<ps_endpointsModel> ListUser1 = new ArrayList<ps_endpointsModel>();
 	          while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 	          {       
 	        	  ps_endpointsModel ModelAlembic=new ps_endpointsModel();	
 	         ListUser1.add(ModelAlembic);  
 	          return ListUser1;
-
-	          }
-	          
+	          }	          
 	          Connection1.close();
-	          
+	          ps_endpointsModel ModelAlembic=new ps_endpointsModel();	
+		         ListUser1.add(ModelAlembic);  
 	          return ListUser1;
 	}
 }

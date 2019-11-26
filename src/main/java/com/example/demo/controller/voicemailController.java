@@ -24,24 +24,19 @@ public class voicemailController
 	PreparedStatement queryselect_voicemail=null;
 	@GetMapping("/Getvoicemail")
 	public ArrayList<VoiceMailModel> TampilvoicemailConfig() throws SQLException
-	{
-		   Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+	{	 Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		   queryselect_voicemail=Connection1.prepareStatement(query_string.query_select_voicemail);
 	        ResultSet Cursor1 = queryselect_voicemail.executeQuery();// Evaluate (Connected_Expression1)
-
 	      	  ArrayList<VoiceMailModel> ListUser1 = new ArrayList<VoiceMailModel>();
 	          while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 	          {       
-	        	  VoiceMailModel ModelAlembic=new VoiceMailModel();	
-	       
-	         ListUser1.add(ModelAlembic);  
+	        VoiceMailModel ModelAlembic=new VoiceMailModel();	
+	        ListUser1.add(ModelAlembic);  
 	          return ListUser1;
-
-	          }
-	          
+	          }	          
 	          Connection1.close();
-	          
+	          VoiceMailModel ModelAlembic=new VoiceMailModel();	
+	          ListUser1.add(ModelAlembic);  
 	          return ListUser1;
-
 	}
 }

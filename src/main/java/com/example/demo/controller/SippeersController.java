@@ -29,19 +29,16 @@ public class SippeersController {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_sippeers=Connection1.prepareStatement(query_string.query_select_sippeers);
         ResultSet Cursor1 = queryselect_sippeers.executeQuery();// Evaluate (Connected_Expression1)
-
       	  ArrayList<SippeersModel> ListUser1 = new ArrayList<SippeersModel>();
           while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
           {       
-        	  SippeersModel ModelAlembic=new SippeersModel();	
-         
+        	  SippeersModel ModelAlembic=new SippeersModel();	         
          ListUser1.add(ModelAlembic);  
           return ListUser1;
-
-          }
-          
+          }          
           Connection1.close();
-          
+          SippeersModel ModelAlembic=new SippeersModel();	          
+          ListUser1.add(ModelAlembic);  
           return ListUser1;
 	}
 }

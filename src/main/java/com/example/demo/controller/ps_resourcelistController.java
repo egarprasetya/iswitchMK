@@ -27,18 +27,16 @@ public class ps_resourcelistController {
 		 Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 	        queryselect_psresourcelist=Connection1.prepareStatement(query_string.query_select_ps_resource_list);
 	        ResultSet Cursor1 = queryselect_psresourcelist.executeQuery();// Evaluate (Connected_Expression1)
-
 	      	  ArrayList<ps_Resource_listModel> ListUser1 = new ArrayList<ps_Resource_listModel>();
 	          while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 	          {       
 	        	  ps_Resource_listModel ModelAlembic=new ps_Resource_listModel();	
 	         ListUser1.add(ModelAlembic);  
 	          return ListUser1;
-
-	          }
-	          
+	          }	          
 	          Connection1.close();
-	          
+	          ps_Resource_listModel ModelAlembic=new ps_Resource_listModel();	
+		         ListUser1.add(ModelAlembic);  
 	          return ListUser1;
 	}
 }
