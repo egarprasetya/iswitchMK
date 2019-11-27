@@ -73,7 +73,7 @@ public class ps_registrationController {
 		return a;    	         
 }
 	
-	@PostMapping("/DeleteGetPsRegistration")
+	@GetMapping("/DeleteGetPsRegistration")
 	public int DeleteGetRegistration(@RequestBody String id) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);

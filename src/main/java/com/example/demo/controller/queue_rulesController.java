@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,11 +46,11 @@ PreparedStatement queryselect_queue_rules=null;
 	          return ListUser1;
 	}
 	
-	@PostMapping("/DeletePostQueueRules")
+	@DeleteMapping("/DeletePostQueueRules")
 	public int DeletePostQueueRules(@RequestBody String rule_name) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-	      querydelete_alembic_version_config=Connection1.prepareStatement(query_string_delete.query_delete_alembic_version);
+	      querydelete_alembic_version_config=Connection1.prepareStatement(query_string_delete.query_delete_queue_rules);
 		 querydelete_alembic_version_config.setString(1, rule_name);   
 		int Cursor1 = querydelete_alembic_version_config.executeUpdate();// Evaluate (Connected_Expression1)
 		int a =0; 
@@ -57,11 +58,11 @@ PreparedStatement queryselect_queue_rules=null;
 		return a;    	         
 }
 	
-	@GetMapping("/DeleteGetQueueRules")
+	@DeleteMapping("/DeleteGetQueueRules")
 	public int DeleteGetQueueRules(@RequestBody String rule_name) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-	      querydelete_alembic_version_config=Connection1.prepareStatement(query_string_delete.query_delete_alembic_version);
+	      querydelete_alembic_version_config=Connection1.prepareStatement(query_string_delete.query_delete_queue_rules);
 		 querydelete_alembic_version_config.setString(1, rule_name);   
 		int Cursor1 = querydelete_alembic_version_config.executeUpdate();// Evaluate (Connected_Expression1)
 		int a =0; 

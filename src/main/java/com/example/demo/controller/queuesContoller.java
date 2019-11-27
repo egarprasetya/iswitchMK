@@ -105,7 +105,7 @@ public class queuesContoller {
 	public int DeletePostQueues(@RequestBody String name) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-	      querydelete_alembic_version_config=Connection1.prepareStatement(query_string_delete.query_delete_alembic_version);
+	      querydelete_alembic_version_config=Connection1.prepareStatement(query_string_delete.query_delete_queues);
 		 querydelete_alembic_version_config.setString(1, name);   
 		int Cursor1 = querydelete_alembic_version_config.executeUpdate();// Evaluate (Connected_Expression1)
 		int a =0; 
@@ -117,7 +117,7 @@ public class queuesContoller {
 	public int DeleteGetQueues(@RequestBody String name) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-	      querydelete_alembic_version_config=Connection1.prepareStatement(query_string_delete.query_delete_alembic_version);
+	      querydelete_alembic_version_config=Connection1.prepareStatement(query_string_delete.query_delete_queues);
 		 querydelete_alembic_version_config.setString(1, name);   
 		int Cursor1 = querydelete_alembic_version_config.executeUpdate();// Evaluate (Connected_Expression1)
 		int a =0; 
