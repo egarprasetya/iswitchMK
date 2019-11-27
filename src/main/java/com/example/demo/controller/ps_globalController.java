@@ -35,11 +35,9 @@ public class ps_globalController {
 	          {       
 	        	  ps_globalsModel ModelAlembic=new ps_globalsModel();
 	         ListUser1.add(ModelAlembic);  
-	          return ListUser1;
+	         
 	          }	          
 	          Connection1.close();
-	          ps_globalsModel ModelAlembic=new ps_globalsModel();
-		         ListUser1.add(ModelAlembic);  
 	          return ListUser1;
 
 }

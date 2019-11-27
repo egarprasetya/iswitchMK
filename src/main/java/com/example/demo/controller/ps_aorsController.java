@@ -50,11 +50,9 @@ public class ps_aorsController {
 	        		ModelPs_aors.qualify_timeout=Cursor1.getDouble(13);
 	        		ModelPs_aors.voicemail_extension=Cursor1.getString(14);
 	         ListUser1.add(ModelPs_aors);  
-	          return ListUser1;
+	         
 	          }	          
 	          Connection1.close();
-	          ps_aorsModel ModelPs_aors=new ps_aorsModel();	
-		         ListUser1.add(ModelPs_aors);
 	          return ListUser1;
 	}
 	

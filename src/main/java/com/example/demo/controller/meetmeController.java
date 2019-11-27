@@ -51,11 +51,9 @@ public class meetmeController {
 	        	  ModelAlembic.maxusers=Cursor1.getInt(11);
 	        	  ModelAlembic.members=Cursor1.getInt(12);
 	         ListUser1.add(ModelAlembic);  
-	          return ListUser1;
+	         
 	          }	          
 	          Connection1.close();
-        	  meetmeModel ModelAlembic=new meetmeModel();	
-		         ListUser1.add(ModelAlembic);  
 	          return ListUser1;
 	}
 	

@@ -35,11 +35,9 @@ public class ps_inbound_publicationsController {
 	          {       
 	        	  ps_inboundModel ModelAlembic=new ps_inboundModel();	
 	         ListUser1.add(ModelAlembic);  
-	          return ListUser1;
+	        
 	          }	          
 	          Connection1.close();
-	          ps_inboundModel ModelAlembic=new ps_inboundModel();	
-		         ListUser1.add(ModelAlembic);  
 	          return ListUser1;
 	}
 	

@@ -47,11 +47,9 @@ public class ps_authsController {
 	        	 Modelpsauths.realm=Cursor1.getString(6);
 	        	 Modelpsauths.username=Cursor1.getString(7);	        	  	        	  
 	         ListUser1.add(Modelpsauths);  
-	          return ListUser1;
+	         
 	          }	          
 	          Connection1.close();
-	          ps_authsModel Modelpsauths=new ps_authsModel();
-		         ListUser1.add(Modelpsauths);  		       
 	          return ListUser1;
 
 }

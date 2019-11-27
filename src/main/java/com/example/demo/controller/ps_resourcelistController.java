@@ -42,11 +42,9 @@ public class ps_resourcelistController {
 	        	  ModelPs_resource_list.full_state=Cursor1.getBoolean(4);
 	        	  ModelPs_resource_list.notification_batch_interval=Cursor1.getInt(5);
 	         ListUser1.add(ModelPs_resource_list);  
-	          return ListUser1;
+	        
 	          }	          
 	          Connection1.close();
-	          ps_Resource_listModel ModelPs_resource_list=new ps_Resource_listModel();	
-		         ListUser1.add(ModelPs_resource_list);  
 	          return ListUser1;
 	}
 	

@@ -52,11 +52,9 @@ AllDeleteQuery query_string_delete = new AllDeleteQuery();
 	        	  ModelContact.prune_on_boot=Cursor1.getBoolean(15);
 	        	  
 	         ListUser1.add(ModelContact);  
-	          return ListUser1;
+	         
 	          }	          
 	          Connection1.close();
-	          ps_contactsModel ModelContact=new ps_contactsModel();	
-		         ListUser1.add(ModelContact);  
 	          return ListUser1;
 
 }

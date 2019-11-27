@@ -127,11 +127,9 @@ public class SippeersController {
         		ModelSippeers.supportpath = Cursor1.getBoolean(89);				// YesNo vale / Type.
         		ModelSippeers.email = Cursor1.getString(90);
          ListUser1.add(ModelSippeers);  
-          return ListUser1;
+         
           }          
           Connection1.close();
-          SippeersModel ModelSippeers=new SippeersModel();	          
-          ListUser1.add(ModelSippeers);  
           return ListUser1;
 	}
 	

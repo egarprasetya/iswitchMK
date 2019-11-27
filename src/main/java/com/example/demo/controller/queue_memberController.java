@@ -36,11 +36,9 @@ AllDeleteQuery query_string_delete = new AllDeleteQuery();
 	          {       
 	        	  queue_memberModel ModelAlembic=new queue_memberModel();	
 	         ListUser1.add(ModelAlembic);  
-	          return ListUser1;
+	         
 	          }	          
 	          Connection1.close();
-	          queue_memberModel ModelAlembic=new queue_memberModel();	
-		         ListUser1.add(ModelAlembic);
 	          return ListUser1;
 	}
 	

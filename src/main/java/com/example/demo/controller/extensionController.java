@@ -43,11 +43,9 @@ public class extensionController {
 	        	  Modelextension.app=Cursor1.getString(5);
 	        	  Modelextension.appdata=Cursor1.getString(6);
 	         ListUser1.add(Modelextension);  
-	          return ListUser1;
+	        
 	          }	          
 	          Connection1.close();
-        	  extensionModel Modelextension=new extensionModel();	
- 	         ListUser1.add(Modelextension);  
 	          return ListUser1;
 	}
 	

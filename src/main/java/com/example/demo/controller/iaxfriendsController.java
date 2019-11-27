@@ -84,11 +84,9 @@ AllDeleteQuery query_string_delete = new AllDeleteQuery();
 	        		ModelIaxfriends.amaflags= Cursor1.getString(45);
 	        		ModelIaxfriends.setvar= Cursor1.getString(46);
 	        	  ListUser1.add(ModelIaxfriends);  
-	          return ListUser1;
+	         
 	          }	          
 	          Connection1.close();
-        	  iaxfriendsModel ModelIaxfriends=new iaxfriendsModel();	
- 	         ListUser1.add(ModelIaxfriends);  
 	          return ListUser1;
 	}
 	

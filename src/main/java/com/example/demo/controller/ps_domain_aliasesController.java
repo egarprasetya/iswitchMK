@@ -38,12 +38,10 @@ public class ps_domain_aliasesController {
 	        	  ModelDomain.domain=Cursor1.getString(2);
 	        	  
 	         ListUser1.add(ModelDomain);  
-	          return ListUser1;
+	         
 
 	          }	          
 	          Connection1.close();
-	          ps_domain_aliasesModel ModelDomain=new ps_domain_aliasesModel();	
-		         ListUser1.add(ModelDomain);  
 	          return ListUser1;
 	}
 	

@@ -41,11 +41,9 @@ public class ps_endpoints_id_ipsController {
 	        	  ModelPs_enpoints_id.match_header=Cursor1.getString(5);
 	        	  
 	         ListUser1.add(ModelPs_enpoints_id);  
-	          return ListUser1;
+	       
 	          }	          
 	          Connection1.close();
-	          ps_endpoints_id_ipsModel ModelPs_enpoints_id=new ps_endpoints_id_ipsModel();	
-		         ListUser1.add(ModelPs_enpoints_id);  
 	          return ListUser1;
 	}
 	

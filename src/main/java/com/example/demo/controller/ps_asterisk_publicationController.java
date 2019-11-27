@@ -42,11 +42,9 @@ AllDeleteQuery query_string_delete = new AllDeleteQuery();
 	        	  ModelPs_asterisk.mailbox_state=Cursor1.getBoolean(6);
 	        	  ModelPs_asterisk.mailbox_state_filter=Cursor1.getString(7);
 	         ListUser1.add(ModelPs_asterisk);  
-	          return ListUser1;
+	         
 	          }          
 	          Connection1.close();
-	          ps_asterisk_publicationsModel ModelPs_asterisk=new ps_asterisk_publicationsModel();			         
-		         ListUser1.add(ModelPs_asterisk);  
 	          return ListUser1;
 	}
 	

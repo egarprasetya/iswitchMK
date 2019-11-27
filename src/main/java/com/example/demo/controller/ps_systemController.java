@@ -35,11 +35,9 @@ public class ps_systemController {
 	          {       
 	        	  ps_SystemsModel ModelAlembic=new ps_SystemsModel();	
 	         ListUser1.add(ModelAlembic);  
-	          return ListUser1;
+	         
 	          }	          
 	          Connection1.close();
-	          ps_SystemsModel ModelAlembic=new ps_SystemsModel();	
-		         ListUser1.add(ModelAlembic);  
 	          return ListUser1;
 	}
 	

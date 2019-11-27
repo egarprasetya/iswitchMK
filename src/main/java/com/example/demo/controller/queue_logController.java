@@ -50,11 +50,9 @@ public class queue_logController {
 	        	  ModelQueue_log.data5=Cursor1.getString(13);
 	 	         
 	         ListUser1.add(ModelQueue_log);  
-	          return ListUser1;
+	         
 	          }	          
 	          Connection1.close();
-	          queue_logModel ModelQueue_log=new queue_logModel();	
-		         ListUser1.add(ModelQueue_log);
 	          return ListUser1;
 	}
 	

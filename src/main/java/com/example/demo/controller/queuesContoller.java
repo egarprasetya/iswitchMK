@@ -93,11 +93,9 @@ public class queuesContoller {
         		ModelQueues.defaultrule = Cursor1.getString(54);
         		ModelQueues.timeoutpriority = Cursor1.getString(55);
          ListUser1.add(ModelQueues);  
-          return ListUser1;
+        
           }          
           Connection1.close();
-          queuesModel ModelQueues=new queuesModel();	         
-          ListUser1.add(ModelQueues);  
           return ListUser1;
 	}
 	

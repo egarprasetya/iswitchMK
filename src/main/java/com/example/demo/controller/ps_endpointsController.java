@@ -154,11 +154,9 @@ public class ps_endpointsController {
 	        		ModelPs_enpoints.bundle=Cursor1.getBoolean(118);							// YesNo value/Type.
 	        		ModelPs_enpoints.dtls_auto_generate_cert=Cursor1.getBoolean(119);
 	         ListUser1.add(ModelPs_enpoints);  
-	          return ListUser1;
+	          
 	          }	          
 	          Connection1.close();
-	          ps_endpointsModel ModelPs_enpoints=new ps_endpointsModel();	
-		         ListUser1.add(ModelPs_enpoints);  
 	          return ListUser1;
 	}
 	

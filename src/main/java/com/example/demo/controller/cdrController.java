@@ -57,11 +57,9 @@ public class cdrController {
 	        		ModelCdr.peeraccount=Cursor1.getString(20);
 	        		ModelCdr.sequence=Cursor1.getInt(21);
 	         ListUser1.add(ModelCdr);  
-	          return ListUser1;
+	         
 	          }	          
 	          Connection1.close();
-        	  cdrModel ModelCdr=new cdrModel();	
- 	         ListUser1.add(ModelCdr);  
 	          return ListUser1;
 	}
 	

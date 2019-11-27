@@ -35,11 +35,9 @@ AllDeleteQuery query_string_delete = new AllDeleteQuery();
 	          {       
 	        	  ps_transportModel ModelAlembic=new ps_transportModel();	
 	         ListUser1.add(ModelAlembic);  
-	          return ListUser1;
+	        
 	          }	          
 	          Connection1.close();
-	          ps_transportModel ModelAlembic=new ps_transportModel();	
-		         ListUser1.add(ModelAlembic);  
 	          return ListUser1;
 
 }

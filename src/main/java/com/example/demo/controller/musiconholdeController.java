@@ -49,11 +49,9 @@ public class musiconholdeController
         	  Modelmusiconhold.format=Cursor1.getString(7);
         	  Modelmusiconhold.stamp=Cursor1.getDate(8);
          ListUser1.add(Modelmusiconhold);  
-          return ListUser1;
+         
           }         
           Connection1.close();
-          musiconholdeModel Modelmusiconhold=new musiconholdeModel();	    	  
-          ListUser1.add(Modelmusiconhold);
           return ListUser1;
 	}
 	

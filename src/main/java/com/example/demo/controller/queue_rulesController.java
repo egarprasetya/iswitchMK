@@ -38,11 +38,9 @@ PreparedStatement queryselect_queue_rules=null;
 	          {       
 	        queue_rulesModel ModelAlembic=new queue_rulesModel();	
 	         ListUser1.add(ModelAlembic);  
-	          return ListUser1;
+	         
 	          }	          
 	          Connection1.close();
-	          queue_rulesModel ModelAlembic=new queue_rulesModel();	
-		         ListUser1.add(ModelAlembic); 
 	          return ListUser1;
 	}
 	

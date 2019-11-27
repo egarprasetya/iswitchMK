@@ -72,11 +72,9 @@ AllDeleteQuery query_string_delete = new AllDeleteQuery();
 	    	ModelVoiceMail.stamp = Cursor1.getDate(34);
 	        
 	        ListUser1.add(ModelVoiceMail);
-	          return ListUser1;
+	        
 	          }	          
 	          Connection1.close();
-	          VoiceMailModel ModelVoiceMail=new VoiceMailModel();	
-	          ListUser1.add(ModelVoiceMail);  
 	          return ListUser1;
 	}
 	

@@ -47,11 +47,9 @@ public class ps_subscription_persistenceController {
         	  ModelPs_subscription_persistance.expires=Cursor1.getInt(11);
         	  ModelPs_subscription_persistance.contact_uri=Cursor1.getString(12);
         	  ModelPs_subscription_persistance.prune_on_boot=Cursor1.getBoolean(13);
-          return ListUser1;
+         
           }          
           Connection1.close();
-          ps_subscription_persistenceModel ModelPs_subscription_persistance=new ps_subscription_persistenceModel();	
-    	  ListUser1.add(ModelPs_subscription_persistance); 
           return ListUser1;
 	}
 	

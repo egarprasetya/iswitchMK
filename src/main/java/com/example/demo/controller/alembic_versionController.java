@@ -40,11 +40,9 @@ public class alembic_versionController {
 	        alembic_versionModel ModelAlembic=new alembic_versionModel();	
 	         ModelAlembic.version_num=Cursor1.getString(1);
 	         ListUser1.add(ModelAlembic);  
-	          return ListUser1;
+	         
 	          }	          
 	          Connection1.close();
-		        alembic_versionModel ModelAlembic=new alembic_versionModel();	
-		         ListUser1.add(ModelAlembic);  
 	          return ListUser1;
 
 }

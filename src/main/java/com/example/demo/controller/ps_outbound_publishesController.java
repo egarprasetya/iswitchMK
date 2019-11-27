@@ -50,11 +50,9 @@ public class ps_outbound_publishesController {
 	        	  ModelPs_outbound._exten=Cursor1.getString(14);
 	        	  
 	         ListUser1.add(ModelPs_outbound);  
-	          return ListUser1;
+	         
 	          }	          
 	          Connection1.close();
-	          ps_OutboundModel ModelPs_outbound=new ps_OutboundModel();	
-		         ListUser1.add(ModelPs_outbound);  
 	          return ListUser1;
 	}
 	

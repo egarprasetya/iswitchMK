@@ -53,11 +53,9 @@ public class ps_registrationController {
 	        	  ModelPs_registration.endpoint=Cursor1.getString(16);
 	        	  
 	         ListUser1.add(ModelPs_registration);  
-	          return ListUser1;
+	         
 	          }	          
 	          Connection1.close();
-	          ps_registrationsModel ModelPs_registration=new ps_registrationsModel();	
-		         ListUser1.add(ModelPs_registration);  
 	          return ListUser1;
 	}
 	
