@@ -59,7 +59,7 @@ public class meetmeController {
 	          return ListUser1;
 	}
 	
-	@PostMapping("/DeletePostmeetme")
+	@PostMapping("/DeletePostmeetmess")
 	public int DeletePostmeetme(@RequestBody int bookid) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
