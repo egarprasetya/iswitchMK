@@ -1,0 +1,89 @@
+package com.example.demo.query;
+
+public class AllUpdateQuery {
+	public String query_replace_alembic_version="replace INTO alembic_version " + 
+			"(version_num) " + 
+			"VALUES(?)";
+	public String query_replace_alembic_version_config="replace INTO alembic_version_config " + 
+			"(version_num) " + 
+			"VALUES(?)";
+	public String query_replace_cdr="replace INTO cdr " + 
+			"(accountcode, src, dst, dcontext, clid, channel, dstchannel, lastapp, lastdata, start, answer, end, duration, billsec, disposition, amaflags, userfield, uniqueid, linkedid, peeraccount, sequence) " + 
+			"VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	public String query_replace_extension="replace INTO extensions " + 
+			"(context, exten, priority, app, appdata) " + 
+			"VALUES(?, ?, ?, ?, ?)";
+	public String query_replace_iaxfriends="replace INTO iaxfriends " + 
+			"(name, type, username, mailbox, secret, dbsecret, context, regcontext, host, ipaddr, port, defaultip, sourceaddress, mask, regexten, regseconds, accountcode, mohinterpret, mohsuggest, inkeys, outkeys, language, callerid, cid_number, sendani, fullname, trunk, auth, maxauthreq, requirecalltoken, encryption, transfer, jitterbuffer, forcejitterbuffer, disallow, allow, codecpriority, qualify, qualifysmoothing, qualifyfreqok, qualifyfreqnotok, timezone, adsi, amaflags, setvar) " + 
+			"VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	public String query_replace_meetme="replace INTO meetme " + 
+			"(confno, starttime, endtime, pin, adminpin, opts, adminopts, recordingfilename, recordingformat, maxusers, members) " + 
+			"VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	public String query_replace_musiconhold="replace INTO musiconhold " + 
+			"(name, mode, directory, application, digit, sort, format, stamp) " + 
+			"VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+	public String query_replace_ps_aors="replace INTO ps_aors " + 
+			"(id, contact, default_expiration, mailboxes, max_contacts, minimum_expiration, remove_existing, qualify_frequency, authenticate_qualify, maximum_expiration, outbound_proxy, support_path, qualify_timeout, voicemail_extension) " + 
+			"VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	public String query_replace_ps_asterisk_publications="replace INTO ps_asterisk_publications " + 
+			"(id, devicestate_publish, mailboxstate_publish, device_state, device_state_filter, mailbox_state, mailbox_state_filter) " + 
+			"VALUES(?, ?, ?, ?, ?, ?, ?)";
+	public String query_replace_ps_auths="replace INTO ps_auths " + 
+			"(id, auth_type, nonce_lifetime, md5_cred, password, realm, username) " + 
+			"VALUES(?, ?, ?, ?, ?, ?, ?)";
+	public String query_replace_ps_contacts="replace INTO ps_contacts " + 
+			"(id, uri, expiration_time, qualify_frequency, outbound_proxy, path, user_agent, qualify_timeout, reg_server, authenticate_qualify, via_addr, via_port, call_id, endpoint, prune_on_boot) " + 
+			"VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	public String query_replace_ps_domain_aliases="replace INTO ps_domain_aliases " + 
+			"(id, domain) " + 
+			"VALUES(?, ?)";
+	public String query_replace_ps_endpoints_id="replace INTO ps_endpoint_id_ips " + 
+			"(id, endpoint, match, srv_lookups, match_header) " + 
+			"VALUES(?, ?, ?, ?, ?)";
+	public String query_replace_ps_endpoints="replace INTO ps_endpoints " + 
+			"(id, transport, aors, auth, context, disallow, allow, direct_media, connected_line_method, direct_media_method, direct_media_glare_mitigation, disable_direct_media_on_nat, dtmf_mode, external_media_address, force_rport, ice_support, identify_by, mailboxes, moh_suggest, outbound_auth, outbound_proxy, rewrite_contact, rtp_ipv6, rtp_symmetric, send_diversion, send_pai, send_rpid, timers_min_se, timers, timers_sess_expires, callerid, callerid_privacy, callerid_tag, 1??rel, aggregate_mwi, trust_id_inbound, trust_id_outbound, use_ptime, use_avpf, media_encryption, inband_progress, call_group, pickup_group, named_call_group, named_pickup_group, device_state_busy_at, fax_detect, t38_udptl, t38_udptl_ec, t38_udptl_maxdatagram, t38_udptl_nat, t38_udptl_ipv6, tone_zone, language, one_touch_recording, record_on_feature, record_off_feature, rtp_engine, allow_transfer, allow_subscribe, sdp_owner, sdp_session, tos_audio, tos_video, sub_min_expiry, from_domain, from_user, mwi_from_user, dtls_verify, dtls_rekey, dtls_cert_file, dtls_private_key, dtls_cipher, dtls_ca_file, dtls_ca_path, dtls_setup, srtp_tag_32, media_address, redirect_method, set_var, cos_audio, cos_video, message_context, force_avp, media_use_received_transport, accountcode, user_eq_phone, moh_passthrough, media_encryption_optimistic, rpid_immediate, g726_non_standard, rtp_keepalive, rtp_timeout, rtp_timeout_hold, bind_rtp_to_media_address, voicemail_extension, mwi_subscribe_replaces_unsolicited, deny, permit, acl, contact_deny, contact_permit, contact_acl, subscribe_context, fax_detect_timeout, contact_user, preferred_codec_only, asymmetric_rtp_codec, rtcp_mux, allow_overlap, refer_blind_progress, notify_early_inuse_ringing, max_audio_streams, max_video_streams, webrtc, dtls_fingerprint, incoming_mwi_mailbox, bundle, dtls_auto_generate_cert) " + 
+			"VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	public String query_replace_ps_globals="replace INTO ps_globals " + 
+			"(id, max_forwards, user_agent, default_outbound_endpoint, debug, endpoint_identifier_order, max_initial_qualify_time, default_from_user, keep_alive_interval, regcontext, contact_expiration_check_interval, default_voicemail_extension, disable_multi_domain, unidentified_request_count, unidentified_request_period, unidentified_request_prune_interval, default_realm, mwi_tps_queue_high, mwi_tps_queue_low, mwi_disable_initial_unsolicited, ignore_uri_user_options) " + 
+			"VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	public String query_replace_ps_inbound_publications="replace INTO ps_inbound_publications " + 
+			"(id, endpoint, event_asterisk-devicestate, event_asterisk-mwi) " + 
+			"VALUES(?, ?, ?, ?)";
+	public String query_replace_ps_outbound_publishes="replace INTO ps_outbound_publishes " + 
+			"(id, expiration, outbound_auth, outbound_proxy, server_uri, from_uri, to_uri, event, max_auth_attempts, transport, multi_user, @body, @context, @exten) " + 
+			"VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	public String query_replace_ps_registrations="replace INTO ps_registrations " + 
+			"(id, auth_rejection_permanent, client_uri, contact_user, expiration, max_retries, outbound_auth, outbound_proxy, retry_interval, forbidden_retry_interval, server_uri, transport, support_path, fatal_retry_interval, line, endpoint) " + 
+			"VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	public String query_replace_ps_resource_list="replace INTO ps_resource_list " + 
+			"(id, list_item, event, full_state, notification_batch_interval) " + 
+			"VALUES(?, ?, ?, ?, ?)";
+	public String query_replace_ps_subscription_persistence="replace INTO ps_subscription_persistence " + 
+			"(id, packet, src_name, src_port, transport_key, local_name, local_port, cseq, tag, endpoint, expires, contact_uri, prune_on_boot) " + 
+			"VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	public String query_replace_ps_systems="replace INTO ps_systems " + 
+			"(id, timer_t1, timer_b, compact_headers, threadpool_initial_size, threadpool_auto_increment, threadpool_idle_timeout, threadpool_max_size, disable_tcp_switch) " + 
+			"VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	public String query_replace_ps_transports="UPDATE public.ps_transports\r\n" + 
+			"SET async_operations=0, bind='', ca_list_file='', cert_file='', cipher='', \"domain\"='', external_media_address='', external_signaling_address='', external_signaling_port=0, \"method\"='', local_net='', \"password\"='', priv_key_file='', protocol='', require_client_cert='', verify_client='', verify_server='', tos='', cos=0, allow_reload='', symmetric_transport=''\r\n" + 
+			"WHERE id='';\r\n";
+	public String query_replace_queue_log="UPDATE public.queue_log\r\n" + 
+			"SET calldatetime='', \"time\"='', callid='', queuename='', agent='', \"event\"='', \"data\"='', data1='', data2='', data3='', data4='', data5=''\r\n" + 
+			"WHERE id=nextval('queuelog_id_seq'::regclass);\r\n";
+	public String query_replace_queue_members="UPDATE public.queue_members\r\n" + 
+			"SET queue_name='', interface='', membername='', state_interface='', penalty=0, paused=0\r\n" + 
+			"WHERE uniqueid=0;\r\n";
+	public String query_replace_queue_rules="UPDATE public.queue_rules\r\n" + 
+			"SET rule_name='', \"time\"='', min_penalty='', max_penalty='';\r\n";
+	public String query_replace_queues="UPDATE public.queues\r\n" + 
+			"SET musiconhold='', announce='', context='', timeout=0, ringinuse='', setinterfacevar='', setqueuevar='', setqueueentryvar='', monitor_format='', membermacro='', membergosub='', queue_youarenext='', queue_thereare='', queue_callswaiting='', queue_quantity1='', queue_quantity2='', queue_holdtime='', queue_minutes='', queue_minute='', queue_seconds='', queue_thankyou='', queue_callerannounce='', queue_reporthold='', announce_frequency=0, announce_to_first_user='', min_announce_frequency=0, announce_round_seconds=0, announce_holdtime='', announce_position='', announce_position_limit=0, periodic_announce='', periodic_announce_frequency=0, relative_periodic_announce='', random_periodic_announce='', retry=0, wrapuptime=0, penaltymemberslimit=0, autofill='', monitor_type='', autopause='', autopausedelay=0, autopausebusy='', autopauseunavail='', maxlen=0, servicelevel=0, strategy='', joinempty='', leavewhenempty='', reportholdtime='', memberdelay=0, weight=0, timeoutrestart='', defaultrule='', timeoutpriority=''\r\n" + 
+			"WHERE \"name\"='';\r\n";
+			
+	public String query_replace_sippeers ="UPDATE public.sippeers\r\n" + 
+			"SET \"name\"='', ipaddr='', port=0, regseconds=0, defaultuser='', fullcontact='', regserver='', useragent='', lastms=0, host='', \"type\"='', context='', permit='', deny='', secret='', md5secret='', remotesecret='', transport='', dtmfmode='', directmedia='', nat='', callgroup='', pickupgroup='', \"language\"='', disallow='', allow='', insecure='', trustrpid='', progressinband='', promiscredir='', useclientcode='', accountcode='', setvar='', callerid='', amaflags='', callcounter='', busylevel=0, allowoverlap='', allowsubscribe='', videosupport='', maxcallbitrate=0, rfc2833compensate='', mailbox='', \"session-timers\"='', \"session-expires\"=0, \"session-minse\"=0, \"session-refresher\"='', t38pt_usertpsource='', regexten='', fromdomain='', fromuser='', qualify='', defaultip='', rtptimeout=0, rtpholdtimeout=0, sendrpid='', outboundproxy='', callbackextension='', timert1=0, timerb=0, qualifyfreq=0, constantssrc='', contactpermit='', contactdeny='', usereqphone='', textsupport='', faxdetect='', buggymwi='', auth='', fullname='', trunkname='', cid_number='', callingpres='', mohinterpret='', mohsuggest='', parkinglot='', hasvoicemail='', subscribemwi='', vmexten='', autoframing='', rtpkeepalive=0, \"call-limit\"=0, g726nonstandard='', ignoresdpversion='', allowtransfer='', \"dynamic\"='', \"path\"='', supportpath='', email=?\r\n" + 
+			"WHERE id=nextval('sippeers_id_seq'::regclass);\r\n";
+	public String query_replace_voicemail="UPDATE public.voicemail\r\n" + 
+			"SET context='', mailbox='', \"password\"='', fullname='', alias='', email='', pager='', \"attach\"='', attachfmt='', serveremail='', \"language\"='', tz='', deletevoicemail='', saycid='', sendvoicemail='', review='', tempgreetwarn='', \"operator\"='', envelope='', sayduration=0, forcename='', forcegreetings='', callback='', dialout='', exitcontext='', maxmsg=0, volgain=0, imapuser='', imappassword='', imapserver='', imapport='', imapflags='', stamp=''\r\n" + 
+			"WHERE uniqueid=nextval('voicemail_uniqueid_seq'::regclass);\r\n";
+
+}
