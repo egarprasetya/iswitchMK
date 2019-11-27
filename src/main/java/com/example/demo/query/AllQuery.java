@@ -8,7 +8,7 @@ public String query_select_sippeers ="select*from sippeers";
 public String query_select_alembic_version="select*from alembic_version";
 public String query_select_alembic_version_config="select*from alembic_version_config";
 public String query_select_cdr="select*from cdr";
-public String query_select_extension="select*from extension";
+public String query_select_extension="select*from extensions";
 public String query_select_iaxfriends="select*from iaxfriends";
 public String query_select_musiconhold="select*from musiconhold";
 public String query_select_ps_aors="select*from ps_aors";
@@ -31,6 +31,8 @@ public String query_select_queues="select*from queues";
 public String query_select_voicemail="select*from voicemail";
 public String query_select_ps_endpoints_id="select*from ps_endpoint_id_ips";
 public String query_select_domain_aliases="select*from ps_domain_aliases";
+
+public String query_select_user="select*from users where nama=?";
 
 
 
