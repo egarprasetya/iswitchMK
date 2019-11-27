@@ -33,8 +33,18 @@ public class ps_systemController {
 	      	  ArrayList<ps_SystemsModel> ListUser1 = new ArrayList<ps_SystemsModel>();
 	          while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 	          {       
-	        	  ps_SystemsModel ModelAlembic=new ps_SystemsModel();	
-	         ListUser1.add(ModelAlembic);  
+	        	  ps_SystemsModel ModelPs_system=new ps_SystemsModel();	
+	        	  ModelPs_system.id=Cursor1.getString(1);
+	        	  ModelPs_system.timer_t1=Cursor1.getInt(2);
+	        	  ModelPs_system.timer_b=Cursor1.getInt(3);
+	        	  ModelPs_system.compact_headers=Cursor1.getBoolean(4);
+	        	  ModelPs_system.threadpool_initial_size=Cursor1.getInt(5);
+	        	  ModelPs_system.threadpool_auto_increment=Cursor1.getInt(6);
+	        	  ModelPs_system.threadpool_idle_timeout=Cursor1.getInt(7);
+	        	  ModelPs_system.threadpool_max_size=Cursor1.getInt(8);
+	        	  ModelPs_system.disable_tcp_switch=Cursor1.getBoolean(9);
+	        	  
+	         ListUser1.add(ModelPs_system);  
 	         
 	          }	          
 	          Connection1.close();

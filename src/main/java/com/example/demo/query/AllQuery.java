@@ -26,12 +26,11 @@ public String query_select_ps_systems="select*from ps_systems";
 public String query_select_ps_transports="select*from ps_transports";
 public String query_select_queue_log="select*from queue_log";
 public String query_select_queue_members="select*from queue_members";
-public String query_select_queue_rules="select*from ps_contacts";
+public String query_select_queue_rules="select*from queue_rules";
 public String query_select_queues="select*from queues";
 public String query_select_voicemail="select*from voicemail";
 public String query_select_ps_endpoints_id="select*from ps_endpoint_id_ips";
 public String query_select_domain_aliases="select*from ps_domain_aliases";
-
 public String query_select_user="select*from users where nama=?";
 
 

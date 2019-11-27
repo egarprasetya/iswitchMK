@@ -34,8 +34,16 @@ AllDeleteQuery query_string_delete = new AllDeleteQuery();
 	      	  ArrayList<queue_memberModel> ListUser1 = new ArrayList<queue_memberModel>();
 	          while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 	          {       
-	        	  queue_memberModel ModelAlembic=new queue_memberModel();	
-	         ListUser1.add(ModelAlembic);  
+	        	  queue_memberModel ModelQueue_member=new queue_memberModel();
+	        	  ModelQueue_member.queue_name=Cursor1.getString(1);
+	        	  ModelQueue_member._interface=Cursor1.getString(2);
+	        	  ModelQueue_member.membername=Cursor1.getString(3);
+	        	  ModelQueue_member.state_interface=Cursor1.getString(4);
+	        	  ModelQueue_member.penalty=Cursor1.getInt(5);
+	        	  ModelQueue_member.paused=Cursor1.getInt(6);
+	        	  ModelQueue_member.uniqueid=Cursor1.getInt(7);
+	        	  
+	         ListUser1.add(ModelQueue_member);  
 	         
 	          }	          
 	          Connection1.close();

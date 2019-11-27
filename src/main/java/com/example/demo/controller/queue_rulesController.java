@@ -36,8 +36,14 @@ PreparedStatement queryselect_queue_rules=null;
 	      	  ArrayList<queue_rulesModel> ListUser1 = new ArrayList<queue_rulesModel>();
 	          while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 	          {       
-	        queue_rulesModel ModelAlembic=new queue_rulesModel();	
-	         ListUser1.add(ModelAlembic);  
+	        queue_rulesModel ModelQueue_rules=new queue_rulesModel();	
+	        ModelQueue_rules.rule_name= Cursor1.getString(1);
+    		ModelQueue_rules.time= Cursor1.getString(2);
+    		ModelQueue_rules.min_penalty= Cursor1.getString(3); 		// type_value Type.
+    		ModelQueue_rules.max_penalty= Cursor1.getString(4);
+    		
+	    	
+	         ListUser1.add(ModelQueue_rules);  
 	         
 	          }	          
 	          Connection1.close();

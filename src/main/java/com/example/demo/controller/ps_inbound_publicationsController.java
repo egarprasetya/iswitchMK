@@ -33,8 +33,13 @@ public class ps_inbound_publicationsController {
 	      	  ArrayList<ps_inboundModel> ListUser1 = new ArrayList<ps_inboundModel>();
 	          while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 	          {       
-	        	  ps_inboundModel ModelAlembic=new ps_inboundModel();	
-	         ListUser1.add(ModelAlembic);  
+	        	  ps_inboundModel ModelPs_inbound=new ps_inboundModel();	
+	        	  ModelPs_inbound.id=Cursor1.getString(1);
+	        	  ModelPs_inbound.endpoint = Cursor1.getString(2);
+	        	  ModelPs_inbound.event_asterisk_devicestate = Cursor1.getString(3);
+	        	  ModelPs_inbound.event_asterisk_mwi = Cursor1.getString(4);
+	        	  
+	         ListUser1.add(ModelPs_inbound);  
 	        
 	          }	          
 	          Connection1.close();

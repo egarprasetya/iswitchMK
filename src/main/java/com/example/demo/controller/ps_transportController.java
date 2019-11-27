@@ -33,8 +33,33 @@ AllDeleteQuery query_string_delete = new AllDeleteQuery();
 	      	  ArrayList<ps_transportModel> ListUser1 = new ArrayList<ps_transportModel>();
 	          while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 	          {       
-	        	  ps_transportModel ModelAlembic=new ps_transportModel();	
-	         ListUser1.add(ModelAlembic);  
+	        	  ps_transportModel ModelPs_transport=new ps_transportModel();
+	        	  
+	        	  ModelPs_transport.id=Cursor1.getString(1);
+	        	  ModelPs_transport.async_operations=Cursor1.getInt(2);
+	        	  ModelPs_transport.bind=Cursor1.getString(3);
+	        	  ModelPs_transport.ca_list_file=Cursor1.getString(4);
+	        	  ModelPs_transport.cert_file=Cursor1.getString(5);
+	        	  ModelPs_transport.cipher=Cursor1.getString(6);
+	        	  ModelPs_transport.domain=Cursor1.getString(7);
+	        	  ModelPs_transport.external_media_address=Cursor1.getString(8);
+	        	  ModelPs_transport.external_signaling_address=Cursor1.getString(9);
+	        	  ModelPs_transport.external_signaling_port=Cursor1.getInt(10);
+	        	  ModelPs_transport.method=Cursor1.getString(11);
+	        	  ModelPs_transport.local_net=Cursor1.getString(12);
+	        	  ModelPs_transport.password=Cursor1.getString(13);
+	        	  ModelPs_transport.priv_key_file=Cursor1.getString(14);
+
+	        	  ModelPs_transport.protocol=Cursor1.getString(15);
+	        	  ModelPs_transport.require_client_cert=Cursor1.getBoolean(16);
+	        	  ModelPs_transport.verify_client=Cursor1.getBoolean(17);
+	        	  ModelPs_transport.verify_server=Cursor1.getBoolean(18);
+	        	  ModelPs_transport.tos=Cursor1.getString(19);
+	        	  ModelPs_transport.cos=Cursor1.getInt(20);
+	        	  ModelPs_transport.allow_reload=Cursor1.getBoolean(21);
+	        	  ModelPs_transport.symmetric_transport=Cursor1.getBoolean(22);
+	        	  
+	         ListUser1.add(ModelPs_transport);  
 	        
 	          }	          
 	          Connection1.close();

@@ -36,21 +36,21 @@ public class meetmeController {
 	      	  ArrayList<meetmeModel> ListUser1 = new ArrayList<meetmeModel>();
 	          while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 	          {       
-	        	  meetmeModel ModelAlembic=new meetmeModel();	
-	        // ModelAlembic.version_num=Cursor1.getString(1);
-	        	  ModelAlembic.bookid=Cursor1.getInt(1);
-	        	  ModelAlembic.confno=Cursor1.getString(2);
-	        	  ModelAlembic.starttime=Cursor1.getDate(3);		// Timestamp value/type.
-	        	  ModelAlembic.endtime=Cursor1.getDate(4);		// Timestamp value/type.
-	        	  ModelAlembic.pin=Cursor1.getString(5);
-	        	  ModelAlembic.adminpin=Cursor1.getString(6);
-	        	  ModelAlembic.opts=Cursor1.getString(7);
-	        	  ModelAlembic.adminopts=Cursor1.getString(8);
-	        	  ModelAlembic.recordingfilename=Cursor1.getString(9);
-	        	  ModelAlembic.recordingformat=Cursor1.getString(10);
-	        	  ModelAlembic.maxusers=Cursor1.getInt(11);
-	        	  ModelAlembic.members=Cursor1.getInt(12);
-	         ListUser1.add(ModelAlembic);  
+	        	  meetmeModel ModelMeetme=new meetmeModel();	
+	        // ModelMeetme.version_num=Cursor1.getString(1);
+	        	  ModelMeetme.bookid=Cursor1.getInt(1);
+	        	  ModelMeetme.confno=Cursor1.getString(2);
+	        	  ModelMeetme.starttime=Cursor1.getDate(3);		// Timestamp value/type.
+	        	  ModelMeetme.endtime=Cursor1.getDate(4);		// Timestamp value/type.
+	        	  ModelMeetme.pin=Cursor1.getString(5);
+	        	  ModelMeetme.adminpin=Cursor1.getString(6);
+	        	  ModelMeetme.opts=Cursor1.getString(7);
+	        	  ModelMeetme.adminopts=Cursor1.getString(8);
+	        	  ModelMeetme.recordingfilename=Cursor1.getString(9);
+	        	  ModelMeetme.recordingformat=Cursor1.getString(10);
+	        	  ModelMeetme.maxusers=Cursor1.getInt(11);
+	        	  ModelMeetme.members=Cursor1.getInt(12);
+	         ListUser1.add(ModelMeetme);  
 	         
 	          }	          
 	          Connection1.close();
