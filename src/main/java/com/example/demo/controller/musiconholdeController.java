@@ -36,6 +36,7 @@ public class musiconholdeController
           while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
           {       
         	  musiconholdeModel Modelmusiconhold=new musiconholdeModel();
+<<<<<<< HEAD
         	  
         	  Modelmusiconhold.name=Cursor1.getString(1);
         	  Modelmusiconhold.mode=Cursor1.getString(2);					// Moh_mode value/type.
@@ -45,6 +46,9 @@ public class musiconholdeController
         	  Modelmusiconhold.sort=Cursor1.getString(6);
         	  Modelmusiconhold.format=Cursor1.getString(7);
         	  Modelmusiconhold.stamp=Cursor1.getDate(8);
+=======
+        	  Modelmusiconhold.digit=Cursor1.getString(1);
+>>>>>>> 8686aabbfa5b0532872448510c1b7c82b7bdcba4
          ListUser1.add(Modelmusiconhold);  
           return ListUser1;
           }         

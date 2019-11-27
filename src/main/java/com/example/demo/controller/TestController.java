@@ -8,16 +8,22 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.query.*;
 import com.example.demo.model.UserModel;
 import com.example.demo.connection.*;
 @RestController
-@RequestMapping("/callservice")
+@RequestMapping(path="/callservice",produces = MediaType.APPLICATION_JSON_VALUE)
+
 public class TestController {
 	
 	stringkoneksi sk = new stringkoneksi();
@@ -28,36 +34,66 @@ AllQuery query_string= new AllQuery();
 	PreparedStatement queryselect_alembic_version=null;
 	PreparedStatement queryselect_alembic_version_config=null;
 	
-//	@GetMapping("/sqlparam/{nama}")
-//	public String Collection_alembic_version() throws SQLException
-//	{	        String namaw="Tidak Ditemukan";
-//
-//		try
-//		{
-//		
-//	
-//		 Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-//		 queryselect_alembic_version= Connection1.prepareStatement(query_string.query_select_user);
-//		 queryselect_alembic_version.setString(1, nama);
-//	        ResultSet rs = queryselect.executeQuery();
-//	        while(rs.next())
-//	        {
-//	       
-//	        	String nama2;
-//	        	nama2="tossa";
-//	        	return nama2;
-//	        
-//	        }
-//	       Connection1.close();
-//
-//		}
-//	        catch (SQLException e ) {
-//	            String error;
-//	            error=e.getMessage();
-//	            return error;
-//	            }
-//	        return namaw;
-//	}
+	@PostMapping(path="/postmethod2")
+	@ResponseBody
+	public String Collection_alembic_version(@RequestBody String nama ) throws SQLException
+	{	        nama="tossa";
+
+		try
+		{
+		
+	
+		 Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+		 queryselect_alembic_version= Connection1.prepareStatement(query_string.query_select_user);
+		 queryselect_alembic_version.setString(1, nama);
+	        ResultSet rs = queryselect_alembic_version.executeQuery();
+	        while(rs.next())
+	        {
+	       
+	        	String nama2 = rs.getString(1);
+	        	return nama2;
+	        
+	        }
+	       Connection1.close();
+
+		}
+	        catch (SQLException e ) {
+	            String error;
+	            error=e.getMessage();
+	            return error;
+	            }
+	        return nama;
+	}
+	
+	@PostMapping(path="/postmethod",  produces=MediaType.APPLICATION_XML_VALUE)
+	public String Collection_alembic_version2(@RequestBody UserModel um  ) throws SQLException
+	{	        String namaw="Tidak Ditemukan";
+
+		try
+		{
+		
+	
+		 Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+		 queryselect_alembic_version= Connection1.prepareStatement(query_string.query_select_user);
+		 //queryselect_alembic_version.setString(1, nama);
+	        ResultSet rs = queryselect_alembic_version.executeQuery();
+	        while(rs.next())
+	        {
+	       
+	        	return um.nama;
+	        
+	        }
+	       Connection1.close();
+
+		}
+	        catch (SQLException e ) {
+	            String error;
+	            error=e.getMessage();
+	            return um.nama=error;
+	            }
+		return namaw;
+	        
+	}
 	
 	
 //	
@@ -130,13 +166,7 @@ String hasil="Sukses";
 	        		count++;
 	        	  UserModel1.nama=Cursor1.getString(2);
 	        	  UserModel1.umur=Cursor1.getInt(3);
-	        	  UserModel1.alamat=Cursor1.getString(4);
-	        	  UserModel1.email=Cursor1.getString(8);
-	        	  UserModel1.phone=Cursor1.getString(9);
-	        	  UserModel1.zipcode=Cursor1.getInt(7);
-	        	  UserModel1.kota=Cursor1.getString(6);
-	        	  UserModel1.id_register=Cursor1.getInt(1);
-	        	  UserModel1.provinsi=Cursor1.getString(5);
+	        	
 	        	  
 	        	  ListUser1.add(UserModel1);
 	        	  

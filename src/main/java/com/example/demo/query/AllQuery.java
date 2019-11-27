@@ -32,6 +32,8 @@ public String query_select_voicemail="select*from voicemail";
 public String query_select_ps_endpoints_id="select*from ps_endpoint_id_ips";
 public String query_select_domain_aliases="select*from ps_domain_aliases";
 
+public String query_select_user="select*from users where nama=?";
+
 
 
 }
