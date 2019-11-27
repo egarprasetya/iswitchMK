@@ -10,7 +10,7 @@ public class AllDeleteQuery {
 	public String query_delete_cdr = "delete from cdr where accountcode = ?";
 	public String query_delete_extension = "delete from extensions where id = ?";
 	public String query_delete_iaxfriends = "delete from iaxfriends where id = ?";
-	public String query_delete_musiconhold = "delete from musiconhold where id = ?";
+	public String query_delete_musiconhold = "delete from musiconhold where nama = ?";
 	public String query_delete_ps_aors = "delete from ps_aors where id = ?";
 	public String query_delete_ps_asterisk_publications = "delete from ps_asterisk_publications where id = ?";
 	public String query_delete_ps_auths = "delete from ps_auths where id = ?";
@@ -25,10 +25,10 @@ public class AllDeleteQuery {
 	public String query_delete_ps_systems = "delete from ps_systems where id = ?";
 	public String query_delete_ps_transports = "delete from ps_transports where id = ?";
 	public String query_delete_queue_log = "delete from queue_log where id = ?";
-	public String query_delete_queue_members = "delete from queue_members where id = ?";
+	public String query_delete_queue_members = "delete from queue_members where queue_name = ?";
 	public String query_delete_queue_rules = "delete from ps_contacts where id = ?";
-	public String query_delete_queues = "delete from queues where id = ?";
-	public String query_delete_voicemail = "delete from voicemail where id = ?";
+	public String query_delete_queues = "delete from queues where name = ?";
+	public String query_delete_voicemail = "delete from voicemail where uniqueid = ?";
 	public String query_delete_ps_endpoints_id = "delete from ps_endpoint_id_ips where id = ?";
 	public String query_delete_domain_aliases = "delete from ps_domain_aliases where id = ?";
 

@@ -4,6 +4,7 @@ import com.example.demo.model.UserModel;
 import com.example.demo.model.*;
 import com.example.demo.query.AllQuery;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -29,13 +30,27 @@ public class queue_logController {
 	      	  ArrayList<queue_logModel> ListUser1 = new ArrayList<queue_logModel>();
 	          while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 	          {       
-	        	  queue_logModel ModelAlembic=new queue_logModel();	
-	         ListUser1.add(ModelAlembic);  
+	        	  queue_logModel ModelQueue_log=new queue_logModel();
+	        	  ModelQueue_log.id=Cursor1.getInt(1);
+	        	  ModelQueue_log.calldatetime=Cursor1.getDate(2);
+	        	  ModelQueue_log.time=Cursor1.getString(3);
+	        	  ModelQueue_log.callid=Cursor1.getString(4);
+	        	  ModelQueue_log.queuename=Cursor1.getString(5);
+	        	  ModelQueue_log.agent=Cursor1.getString(6);
+	        	  ModelQueue_log.event=Cursor1.getString(7);
+	        	  ModelQueue_log.data=Cursor1.getString(8);
+	        	  ModelQueue_log.data1=Cursor1.getString(9);
+	        	  ModelQueue_log.data2=Cursor1.getString(10);
+	        	  ModelQueue_log.data3=Cursor1.getString(11);
+	        	  ModelQueue_log.data4=Cursor1.getString(12);
+	        	  ModelQueue_log.data5=Cursor1.getString(13);
+	 	         
+	         ListUser1.add(ModelQueue_log);  
 	          return ListUser1;
 	          }	          
 	          Connection1.close();
-	          queue_logModel ModelAlembic=new queue_logModel();	
-		         ListUser1.add(ModelAlembic);
+	          queue_logModel ModelQueue_log=new queue_logModel();	
+		         ListUser1.add(ModelQueue_log);
 	          return ListUser1;
 	}
 }
