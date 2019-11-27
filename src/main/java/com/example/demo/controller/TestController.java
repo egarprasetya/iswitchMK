@@ -37,7 +37,7 @@ AllQuery query_string= new AllQuery();
 	@PostMapping(path="/postmethod2")
 	@ResponseBody
 	public String Collection_alembic_version(@RequestBody String nama ) throws SQLException
-	{	        nama="tossa";
+	{	       
 
 		try
 		{
