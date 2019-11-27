@@ -29,13 +29,28 @@ public class ps_outbound_publishesController {
 	      	  ArrayList<ps_OutboundModel> ListUser1 = new ArrayList<ps_OutboundModel>();
 	          while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 	          {       
-	        	  ps_OutboundModel ModelAlembic=new ps_OutboundModel();	
-	         ListUser1.add(ModelAlembic);  
+	        	  ps_OutboundModel ModelPs_outbound=new ps_OutboundModel();	
+	        	  ModelPs_outbound.id=Cursor1.getString(1);
+	        	  ModelPs_outbound.expiration=Cursor1.getInt(2);
+	        	  ModelPs_outbound.outbound_auth=Cursor1.getString(3);
+	        	  ModelPs_outbound.outbound_proxy=Cursor1.getString(4);
+	        	  ModelPs_outbound.server_uri=Cursor1.getString(5);
+	        	  ModelPs_outbound.from_uri=Cursor1.getString(6);
+	        	  ModelPs_outbound.to_uri=Cursor1.getString(7);
+	        	  ModelPs_outbound.event=Cursor1.getString(8);
+	        	  ModelPs_outbound.max_auth_attemps=Cursor1.getInt(9);
+	        	  ModelPs_outbound.transport=Cursor1.getString(10);
+	        	  ModelPs_outbound.multi_user=Cursor1.getBoolean(11);
+	        	  ModelPs_outbound._body=Cursor1.getString(12);
+	        	  ModelPs_outbound._context=Cursor1.getString(13);
+	        	  ModelPs_outbound._exten=Cursor1.getString(14);
+	        	  
+	         ListUser1.add(ModelPs_outbound);  
 	          return ListUser1;
 	          }	          
 	          Connection1.close();
-	          ps_OutboundModel ModelAlembic=new ps_OutboundModel();	
-		         ListUser1.add(ModelAlembic);  
+	          ps_OutboundModel ModelPs_outbound=new ps_OutboundModel();	
+		         ListUser1.add(ModelPs_outbound);  
 	          return ListUser1;
 	}
 }

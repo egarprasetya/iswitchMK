@@ -29,14 +29,17 @@ public class ps_domain_aliasesController {
 	      	  ArrayList<ps_domain_aliasesModel> ListUser1 = new ArrayList<ps_domain_aliasesModel>();
 	          while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 	          {       
-	        	  ps_domain_aliasesModel ModelAlembic=new ps_domain_aliasesModel();	
-	         ListUser1.add(ModelAlembic);  
+	        	  ps_domain_aliasesModel ModelDomain=new ps_domain_aliasesModel();	
+	        	  ModelDomain.id=Cursor1.getString(1);
+	        	  ModelDomain.domain=Cursor1.getString(2);
+	        	  
+	         ListUser1.add(ModelDomain);  
 	          return ListUser1;
 
 	          }	          
 	          Connection1.close();
-	          ps_domain_aliasesModel ModelAlembic=new ps_domain_aliasesModel();	
-		         ListUser1.add(ModelAlembic);  
+	          ps_domain_aliasesModel ModelDomain=new ps_domain_aliasesModel();	
+		         ListUser1.add(ModelDomain);  
 	          return ListUser1;
 	}
 }

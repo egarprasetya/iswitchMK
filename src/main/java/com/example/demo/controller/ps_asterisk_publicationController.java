@@ -30,13 +30,20 @@ public class ps_asterisk_publicationController
 	      	  ArrayList<ps_asterisk_publicationsModel> ListUser1 = new ArrayList<ps_asterisk_publicationsModel>();
 	          while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 	          {       
-	        	  ps_asterisk_publicationsModel ModelAlembic=new ps_asterisk_publicationsModel();		         
-	         ListUser1.add(ModelAlembic);  
+	        	  ps_asterisk_publicationsModel ModelPs_asterisk=new ps_asterisk_publicationsModel();
+	        	  ModelPs_asterisk.id=Cursor1.getString(1);
+	        	  ModelPs_asterisk.devicestate_publish=Cursor1.getString(2);
+	        	  ModelPs_asterisk.mailboxstate_publish=Cursor1.getString(3);
+	        	  ModelPs_asterisk.device_state=Cursor1.getBoolean(4);
+	        	  ModelPs_asterisk.device_state_filter=Cursor1.getString(5);
+	        	  ModelPs_asterisk.mailbox_state=Cursor1.getBoolean(6);
+	        	  ModelPs_asterisk.mailbox_state_filter=Cursor1.getString(7);
+	         ListUser1.add(ModelPs_asterisk);  
 	          return ListUser1;
 	          }          
 	          Connection1.close();
-	          ps_asterisk_publicationsModel ModelAlembic=new ps_asterisk_publicationsModel();			         
-		         ListUser1.add(ModelAlembic);  
+	          ps_asterisk_publicationsModel ModelPs_asterisk=new ps_asterisk_publicationsModel();			         
+		         ListUser1.add(ModelPs_asterisk);  
 	          return ListUser1;
 	}
 }

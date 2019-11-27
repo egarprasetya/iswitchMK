@@ -29,13 +29,25 @@ public class ps_subscription_persistenceController {
       	  ArrayList<ps_subscription_persistenceModel> ListUser1 = new ArrayList<ps_subscription_persistenceModel>();
           while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
           {       
-        	  ps_subscription_persistenceModel ModelAlembic=new ps_subscription_persistenceModel();	
-        	  ListUser1.add(ModelAlembic);  
+        	  ps_subscription_persistenceModel ModelPs_subscription_persistance=new ps_subscription_persistenceModel();	
+        	  ModelPs_subscription_persistance.id=Cursor1.getString(1);
+        	  ModelPs_subscription_persistance.packet=Cursor1.getString(2);
+        	  ModelPs_subscription_persistance.src_name=Cursor1.getString(3);
+        	  ModelPs_subscription_persistance.src_port=Cursor1.getInt(4);
+        	  ModelPs_subscription_persistance.transport_key=Cursor1.getString(5);
+        	  ModelPs_subscription_persistance.local_name=Cursor1.getString(6);
+        	  ModelPs_subscription_persistance.local_port=Cursor1.getInt(7);
+        	  ModelPs_subscription_persistance.cseq=Cursor1.getInt(8);
+        	  ModelPs_subscription_persistance.tag=Cursor1.getString(9);
+        	  ModelPs_subscription_persistance.endpoint=Cursor1.getString(10);
+        	  ModelPs_subscription_persistance.expires=Cursor1.getInt(11);
+        	  ModelPs_subscription_persistance.contact_uri=Cursor1.getString(12);
+        	  ModelPs_subscription_persistance.prune_on_boot=Cursor1.getBoolean(13);
           return ListUser1;
           }          
           Connection1.close();
-          ps_subscription_persistenceModel ModelAlembic=new ps_subscription_persistenceModel();	
-    	  ListUser1.add(ModelAlembic); 
+          ps_subscription_persistenceModel ModelPs_subscription_persistance=new ps_subscription_persistenceModel();	
+    	  ListUser1.add(ModelPs_subscription_persistance); 
           return ListUser1;
 	}
 }

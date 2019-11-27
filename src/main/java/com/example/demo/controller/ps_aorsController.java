@@ -31,13 +31,27 @@ public class ps_aorsController {
 	      	  ArrayList<ps_aorsModel> ListUser1 = new ArrayList<ps_aorsModel>();
 	          while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 	          {       
-	        	  ps_aorsModel ModelAlembic=new ps_aorsModel();	
-	         ListUser1.add(ModelAlembic);  
+	        	  ps_aorsModel ModelPs_aors=new ps_aorsModel();	
+	        	  ModelPs_aors.id=Cursor1.getString(1);
+	        		ModelPs_aors.contact=Cursor1.getString(2);
+	        		ModelPs_aors.default_expiration=Cursor1.getInt(3);
+	        		ModelPs_aors.mailboxes=Cursor1.getString(4);
+	        		ModelPs_aors.max_contacts=Cursor1.getInt(5);
+	        		ModelPs_aors.minimum_expiration=Cursor1.getInt(6);
+	        		ModelPs_aors.remove_existing=Cursor1.getBoolean(7);					// YesNo value/Type.
+	        		ModelPs_aors.qualify_frequency=Cursor1.getInt(8);
+	        		ModelPs_aors.authenticate_qualify=Cursor1.getBoolean(9);			// YesNo value/Type.
+	        		ModelPs_aors.maximum_expiration=Cursor1.getInt(10);
+	        		ModelPs_aors.outbound_proxy=Cursor1.getString(11);
+	        		ModelPs_aors.support_path=Cursor1.getBoolean(12);
+	        		ModelPs_aors.qualify_timeout=Cursor1.getDouble(13);
+	        		ModelPs_aors.voicemail_extension=Cursor1.getString(14);
+	         ListUser1.add(ModelPs_aors);  
 	          return ListUser1;
 	          }	          
 	          Connection1.close();
-	          ps_aorsModel ModelAlembic=new ps_aorsModel();	
-		         ListUser1.add(ModelAlembic);
+	          ps_aorsModel ModelPs_aors=new ps_aorsModel();	
+		         ListUser1.add(ModelPs_aors);
 	          return ListUser1;
 	}
 }

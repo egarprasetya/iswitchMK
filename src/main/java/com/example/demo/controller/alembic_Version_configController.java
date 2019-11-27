@@ -30,7 +30,7 @@ public class alembic_Version_configController {
 	{
 		
 		   Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-	        queryselect_alembic_version_config=Connection1.prepareStatement(query_string.query_select_alembic_version);
+	        queryselect_alembic_version_config=Connection1.prepareStatement(query_string.query_select_alembic_version_config);
 	        ResultSet Cursor1 = queryselect_alembic_version_config.executeQuery();// Evaluate (Connected_Expression1)
 	      	  ArrayList<alembic_version_configModel> ListUser1 = new ArrayList<alembic_version_configModel>();
 	          while (Cursor1.next()) // while there_is_next_record_in (Cursor1)

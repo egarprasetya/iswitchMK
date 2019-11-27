@@ -29,13 +29,31 @@ public class ps_registrationController {
 	      	  ArrayList<ps_registrationsModel> ListUser1 = new ArrayList<ps_registrationsModel>();
 	          while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 	          {       
-	        	  ps_registrationsModel ModelAlembic=new ps_registrationsModel();	
-	         ListUser1.add(ModelAlembic);  
+	        	  ps_registrationsModel ModelPs_registration=new ps_registrationsModel();	
+	        	  
+	        	  ModelPs_registration.id=Cursor1.getString(1);
+	        	  ModelPs_registration.auth_rejection_permanent=Cursor1.getBoolean(2);
+	        	  ModelPs_registration.client_uri=Cursor1.getString(3);
+	        	  ModelPs_registration.contact_user=Cursor1.getString(4);
+	        	  ModelPs_registration.expiration=Cursor1.getInt(5);
+	        	  ModelPs_registration.max_retries=Cursor1.getInt(6);
+	        	  ModelPs_registration.outbound_auth=Cursor1.getString(7);
+	        	  ModelPs_registration.outbound_proxy=Cursor1.getString(8);
+	        	  ModelPs_registration.retry_interval=Cursor1.getInt(9);
+	        	  ModelPs_registration.forbidden_retry_interval=Cursor1.getInt(10);
+	        	  ModelPs_registration.server_uri=Cursor1.getString(11);
+	        	  ModelPs_registration.transport=Cursor1.getString(12);
+	        	  ModelPs_registration.support_path=Cursor1.getBoolean(13);
+	        	  ModelPs_registration.fatal_retry_interval=Cursor1.getInt(14);
+	        	  ModelPs_registration.line=Cursor1.getBoolean(15);
+	        	  ModelPs_registration.endpoint=Cursor1.getString(16);
+	        	  
+	         ListUser1.add(ModelPs_registration);  
 	          return ListUser1;
 	          }	          
 	          Connection1.close();
-	          ps_registrationsModel ModelAlembic=new ps_registrationsModel();	
-		         ListUser1.add(ModelAlembic);  
+	          ps_registrationsModel ModelPs_registration=new ps_registrationsModel();	
+		         ListUser1.add(ModelPs_registration);  
 	          return ListUser1;
 	}
 }

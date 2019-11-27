@@ -4,6 +4,7 @@ import com.example.demo.model.UserModel;
 import com.example.demo.model.*;
 import com.example.demo.query.AllQuery;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,6 +33,18 @@ public class meetmeController {
 	          {       
 	        	  meetmeModel ModelAlembic=new meetmeModel();	
 	        // ModelAlembic.version_num=Cursor1.getString(1);
+	        	  ModelAlembic.bookid=Cursor1.getInt(1);
+	        	  ModelAlembic.confno=Cursor1.getString(2);
+	        	  ModelAlembic.starttime=Cursor1.getDate(3);		// Timestamp value/type.
+	        	  ModelAlembic.endtime=Cursor1.getDate(4);		// Timestamp value/type.
+	        	  ModelAlembic.pin=Cursor1.getString(5);
+	        	  ModelAlembic.adminpin=Cursor1.getString(6);
+	        	  ModelAlembic.opts=Cursor1.getString(7);
+	        	  ModelAlembic.adminopts=Cursor1.getString(8);
+	        	  ModelAlembic.recordingfilename=Cursor1.getString(9);
+	        	  ModelAlembic.recordingformat=Cursor1.getString(10);
+	        	  ModelAlembic.maxusers=Cursor1.getInt(11);
+	        	  ModelAlembic.members=Cursor1.getInt(12);
 	         ListUser1.add(ModelAlembic);  
 	          return ListUser1;
 	          }	          

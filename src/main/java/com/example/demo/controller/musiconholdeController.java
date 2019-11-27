@@ -4,6 +4,7 @@ import com.example.demo.model.UserModel;
 import com.example.demo.model.*;
 import com.example.demo.query.AllQuery;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -34,7 +35,16 @@ public class musiconholdeController
       	  ArrayList<musiconholdeModel> ListUser1 = new ArrayList<musiconholdeModel>();
           while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
           {       
-        	  musiconholdeModel Modelmusiconhold=new musiconholdeModel();	        	  
+        	  musiconholdeModel Modelmusiconhold=new musiconholdeModel();
+        	  
+        	  Modelmusiconhold.name=Cursor1.getString(1);
+        	  Modelmusiconhold.mode=Cursor1.getString(2);					// Moh_mode value/type.
+        	  Modelmusiconhold.directory=Cursor1.getString(3);
+        	  Modelmusiconhold.application=Cursor1.getString(4);
+        	  Modelmusiconhold.digit=Cursor1.getString(5);
+        	  Modelmusiconhold.sort=Cursor1.getString(6);
+        	  Modelmusiconhold.format=Cursor1.getString(7);
+        	  Modelmusiconhold.stamp=Cursor1.getDate(8);
          ListUser1.add(Modelmusiconhold);  
           return ListUser1;
           }         

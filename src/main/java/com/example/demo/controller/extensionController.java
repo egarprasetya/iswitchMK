@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/extension")
+@RequestMapping("/extensions")
 public class extensionController {
 	stringkoneksi sk = new stringkoneksi();
 	AllQuery query_string= new AllQuery();
 	PreparedStatement queryselect_extension=null;
 	
-	@GetMapping("/Getextension")
+	@GetMapping("/Getextensions")
 	public ArrayList<extensionModel> Tampilextension() throws SQLException
 	{
 		  Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
