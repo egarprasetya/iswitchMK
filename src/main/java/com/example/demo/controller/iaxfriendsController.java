@@ -30,20 +30,65 @@ public class iaxfriendsController {
 	PreparedStatement queryselect_iaxfriends = null;
 
 	AllInsertQuery query_string_insert = new AllInsertQuery();
-	PreparedStatement queryinsert_alembic_version_config=null;
-	
+	PreparedStatement queryinsert_iaxfriend = null;
+
 	@PutMapping("/Putiaxfirends")
-	public String putalembicversionconfig(@RequestBody extensionModel cfm) throws SQLException
-	{
+	public String putalembicversionconfig(@RequestBody iaxfriendsModel cfm) throws SQLException {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-	      queryinsert_alembic_version_config=Connection1.prepareStatement(query_string_insert.query_insert_iaxfriends);
-		 queryinsert_alembic_version_config.setString(1, cfm.version_num);   
-		int Cursor1 = queryinsert_alembic_version_config.executeUpdate();// Evaluate (Connected_Expression1)
-		String a ="0"; 
+		queryinsert_iaxfriend = Connection1.prepareStatement(query_string_insert.query_insert_iaxfriends);
+		queryinsert_iaxfriend.setInt(1, cfm.id);
+		queryinsert_iaxfriend.setString(1, cfm.name);
+		queryinsert_iaxfriend.setString(2, cfm.type); // type_value Type.
+		queryinsert_iaxfriend.setString(3, cfm.username);
+		queryinsert_iaxfriend.setString(4, cfm.mailbox);
+		queryinsert_iaxfriend.setString(5, cfm.secret);
+		queryinsert_iaxfriend.setString(6, cfm.dbsecret);
+		queryinsert_iaxfriend.setString(7, cfm.context);
+		queryinsert_iaxfriend.setString(8, cfm.regcontext);
+		queryinsert_iaxfriend.setString(9, cfm.host);
+		queryinsert_iaxfriend.setString(10, cfm.ipaddr);
+		queryinsert_iaxfriend.setInt(11, cfm.port);
+		queryinsert_iaxfriend.setString(12, cfm.defaultip);
+		queryinsert_iaxfriend.setString(13, cfm.sourceaddress);
+		queryinsert_iaxfriend.setString(14, cfm.mask);
+		queryinsert_iaxfriend.setString(15, cfm.regexten);
+		queryinsert_iaxfriend.setInt(16, cfm.regseconds);
+		queryinsert_iaxfriend.setString(17, cfm.accountcode);
+		queryinsert_iaxfriend.setString(18, cfm.mohinterpret);
+		queryinsert_iaxfriend.setString(19, cfm.mohsuggest);
+		queryinsert_iaxfriend.setString(20, cfm.inkeys);
+		queryinsert_iaxfriend.setString(21, cfm.outkeys);
+		queryinsert_iaxfriend.setString(22, cfm.language);
+		queryinsert_iaxfriend.setString(23, cfm.callerid);
+		queryinsert_iaxfriend.setString(24, cfm.cid_number);
+		queryinsert_iaxfriend.setBoolean(25, cfm.sendani); // YesNo Value/Type.
+		queryinsert_iaxfriend.setString(26, cfm.fullname); // YesNo Value/Type
+		queryinsert_iaxfriend.setBoolean(27, cfm.trunk);
+		queryinsert_iaxfriend.setString(28, cfm.auth);
+		queryinsert_iaxfriend.setInt(29, cfm.maxauthreq);
+		queryinsert_iaxfriend.setString(30, cfm.requirecalltoken); // iax_requirecalltoken value/Type.
+		queryinsert_iaxfriend.setString(31, cfm.encryption); // iax_encryption value/Type.
+		queryinsert_iaxfriend.setString(32, cfm.transfer); // iax_transfer value/Type.
+		queryinsert_iaxfriend.setBoolean(33, cfm.jitterbuffer); // YesNo Value/Type.
+		queryinsert_iaxfriend.setBoolean(34, cfm.forcejitterbuffer); // YesNo Value/Type.
+		queryinsert_iaxfriend.setString(35, cfm.disallow);
+		queryinsert_iaxfriend.setString(36, cfm.allow);
+		queryinsert_iaxfriend.setString(37, cfm.codecpriority);
+		queryinsert_iaxfriend.setString(38, cfm.qualify);
+		queryinsert_iaxfriend.setBoolean(39, cfm.qualifysmoothing); // YesNo Value/Type
+		queryinsert_iaxfriend.setString(40, cfm.qualifyfreqok);
+		queryinsert_iaxfriend.setString(41, cfm.qualifyfreqnotok);
+		queryinsert_iaxfriend.setString(42, cfm.timezone);
+		queryinsert_iaxfriend.setBoolean(43, cfm.adsi); // YesNo Value/Type.
+		queryinsert_iaxfriend.setString(44, cfm.amaflags);
+		queryinsert_iaxfriend.setString(45, cfm.setvar);
+
+		int Cursor1 = queryinsert_iaxfriend.executeUpdate();// Evaluate (Connected_Expression1)
+		String a = "0";
 		Connection1.close();
-		return a;  	      
+		return a;
 	}
-	
+
 	@GetMapping("/Getiaxfriends")
 	public ArrayList<iaxfriendsModel> Tampiliaxfriends() throws SQLException {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
@@ -105,25 +150,19 @@ public class iaxfriendsController {
 		Connection1.close();
 		return ListUser1;
 	}
-	
-	@DeleteMapping(path="/DeletePostiaxfriends",produces="application/json",consumes=MediaType.APPLICATION_JSON_VALUE)
-	public int DeletePostiaxfriends(@RequestBody extensionModel cfm) throws SQLException
-	{
+
+	@DeleteMapping(path = "/DeletePostiaxfriends", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public int DeletePostiaxfriends(@RequestBody extensionModel cfm) throws SQLException {
 
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1.prepareStatement(query_string_delete.query_delete_iaxfriends);
-		querydelete_alembic_version_config.setInt(1, cfm.id);   
-	
+		querydelete_alembic_version_config.setInt(1, cfm.id);
+
 		int Cursor1 = querydelete_alembic_version_config.executeUpdate();// Evaluate (Connected_Expression1)
-		int a =1; 
-		
+		int a = 1;
+
 		Connection1.close();
-		return a;    	         
-}
-	
+		return a;
+	}
 
-	
-	
-
-	
 }

@@ -25,8 +25,8 @@ import com.example.demo.query.*;
 @RequestMapping("/AlembicVersion")
 public class alembic_versionController {
 	AllInsertQuery query_string_insert = new AllInsertQuery();
-	PreparedStatement queryinsert_alembic_version_config=null;
-	PreparedStatement querydelete_alembic_version_config = null;
+	PreparedStatement queryinsert_alembic_version=null;
+	PreparedStatement querydelete_alembic_version = null;
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();
 	stringkoneksi sk = new stringkoneksi();
 	AllQuery query_string = new AllQuery();
@@ -38,9 +38,9 @@ public class alembic_versionController {
 	public String putalembicversionconfig(@RequestBody alembic_versionModel cfm) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-	      queryinsert_alembic_version_config=Connection1.prepareStatement(query_string_insert.query_insert_alembic_version);
-		 queryinsert_alembic_version_config.setString(1, cfm.version_num);   
-		int Cursor1 = queryinsert_alembic_version_config.executeUpdate();// Evaluate (Connected_Expression1)
+	      queryinsert_alembic_version=Connection1.prepareStatement(query_string_insert.query_insert_alembic_version);
+		 queryinsert_alembic_version.setString(1, cfm.version_num);   
+		int Cursor1 = queryinsert_alembic_version.executeUpdate();// Evaluate (Connected_Expression1)
 		String a ="1"; 
 		Connection1.close();
 		return a;  	      
@@ -100,11 +100,11 @@ public class alembic_versionController {
 
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 
-	      querydelete_alembic_version_config=Connection1.prepareStatement(query_string_delete.query_delete_alembic_version);
-		 querydelete_alembic_version_config.setString(1, cfm.version_num);   
+	      querydelete_alembic_version=Connection1.prepareStatement(query_string_delete.query_delete_alembic_version);
+		 querydelete_alembic_version.setString(1, cfm.version_num);   
 
-		querydelete_alembic_version_config = Connection1.prepareStatement(query_string_delete.query_delete_alembic_version);
-		int Cursor1 = querydelete_alembic_version_config.executeUpdate();// Evaluate (Connected_Expression1)
+		querydelete_alembic_version = Connection1.prepareStatement(query_string_delete.query_delete_alembic_version);
+		int Cursor1 = querydelete_alembic_version.executeUpdate();// Evaluate (Connected_Expression1)
 		int a =1; 
 		
 		Connection1.close();

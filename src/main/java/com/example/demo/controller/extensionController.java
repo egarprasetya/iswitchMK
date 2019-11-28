@@ -1,4 +1,5 @@
 package com.example.demo.controller;
+
 import com.example.demo.connection.stringkoneksi;
 import com.example.demo.model.*;
 import com.example.demo.query.*;
@@ -24,60 +25,61 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/extensions")
 public class extensionController {
 	AllInsertQuery query_string_insert = new AllInsertQuery();
-	PreparedStatement queryinsert_alembic_version_config=null;
-	PreparedStatement querydelete_alembic_version_config=null;
+	PreparedStatement queryinsert_extension = null;
+	PreparedStatement querydelete_alembic_version_config = null;
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();
 	stringkoneksi sk = new stringkoneksi();
-	AllQuery query_string= new AllQuery();
-	PreparedStatement queryselect_extension=null;
-	
-	
+	AllQuery query_string = new AllQuery();
+	PreparedStatement queryselect_extension = null;
+
 	@PutMapping("/Putextension")
-	public String putalembicversionconfig(@RequestBody extensionModel cfm) throws SQLException
-	{
+	public String putalembicversionconfig(@RequestBody extensionModel cfm) throws SQLException {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-	      queryinsert_alembic_version_config=Connection1.prepareStatement(query_string_insert.query_insert_extension);
-		 queryinsert_alembic_version_config.setString(1, cfm.version_num);   
-		int Cursor1 = queryinsert_alembic_version_config.executeUpdate();// Evaluate (Connected_Expression1)
-		String a ="0"; 
+		queryinsert_extension = Connection1.prepareStatement(query_string_insert.query_insert_extension);
+		queryinsert_extension.setInt(1, cfm.id);
+		queryinsert_extension.setString(2, cfm.context);
+		queryinsert_extension.setString(3, cfm.exten);
+		queryinsert_extension.setInt(4, cfm.priority);
+		queryinsert_extension.setString(5, cfm.app);
+		queryinsert_extension.setString(6, cfm.appdata);
+
+		int Cursor1 = queryinsert_extension.executeUpdate();// Evaluate (Connected_Expression1)
+		String a = "0";
 		Connection1.close();
-		return a;  	      
+		return a;
 	}
-	
+
 	@GetMapping("/Getextensions")
-	public ArrayList<extensionModel> Tampilextension() throws SQLException
-	{
-		  Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-		  queryselect_extension=Connection1.prepareStatement(query_string.query_select_extension);
-	        ResultSet Cursor1 = queryselect_extension.executeQuery();// Evaluate (Connected_Expression1)
-	      	  ArrayList<extensionModel> ListUser1 = new ArrayList<extensionModel>();
-	          while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
-	          {       
-	        	  extensionModel Modelextension=new extensionModel();	
-	        	  Modelextension.id=Cursor1.getInt(1);
-	        	  Modelextension.context=Cursor1.getString(2);
-	        	  Modelextension.exten=Cursor1.getString(3);
-	        	  Modelextension.priority=Cursor1.getInt(4);
-	        	  Modelextension.app=Cursor1.getString(5);
-	        	  Modelextension.appdata=Cursor1.getString(6);
-	         ListUser1.add(Modelextension);  
-	        
-	          }	          
-	          Connection1.close();
-	          return ListUser1;
-	}
-	
-	@DeleteMapping(path="/DeletePostExtension",produces="application/json",consumes=MediaType.APPLICATION_JSON_VALUE)
-	public int DeletePostExtension(@RequestBody extensionModel cfm) throws SQLException
-	{
+	public ArrayList<extensionModel> Tampilextension() throws SQLException {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-	      querydelete_alembic_version_config=Connection1.prepareStatement(query_string_delete.query_delete_extension);
-		 querydelete_alembic_version_config.setInt(1, cfm.id);   
-		int Cursor1 = querydelete_alembic_version_config.executeUpdate();// Evaluate (Connected_Expression1)
-		int a =1; 
+		queryselect_extension = Connection1.prepareStatement(query_string.query_select_extension);
+		ResultSet Cursor1 = queryselect_extension.executeQuery();// Evaluate (Connected_Expression1)
+		ArrayList<extensionModel> ListUser1 = new ArrayList<extensionModel>();
+		while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
+		{
+			extensionModel Modelextension = new extensionModel();
+			Modelextension.id = Cursor1.getInt(1);
+			Modelextension.context = Cursor1.getString(2);
+			Modelextension.exten = Cursor1.getString(3);
+			Modelextension.priority = Cursor1.getInt(4);
+			Modelextension.app = Cursor1.getString(5);
+			Modelextension.appdata = Cursor1.getString(6);
+			ListUser1.add(Modelextension);
+
+		}
 		Connection1.close();
-		return a;    	         
-}	
-	
-	
+		return ListUser1;
+	}
+
+	@DeleteMapping(path = "/DeletePostExtension", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public int DeletePostExtension(@RequestBody extensionModel cfm) throws SQLException {
+		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+		querydelete_alembic_version_config = Connection1.prepareStatement(query_string_delete.query_delete_extension);
+		querydelete_alembic_version_config.setInt(1, cfm.id);
+		int Cursor1 = querydelete_alembic_version_config.executeUpdate();// Evaluate (Connected_Expression1)
+		int a = 1;
+		Connection1.close();
+		return a;
+	}
+
 }
