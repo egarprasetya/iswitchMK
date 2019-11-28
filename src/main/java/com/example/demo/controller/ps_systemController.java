@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -51,7 +52,7 @@ public class ps_systemController {
 	          return ListUser1;
 	}
 	
-	@PostMapping("/DeletePostPsSystem")
+	@PostMapping(path="/DeletePostPsSystem",produces="application/json",consumes=MediaType.APPLICATION_JSON_VALUE)
 	public int DeletePostPsSystems(@RequestBody String id) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
@@ -62,7 +63,7 @@ public class ps_systemController {
 		Connection1.close();
 		return a;    	         
 }
-	@GetMapping("/DeleteGetPsSystem")
+	@GetMapping(path="/DeleteGetPsSystem ",produces="application/json",consumes=MediaType.APPLICATION_JSON_VALUE)
 	public int DeleteGetPsSystems(@RequestBody String id) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);

@@ -1,7 +1,7 @@
 package com.example.demo.query;
 
 public class AllUpdateQuery {
-	public String query_replace_alembic_version="UPDATE alembic_version " + 
+	public String query_update_alembic_version="UPDATE alembic_version " + 
 			"SET version_num=? " +
 			"WHERE version_num=?;"; 
 	public String query_update_alembic_version_config="UPDATE alembic_version_config " + 

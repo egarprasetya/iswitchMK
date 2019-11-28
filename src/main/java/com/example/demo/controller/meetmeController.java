@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 import com.example.demo.connection.stringkoneksi;
-import com.example.demo.model.UserModel;
 import com.example.demo.model.*;
 import com.example.demo.query.*;
 import java.sql.Connection;
@@ -12,6 +11,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -57,27 +58,17 @@ public class meetmeController {
 	          return ListUser1;
 	}
 	
-	@PostMapping("/DeletePostmeetmess")
-	public int DeletePostmeetme(@RequestBody int bookid) throws SQLException
+	@DeleteMapping(path="/DeletePostmeetmess",produces="application/json",consumes=MediaType.APPLICATION_JSON_VALUE)
+	public int DeletePostmeetme(@RequestBody meetmeModel cfm) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 	      querydelete_alembic_version_config=Connection1.prepareStatement(query_string_delete.query_delete_meetme);
-		 querydelete_alembic_version_config.setInt(1, bookid);   
+		 querydelete_alembic_version_config.setInt(1, cfm.bookid);   
 		int Cursor1 = querydelete_alembic_version_config.executeUpdate();// Evaluate (Connected_Expression1)
-		int a =0; 
+		int a =1; 
 		Connection1.close();
 		return a;    	         
 }
 	
-	@GetMapping("/DeleteGetmeetme")
-	public int DeleteGetmeetme(@RequestBody int bookid) throws SQLException
-	{
-		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-	      querydelete_alembic_version_config=Connection1.prepareStatement(query_string_delete.query_delete_meetme);
-		 querydelete_alembic_version_config.setInt(1, bookid);   
-		int Cursor1 = querydelete_alembic_version_config.executeUpdate();// Evaluate (Connected_Expression1)
-		int a =0; 
-		Connection1.close();
-		return a;    	         
-}
+
 }

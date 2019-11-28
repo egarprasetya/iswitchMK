@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import com.example.demo.query.*;
-import com.example.demo.model.UserModel;
 import com.example.demo.model.*;
 import com.example.demo.connection.*;
 @RestController
@@ -133,27 +134,17 @@ public class SippeersController {
           return ListUser1;
 	}
 	
-	@PostMapping("/DeletePostSippeers")
-	public int DeletePostAlembicVersionConfig(@RequestBody int id) throws SQLException
+	@DeleteMapping(path="/DeletePostSippeers",produces="application/json",consumes=MediaType.APPLICATION_JSON_VALUE)
+	public int DeletePostAlembicVersionConfig(@RequestBody SippeersModel cfm) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 	      querydelete_alembic_version_config=Connection1.prepareStatement(query_string_delete.query_delete_sippeers);
-		 querydelete_alembic_version_config.setInt(1, id);   
+		 querydelete_alembic_version_config.setInt(1, cfm.id);   
 		int Cursor1 = querydelete_alembic_version_config.executeUpdate();// Evaluate (Connected_Expression1)
-		int a =0; 
+		int a =1; 
 		Connection1.close();
 		return a;    	         
 }
 	
-	@GetMapping("/DeleteGetSippeers")
-	public int DeleteGetAlembicVersionConfig(@RequestBody int id) throws SQLException
-	{
-		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-	      querydelete_alembic_version_config=Connection1.prepareStatement(query_string_delete.query_delete_sippeers);
-		 querydelete_alembic_version_config.setInt(1, id);   
-		int Cursor1 = querydelete_alembic_version_config.executeUpdate();// Evaluate (Connected_Expression1)
-		int a =0; 
-		Connection1.close();
-		return a;    	         
-}
+	
 }

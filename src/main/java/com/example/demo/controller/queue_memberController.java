@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 import com.example.demo.connection.stringkoneksi;
-import com.example.demo.model.UserModel;
 import com.example.demo.model.*;
 import com.example.demo.query.*;
 import java.sql.Connection;
@@ -11,6 +10,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -50,26 +51,16 @@ AllDeleteQuery query_string_delete = new AllDeleteQuery();
 	          return ListUser1;
 	}
 	
-	@PostMapping("/DeletePostQueueMember")
-	public int DeletePostqueuemember(@RequestBody String queue_name) throws SQLException
+	@DeleteMapping(path="/DeletePostQueueMember" ,produces="application/json",consumes=MediaType.APPLICATION_JSON_VALUE)
+	public int DeletePostqueuemember(@RequestBody queue_memberModel cfm) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 	      querydelete_alembic_version_config=Connection1.prepareStatement(query_string_delete.query_delete_queue_members);
-		 querydelete_alembic_version_config.setString(1, queue_name);   
+		 querydelete_alembic_version_config.setString(1, cfm.queue_name);   
 		int Cursor1 = querydelete_alembic_version_config.executeUpdate();// Evaluate (Connected_Expression1)
 		int a =0; 
 		Connection1.close();
 		return a;    	         
 }
-	@GetMapping("/DeleteGetQueueMember")
-	public int DeleteGetQueueMember(@RequestBody String queue_name) throws SQLException
-	{
-		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-	      querydelete_alembic_version_config=Connection1.prepareStatement(query_string_delete.query_delete_queue_members);
-		 querydelete_alembic_version_config.setString(1, queue_name);   
-		int Cursor1 = querydelete_alembic_version_config.executeUpdate();// Evaluate (Connected_Expression1)
-		int a =0; 
-		Connection1.close();
-		return a;    	         
-}
+	
 }

@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 import com.example.demo.connection.stringkoneksi;
-import com.example.demo.model.UserModel;
 import com.example.demo.model.*;
 import com.example.demo.query.*;
 import java.sql.Connection;
@@ -11,6 +10,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -53,27 +54,17 @@ public class ps_subscription_persistenceController {
           return ListUser1;
 	}
 	
-	@PostMapping("/DeletePostPsSubscript")
-	public int DeletePostPsSubscript(@RequestBody String id) throws SQLException
+	@DeleteMapping(path="/DeletePostPsSubscript",produces="application/json",consumes=MediaType.APPLICATION_JSON_VALUE)
+	public int DeletePostPsSubscript(@RequestBody ps_subscription_persistenceModel cfm) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 	      querydelete_alembic_version_config=Connection1.prepareStatement(query_string_delete.query_delete_ps_subscription_persistence);
-		 querydelete_alembic_version_config.setString(1, id);   
+		 querydelete_alembic_version_config.setString(1, cfm.id);   
 		int Cursor1 = querydelete_alembic_version_config.executeUpdate();// Evaluate (Connected_Expression1)
 		int a =0; 
 		Connection1.close();
 		return a;    	         
 }
 	
-	@GetMapping("/DeleteGetPsSubscript")
-	public int DeleteGetPsSubscript(@RequestBody String id) throws SQLException
-	{
-		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-	      querydelete_alembic_version_config=Connection1.prepareStatement(query_string_delete.query_delete_ps_subscription_persistence);
-		 querydelete_alembic_version_config.setString(1, id);   
-		int Cursor1 = querydelete_alembic_version_config.executeUpdate();// Evaluate (Connected_Expression1)
-		int a =0; 
-		Connection1.close();
-		return a;    	         
-}
+
 }

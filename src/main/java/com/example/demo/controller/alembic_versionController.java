@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.connection.stringkoneksi;
-import com.example.demo.model.UserModel;
 import com.example.demo.model.*;
 import com.example.demo.query.*;
 
@@ -47,7 +48,7 @@ public class alembic_versionController {
 
 }
 	
-	@PostMapping("/GetAlembicVersionParameter")
+	@PostMapping(path="/GetAlembicVersionParameter" ,produces="application/json",consumes=MediaType.APPLICATION_JSON_VALUE)
 	public ArrayList<alembic_versionModel> TampilAlembicVersionParameterSelect(@RequestBody String version_num) throws SQLException
 	{		
 		   Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
@@ -71,29 +72,19 @@ public class alembic_versionController {
 }
 	
 	
-	@PostMapping("/DeletePostAlembicVersionParameter")
-	public int DeletePostAlembicVersion(@RequestBody String version_num) throws SQLException
+	@DeleteMapping("/DeletePostAlembicVersionParameter")
+	public int DeletePostAlembicVersion(@RequestBody alembic_versionModel cfm) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 	      querydelete_alembic_version_config=Connection1.prepareStatement(query_string_delete.query_delete_alembic_version);
-		 querydelete_alembic_version_config.setString(1, version_num);   
+		 querydelete_alembic_version_config.setString(1, cfm.version_num);   
 		int Cursor1 = querydelete_alembic_version_config.executeUpdate();// Evaluate (Connected_Expression1)
-		int a =0; 
+		int a =1; 
 		Connection1.close();
 		return a;    	         
 }
 	
-	@GetMapping("/DeleteGetAlembicVersionParameter")
-	public int DeleteGetAlembicVersion(@RequestBody String version_num) throws SQLException
-	{
-		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-	      querydelete_alembic_version_config=Connection1.prepareStatement(query_string_delete.query_delete_alembic_version);
-		 querydelete_alembic_version_config.setString(1, version_num);   
-		int Cursor1 = querydelete_alembic_version_config.executeUpdate();// Evaluate (Connected_Expression1)
-		int a =0;  
-		Connection1.close();
-		return a;    	         
-}
+
 	
 	
 }

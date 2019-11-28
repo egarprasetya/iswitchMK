@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 import com.example.demo.connection.stringkoneksi;
-import com.example.demo.model.UserModel;
 import com.example.demo.model.*;
 import com.example.demo.query.*;
 import java.sql.Connection;
@@ -11,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -99,27 +99,17 @@ public class queuesContoller {
           return ListUser1;
 	}
 	
-	@PostMapping("/DeletePostQueues")
-	public int DeletePostQueues(@RequestBody String name) throws SQLException
+	@PostMapping(path="/DeletePostQueues",produces="application/json",consumes=MediaType.APPLICATION_JSON_VALUE)
+	public int DeletePostQueues(@RequestBody queuesModel cfm) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 	      querydelete_alembic_version_config=Connection1.prepareStatement(query_string_delete.query_delete_queues);
-		 querydelete_alembic_version_config.setString(1, name);   
+		 querydelete_alembic_version_config.setString(1, cfm.name);   
 		int Cursor1 = querydelete_alembic_version_config.executeUpdate();// Evaluate (Connected_Expression1)
-		int a =0; 
+		int a =1; 
 		Connection1.close();
 		return a;    	         
 }
 	
-	@GetMapping("/DeletePostQueues")
-	public int DeleteGetQueues(@RequestBody String name) throws SQLException
-	{
-		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-	      querydelete_alembic_version_config=Connection1.prepareStatement(query_string_delete.query_delete_queues);
-		 querydelete_alembic_version_config.setString(1, name);   
-		int Cursor1 = querydelete_alembic_version_config.executeUpdate();// Evaluate (Connected_Expression1)
-		int a =0; 
-		Connection1.close();
-		return a;    	         
-}
+	
 }
