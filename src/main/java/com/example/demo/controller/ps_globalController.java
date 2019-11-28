@@ -14,6 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,6 +26,19 @@ public class ps_globalController {
 	stringkoneksi sk = new stringkoneksi();
 	AllQuery query_string= new AllQuery();
 	PreparedStatement queryselect_ps_globals=null;
+	AllInsertQuery query_string_insert = new AllInsertQuery();
+	PreparedStatement queryinsert_alembic_version_config=null;
+	@PutMapping("/PutPsGlobal")
+	public String putalembicversionconfig(@RequestBody ps_globalsModel cfm) throws SQLException
+	{
+		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+	      queryinsert_alembic_version_config=Connection1.prepareStatement(query_string_insert.query_insert_ps_globals);
+		 queryinsert_alembic_version_config.setString(1, cfm.version_num);   
+		int Cursor1 = queryinsert_alembic_version_config.executeUpdate();// Evaluate (Connected_Expression1)
+		String a ="1"; 
+		Connection1.close();
+		return a;  	      
+	}
 	@GetMapping("/Getps_global")
 	public ArrayList<ps_globalsModel> TampilAlembicVersionConfig() throws SQLException
 	{		
