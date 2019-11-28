@@ -65,7 +65,7 @@ public class ps_authsController {
 		return a;    	         
 }
 	
-	@PostMapping("/DeleteGetPsAuths")
+	@GetMapping("/DeleteGetPsAuths")
 	public int DeleteGetAlembicVersionConfig(@RequestBody String id) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);

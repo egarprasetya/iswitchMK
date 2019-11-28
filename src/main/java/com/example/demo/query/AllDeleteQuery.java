@@ -10,7 +10,7 @@ public class AllDeleteQuery {
 	public String query_delete_cdr = "delete from cdr where accountcode = ?";
 	public String query_delete_extension = "delete from extensions where id = ?";
 	public String query_delete_iaxfriends = "delete from iaxfriends where id = ?";
-	public String query_delete_musiconhold = "delete from musiconhold where nama = ?";
+	public String query_delete_musiconhold = "delete from musiconhold where name = ?";
 	public String query_delete_ps_aors = "delete from ps_aors where id = ?";
 	public String query_delete_ps_asterisk_publications = "delete from ps_asterisk_publications where id = ?";
 	public String query_delete_ps_auths = "delete from ps_auths where id = ?";
