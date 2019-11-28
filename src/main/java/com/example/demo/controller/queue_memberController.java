@@ -1,4 +1,5 @@
 package com.example.demo.controller;
+
 import com.example.demo.connection.stringkoneksi;
 import com.example.demo.model.*;
 import com.example.demo.query.*;
@@ -21,61 +22,69 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/queuemember")
-public class queue_memberController 
-{PreparedStatement querydelete_alembic_version_config=null;
-AllDeleteQuery query_string_delete = new AllDeleteQuery();
+public class queue_memberController {
+	PreparedStatement querydelete_alembic_version_config = null;
+	AllDeleteQuery query_string_delete = new AllDeleteQuery();
 	stringkoneksi sk = new stringkoneksi();
-	AllQuery query_string= new AllQuery();
-	PreparedStatement queryselect_queuemember=null;
-	
+	AllQuery query_string = new AllQuery();
+	PreparedStatement queryselect_queuemember = null;
+
 	AllInsertQuery query_string_insert = new AllInsertQuery();
-	PreparedStatement queryinsert_alembic_version_config=null;
+	PreparedStatement query_insert_queue_members = null;
+
 	@PutMapping("/PutQueueMember")
-	public String putalembicversionconfig(@RequestBody queue_memberModel cfm) throws SQLException
-	{
+	public String putalembicversionconfig(@RequestBody queue_memberModel cfm) throws SQLException {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-	      queryinsert_alembic_version_config=Connection1.prepareStatement(query_string_insert.query_insert_queue_members);
-		 queryinsert_alembic_version_config.setString(1, cfm.version_num);   
-		int Cursor1 = queryinsert_alembic_version_config.executeUpdate();// Evaluate (Connected_Expression1)
-		String a ="1"; 
+		query_insert_queue_members = Connection1.prepareStatement(query_string_insert.query_insert_queue_members);
+
+		query_insert_queue_members.setString(1, cfm.queue_name);
+		query_insert_queue_members.setString(2, cfm._interface);
+		query_insert_queue_members.setString(3, cfm.membername);
+		query_insert_queue_members.setString(4, cfm.state_interface);
+		query_insert_queue_members.setInt(5, cfm.penalty);
+		query_insert_queue_members.setInt(6, cfm.paused);
+		query_insert_queue_members.setInt(7, cfm.uniqueid);
+
+		int Cursor1 = query_insert_queue_members.executeUpdate();// Evaluate (Connected_Expression1)
+		String a = "1";
 		Connection1.close();
-		return a;  	      
+		return a;
 	}
+
 	@GetMapping("/Getqueuemember")
-	public ArrayList<queue_memberModel> TampilAlembicVersionConfig() throws SQLException
-	{
-		 Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-	        queryselect_queuemember=Connection1.prepareStatement(query_string.query_select_queue_members);
-	        ResultSet Cursor1 = queryselect_queuemember.executeQuery();// Evaluate (Connected_Expression1)
-	      	  ArrayList<queue_memberModel> ListUser1 = new ArrayList<queue_memberModel>();
-	          while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
-	          {       
-	        	  queue_memberModel ModelQueue_member=new queue_memberModel();
-	        	  ModelQueue_member.queue_name=Cursor1.getString(1);
-	        	  ModelQueue_member._interface=Cursor1.getString(2);
-	        	  ModelQueue_member.membername=Cursor1.getString(3);
-	        	  ModelQueue_member.state_interface=Cursor1.getString(4);
-	        	  ModelQueue_member.penalty=Cursor1.getInt(5);
-	        	  ModelQueue_member.paused=Cursor1.getInt(6);
-	        	  ModelQueue_member.uniqueid=Cursor1.getInt(7);
-	        	  
-	         ListUser1.add(ModelQueue_member);  
-	         
-	          }	          
-	          Connection1.close();
-	          return ListUser1;
-	}
-	
-	@DeleteMapping(path="/DeletePostQueueMember" ,produces="application/json",consumes=MediaType.APPLICATION_JSON_VALUE)
-	public int DeletePostqueuemember(@RequestBody queue_memberModel cfm) throws SQLException
-	{
+	public ArrayList<queue_memberModel> TampilAlembicVersionConfig() throws SQLException {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-	      querydelete_alembic_version_config=Connection1.prepareStatement(query_string_delete.query_delete_queue_members);
-		 querydelete_alembic_version_config.setString(1, cfm.queue_name);   
-		int Cursor1 = querydelete_alembic_version_config.executeUpdate();// Evaluate (Connected_Expression1)
-		int a =0; 
+		queryselect_queuemember = Connection1.prepareStatement(query_string.query_select_queue_members);
+		ResultSet Cursor1 = queryselect_queuemember.executeQuery();// Evaluate (Connected_Expression1)
+		ArrayList<queue_memberModel> ListUser1 = new ArrayList<queue_memberModel>();
+		while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
+		{
+			queue_memberModel ModelQueue_member = new queue_memberModel();
+			ModelQueue_member.queue_name = Cursor1.getString(1);
+			ModelQueue_member._interface = Cursor1.getString(2);
+			ModelQueue_member.membername = Cursor1.getString(3);
+			ModelQueue_member.state_interface = Cursor1.getString(4);
+			ModelQueue_member.penalty = Cursor1.getInt(5);
+			ModelQueue_member.paused = Cursor1.getInt(6);
+			ModelQueue_member.uniqueid = Cursor1.getInt(7);
+
+			ListUser1.add(ModelQueue_member);
+
+		}
 		Connection1.close();
-		return a;    	         
-}
-	
+		return ListUser1;
+	}
+
+	@DeleteMapping(path = "/DeletePostQueueMember", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public int DeletePostqueuemember(@RequestBody queue_memberModel cfm) throws SQLException {
+		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+		querydelete_alembic_version_config = Connection1
+				.prepareStatement(query_string_delete.query_delete_queue_members);
+		querydelete_alembic_version_config.setString(1, cfm.queue_name);
+		int Cursor1 = querydelete_alembic_version_config.executeUpdate();// Evaluate (Connected_Expression1)
+		int a = 0;
+		Connection1.close();
+		return a;
+	}
+
 }
