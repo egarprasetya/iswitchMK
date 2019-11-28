@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 import com.example.demo.connection.stringkoneksi;
-import com.example.demo.model.UserModel;
 import com.example.demo.model.*;
 import com.example.demo.query.*;
 import java.sql.Connection;
@@ -14,6 +13,7 @@ import java.util.ArrayList;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,6 +25,19 @@ public class ps_systemController {
 	stringkoneksi sk = new stringkoneksi();
 	AllQuery query_string= new AllQuery();
 	PreparedStatement queryselect_ps_systems=null;
+	AllInsertQuery query_string_insert = new AllInsertQuery();
+	PreparedStatement queryinsert_alembic_version_config=null;
+	@PutMapping("/PutPsSystems")
+	public String putalembicversionconfig(@RequestBody ps_SystemsModel cfm) throws SQLException
+	{
+		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+	      queryinsert_alembic_version_config=Connection1.prepareStatement(query_string_insert.query_insert_ps_systems);
+		 queryinsert_alembic_version_config.setString(1, cfm.version_num);   
+		int Cursor1 = queryinsert_alembic_version_config.executeUpdate();// Evaluate (Connected_Expression1)
+		String a ="1"; 
+		Connection1.close();
+		return a;  	      
+	}
 	@GetMapping("/Getps_systems")
 	public ArrayList<ps_SystemsModel> TampilAlembicVersionConfig() throws SQLException
 	{
