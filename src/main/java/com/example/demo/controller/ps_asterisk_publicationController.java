@@ -61,5 +61,16 @@ AllDeleteQuery query_string_delete = new AllDeleteQuery();
 		return a;    	         
 }
 	
-	
+
+	@GetMapping("/DeleteGetpsAsterisk")
+	public int DeleteGetAlembicVersionConfig(@RequestBody String id) throws SQLException
+	{
+		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+	      querydelete_alembic_version_config=Connection1.prepareStatement(query_string_delete.query_delete_ps_asterisk_publications);
+		 querydelete_alembic_version_config.setString(1, id);   
+		int Cursor1 = querydelete_alembic_version_config.executeUpdate();// Evaluate (Connected_Expression1)
+		int a =0; 
+		Connection1.close();
+		return a;    	         
+}
 }

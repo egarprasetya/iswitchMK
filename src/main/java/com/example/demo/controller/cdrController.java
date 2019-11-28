@@ -30,7 +30,7 @@ public class cdrController {
 	public ArrayList<cdrModel> TampilAlembicVersionConfig() throws SQLException
 	{
 		 Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-	        queryselect_cdr=Connection1.prepareStatement(query_string.query_select_alembic_version);
+	        queryselect_cdr=Connection1.prepareStatement(query_string.query_select_cdr);
 	        ResultSet Cursor1 = queryselect_cdr.executeQuery();// Evaluate (Connected_Expression1)
 	      	  ArrayList<cdrModel> ListUser1 = new ArrayList<cdrModel>();
 	          while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
