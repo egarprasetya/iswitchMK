@@ -26,7 +26,7 @@ public class AllDeleteQuery {
 	public String query_delete_ps_transports = "delete from ps_transports where id = ?";
 	public String query_delete_queue_log = "delete from queue_log where id = ?";
 	public String query_delete_queue_members = "delete from queue_members where queue_name = ?";
-	public String query_delete_queue_rules = "delete from ps_contacts where rule_name = ?";
+	public String query_delete_queue_rules = "delete from queue_rules where rule_name = ?";
 	public String query_delete_queues = "delete from queues where name = ?";
 	public String query_delete_voicemail = "delete from voicemail where uniqueid = ?";
 	public String query_delete_ps_endpoints_id = "delete from ps_endpoint_id_ips where id = ?";
