@@ -6,10 +6,10 @@ public class queuesModel {
 	public String announce;
 	public String context;
 	public int timeout;
-	public boolean ringinuse;				// YesNo value / Type.
-	public boolean setinterfacevar;			// YesNo value / Type.
-	public boolean setqueuevar;				// YesNo value / Type.
-	public boolean setqueueentryvar;		// YesNo value / Type.
+	public String ringinuse;				// YesNo value / Type.
+	public String setinterfacevar;			// YesNo value / Type.
+	public String setqueuevar;				// YesNo value / Type.
+	public String setqueueentryvar;		// YesNo value / Type.
 	public String monitor_format;
 	public String membermacro;
 	public String membergosub;
@@ -26,7 +26,7 @@ public class queuesModel {
 	public String queue_callerannouce;
 	public String queue_reporthold;
 	public int announce_frequency;
-	public boolean announce_to_first_user;	// YesNo value / Type.
+	public String announce_to_first_user;	// YesNo value / Type.
 	public int min_announce_frequency;
 	public int announce_round_seconds;
 	public String announce_holdtime;
@@ -34,26 +34,26 @@ public class queuesModel {
 	public int announce_position_limit;
 	public String periodic_announce;
 	public int periodic_announce_frequency;
-	public boolean relative_periodic_announce;
-	public boolean random_periodic_announce;
+	public String relative_periodic_announce;
+	public String random_periodic_announce;
 	public int retry;
 	public int wrapuptime;
 	public int penaltymemberslimit;
-	public boolean autofill;
+	public String autofill;
 	public String monitor_type;
 	public String autopause;				// Queue_autopause value / Type.
 	public int autopausedelay;
-	public boolean autopausebusy;			// YesNo value / Type.
-	public boolean autopauseunavail;		// YesNo value / Type.
+	public String autopausebusy;			// YesNo value / Type.
+	public String autopauseunavail;		// YesNo value / Type.
 	public int maxlen;
 	public int servicelevel;
 	public String strategy;					// queue_strategy value / Type.
 	public String joinempty;
 	public String leavewhenempty;
-	public boolean reportholdtime;			// YesNo value / Type.
+	public String reportholdtime;			// YesNo value / Type.
 	public int memberdelay;
 	public int weight;
-	public boolean timeoutrestart;			// YesNo value / Type.
+	public String timeoutrestart;			// YesNo value / Type.
 	public String defaultrule;
 	public String timeoutpriority;
 }

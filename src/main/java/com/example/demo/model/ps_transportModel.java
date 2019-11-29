@@ -16,11 +16,11 @@ public class ps_transportModel {
 	public String password;
 	public String priv_key_file;
 	public String protocol;				// pjsip_transport_protocol value/Type.
-	public boolean require_client_cert;	// YesNo value/Type.
-	public boolean verify_client;		// YesNo value/Type.
-	public boolean verify_server;		// YesNo value/Type.
+	public String require_client_cert;	// YesNo value/Type.
+	public String verify_client;		// YesNo value/Type.
+	public String verify_server;		// YesNo value/Type.
 	public String tos;
 	public int cos;
-	public boolean allow_reload;				// YesNo value/Type.
-	public boolean symmetric_transport;			// YesNo value/Type.
+	public String allow_reload;				// YesNo value/Type.
+	public String symmetric_transport;			// YesNo value/Type.
 }

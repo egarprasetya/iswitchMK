@@ -36,7 +36,7 @@ public class ps_registrationController {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryinsert_ps_registration = Connection1.prepareStatement(query_string_insert.query_insert_ps_registrations);
 		queryinsert_ps_registration.setString(1, cfm.id);
-		queryinsert_ps_registration.setBoolean(2, cfm.auth_rejection_permanent);
+		queryinsert_ps_registration.setString(2, cfm.auth_rejection_permanent);
 		queryinsert_ps_registration.setString(3, cfm.client_uri);
 		queryinsert_ps_registration.setString(4, cfm.contact_user);
 		queryinsert_ps_registration.setInt(5, cfm.expiration);
@@ -47,9 +47,9 @@ public class ps_registrationController {
 		queryinsert_ps_registration.setInt(10, cfm.forbidden_retry_interval);
 		queryinsert_ps_registration.setString(11, cfm.server_uri);
 		queryinsert_ps_registration.setString(12, cfm.transport);
-		queryinsert_ps_registration.setBoolean(13, cfm.support_path);
+		queryinsert_ps_registration.setString(13, cfm.support_path);
 		queryinsert_ps_registration.setInt(14, cfm.fatal_retry_interval);
-		queryinsert_ps_registration.setBoolean(15, cfm.line);
+		queryinsert_ps_registration.setString(15, cfm.line);
 		queryinsert_ps_registration.setString(16, cfm.endpoint);
 		int Cursor1 = queryinsert_ps_registration.executeUpdate();// Evaluate (Connected_Expression1)
 		String a = "1";
@@ -69,7 +69,7 @@ public class ps_registrationController {
 			ps_registrationsModel ModelPs_registration = new ps_registrationsModel();
 
 			ModelPs_registration.id = Cursor1.getString(1);
-			ModelPs_registration.auth_rejection_permanent = Cursor1.getBoolean(2);
+			ModelPs_registration.auth_rejection_permanent = Cursor1.getString(2);
 			ModelPs_registration.client_uri = Cursor1.getString(3);
 			ModelPs_registration.contact_user = Cursor1.getString(4);
 			ModelPs_registration.expiration = Cursor1.getInt(5);
@@ -80,9 +80,9 @@ public class ps_registrationController {
 			ModelPs_registration.forbidden_retry_interval = Cursor1.getInt(10);
 			ModelPs_registration.server_uri = Cursor1.getString(11);
 			ModelPs_registration.transport = Cursor1.getString(12);
-			ModelPs_registration.support_path = Cursor1.getBoolean(13);
+			ModelPs_registration.support_path = Cursor1.getString(13);
 			ModelPs_registration.fatal_retry_interval = Cursor1.getInt(14);
-			ModelPs_registration.line = Cursor1.getBoolean(15);
+			ModelPs_registration.line = Cursor1.getString(15);
 			ModelPs_registration.endpoint = Cursor1.getString(16);
 
 			ListUser1.add(ModelPs_registration);

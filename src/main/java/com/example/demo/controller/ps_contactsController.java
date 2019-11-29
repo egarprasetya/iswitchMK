@@ -44,12 +44,12 @@ public class ps_contactsController {
 		queryinsert_ps_contact.setString(7, cfm.user_agent);
 		queryinsert_ps_contact.setDouble(8, cfm.qualify_timeout);
 		queryinsert_ps_contact.setString(9, cfm.reg_server);
-		queryinsert_ps_contact.setBoolean(10, cfm.authenticate_qualify);
+		queryinsert_ps_contact.setString(10, cfm.authenticate_qualify);
 		queryinsert_ps_contact.setString(11, cfm.via_addr);
 		queryinsert_ps_contact.setInt(12, cfm.via_port);
 		queryinsert_ps_contact.setString(13, cfm.call_id);
 		queryinsert_ps_contact.setString(14, cfm.endpoint);
-		queryinsert_ps_contact.setBoolean(15, cfm.prune_on_boot);
+		queryinsert_ps_contact.setString(15, cfm.prune_on_boot);
 		int Cursor1 = queryinsert_ps_contact.executeUpdate();// Evaluate (Connected_Expression1)
 		String a = "1";
 		Connection1.close();
@@ -75,12 +75,12 @@ public class ps_contactsController {
 			ModelContact.user_agent = Cursor1.getString(7);
 			ModelContact.qualify_timeout = Cursor1.getInt(8);
 			ModelContact.reg_server = Cursor1.getString(9);
-			ModelContact.authenticate_qualify = Cursor1.getBoolean(10);
+			ModelContact.authenticate_qualify = Cursor1.getString(10);
 			ModelContact.via_addr = Cursor1.getString(11);
 			ModelContact.via_port = Cursor1.getInt(12);
 			ModelContact.call_id = Cursor1.getString(13);
 			ModelContact.endpoint = Cursor1.getString(14);
-			ModelContact.prune_on_boot = Cursor1.getBoolean(15);
+			ModelContact.prune_on_boot = Cursor1.getString(15);
 
 			ListUser1.add(ModelContact);
 

@@ -50,7 +50,7 @@ public class ps_subscription_persistenceController {
 		query_insert_ps_subscription_persistence.setString(10, cfm.endpoint);
 		query_insert_ps_subscription_persistence.setInt(11, cfm.expires);
 		query_insert_ps_subscription_persistence.setString(12, cfm.contact_uri);
-		query_insert_ps_subscription_persistence.setBoolean(13, cfm.prune_on_boot);
+		query_insert_ps_subscription_persistence.setString(13, cfm.prune_on_boot);
 		
 		int Cursor1 = query_insert_ps_subscription_persistence.executeUpdate();// Evaluate (Connected_Expression1)
 		String a = "1";
@@ -80,7 +80,7 @@ public class ps_subscription_persistenceController {
 			ModelPs_subscription_persistance.endpoint = Cursor1.getString(10);
 			ModelPs_subscription_persistance.expires = Cursor1.getInt(11);
 			ModelPs_subscription_persistance.contact_uri = Cursor1.getString(12);
-			ModelPs_subscription_persistance.prune_on_boot = Cursor1.getBoolean(13);
+			ModelPs_subscription_persistance.prune_on_boot = Cursor1.getString(13);
 
 		}
 		Connection1.close();

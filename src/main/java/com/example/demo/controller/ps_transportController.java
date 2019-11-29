@@ -53,13 +53,13 @@ public class ps_transportController {
 		query_insert_ps_transports.setString(13, cfm.password);
 		query_insert_ps_transports.setString(14, cfm.priv_key_file);
 		query_insert_ps_transports.setString(15, cfm.protocol);
-		query_insert_ps_transports.setBoolean(16, cfm.require_client_cert);
-		query_insert_ps_transports.setBoolean(17, cfm.verify_client);
-		query_insert_ps_transports.setBoolean(18, cfm.verify_server);
+		query_insert_ps_transports.setString(16, cfm.require_client_cert);
+		query_insert_ps_transports.setString(17, cfm.verify_client);
+		query_insert_ps_transports.setString(18, cfm.verify_server);
 		query_insert_ps_transports.setString(19, cfm.tos);
 		query_insert_ps_transports.setInt(20, cfm.cos);
-		query_insert_ps_transports.setBoolean(21, cfm.allow_reload);
-		query_insert_ps_transports.setBoolean(22, cfm.symmetric_transport);
+		query_insert_ps_transports.setString(21, cfm.allow_reload);
+		query_insert_ps_transports.setString(22, cfm.symmetric_transport);
 		
 		int Cursor1 = query_insert_ps_transports.executeUpdate();// Evaluate (Connected_Expression1)
 		String a = "1";
@@ -92,13 +92,13 @@ public class ps_transportController {
 			ModelPs_transport.password = Cursor1.getString(13);
 			ModelPs_transport.priv_key_file = Cursor1.getString(14);
 			ModelPs_transport.protocol = Cursor1.getString(15);
-			ModelPs_transport.require_client_cert = Cursor1.getBoolean(16);
-			ModelPs_transport.verify_client = Cursor1.getBoolean(17);
-			ModelPs_transport.verify_server = Cursor1.getBoolean(18);
+			ModelPs_transport.require_client_cert = Cursor1.getString(16);
+			ModelPs_transport.verify_client = Cursor1.getString(17);
+			ModelPs_transport.verify_server = Cursor1.getString(18);
 			ModelPs_transport.tos = Cursor1.getString(19);
 			ModelPs_transport.cos = Cursor1.getInt(20);
-			ModelPs_transport.allow_reload = Cursor1.getBoolean(21);
-			ModelPs_transport.symmetric_transport = Cursor1.getBoolean(22);
+			ModelPs_transport.allow_reload = Cursor1.getString(21);
+			ModelPs_transport.symmetric_transport = Cursor1.getString(22);
 
 			ListUser1.add(ModelPs_transport);
 

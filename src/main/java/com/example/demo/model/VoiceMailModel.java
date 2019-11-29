@@ -11,21 +11,21 @@ public class VoiceMailModel {
 	public String alias;
 	public String email;
 	public String pager;
-	public boolean attach;					// YesNo value/Type.
+	public String attach;					// YesNo value/Type.
 	public String attachfmt;
 	public String servermail;
 	public String language;
 	public String tz;
-	public boolean deletevoicemail;			// YesNo value/Type.
-	public boolean saycid;					// YesNo value/Type.
-	public boolean sendvoicemail;			// YesNo value/Type.
-	public boolean review;					// YesNo value/Type.
-	public boolean tempgreetwarn;			// YesNo value/Type.
-	public boolean operator;				// YesNo value/Type.
-	public boolean envelope;				// YesNo value/Type.
+	public String deletevoicemail;			// YesNo value/Type.
+	public String saycid;					// YesNo value/Type.
+	public String sendvoicemail;			// YesNo value/Type.
+	public String review;					// YesNo value/Type.
+	public String tempgreetwarn;			// YesNo value/Type.
+	public String operator;				// YesNo value/Type.
+	public String envelope;				// YesNo value/Type.
 	public int sayduration;
-	public boolean forcename;				// YesNo value/Type.
-	public boolean forcegreetings;			// YesNo value/Type.
+	public String forcename;				// YesNo value/Type.
+	public String forcegreetings;			// YesNo value/Type.
 	public String callback;
 	public String dialout;
 	public String exitcontext;

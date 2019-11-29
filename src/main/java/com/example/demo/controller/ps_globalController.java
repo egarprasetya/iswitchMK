@@ -46,15 +46,15 @@ public class ps_globalController {
 		queryinsert_ps_global.setString(9, cfm.regcontext);
 		queryinsert_ps_global.setInt(10, cfm.contact_expiration_check_interval);
 		queryinsert_ps_global.setString(11, cfm.default_voicemail_extension);
-		queryinsert_ps_global.setBoolean(12, cfm.disable_multi_domain);
+		queryinsert_ps_global.setString(12, cfm.disable_multi_domain);
 		queryinsert_ps_global.setInt(13, cfm.unidentified_request_count);
 		queryinsert_ps_global.setInt(14, cfm.unidentified_request_period);
 		queryinsert_ps_global.setInt(15, cfm.unidentified_request_prune_interval);
 		queryinsert_ps_global.setString(16, cfm.default_realm);
 		queryinsert_ps_global.setInt(17, cfm.mwi_tps_queue_high);
 		queryinsert_ps_global.setInt(18, cfm.mwi_tps_queue_low);
-		queryinsert_ps_global.setBoolean(19, cfm.mwi_disable_initial_unsolicited);
-		queryinsert_ps_global.setBoolean(20, cfm.ignore_uri_user_options);
+		queryinsert_ps_global.setString(19, cfm.mwi_disable_initial_unsolicited);
+		queryinsert_ps_global.setString(20, cfm.ignore_uri_user_options);
 
 		int Cursor1 = queryinsert_ps_global.executeUpdate();// Evaluate (Connected_Expression1)
 		String a = "1";
@@ -82,15 +82,15 @@ public class ps_globalController {
 			ModelPs_global.regcontext = Cursor1.getString(9);
 			ModelPs_global.contact_expiration_check_interval = Cursor1.getInt(10);
 			ModelPs_global.default_voicemail_extension = Cursor1.getString(11);
-			ModelPs_global.disable_multi_domain = Cursor1.getBoolean(12); // YesNo value/Type.
+			ModelPs_global.disable_multi_domain = Cursor1.getString(12); // YesNo value/Type.
 			ModelPs_global.unidentified_request_count = Cursor1.getInt(13);
 			ModelPs_global.unidentified_request_period = Cursor1.getInt(14);
 			ModelPs_global.unidentified_request_prune_interval = Cursor1.getInt(15);
 			ModelPs_global.default_realm = Cursor1.getString(16);
 			ModelPs_global.mwi_tps_queue_high = Cursor1.getInt(17);
 			ModelPs_global.mwi_tps_queue_low = Cursor1.getInt(18);
-			ModelPs_global.mwi_disable_initial_unsolicited = Cursor1.getBoolean(19); // YesNo value/Type.
-			ModelPs_global.ignore_uri_user_options = Cursor1.getBoolean(20);
+			ModelPs_global.mwi_disable_initial_unsolicited = Cursor1.getString(19); // YesNo value/Type.
+			ModelPs_global.ignore_uri_user_options = Cursor1.getString(20);
 			ListUser1.add(ModelPs_global);
 
 		}

@@ -11,7 +11,7 @@ public class ps_OutboundModel {
 	public String event;
 	public int max_auth_attemps;
 	public String transport;
-	public boolean multi_user;				// YesNo value/Type.
+	public String multi_user;				// YesNo value/Type.
 	public String _body;
 	public String _context;
 	public String _exten;

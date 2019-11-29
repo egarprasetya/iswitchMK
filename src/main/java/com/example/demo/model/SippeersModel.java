@@ -30,21 +30,21 @@ public class SippeersModel {
 	public String disallow;
 	public String allow;
 	public String insecure;
-	public boolean trustrpid;
+	public String trustrpid;
 	public String progressinband;		// sip_progressinband value / Type.
-	public boolean promiscredir;		// YesNo value / Type.
-	public boolean useclientcode;		// YesNo value / Type.
+	public String promiscredir;		// YesNo value / Type.
+	public String useclientcode;		// YesNo value / Type.
 	public String accountcode;
 	public String setvar;
 	public String callerid;
 	public String amaflags;
-	public boolean callcounter;			// YesNo value / Type.
+	public String callcounter;			// YesNo value / Type.
 	public int busylevel;
-	public boolean allowoverlap;		// YesNo value / Type.
-	public boolean allowsubscribe;		// YesNo value / Type.
-	public boolean videosupport;		// YesNo value / Type.
+	public String allowoverlap;		// YesNo value / Type.
+	public String allowsubscribe;		// YesNo value / Type.
+	public String videosupport;		// YesNo value / Type.
 	public int maxcallbitrate;
-	public boolean rfc2833compensate;	// YesNo value / Type.
+	public String rfc2833compensate;	// YesNo value / Type.
 	public String mailbox;
 	public String session_timers;		// sip_session_timers value / Type.
 	public int session_expires;
@@ -58,19 +58,19 @@ public class SippeersModel {
 	public String defaultip;
 	public int rtptimeout;
 	public int rtpholdtimeout;
-	public boolean sendrpid;
+	public String sendrpid;
 	public String outboundproxy;
 	public String callbackextension;
 	public int timer1;
 	public int timerb;
 	public int qualifyfreq;
-	public boolean constantssrc;			// YesNo vale / Type.
+	public String constantssrc;			// YesNo vale / Type.
 	public String contact_permit;
 	public String contact_deny;	
-	public boolean usereqphone;				// YesNo vale / Type.
-	public boolean textsupport;				// YesNo vale / Type.
-	public boolean faxdetect;				// YesNo vale / Type.
-	public boolean buggymwi;				// YesNo vale / Type.
+	public String usereqphone;				// YesNo vale / Type.
+	public String textsupport;				// YesNo vale / Type.
+	public String faxdetect;				// YesNo vale / Type.
+	public String buggymwi;				// YesNo vale / Type.
 	public String auth;
 	public String fullname;
 	public String trunkname;
@@ -79,17 +79,17 @@ public class SippeersModel {
 	public String mohinterpret;
 	public String mohsuggest;
 	public String parkinglot;
-	public boolean hasvoicemail;			// YesNo vale / Type.
-	public boolean subscribemwi;			// YesNo vale / Type.
+	public String hasvoicemail;			// YesNo vale / Type.
+	public String subscribemwi;			// YesNo vale / Type.
 	public String vmexten;
-	public boolean autoframing;				// YesNo vale / Type.
+	public String autoframing;				// YesNo vale / Type.
 	public int rtpkeepalive;
 	public int call_limit;
-	public boolean g726nonstandard;			// YesNo vale / Type.
-	public boolean ignoresdpversion;		// YesNo vale / Type.
-	public boolean allowtransfer;			// YesNo vale / Type.
-	public boolean dynamic;					// YesNo vale / Type.
+	public String g726nonstandard;			// YesNo vale / Type.
+	public String ignoresdpversion;		// YesNo vale / Type.
+	public String allowtransfer;			// YesNo vale / Type.
+	public String dynamic;					// YesNo vale / Type.
 	public String path;
-	public boolean supportpath;				// YesNo vale / Type.
+	public String supportpath;				// YesNo vale / Type.
 	public String email;					// bp_char value / Type.
 }
