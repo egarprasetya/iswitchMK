@@ -36,10 +36,9 @@ public class ps_inbound_publicationsController {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryinsert_inbound_publication = Connection1
 				.prepareStatement(query_string_insert.query_insert_ps_inbound_publications);
-		queryinsert_inbound_publication.setString(1, cfm.id);
-		queryinsert_inbound_publication.setString(2, cfm.endpoint);
-		queryinsert_inbound_publication.setString(3, cfm.event_asterisk_devicestate);
-		queryinsert_inbound_publication.setString(4, cfm.event_asterisk_mwi);
+		queryinsert_inbound_publication.setString(1, cfm.endpoint);
+		queryinsert_inbound_publication.setString(2, cfm.event_asterisk_devicestate);
+		queryinsert_inbound_publication.setString(3, cfm.event_asterisk_mwi);
 
 		int Cursor1 = queryinsert_inbound_publication.executeUpdate();// Evaluate (Connected_Expression1)
 		String a = "1";
@@ -50,7 +49,7 @@ public class ps_inbound_publicationsController {
 	@GetMapping("/Getpsinbound")
 	public ArrayList<ps_inboundModel> Tampilps_inbound() throws SQLException {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-		queryselect_psinbound = Connection1.prepareStatement(query_string.query_select_alembic_version);
+		queryselect_psinbound = Connection1.prepareStatement(query_string.query_select_ps_inbound_publications);
 		ResultSet Cursor1 = queryselect_psinbound.executeQuery();// Evaluate (Connected_Expression1)
 		ArrayList<ps_inboundModel> ListUser1 = new ArrayList<ps_inboundModel>();
 		while (Cursor1.next()) // while there_is_next_record_in (Cursor1)

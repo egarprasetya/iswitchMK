@@ -3,6 +3,7 @@ package com.example.demo.model;
 public class ps_globalsModel {
 	public String id;
 	public int max_forwards;
+	public String user_agent;
 	public String default_outbound_endpoint;
 	public String debug;
 	public String endpoint_identifier_order;

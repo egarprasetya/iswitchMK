@@ -8,14 +8,19 @@ public class AllInsertQuery {
 			"(version_num) " + 
 			"VALUES(?)";
 	public String query_insert_cdr="INSERT INTO cdr " + 
-			"(accountcode, src, dst, dcontext, clid, channel, dstchannel, lastapp, lastdata, start, answer, end, duration, billsec, disposition, amaflags, userfield, uniqueid, linkedid, peeraccount, sequence) " + 
+			"(accountcode, src, dst, dcontext, clid, channel, dstchannel, lastapp, lastdata, start, answer, \"end\", duration, billsec, disposition, amaflags, userfield, uniqueid, linkedid, peeraccount, sequence) " + 
 			"VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-	public String query_insert_extension="INSERT INTO extensions " + 
+	public String query_insert_extension="INSERT INTO extensions " +
 			"(context, exten, priority, app, appdata) " + 
 			"VALUES(?, ?, ?, ?, ?)";
 	public String query_insert_iaxfriends="INSERT INTO iaxfriends " + 
 			"(name, type, username, mailbox, secret, dbsecret, context, regcontext, host, ipaddr, port, defaultip, sourceaddress, mask, regexten, regseconds, accountcode, mohinterpret, mohsuggest, inkeys, outkeys, language, callerid, cid_number, sendani, fullname, trunk, auth, maxauthreq, requirecalltoken, encryption, transfer, jitterbuffer, forcejitterbuffer, disallow, allow, codecpriority, qualify, qualifysmoothing, qualifyfreqok, qualifyfreqnotok, timezone, adsi, amaflags, setvar) " + 
-			"VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			"VALUES("
+			+ "?, ?, ?::type_values, ?, ?, ?, ?, ?, ?, ?,"
+			+ "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, "
+			+ "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, "
+			+ "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, "
+			+ "?, ?, ?, ?, ?)";
 	public String query_insert_meetme="INSERT INTO meetme " + 
 			"(confno, starttime, endtime, pin, adminpin, opts, adminopts, recordingfilename, recordingformat, maxusers, members) " + 
 			"VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";

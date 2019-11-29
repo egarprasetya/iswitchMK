@@ -81,6 +81,7 @@ public class ps_subscription_persistenceController {
 			ModelPs_subscription_persistance.expires = Cursor1.getInt(11);
 			ModelPs_subscription_persistance.contact_uri = Cursor1.getString(12);
 			ModelPs_subscription_persistance.prune_on_boot = Cursor1.getString(13);
+			ListUser1.add(ModelPs_subscription_persistance);
 
 		}
 		Connection1.close();

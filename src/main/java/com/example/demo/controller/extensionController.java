@@ -36,12 +36,12 @@ public class extensionController {
 	public String putalembicversionconfig(@RequestBody extensionModel cfm) throws SQLException {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryinsert_extension = Connection1.prepareStatement(query_string_insert.query_insert_extension);
-		queryinsert_extension.setInt(1, cfm.id);
-		queryinsert_extension.setString(2, cfm.context);
-		queryinsert_extension.setString(3, cfm.exten);
-		queryinsert_extension.setInt(4, cfm.priority);
-		queryinsert_extension.setString(5, cfm.app);
-		queryinsert_extension.setString(6, cfm.appdata);
+//		queryinsert_extension.setInt(1, cfm.id);
+		queryinsert_extension.setString(1, cfm.context);
+		queryinsert_extension.setString(2, cfm.exten);
+		queryinsert_extension.setInt(3, cfm.priority);
+		queryinsert_extension.setString(4, cfm.app);
+		queryinsert_extension.setString(5, cfm.appdata);
 
 		int Cursor1 = queryinsert_extension.executeUpdate();// Evaluate (Connected_Expression1)
 		String a = "0";

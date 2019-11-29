@@ -35,24 +35,23 @@ public class meetmeController {
 	AllQuery query_string = new AllQuery();
 	PreparedStatement queryselect_meetme = null;
 
-	@GetMapping("/Getmeetme")
+	
 
 	@PutMapping("/Putmeetme")
 	public String putmeetme(@RequestBody meetmeModel cfm) throws SQLException {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryinsert_meetme = Connection1.prepareStatement(query_string_insert.query_insert_meetme);
-		queryinsert_meetme.setInt(1, cfm.bookid);
-		queryinsert_meetme.setString(2, cfm.confno);
-		queryinsert_meetme.setDate(3, cfm.starttime);
-		queryinsert_meetme.setDate(4, cfm.endtime);
-		queryinsert_meetme.setString(5, cfm.pin);
-		queryinsert_meetme.setString(6, cfm.adminpin);
-		queryinsert_meetme.setString(7, cfm.opts);
-		queryinsert_meetme.setString(8, cfm.adminopts);
-		queryinsert_meetme.setString(9, cfm.recordingfilename);
-		queryinsert_meetme.setString(10, cfm.recordingformat);
-		queryinsert_meetme.setInt(11, cfm.maxusers);
-		queryinsert_meetme.setInt(12, cfm.members);
+		queryinsert_meetme.setString(1, cfm.confno);
+		queryinsert_meetme.setDate(2, cfm.starttime);
+		queryinsert_meetme.setDate(3, cfm.endtime);
+		queryinsert_meetme.setString(4, cfm.pin);
+		queryinsert_meetme.setString(5, cfm.adminpin);
+		queryinsert_meetme.setString(6, cfm.opts);
+		queryinsert_meetme.setString(7, cfm.adminopts);
+		queryinsert_meetme.setString(8, cfm.recordingfilename);
+		queryinsert_meetme.setString(9, cfm.recordingformat);
+		queryinsert_meetme.setInt(10, cfm.maxusers);
+		queryinsert_meetme.setInt(11, cfm.members);
 
 		int Cursor1 = queryinsert_meetme.executeUpdate();// Evaluate (Connected_Expression1)
 		String a = "1";
@@ -60,6 +59,7 @@ public class meetmeController {
 		return a;
 	}
 
+	@GetMapping("/Getmeetme")
 	public ArrayList<meetmeModel> Tampilmetmee() throws SQLException {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_meetme = Connection1.prepareStatement(query_string.query_select_meetme);

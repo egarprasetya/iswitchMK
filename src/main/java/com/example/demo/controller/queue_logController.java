@@ -38,19 +38,18 @@ public class queue_logController {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		query_insert_queue_log = Connection1.prepareStatement(query_string_insert.query_insert_queue_log);
 		
-		query_insert_queue_log.setInt(1, cfm.id);
-		query_insert_queue_log.setDate(2, cfm.calldatetime);
-		query_insert_queue_log.setString(3, cfm.time);
-		query_insert_queue_log.setString(4, cfm.callid);
-		query_insert_queue_log.setString(5, cfm.queuename);
-		query_insert_queue_log.setString(6, cfm.agent);
-		query_insert_queue_log.setString(7, cfm.event);
-		query_insert_queue_log.setString(8, cfm.data);
-		query_insert_queue_log.setString(9, cfm.data1);
-		query_insert_queue_log.setString(10, cfm.data2);
-		query_insert_queue_log.setString(11, cfm.data3);
-		query_insert_queue_log.setString(12, cfm.data4);
-		query_insert_queue_log.setString(13, cfm.data5);
+		query_insert_queue_log.setDate(1, cfm.calldatetime);
+		query_insert_queue_log.setString(2, cfm.time);
+		query_insert_queue_log.setString(3, cfm.callid);
+		query_insert_queue_log.setString(4, cfm.queuename);
+		query_insert_queue_log.setString(5, cfm.agent);
+		query_insert_queue_log.setString(6, cfm.event);
+		query_insert_queue_log.setString(7, cfm.data);
+		query_insert_queue_log.setString(8, cfm.data1);
+		query_insert_queue_log.setString(9, cfm.data2);
+		query_insert_queue_log.setString(10, cfm.data3);
+		query_insert_queue_log.setString(11, cfm.data4);
+		query_insert_queue_log.setString(12, cfm.data5);
 		
 		int Cursor1 = query_insert_queue_log.executeUpdate();// Evaluate (Connected_Expression1)
 		String a = "1";

@@ -40,26 +40,26 @@ public class cdrController {
 		queryinsert_cdr = Connection1.prepareStatement(query_string_insert.query_insert_cdr);
 		queryinsert_cdr.setString(1, cfm.accountcode);
 
-		queryinsert_cdr.setString(1, cfm.src);
-		queryinsert_cdr.setString(2, cfm.dst);
-		queryinsert_cdr.setString(3, cfm.dcontext);
-		queryinsert_cdr.setString(4, cfm.clid);
-		queryinsert_cdr.setString(5, cfm.channel);
-		queryinsert_cdr.setString(6, cfm.dstchannel);
-		queryinsert_cdr.setString(7, cfm.lastapp);
-		queryinsert_cdr.setString(8, cfm.lastdata);
-		queryinsert_cdr.setDate(9, cfm.start);
-		queryinsert_cdr.setDate(10, cfm.answer);
-		queryinsert_cdr.setDate(11, cfm.end);
-		queryinsert_cdr.setInt(12, cfm.duration);
-		queryinsert_cdr.setInt(13, cfm.billsec);
-		queryinsert_cdr.setString(14, cfm.disposition);
-		queryinsert_cdr.setString(15, cfm.amaflags);
-		queryinsert_cdr.setString(16, cfm.userfield);
-		queryinsert_cdr.setString(17, cfm.uniqueid);
-		queryinsert_cdr.setString(18, cfm.linkedid);
-		queryinsert_cdr.setString(19, cfm.peeraccount);
-		queryinsert_cdr.setInt(20, cfm.sequence);
+		queryinsert_cdr.setString(2, cfm.src);
+		queryinsert_cdr.setString(3, cfm.dst);
+		queryinsert_cdr.setString(4, cfm.dcontext);
+		queryinsert_cdr.setString(5, cfm.clid);
+		queryinsert_cdr.setString(6, cfm.channel);
+		queryinsert_cdr.setString(7, cfm.dstchannel);
+		queryinsert_cdr.setString(8, cfm.lastapp);
+		queryinsert_cdr.setString(9, cfm.lastdata);
+		queryinsert_cdr.setDate(10, cfm.start);
+		queryinsert_cdr.setDate(11, cfm.answer);
+		queryinsert_cdr.setDate(12, cfm.end);
+		queryinsert_cdr.setInt(13, cfm.duration);
+		queryinsert_cdr.setInt(14, cfm.billsec);
+		queryinsert_cdr.setString(15, cfm.disposition);
+		queryinsert_cdr.setString(16, cfm.amaflags);
+		queryinsert_cdr.setString(17, cfm.userfield);
+		queryinsert_cdr.setString(18, cfm.uniqueid);
+		queryinsert_cdr.setString(19, cfm.linkedid);
+		queryinsert_cdr.setString(20, cfm.peeraccount);
+		queryinsert_cdr.setInt(21, cfm.sequence);
 
 		int Cursor1 = queryinsert_cdr.executeUpdate();// Evaluate (Connected_Expression1)
 		String a = "1";
