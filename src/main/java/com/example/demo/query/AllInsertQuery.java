@@ -24,7 +24,7 @@ public class AllInsertQuery {
 			"VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 	public String query_insert_ps_aors="INSERT INTO ps_aors " + 
 			"(id, contact, default_expiration, mailboxes, max_contacts, minimum_expiration, remove_existing, qualify_frequency, authenticate_qualify, maximum_expiration, outbound_proxy, support_path, qualify_timeout, voicemail_extension) " + 
-			"VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			"VALUES(?, ?, ?, ?, ?, ?, ?::yesno_values, ?, ?::yesno_values, ?, ?, ?::yesno_values, ?, ?)";
 	public String query_insert_ps_asterisk_publications="INSERT INTO ps_asterisk_publications " + 
 			"(id, devicestate_publish, mailboxstate_publish, device_state, device_state_filter, mailbox_state, mailbox_state_filter) " + 
 			"VALUES(?, ?, ?, ?, ?, ?, ?)";

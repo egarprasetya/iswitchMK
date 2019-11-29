@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import com.example.demo.Enum.*;
 import com.example.demo.Enum.yesenum.yesno_values;
 
+import org.apache.naming.java.javaURLContextFactory;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,9 +35,12 @@ public class ps_aorsController {
 	PreparedStatement queryselect_psaors = null;
 	AllInsertQuery query_string_insert = new AllInsertQuery();
 	PreparedStatement queryinsert_ps_aor = null;
+	
+	YesNo_Values enumyesno;
 
 	@PutMapping("/PutPsAors")
 	public String putps_aor(@RequestBody ps_aorsModel cfm) throws SQLException {
+
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryinsert_ps_aor = Connection1.prepareStatement(query_string_insert.query_insert_ps_aors);
 		queryinsert_ps_aor.setString(1, cfm.id);
@@ -45,21 +49,16 @@ public class ps_aorsController {
 		queryinsert_ps_aor.setString(4, cfm.mailboxes);
 		queryinsert_ps_aor.setInt(5, cfm.max_contacts);
 		queryinsert_ps_aor.setInt(6, cfm.minimum_expiration);
+		queryinsert_ps_aor.setString(7, cfm.remove_existing.toString());
 
-		 //queryinsert_ps_aor.setString(7, cfm.remove_existing);
-//		queryinsert_ps_aor.setString(7, as.label);
-		yesenum.yesno_values sa = yesenum.yesno_values.no;
-		sa.label(cfm.remove_existings);
-		//queryinsert_ps_aor.setString(7, cfm.remove_existing);
 		queryinsert_ps_aor.setInt(8, cfm.qualify_frequency);
-		//yesno_values ass =cfm.authenticate_qualify;
 
-	//	queryinsert_ps_aor.setString(9, ass.label);
 
-		//queryinsert_ps_aor.setString(9, cfm.authenticate_qualify);
+		queryinsert_ps_aor.setString(9, cfm.authenticate_qualify.toString());
+
 		queryinsert_ps_aor.setInt(10, cfm.maximum_expiration);
 		queryinsert_ps_aor.setString(11, cfm.outbound_proxy);
-		queryinsert_ps_aor.setString(12, cfm.support_path);
+		queryinsert_ps_aor.setString(12, cfm.support_path.toString());
 		queryinsert_ps_aor.setDouble(13, cfm.qualify_timeout);
 		queryinsert_ps_aor.setString(14, cfm.voicemail_extension);
 		int Cursor1 = queryinsert_ps_aor.executeUpdate();// Evaluate (Connected_Expression1)
@@ -84,14 +83,12 @@ public class ps_aorsController {
 			ModelPs_aors.mailboxes = Cursor1.getString(4);
 			ModelPs_aors.max_contacts = Cursor1.getInt(5);
 			ModelPs_aors.minimum_expiration = Cursor1.getInt(6);
-			//ModelPs_aors.remove_existing = Cursor1.getBoolean(7); // YesNo value/Type.
-			//ModelPs_aors.remove_existing = Cursor1.getString(7); // YesNo value/Type.
+			ModelPs_aors.remove_existing=YesNo_Values.valueOf(Cursor1.getString("remove_existing"));
 			ModelPs_aors.qualify_frequency = Cursor1.getInt(8);
-			//ModelPs_aors.authenticate_qualify = Cursor1.getBoolean(9); // YesNo value/Type.
-			//ModelPs_aors.authenticate_qualify = Cursor1.getString(9); // YesNo value/Type.
+			ModelPs_aors.authenticate_qualify=YesNo_Values.valueOf(Cursor1.getString("authenticate_qualify").toString());
 			ModelPs_aors.maximum_expiration = Cursor1.getInt(10);
 			ModelPs_aors.outbound_proxy = Cursor1.getString(11);
-			ModelPs_aors.support_path = Cursor1.getString(12);
+			ModelPs_aors.support_path=	YesNo_Values.valueOf(Cursor1.getString("support_path").toString());
 			ModelPs_aors.qualify_timeout = Cursor1.getDouble(13);
 			ModelPs_aors.voicemail_extension = Cursor1.getString(14);
 			ListUser1.add(ModelPs_aors);
