@@ -19,7 +19,8 @@ public class SippeersModel {
 	public String secret;
 	public String md5secret;
 	public String remotesecret;
-	public String transport;			// sip_transport value / Type.
+	public String transport;	
+	
 	public String dtmfmode;				// sip_dtmf_mode value / Type.
 	public String directmedia;			// sip_direct_media value v2 / Type.
 	public String nat;

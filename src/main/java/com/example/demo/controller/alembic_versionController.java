@@ -65,13 +65,13 @@ public class alembic_versionController {
 
 }
 	
-	@PostMapping(path="/GetAlembicVersionParameter" ,produces="application/json",consumes=MediaType.APPLICATION_JSON_VALUE)
-	public ArrayList<alembic_versionModel> TampilAlembicVersionParameterSelect(@RequestBody String version_num) throws SQLException
+	@PostMapping(path="/PostAlembicVersionParameter" ,produces="application/json",consumes=MediaType.APPLICATION_JSON_VALUE)
+	public ArrayList<alembic_versionModel> TampilAlembicVersionParameterSelect(@RequestBody alembic_versionModel cfm) throws SQLException
 	{		
 		   Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 	        queryselect_alembic_version=Connection1.prepareStatement(query_String_param.query_select_alembic_version_param_version_num);
 	       
-	        queryselect_alembic_version.setString(1, version_num);
+	        queryselect_alembic_version.setString(1, cfm.version_num);
 	        ResultSet Cursor1 = queryselect_alembic_version.executeQuery();// Evaluate (Connected_Expression1)
 	      	  ArrayList<alembic_versionModel> ListUser1 = new ArrayList<alembic_versionModel>();
 	          while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
@@ -79,11 +79,10 @@ public class alembic_versionController {
 	        alembic_versionModel ModelAlembic=new alembic_versionModel();	
 	         ModelAlembic.version_num=Cursor1.getString(1);
 	         ListUser1.add(ModelAlembic);  
-	          return ListUser1;
+	          
 	          }	          
 	          Connection1.close();
-		        alembic_versionModel ModelAlembic=new alembic_versionModel();	
-		         ListUser1.add(ModelAlembic);  
+		        
 	          return ListUser1;
 
 	}
