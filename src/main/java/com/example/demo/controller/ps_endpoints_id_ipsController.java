@@ -38,7 +38,7 @@ public class ps_endpoints_id_ipsController {
 		queryinsert_ps_endpoints_id_ip.setString(1, cfm.id);
 		queryinsert_ps_endpoints_id_ip.setString(2, cfm.endpoint);
 		queryinsert_ps_endpoints_id_ip.setString(3, cfm.match);
-		queryinsert_ps_endpoints_id_ip.setBoolean(4, cfm.srv_lookups);
+		queryinsert_ps_endpoints_id_ip.setString(4, cfm.srv_lookups);
 		queryinsert_ps_endpoints_id_ip.setString(5, cfm.match_header);
 		int Cursor1 = queryinsert_ps_endpoints_id_ip.executeUpdate();// Evaluate (Connected_Expression1)
 		String a = "1";
@@ -58,7 +58,7 @@ public class ps_endpoints_id_ipsController {
 			ModelPs_enpoints_id.id = Cursor1.getString(1);
 			ModelPs_enpoints_id.endpoint = Cursor1.getString(2);
 			ModelPs_enpoints_id.match = Cursor1.getString(3);
-			ModelPs_enpoints_id.srv_lookups = Cursor1.getBoolean(4);
+			ModelPs_enpoints_id.srv_lookups = Cursor1.getString(4);
 			ModelPs_enpoints_id.match_header = Cursor1.getString(5);
 
 			ListUser1.add(ModelPs_enpoints_id);

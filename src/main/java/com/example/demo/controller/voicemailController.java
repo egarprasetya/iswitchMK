@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(produces="application/json",path="/voicemail")
+@RequestMapping("/voicemail")
 public class voicemailController {
 	PreparedStatement querydelete_alembic_version_config = null;
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();
@@ -45,21 +45,21 @@ public class voicemailController {
 		query_insert_voicemail.setString(5, cfm.alias);
 		query_insert_voicemail.setString(6, cfm.email);
 		query_insert_voicemail.setString(7, cfm.pager);
-		query_insert_voicemail.setBoolean(8, cfm.attach);
+		query_insert_voicemail.setString(8, cfm.attach);
 		query_insert_voicemail.setString(9, cfm.attachfmt);
 		query_insert_voicemail.setString(10, cfm.servermail);
 		query_insert_voicemail.setString(11, cfm.language);
 		query_insert_voicemail.setString(12, cfm.tz);
-		query_insert_voicemail.setBoolean(13, cfm.deletevoicemail);
-		query_insert_voicemail.setBoolean(14, cfm.saycid);
-		query_insert_voicemail.setBoolean(15, cfm.sendvoicemail);
-		query_insert_voicemail.setBoolean(16, cfm.review);
-		query_insert_voicemail.setBoolean(17, cfm.tempgreetwarn);
-		query_insert_voicemail.setBoolean(18, cfm.operator);
-		query_insert_voicemail.setBoolean(19, cfm.envelope);
+		query_insert_voicemail.setString(13, cfm.deletevoicemail);
+		query_insert_voicemail.setString(14, cfm.saycid);
+		query_insert_voicemail.setString(15, cfm.sendvoicemail);
+		query_insert_voicemail.setString(16, cfm.review);
+		query_insert_voicemail.setString(17, cfm.tempgreetwarn);
+		query_insert_voicemail.setString(18, cfm.operator);
+		query_insert_voicemail.setString(19, cfm.envelope);
 		query_insert_voicemail.setInt(20, cfm.sayduration);
-		query_insert_voicemail.setBoolean(21, cfm.forcename);
-		query_insert_voicemail.setBoolean(22, cfm.forcegreetings);
+		query_insert_voicemail.setString(21, cfm.forcename);
+		query_insert_voicemail.setString(22, cfm.forcegreetings);
 		query_insert_voicemail.setString(23, cfm.callback);
 		query_insert_voicemail.setString(24, cfm.dialout);
 		query_insert_voicemail.setString(25, cfm.exitcontext);
@@ -96,21 +96,21 @@ public class voicemailController {
 			ModelVoiceMail.alias = Cursor1.getString(6);
 			ModelVoiceMail.email = Cursor1.getString(7);
 			ModelVoiceMail.pager = Cursor1.getString(8);
-			ModelVoiceMail.attach = Cursor1.getBoolean(9); // YesNo value/Type.
+			ModelVoiceMail.attach = Cursor1.getString(9); // YesNo value/Type.
 			ModelVoiceMail.attachfmt = Cursor1.getString(10);
 			ModelVoiceMail.servermail = Cursor1.getString(11);
 			ModelVoiceMail.language = Cursor1.getString(12);
 			ModelVoiceMail.tz = Cursor1.getString(13);
-			ModelVoiceMail.deletevoicemail = Cursor1.getBoolean(14); // YesNo value/Type.
-			ModelVoiceMail.saycid = Cursor1.getBoolean(15); // YesNo value/Type.
-			ModelVoiceMail.sendvoicemail = Cursor1.getBoolean(16); // YesNo value/Type.
-			ModelVoiceMail.review = Cursor1.getBoolean(17); // YesNo value/Type.
-			ModelVoiceMail.tempgreetwarn = Cursor1.getBoolean(18); // YesNo value/Type.
-			ModelVoiceMail.operator = Cursor1.getBoolean(19); // YesNo value/Type.
-			ModelVoiceMail.envelope = Cursor1.getBoolean(20); // YesNo value/Type.
+			ModelVoiceMail.deletevoicemail = Cursor1.getString(14); // YesNo value/Type.
+			ModelVoiceMail.saycid = Cursor1.getString(15); // YesNo value/Type.
+			ModelVoiceMail.sendvoicemail = Cursor1.getString(16); // YesNo value/Type.
+			ModelVoiceMail.review = Cursor1.getString(17); // YesNo value/Type.
+			ModelVoiceMail.tempgreetwarn = Cursor1.getString(18); // YesNo value/Type.
+			ModelVoiceMail.operator = Cursor1.getString(19); // YesNo value/Type.
+			ModelVoiceMail.envelope = Cursor1.getString(20); // YesNo value/Type.
 			ModelVoiceMail.sayduration = Cursor1.getInt(21);
-			ModelVoiceMail.forcename = Cursor1.getBoolean(22); // YesNo value/Type.
-			ModelVoiceMail.forcegreetings = Cursor1.getBoolean(23); // YesNo value/Type.
+			ModelVoiceMail.forcename = Cursor1.getString(22); // YesNo value/Type.
+			ModelVoiceMail.forcegreetings = Cursor1.getString(23); // YesNo value/Type.
 			ModelVoiceMail.callback = Cursor1.getString(24);
 			ModelVoiceMail.dialout = Cursor1.getString(25);
 			ModelVoiceMail.exitcontext = Cursor1.getString(26);

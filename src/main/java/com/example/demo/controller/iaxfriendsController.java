@@ -61,25 +61,25 @@ public class iaxfriendsController {
 		queryinsert_iaxfriend.setString(22, cfm.language);
 		queryinsert_iaxfriend.setString(23, cfm.callerid);
 		queryinsert_iaxfriend.setString(24, cfm.cid_number);
-		queryinsert_iaxfriend.setBoolean(25, cfm.sendani); // YesNo Value/Type.
+		queryinsert_iaxfriend.setString(25, cfm.sendani); // YesNo Value/Type.
 		queryinsert_iaxfriend.setString(26, cfm.fullname); // YesNo Value/Type
-		queryinsert_iaxfriend.setBoolean(27, cfm.trunk);
+		queryinsert_iaxfriend.setString(27, cfm.trunk);
 		queryinsert_iaxfriend.setString(28, cfm.auth);
 		queryinsert_iaxfriend.setInt(29, cfm.maxauthreq);
 		queryinsert_iaxfriend.setString(30, cfm.requirecalltoken); // iax_requirecalltoken value/Type.
 		queryinsert_iaxfriend.setString(31, cfm.encryption); // iax_encryption value/Type.
 		queryinsert_iaxfriend.setString(32, cfm.transfer); // iax_transfer value/Type.
-		queryinsert_iaxfriend.setBoolean(33, cfm.jitterbuffer); // YesNo Value/Type.
-		queryinsert_iaxfriend.setBoolean(34, cfm.forcejitterbuffer); // YesNo Value/Type.
+		queryinsert_iaxfriend.setString(33, cfm.jitterbuffer); // YesNo Value/Type.
+		queryinsert_iaxfriend.setString(34, cfm.forcejitterbuffer); // YesNo Value/Type.
 		queryinsert_iaxfriend.setString(35, cfm.disallow);
 		queryinsert_iaxfriend.setString(36, cfm.allow);
 		queryinsert_iaxfriend.setString(37, cfm.codecpriority);
 		queryinsert_iaxfriend.setString(38, cfm.qualify);
-		queryinsert_iaxfriend.setBoolean(39, cfm.qualifysmoothing); // YesNo Value/Type
+		queryinsert_iaxfriend.setString(39, cfm.qualifysmoothing); // YesNo Value/Type
 		queryinsert_iaxfriend.setString(40, cfm.qualifyfreqok);
 		queryinsert_iaxfriend.setString(41, cfm.qualifyfreqnotok);
 		queryinsert_iaxfriend.setString(42, cfm.timezone);
-		queryinsert_iaxfriend.setBoolean(43, cfm.adsi); // YesNo Value/Type.
+		queryinsert_iaxfriend.setString(43, cfm.adsi); // YesNo Value/Type.
 		queryinsert_iaxfriend.setString(44, cfm.amaflags);
 		queryinsert_iaxfriend.setString(45, cfm.setvar);
 
@@ -123,25 +123,25 @@ public class iaxfriendsController {
 			ModelIaxfriends.language = Cursor1.getString(23);
 			ModelIaxfriends.callerid = Cursor1.getString(24);
 			ModelIaxfriends.cid_number = Cursor1.getString(25);
-			ModelIaxfriends.sendani = Cursor1.getBoolean(26); // YesNo Value/Type.
+			ModelIaxfriends.sendani = Cursor1.getString(26); // YesNo Value/Type.
 			ModelIaxfriends.fullname = Cursor1.getString(27); // YesNo Value/Type
-			ModelIaxfriends.trunk = Cursor1.getBoolean(28);
+			ModelIaxfriends.trunk = Cursor1.getString(28);
 			ModelIaxfriends.auth = Cursor1.getString(29);
 			ModelIaxfriends.maxauthreq = Cursor1.getInt(30);
 			ModelIaxfriends.requirecalltoken = Cursor1.getString(31); // iax_requirecalltoken value/Type.
 			ModelIaxfriends.encryption = Cursor1.getString(32); // iax_encryption value/Type.
 			ModelIaxfriends.transfer = Cursor1.getString(33); // iax_transfer value/Type.
-			ModelIaxfriends.jitterbuffer = Cursor1.getBoolean(34); // YesNo Value/Type.
-			ModelIaxfriends.forcejitterbuffer = Cursor1.getBoolean(35); // YesNo Value/Type.
+			ModelIaxfriends.jitterbuffer = Cursor1.getString(34); // YesNo Value/Type.
+			ModelIaxfriends.forcejitterbuffer = Cursor1.getString(35); // YesNo Value/Type.
 			ModelIaxfriends.disallow = Cursor1.getString(36);
 			ModelIaxfriends.allow = Cursor1.getString(37);
 			ModelIaxfriends.codecpriority = Cursor1.getString(38);
 			ModelIaxfriends.qualify = Cursor1.getString(39);
-			ModelIaxfriends.qualifysmoothing = Cursor1.getBoolean(40); // YesNo Value/Type
+			ModelIaxfriends.qualifysmoothing = Cursor1.getString(40); // YesNo Value/Type
 			ModelIaxfriends.qualifyfreqok = Cursor1.getString(41);
 			ModelIaxfriends.qualifyfreqnotok = Cursor1.getString(42);
 			ModelIaxfriends.timezone = Cursor1.getString(43);
-			ModelIaxfriends.adsi = Cursor1.getBoolean(44); // YesNo Value/Type.
+			ModelIaxfriends.adsi = Cursor1.getString(44); // YesNo Value/Type.
 			ModelIaxfriends.amaflags = Cursor1.getString(45);
 			ModelIaxfriends.setvar = Cursor1.getString(46);
 			ListUser1.add(ModelIaxfriends);

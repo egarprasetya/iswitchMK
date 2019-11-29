@@ -39,9 +39,9 @@ public class ps_asterisk_publicationController {
 		queryinsert_ps_asterisk_publication.setString(1, cfm.id);
 		queryinsert_ps_asterisk_publication.setString(2, cfm.devicestate_publish);
 		queryinsert_ps_asterisk_publication.setString(3, cfm.mailboxstate_publish);
-		queryinsert_ps_asterisk_publication.setBoolean(4, cfm.device_state);
+		queryinsert_ps_asterisk_publication.setString(4, cfm.device_state);
 		queryinsert_ps_asterisk_publication.setString(5, cfm.device_state_filter);
-		queryinsert_ps_asterisk_publication.setBoolean(6, cfm.mailbox_state);
+		queryinsert_ps_asterisk_publication.setString(6, cfm.mailbox_state);
 		queryinsert_ps_asterisk_publication.setString(7, cfm.mailbox_state_filter);
 
 		int Cursor1 = queryinsert_ps_asterisk_publication.executeUpdate();// Evaluate (Connected_Expression1)
@@ -62,9 +62,9 @@ public class ps_asterisk_publicationController {
 			ModelPs_asterisk.id = Cursor1.getString(1);
 			ModelPs_asterisk.devicestate_publish = Cursor1.getString(2);
 			ModelPs_asterisk.mailboxstate_publish = Cursor1.getString(3);
-			ModelPs_asterisk.device_state = Cursor1.getBoolean(4);
+			ModelPs_asterisk.device_state = Cursor1.getString(4);
 			ModelPs_asterisk.device_state_filter = Cursor1.getString(5);
-			ModelPs_asterisk.mailbox_state = Cursor1.getBoolean(6);
+			ModelPs_asterisk.mailbox_state = Cursor1.getString(6);
 			ModelPs_asterisk.mailbox_state_filter = Cursor1.getString(7);
 			ListUser1.add(ModelPs_asterisk);
 

@@ -40,7 +40,7 @@ public class ps_resourcelistController {
 		query_insert_ps_resource_list.setString(1, cfm.id);
 		query_insert_ps_resource_list.setString(2, cfm.list_item);
 		query_insert_ps_resource_list.setString(3, cfm.event);
-		query_insert_ps_resource_list.setBoolean(4, cfm.full_state);
+		query_insert_ps_resource_list.setString(4, cfm.full_state);
 		query_insert_ps_resource_list.setInt(5, cfm.notification_batch_interval);
 		
 		int Cursor1 = query_insert_ps_resource_list.executeUpdate();// Evaluate (Connected_Expression1)
@@ -62,7 +62,7 @@ public class ps_resourcelistController {
 			ModelPs_resource_list.id = Cursor1.getString(1);
 			ModelPs_resource_list.list_item = Cursor1.getString(2);
 			ModelPs_resource_list.event = Cursor1.getString(3);
-			ModelPs_resource_list.full_state = Cursor1.getBoolean(4);
+			ModelPs_resource_list.full_state = Cursor1.getString(4);
 			ModelPs_resource_list.notification_batch_interval = Cursor1.getInt(5);
 			ListUser1.add(ModelPs_resource_list);
 
