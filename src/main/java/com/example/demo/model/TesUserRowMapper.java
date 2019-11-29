@@ -7,8 +7,8 @@ public class TesUserRowMapper implements RowMapper<TesUserModel>
 {
 	public TesUserModel mapRow(ResultSet rs, int rowNum) throws SQLException {
 		TesUserModel dh = new TesUserModel();
-		dh.setNama(rs.getString("nama"));
-		dh.setUmur(rs.getInt("umur"));
+//		dh.setNama(rs.getString("nama"));
+//		dh.setUmur(rs.getInt("umur"));
 		return dh;
 	}
 }
