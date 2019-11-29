@@ -2,7 +2,7 @@ package com.example.demo.model;
 
 public class ps_registrationsModel {
 	public String id;
-	public boolean auth_rejection_permanent;	// YesNo value/Type.
+	public String auth_rejection_permanent;	// YesNo value/Type.
 	public String client_uri;
 	public String contact_user;
 	public int expiration;
@@ -13,8 +13,8 @@ public class ps_registrationsModel {
 	public int forbidden_retry_interval;
 	public String server_uri;
 	public String transport;
-	public boolean support_path;
+	public String support_path;
 	public int fatal_retry_interval;
-	public boolean line;						// YesNo value/Type.
+	public String line;						// YesNo value/Type.
 	public String endpoint;
 }

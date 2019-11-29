@@ -13,5 +13,5 @@ public class ps_subscription_persistenceModel {
 	public String endpoint;
 	public int expires;
 	public String contact_uri;
-	public boolean prune_on_boot;			// YesNo value/Type.
+	public String prune_on_boot;			// YesNo value/Type.
 }

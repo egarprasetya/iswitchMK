@@ -26,25 +26,25 @@ public class iaxfriendsModel {
 	public String language;
 	public String callerid;
 	public String cid_number;
-	public boolean sendani;		// YesNo Value/Type.
+	public String sendani;		// YesNo Value/Type.
 	public String fullname;		// YesNo Value/Type
-	public boolean trunk;
+	public String trunk;
 	public String auth;
 	public int maxauthreq;
 	public String requirecalltoken;		// iax_requirecalltoken value/Type.
 	public String encryption;			// iax_encryption value/Type.
 	public String transfer;				// iax_transfer value/Type.
-	public boolean jitterbuffer;		// YesNo Value/Type.
-	public boolean forcejitterbuffer;		// YesNo Value/Type.
+	public String jitterbuffer;		// YesNo Value/Type.
+	public String forcejitterbuffer;		// YesNo Value/Type.
 	public String disallow;
 	public String allow;
 	public String codecpriority;
 	public String qualify;
-	public boolean qualifysmoothing;		// YesNo Value/Type
+	public String qualifysmoothing;		// YesNo Value/Type
 	public String qualifyfreqok;
 	public String qualifyfreqnotok;
 	public String timezone;
-	public boolean adsi;				// YesNo Value/Type.
+	public String adsi;				// YesNo Value/Type.
 	public String amaflags;
 	public String setvar;
 }

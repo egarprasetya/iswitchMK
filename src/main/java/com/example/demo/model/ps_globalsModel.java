@@ -12,13 +12,13 @@ public class ps_globalsModel {
 	public String regcontext;
 	public int contact_expiration_check_interval;
 	public String default_voicemail_extension;
-	public boolean disable_multi_domain;				// YesNo value/Type.
+	public String disable_multi_domain;				// YesNo value/Type.
 	public int unidentified_request_count;
 	public int unidentified_request_period;
 	public int unidentified_request_prune_interval;
 	public String default_realm;
 	public int mwi_tps_queue_high;
 	public int mwi_tps_queue_low;
-	public boolean mwi_disable_initial_unsolicited;		// YesNo value/Type.
-	public boolean ignore_uri_user_options;				// YesNo v
+	public String mwi_disable_initial_unsolicited;		// YesNo value/Type.
+	public String ignore_uri_user_options;				// YesNo v
 }
