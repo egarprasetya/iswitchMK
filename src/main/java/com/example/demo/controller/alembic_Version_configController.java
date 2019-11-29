@@ -34,15 +34,7 @@ public class alembic_Version_configController {
 	PreparedStatement querydelete_alembic_version_config=null;
 	PreparedStatement queryinsert_alembic_version_config=null;
 
-//	@Autowired
-//	public getCurrentMasterAlembicVersion dataalembic_version;
-//
-//	@GetMapping
-//	public alembic_version_configModel getCurrentMasteralembic()
-//	{
-//		return dataalembic_version.getCurrentMasterDataPemrek2();
-//	}
-	
+
 	@GetMapping("/GetAlembicVersionConfig")
 	public ArrayList<alembic_version_configModel> TampilAlembicVersionConfig() throws SQLException
 	{
@@ -87,21 +79,12 @@ public class alembic_Version_configController {
 		int Cursor1 = querydelete_alembic_version_config.executeUpdate();// Evaluate (Connected_Expression1)
 		int a =1; 
 		Connection1.close();
-		return a;    	         
+		return a;   
+		
+	
 }
 	
-	@GetMapping("/DeleteGetAlembicVersionConfigParameter")
-	public int DeleteGetAlembicVersionConfig(@RequestBody alembic_version_configModel cfm) throws SQLException
-	{
-		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-	      querydelete_alembic_version_config=Connection1.prepareStatement(query_string_delete.query_delete_alembic_version_config);
-		 querydelete_alembic_version_config.setString(1, cfm.version_num);   
-		int Cursor1 = querydelete_alembic_version_config.executeUpdate();// Evaluate (Connected_Expression1)
-		int a =1;  
-		
-		Connection1.close();
-		return a;    	         
-}
+	
 	
 	
 	

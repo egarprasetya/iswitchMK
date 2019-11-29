@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/queue_rules")
+@RequestMapping(produces="application/json",path="/queue_rules")
 public class queue_rulesController {
 
 	PreparedStatement querydelete_alembic_version_config = null;

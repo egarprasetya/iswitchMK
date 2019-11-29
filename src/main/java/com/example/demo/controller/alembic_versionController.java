@@ -34,7 +34,7 @@ public class alembic_versionController {
 	PreparedStatement queryselect_alembic_version = null;
 
 	
-	@PutMapping("/PutAlembicVersion")
+	@PutMapping(path="/PutAlembicVersion",produces="application/json")
 	public String putalembicversionconfig(@RequestBody alembic_versionModel cfm) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
@@ -46,7 +46,7 @@ public class alembic_versionController {
 		return a;  	      
 	}
 	
-	@GetMapping("/GetAlembicVersion")
+	@GetMapping(path="/GetAlembicVersion" ,produces="application/json")
 	public ArrayList<alembic_versionModel> TampilAlembicVersion() throws SQLException {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_alembic_version = Connection1.prepareStatement(query_string.query_select_alembic_version);
@@ -57,11 +57,10 @@ public class alembic_versionController {
 			alembic_versionModel ModelAlembic = new alembic_versionModel();
 			ModelAlembic.version_num = Cursor1.getString(1);
 			ListUser1.add(ModelAlembic);
-			return ListUser1;
+			
 		}
 		Connection1.close();
-		alembic_versionModel ModelAlembic = new alembic_versionModel();
-		ListUser1.add(ModelAlembic);
+		
 		return ListUser1;
 
 }
@@ -89,13 +88,8 @@ public class alembic_versionController {
 
 	}
 
-	
-	
-	
-	
 
-
-	@DeleteMapping("/DeletePostAlembicVersionParameter")
+	@DeleteMapping(path="/DeletePostAlembicVersionParameter",produces="application/json")
 	public int DeletePostAlembicVersion(@RequestBody alembic_versionModel cfm) throws SQLException {
 
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
@@ -103,7 +97,6 @@ public class alembic_versionController {
 	      querydelete_alembic_version=Connection1.prepareStatement(query_string_delete.query_delete_alembic_version);
 		 querydelete_alembic_version.setString(1, cfm.version_num);   
 
-		querydelete_alembic_version = Connection1.prepareStatement(query_string_delete.query_delete_alembic_version);
 		int Cursor1 = querydelete_alembic_version.executeUpdate();// Evaluate (Connected_Expression1)
 		int a =1; 
 		

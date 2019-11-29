@@ -32,7 +32,7 @@ public class extensionController {
 	AllQuery query_string = new AllQuery();
 	PreparedStatement queryselect_extension = null;
 
-	@PutMapping("/Putextension")
+	@PutMapping(produces="application/json",path="/Putextension")
 	public String putalembicversionconfig(@RequestBody extensionModel cfm) throws SQLException {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryinsert_extension = Connection1.prepareStatement(query_string_insert.query_insert_extension);
@@ -49,7 +49,7 @@ public class extensionController {
 		return a;
 	}
 
-	@GetMapping("/Getextensions")
+	@GetMapping(produces="application/json",path="/Getextensions")
 	public ArrayList<extensionModel> Tampilextension() throws SQLException {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_extension = Connection1.prepareStatement(query_string.query_select_extension);

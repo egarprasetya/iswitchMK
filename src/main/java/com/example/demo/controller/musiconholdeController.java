@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/musiconhold")
+@RequestMapping(produces="application/json",path="/musiconhold")
 public class musiconholdeController
 
 {
@@ -34,7 +34,6 @@ public class musiconholdeController
 	AllQuery query_string = new AllQuery();
 	PreparedStatement queryselect_musiconhold = null;
 
-	@GetMapping("/Getmusiconhold")
 
 	@PutMapping("/Putmusiconhold")
 	public String putmusiconholde(@RequestBody musiconholdeModel cfm) throws SQLException {
@@ -54,6 +53,7 @@ public class musiconholdeController
 		Connection1.close();
 		return a;
 	}
+	@GetMapping("/Getmusiconhold")
 
 	public ArrayList<musiconholdeModel> Tampilmusiconholde() throws SQLException {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);

@@ -32,7 +32,7 @@ public class iaxfriendsController {
 	AllInsertQuery query_string_insert = new AllInsertQuery();
 	PreparedStatement queryinsert_iaxfriend = null;
 
-	@PutMapping("/Putiaxfirends")
+	@PutMapping(produces="application/json",path="/Putiaxfirends")
 	public String putalembicversionconfig(@RequestBody iaxfriendsModel cfm) throws SQLException {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryinsert_iaxfriend = Connection1.prepareStatement(query_string_insert.query_insert_iaxfriends);
@@ -89,7 +89,7 @@ public class iaxfriendsController {
 		return a;
 	}
 
-	@GetMapping("/Getiaxfriends")
+	@GetMapping(produces="application/json",path="/Getiaxfriends")
 	public ArrayList<iaxfriendsModel> Tampiliaxfriends() throws SQLException {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_iaxfriends = Connection1.prepareStatement(query_string.query_select_iaxfriends);

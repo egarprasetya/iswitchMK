@@ -32,9 +32,9 @@ public class cdrController {
 	AllQuery query_string = new AllQuery();
 	PreparedStatement queryselect_cdr = null;
 
-	@GetMapping("/Getcdr")
+	
 
-	@PutMapping("/PutCdr")
+	@PutMapping(produces="application/json",path="/PutCdr")
 	public String putalembicversionconfig(@RequestBody cdrModel cfm) throws SQLException {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryinsert_cdr = Connection1.prepareStatement(query_string_insert.query_insert_cdr);
@@ -66,7 +66,7 @@ public class cdrController {
 		Connection1.close();
 		return a;
 	}
-
+	@GetMapping(produces="application/json",path="/Getcdr")
 	public ArrayList<cdrModel> TampilAlembicVersionConfig() throws SQLException {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_cdr = Connection1.prepareStatement(query_string.query_select_cdr);

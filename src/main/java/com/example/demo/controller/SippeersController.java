@@ -21,7 +21,7 @@ import com.example.demo.model.*;
 import com.example.demo.connection.*;
 
 @RestController
-@RequestMapping("/Sippeers")
+@RequestMapping(produces="application/json",path="/Sippeers")
 public class SippeersController {
 	PreparedStatement querydelete_alembic_version_config = null;
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();

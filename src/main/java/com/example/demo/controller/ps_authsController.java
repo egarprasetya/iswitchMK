@@ -21,7 +21,7 @@ import com.example.demo.model.*;
 import com.example.demo.query.*;
 
 @RestController
-@RequestMapping("/psAuthVersion")
+@RequestMapping(produces="application/json",path="/psAuthVersion")
 public class ps_authsController {
 	PreparedStatement querydelete_alembic_version_config = null;
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();

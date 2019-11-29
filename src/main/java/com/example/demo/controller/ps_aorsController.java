@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 
-@RequestMapping("/psaors")
+@RequestMapping(produces="application/json",path="/psaors")
 public class ps_aorsController {
 
 	PreparedStatement querydelete_alembic_version_config = null;
