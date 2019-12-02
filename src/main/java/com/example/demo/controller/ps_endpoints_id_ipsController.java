@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(produces="application/json",path="/psendpointsid")
 public class ps_endpoints_id_ipsController {
-	PreparedStatement querydelete_alembic_version_config = null;
+	PreparedStatement query_delete_ps_endpoints_id = null;
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();
 	stringkoneksi sk = new stringkoneksi();
 	AllQuery query_string = new AllQuery();
@@ -72,10 +72,10 @@ public class ps_endpoints_id_ipsController {
 	@DeleteMapping(path = "/DeletePostPsEndpointsId", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public int DeletePostPsEndpoints(@RequestBody ps_endpoints_id_ipsModel cfm) throws SQLException {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-		queryinsert_ps_endpoints_id_ip = Connection1
-				.prepareStatement(query_string_delete.query_delete_ps_endpoints);
-		queryinsert_ps_endpoints_id_ip.setString(1, cfm.id);
-		int Cursor1 = queryinsert_ps_endpoints_id_ip.executeUpdate();// Evaluate (Connected_Expression1)
+		query_delete_ps_endpoints_id = Connection1
+				.prepareStatement(query_string_delete.query_delete_ps_endpoints_id);
+		query_delete_ps_endpoints_id.setString(1, cfm.id);
+		int Cursor1 = query_delete_ps_endpoints_id.executeUpdate();// Evaluate (Connected_Expression1)
 		int a = 0;
 		Connection1.close();
 		return a;
