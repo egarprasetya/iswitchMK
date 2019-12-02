@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import com.example.demo.Enum.YesNo_Values;
+
 public class ps_OutboundModel {
 	public String id;
 	public int expiration;
@@ -11,7 +13,7 @@ public class ps_OutboundModel {
 	public String event;
 	public int max_auth_attemps;
 	public String transport;
-	public String multi_user;				// YesNo value/Type.
+	public YesNo_Values multi_user;				// YesNo value/Type.
 	public String _body;
 	public String _context;
 	public String _exten;

@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.Enum.YesNo_Values;
 import com.example.demo.connection.stringkoneksi;
 import com.example.demo.model.*;
 import com.example.demo.query.*;
@@ -38,7 +39,7 @@ public class ps_endpoints_id_ipsController {
 		queryinsert_ps_endpoints_id_ip.setString(1, cfm.id);
 		queryinsert_ps_endpoints_id_ip.setString(2, cfm.endpoint);
 		queryinsert_ps_endpoints_id_ip.setString(3, cfm.match);
-		queryinsert_ps_endpoints_id_ip.setString(4, cfm.srv_lookups);
+		queryinsert_ps_endpoints_id_ip.setString(4, cfm.srv_lookups.toString());
 		queryinsert_ps_endpoints_id_ip.setString(5, cfm.match_header);
 		int Cursor1 = queryinsert_ps_endpoints_id_ip.executeUpdate();// Evaluate (Connected_Expression1)
 		String a = "1";
@@ -58,7 +59,7 @@ public class ps_endpoints_id_ipsController {
 			ModelPs_enpoints_id.id = Cursor1.getString(1);
 			ModelPs_enpoints_id.endpoint = Cursor1.getString(2);
 			ModelPs_enpoints_id.match = Cursor1.getString(3);
-			ModelPs_enpoints_id.srv_lookups = Cursor1.getString(4);
+			ModelPs_enpoints_id.srv_lookups = YesNo_Values.valueOf(Cursor1.getString(4));
 			ModelPs_enpoints_id.match_header = Cursor1.getString(5);
 
 			ListUser1.add(ModelPs_enpoints_id);
@@ -71,10 +72,10 @@ public class ps_endpoints_id_ipsController {
 	@DeleteMapping(path = "/DeletePostPsEndpointsId", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public int DeletePostPsEndpoints(@RequestBody ps_endpoints_id_ipsModel cfm) throws SQLException {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-		querydelete_alembic_version_config = Connection1
+		queryinsert_ps_endpoints_id_ip = Connection1
 				.prepareStatement(query_string_delete.query_delete_ps_endpoints);
-		querydelete_alembic_version_config.setString(1, cfm.id);
-		int Cursor1 = querydelete_alembic_version_config.executeUpdate();// Evaluate (Connected_Expression1)
+		queryinsert_ps_endpoints_id_ip.setString(1, cfm.id);
+		int Cursor1 = queryinsert_ps_endpoints_id_ip.executeUpdate();// Evaluate (Connected_Expression1)
 		int a = 0;
 		Connection1.close();
 		return a;

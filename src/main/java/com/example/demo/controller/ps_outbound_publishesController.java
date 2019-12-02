@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.Enum.YesNo_Values;
 import com.example.demo.connection.stringkoneksi;
 import com.example.demo.model.*;
 import com.example.demo.query.*;
@@ -46,7 +47,7 @@ public class ps_outbound_publishesController {
 		queryinsert_ps_outbound_publishes.setString(8, cfm.event);
 		queryinsert_ps_outbound_publishes.setInt(9, cfm.max_auth_attemps);
 		queryinsert_ps_outbound_publishes.setString(10, cfm.transport);
-		queryinsert_ps_outbound_publishes.setString(11, cfm.multi_user);
+		queryinsert_ps_outbound_publishes.setString(11, cfm.multi_user.toString());
 		queryinsert_ps_outbound_publishes.setString(12, cfm._body);
 		queryinsert_ps_outbound_publishes.setString(13, cfm._context);
 		queryinsert_ps_outbound_publishes.setString(14, cfm._exten);
@@ -76,7 +77,7 @@ public class ps_outbound_publishesController {
 			ModelPs_outbound.event = Cursor1.getString(8);
 			ModelPs_outbound.max_auth_attemps = Cursor1.getInt(9);
 			ModelPs_outbound.transport = Cursor1.getString(10);
-			ModelPs_outbound.multi_user = Cursor1.getString(11);
+			ModelPs_outbound.multi_user = YesNo_Values.valueOf(Cursor1.getString(11));
 			ModelPs_outbound._body = Cursor1.getString(12);
 			ModelPs_outbound._context = Cursor1.getString(13);
 			ModelPs_outbound._exten = Cursor1.getString(14);
