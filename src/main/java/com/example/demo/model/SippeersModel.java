@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import com.example.demo.Enum.*;
+
 public class SippeersModel {
 	public int id;
 	public String name;
@@ -31,19 +33,19 @@ public class SippeersModel {
 	public String insecure;
 	public String trustrpid;
 	public String progressinband;		// sip_progressinband value / Type.
-	public String promiscredir;		// YesNo value / Type.
-	public String useclientcode;		// YesNo value / Type.
+	public YesNo_Values promiscredir;		// YesNo value / Type.
+	public YesNo_Values useclientcode;		// YesNo value / Type.
 	public String accountcode;
 	public String setvar;
 	public String callerid;
 	public String amaflags;
-	public String callcounter;			// YesNo value / Type.
+	public YesNo_Values callcounter;			// YesNo value / Type.
 	public int busylevel;
-	public String allowoverlap;		// YesNo value / Type.
-	public String allowsubscribe;		// YesNo value / Type.
-	public String videosupport;		// YesNo value / Type.
+	public YesNo_Values allowoverlap;		// YesNo value / Type.
+	public YesNo_Values allowsubscribe;		// YesNo value / Type.
+	public YesNo_Values videosupport;		// YesNo value / Type.
 	public int maxcallbitrate;
-	public String rfc2833compensate;	// YesNo value / Type.
+	public YesNo_Values rfc2833compensate;	// YesNo value / Type.
 	public String mailbox;
 	public String session_timers;		// sip_session_timers value / Type.
 	public int session_expires;
@@ -63,13 +65,13 @@ public class SippeersModel {
 	public int timer1;
 	public int timerb;
 	public int qualifyfreq;
-	public String constantssrc;			// YesNo vale / Type.
+	public YesNo_Values constantssrc;			// YesNo vale / Type.
 	public String contact_permit;
 	public String contact_deny;	
-	public String usereqphone;				// YesNo vale / Type.
-	public String textsupport;				// YesNo vale / Type.
-	public String faxdetect;				// YesNo vale / Type.
-	public String buggymwi;				// YesNo vale / Type.
+	public YesNo_Values usereqphone;				// YesNo vale / Type.
+	public YesNo_Values textsupport;				// YesNo vale / Type.
+	public YesNo_Values faxdetect;				// YesNo vale / Type.
+	public YesNo_Values buggymwi;				// YesNo vale / Type.
 	public String auth;
 	public String fullname;
 	public String trunkname;
@@ -78,17 +80,17 @@ public class SippeersModel {
 	public String mohinterpret;
 	public String mohsuggest;
 	public String parkinglot;
-	public String hasvoicemail;			// YesNo vale / Type.
-	public String subscribemwi;			// YesNo vale / Type.
+	public YesNo_Values hasvoicemail;			// YesNo vale / Type.
+	public YesNo_Values subscribemwi;			// YesNo vale / Type.
 	public String vmexten;
-	public String autoframing;				// YesNo vale / Type.
+	public YesNo_Values autoframing;				// YesNo vale / Type.
 	public int rtpkeepalive;
 	public int call_limit;
-	public String g726nonstandard;			// YesNo vale / Type.
-	public String ignoresdpversion;		// YesNo vale / Type.
-	public String allowtransfer;			// YesNo vale / Type.
-	public String dynamic;					// YesNo vale / Type.
+	public YesNo_Values g726nonstandard;			// YesNo vale / Type.
+	public YesNo_Values ignoresdpversion;		// YesNo vale / Type.
+	public YesNo_Values allowtransfer;			// YesNo vale / Type.
+	public YesNo_Values dynamic;					// YesNo vale / Type.
 	public String path;
-	public String supportpath;				// YesNo vale / Type.
+	public YesNo_Values supportpath;				// YesNo vale / Type.
 	public String email;					// bp_char value / Type.
 }
