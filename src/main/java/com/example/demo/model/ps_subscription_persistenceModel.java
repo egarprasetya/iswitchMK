@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import com.example.demo.Enum.YesNo_Values;
+
 public class ps_subscription_persistenceModel {
 	public String id;
 	public String packet;
@@ -13,5 +15,5 @@ public class ps_subscription_persistenceModel {
 	public String endpoint;
 	public int expires;
 	public String contact_uri;
-	public String prune_on_boot;			// YesNo value/Type.
+	public YesNo_Values prune_on_boot;			// YesNo value/Type.
 }

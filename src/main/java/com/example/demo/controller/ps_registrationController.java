@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.Enum.YesNo_Values;
 import com.example.demo.connection.stringkoneksi;
 import com.example.demo.model.*;
 import com.example.demo.query.*;
@@ -36,7 +37,7 @@ public class ps_registrationController {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryinsert_ps_registration = Connection1.prepareStatement(query_string_insert.query_insert_ps_registrations);
 		queryinsert_ps_registration.setString(1, cfm.id);
-		queryinsert_ps_registration.setString(2, cfm.auth_rejection_permanent);
+		queryinsert_ps_registration.setString(2, cfm.auth_rejection_permanent.toString());
 		queryinsert_ps_registration.setString(3, cfm.client_uri);
 		queryinsert_ps_registration.setString(4, cfm.contact_user);
 		queryinsert_ps_registration.setInt(5, cfm.expiration);
@@ -49,7 +50,7 @@ public class ps_registrationController {
 		queryinsert_ps_registration.setString(12, cfm.transport);
 		queryinsert_ps_registration.setString(13, cfm.support_path);
 		queryinsert_ps_registration.setInt(14, cfm.fatal_retry_interval);
-		queryinsert_ps_registration.setString(15, cfm.line);
+		queryinsert_ps_registration.setString(15, cfm.line.toString());
 		queryinsert_ps_registration.setString(16, cfm.endpoint);
 		int Cursor1 = queryinsert_ps_registration.executeUpdate();// Evaluate (Connected_Expression1)
 		String a = "1";
@@ -69,7 +70,7 @@ public class ps_registrationController {
 			ps_registrationsModel ModelPs_registration = new ps_registrationsModel();
 
 			ModelPs_registration.id = Cursor1.getString(1);
-			ModelPs_registration.auth_rejection_permanent = Cursor1.getString(2);
+			ModelPs_registration.auth_rejection_permanent = YesNo_Values.valueOf(Cursor1.getString(2));
 			ModelPs_registration.client_uri = Cursor1.getString(3);
 			ModelPs_registration.contact_user = Cursor1.getString(4);
 			ModelPs_registration.expiration = Cursor1.getInt(5);
@@ -82,7 +83,7 @@ public class ps_registrationController {
 			ModelPs_registration.transport = Cursor1.getString(12);
 			ModelPs_registration.support_path = Cursor1.getString(13);
 			ModelPs_registration.fatal_retry_interval = Cursor1.getInt(14);
-			ModelPs_registration.line = Cursor1.getString(15);
+			ModelPs_registration.line = YesNo_Values.valueOf(Cursor1.getString(15));
 			ModelPs_registration.endpoint = Cursor1.getString(16);
 
 			ListUser1.add(ModelPs_registration);

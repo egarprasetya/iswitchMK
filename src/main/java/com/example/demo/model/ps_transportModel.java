@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import com.example.demo.Enum.YesNo_Values;
+
 public class ps_transportModel {
 	public String id;
 	public int async_operations;
@@ -16,11 +18,11 @@ public class ps_transportModel {
 	public String password;
 	public String priv_key_file;
 	public String protocol;				// pjsip_transport_protocol value/Type.
-	public String require_client_cert;	// YesNo value/Type.
-	public String verify_client;		// YesNo value/Type.
-	public String verify_server;		// YesNo value/Type.
+	public YesNo_Values require_client_cert;	// YesNo value/Type.
+	public YesNo_Values verify_client;		// YesNo value/Type.
+	public YesNo_Values verify_server;		// YesNo value/Type.
 	public String tos;
 	public int cos;
-	public String allow_reload;				// YesNo value/Type.
-	public String symmetric_transport;			// YesNo value/Type.
+	public YesNo_Values allow_reload;				// YesNo value/Type.
+	public YesNo_Values symmetric_transport;			// YesNo value/Type.
 }

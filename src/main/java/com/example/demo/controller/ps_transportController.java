@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.Enum.YesNo_Values;
 import com.example.demo.connection.stringkoneksi;
 import com.example.demo.model.*;
 import com.example.demo.query.*;
@@ -53,13 +54,13 @@ public class ps_transportController {
 		query_insert_ps_transports.setString(13, cfm.password);
 		query_insert_ps_transports.setString(14, cfm.priv_key_file);
 		query_insert_ps_transports.setString(15, cfm.protocol);
-		query_insert_ps_transports.setString(16, cfm.require_client_cert);
-		query_insert_ps_transports.setString(17, cfm.verify_client);
-		query_insert_ps_transports.setString(18, cfm.verify_server);
+		query_insert_ps_transports.setString(16, cfm.require_client_cert.toString());
+		query_insert_ps_transports.setString(17, cfm.verify_client.toString());
+		query_insert_ps_transports.setString(18, cfm.verify_server.toString());
 		query_insert_ps_transports.setString(19, cfm.tos);
 		query_insert_ps_transports.setInt(20, cfm.cos);
-		query_insert_ps_transports.setString(21, cfm.allow_reload);
-		query_insert_ps_transports.setString(22, cfm.symmetric_transport);
+		query_insert_ps_transports.setString(21, cfm.allow_reload.toString());
+		query_insert_ps_transports.setString(22, cfm.symmetric_transport.toString());
 		
 		int Cursor1 = query_insert_ps_transports.executeUpdate();// Evaluate (Connected_Expression1)
 		String a = "1";
@@ -92,13 +93,13 @@ public class ps_transportController {
 			ModelPs_transport.password = Cursor1.getString(13);
 			ModelPs_transport.priv_key_file = Cursor1.getString(14);
 			ModelPs_transport.protocol = Cursor1.getString(15);
-			ModelPs_transport.require_client_cert = Cursor1.getString(16);
-			ModelPs_transport.verify_client = Cursor1.getString(17);
-			ModelPs_transport.verify_server = Cursor1.getString(18);
+			ModelPs_transport.require_client_cert = YesNo_Values.valueOf(Cursor1.getString(16));
+			ModelPs_transport.verify_client = YesNo_Values.valueOf(Cursor1.getString(17));
+			ModelPs_transport.verify_server = YesNo_Values.valueOf(Cursor1.getString(18));
 			ModelPs_transport.tos = Cursor1.getString(19);
 			ModelPs_transport.cos = Cursor1.getInt(20);
-			ModelPs_transport.allow_reload = Cursor1.getString(21);
-			ModelPs_transport.symmetric_transport = Cursor1.getString(22);
+			ModelPs_transport.allow_reload = YesNo_Values.valueOf(Cursor1.getString(21));
+			ModelPs_transport.symmetric_transport = YesNo_Values.valueOf(Cursor1.getString(22));
 
 			ListUser1.add(ModelPs_transport);
 

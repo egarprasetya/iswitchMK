@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import java.sql.Date;
+import com.example.demo.Enum.*;
 
 public class VoiceMailModel {
 	public int uniqueid;
@@ -11,21 +12,21 @@ public class VoiceMailModel {
 	public String alias;
 	public String email;
 	public String pager;
-	public String attach;					// YesNo value/Type.
+	public YesNo_Values attach;					// YesNo value/Type.
 	public String attachfmt;
 	public String servermail;
 	public String language;
 	public String tz;
-	public String deletevoicemail;			// YesNo value/Type.
-	public String saycid;					// YesNo value/Type.
-	public String sendvoicemail;			// YesNo value/Type.
-	public String review;					// YesNo value/Type.
-	public String tempgreetwarn;			// YesNo value/Type.
-	public String operator;				// YesNo value/Type.
-	public String envelope;				// YesNo value/Type.
+	public YesNo_Values deletevoicemail;		// YesNo value/Type.
+	public YesNo_Values saycid;					// YesNo value/Type.
+	public YesNo_Values sendvoicemail;			// YesNo value/Type.
+	public YesNo_Values review;					// YesNo value/Type.
+	public YesNo_Values tempgreetwarn;			// YesNo value/Type.
+	public YesNo_Values operator;				// YesNo value/Type.
+	public YesNo_Values envelope;				// YesNo value/Type.
 	public int sayduration;
-	public String forcename;				// YesNo value/Type.
-	public String forcegreetings;			// YesNo value/Type.
+	public YesNo_Values forcename;				// YesNo value/Type.
+	public YesNo_Values forcegreetings;			// YesNo value/Type.
 	public String callback;
 	public String dialout;
 	public String exitcontext;

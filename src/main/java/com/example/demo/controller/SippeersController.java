@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.query.*;
 import com.example.demo.model.*;
+import com.example.demo.Enum.YesNo_Values;
 import com.example.demo.connection.*;
 
 @RestController
@@ -67,19 +68,19 @@ public class SippeersController {
 		query_insert_sippeers.setString(28, cfm.insecure);
 		query_insert_sippeers.setString(29, cfm.trustrpid);
 		query_insert_sippeers.setString(30, cfm.progressinband);
-		query_insert_sippeers.setString(31, cfm.promiscredir);
-		query_insert_sippeers.setString(32, cfm.useclientcode);
+		query_insert_sippeers.setString(31, cfm.promiscredir.toString());
+		query_insert_sippeers.setString(32, cfm.useclientcode.toString());
 		query_insert_sippeers.setString(33, cfm.accountcode);
 		query_insert_sippeers.setString(34, cfm.setvar);
 		query_insert_sippeers.setString(35, cfm.callerid);
 		query_insert_sippeers.setString(36, cfm.amaflags);
-		query_insert_sippeers.setString(37, cfm.callcounter);
+		query_insert_sippeers.setString(37, cfm.callcounter.toString());
 		query_insert_sippeers.setInt(38, cfm.busylevel);
-		query_insert_sippeers.setString(39, cfm.allowoverlap);
-		query_insert_sippeers.setString(40, cfm.allowsubscribe);
-		query_insert_sippeers.setString(41, cfm.videosupport);
+		query_insert_sippeers.setString(39, cfm.allowoverlap.toString());
+		query_insert_sippeers.setString(40, cfm.allowsubscribe.toString());
+		query_insert_sippeers.setString(41, cfm.videosupport.toString());
 		query_insert_sippeers.setInt(42, cfm.maxcallbitrate);
-		query_insert_sippeers.setString(43, cfm.rfc2833compensate);
+		query_insert_sippeers.setString(43, cfm.rfc2833compensate.toString());
 		query_insert_sippeers.setString(44, cfm.mailbox);
 		query_insert_sippeers.setString(45, cfm.session_timers);
 		query_insert_sippeers.setInt(46, cfm.session_expires);
@@ -99,13 +100,13 @@ public class SippeersController {
 		query_insert_sippeers.setInt(60, cfm.timer1);
 		query_insert_sippeers.setInt(61, cfm.timerb);
 		query_insert_sippeers.setInt(62, cfm.qualifyfreq);
-		query_insert_sippeers.setString(63, cfm.constantssrc);
+		query_insert_sippeers.setString(63, cfm.constantssrc.toString());
 		query_insert_sippeers.setString(64, cfm.contact_permit);
 		query_insert_sippeers.setString(65, cfm.contact_deny);
-		query_insert_sippeers.setString(66, cfm.usereqphone);
-		query_insert_sippeers.setString(67, cfm.textsupport);
-		query_insert_sippeers.setString(68, cfm.faxdetect);
-		query_insert_sippeers.setString(69, cfm.buggymwi);
+		query_insert_sippeers.setString(66, cfm.usereqphone.toString());
+		query_insert_sippeers.setString(67, cfm.textsupport.toString());
+		query_insert_sippeers.setString(68, cfm.faxdetect.toString());
+		query_insert_sippeers.setString(69, cfm.buggymwi.toString());
 		query_insert_sippeers.setString(70, cfm.auth);
 		query_insert_sippeers.setString(71, cfm.fullname);
 		query_insert_sippeers.setString(72, cfm.trunkname);
@@ -114,18 +115,18 @@ public class SippeersController {
 		query_insert_sippeers.setString(75, cfm.mohinterpret);
 		query_insert_sippeers.setString(76, cfm.mohsuggest);
 		query_insert_sippeers.setString(77, cfm.parkinglot);
-		query_insert_sippeers.setString(78, cfm.hasvoicemail);
-		query_insert_sippeers.setString(79, cfm.subscribemwi);
+		query_insert_sippeers.setString(78, cfm.hasvoicemail.toString());
+		query_insert_sippeers.setString(79, cfm.subscribemwi.toString());
 		query_insert_sippeers.setString(80, cfm.vmexten);
-		query_insert_sippeers.setString(81, cfm.autoframing);
+		query_insert_sippeers.setString(81, cfm.autoframing.toString());
 		query_insert_sippeers.setInt(82, cfm.rtpkeepalive);
 		query_insert_sippeers.setInt(83, cfm.call_limit);
-		query_insert_sippeers.setString(84, cfm.g726nonstandard);
-		query_insert_sippeers.setString(85, cfm.ignoresdpversion);
-		query_insert_sippeers.setString(86, cfm.allowtransfer);
-		query_insert_sippeers.setString(87, cfm.dynamic);
+		query_insert_sippeers.setString(84, cfm.g726nonstandard.toString());
+		query_insert_sippeers.setString(85, cfm.ignoresdpversion.toString());
+		query_insert_sippeers.setString(86, cfm.allowtransfer.toString());
+		query_insert_sippeers.setString(87, cfm.dynamic.toString());
 		query_insert_sippeers.setString(88, cfm.path);
-		query_insert_sippeers.setString(89, cfm.supportpath);
+		query_insert_sippeers.setString(89, cfm.supportpath.toString());
 		query_insert_sippeers.setString(90, cfm.email);
 
 		int Cursor1 = query_insert_sippeers.executeUpdate();// Evaluate (Connected_Expression1)
@@ -173,19 +174,19 @@ public class SippeersController {
 			ModelSippeers.insecure = Cursor1.getString(28);
 			ModelSippeers.trustrpid = Cursor1.getString(29);
 			ModelSippeers.progressinband = Cursor1.getString(30); // sip_progressinband value / Type.
-			ModelSippeers.promiscredir = Cursor1.getString(31); // YesNo value / Type.
-			ModelSippeers.useclientcode = Cursor1.getString(32); // YesNo value / Type.
+			ModelSippeers.promiscredir = YesNo_Values.valueOf(Cursor1.getString(31)); // YesNo value / Type.
+			ModelSippeers.useclientcode = YesNo_Values.valueOf(Cursor1.getString(32)); // YesNo value / Type.
 			ModelSippeers.accountcode = Cursor1.getString(33);
 			ModelSippeers.setvar = Cursor1.getString(34);
 			ModelSippeers.callerid = Cursor1.getString(35);
 			ModelSippeers.amaflags = Cursor1.getString(36);
-			ModelSippeers.callcounter = Cursor1.getString(37); // YesNo value / Type.
+			ModelSippeers.callcounter = YesNo_Values.valueOf(Cursor1.getString(37)); // YesNo value / Type.
 			ModelSippeers.busylevel = Cursor1.getInt(38);
-			ModelSippeers.allowoverlap = Cursor1.getString(39); // YesNo value / Type.
-			ModelSippeers.allowsubscribe = Cursor1.getString(40); // YesNo value / Type.
-			ModelSippeers.videosupport = Cursor1.getString(41); // YesNo value / Type.
+			ModelSippeers.allowoverlap = YesNo_Values.valueOf(Cursor1.getString(39)); // YesNo value / Type.
+			ModelSippeers.allowsubscribe = YesNo_Values.valueOf(Cursor1.getString(40)); // YesNo value / Type.
+			ModelSippeers.videosupport = YesNo_Values.valueOf(Cursor1.getString(41)); // YesNo value / Type.
 			ModelSippeers.maxcallbitrate = Cursor1.getInt(42);
-			ModelSippeers.rfc2833compensate = Cursor1.getString(43); // YesNo value / Type.
+			ModelSippeers.rfc2833compensate = YesNo_Values.valueOf(Cursor1.getString(43)); // YesNo value / Type.
 			ModelSippeers.mailbox = Cursor1.getString(44);
 			ModelSippeers.session_timers = Cursor1.getString(45); // sip_session_timers value / Type.
 			ModelSippeers.session_expires = Cursor1.getInt(46);
@@ -205,13 +206,13 @@ public class SippeersController {
 			ModelSippeers.timer1 = Cursor1.getInt(60);
 			ModelSippeers.timerb = Cursor1.getInt(61);
 			ModelSippeers.qualifyfreq = Cursor1.getInt(62);
-			ModelSippeers.constantssrc = Cursor1.getString(63); // YesNo vale / Type.
+			ModelSippeers.constantssrc = YesNo_Values.valueOf(Cursor1.getString(63)); // YesNo vale / Type.
 			ModelSippeers.contact_permit = Cursor1.getString(64);
 			ModelSippeers.contact_deny = Cursor1.getString(65);
-			ModelSippeers.usereqphone = Cursor1.getString(66); // YesNo vale / Type.
-			ModelSippeers.textsupport = Cursor1.getString(67); // YesNo vale / Type.
-			ModelSippeers.faxdetect = Cursor1.getString(68); // YesNo vale / Type.
-			ModelSippeers.buggymwi = Cursor1.getString(69); // YesNo vale / Type.
+			ModelSippeers.usereqphone = YesNo_Values.valueOf(Cursor1.getString(66)); // YesNo vale / Type.
+			ModelSippeers.textsupport = YesNo_Values.valueOf(Cursor1.getString(67)); // YesNo vale / Type.
+			ModelSippeers.faxdetect = YesNo_Values.valueOf(Cursor1.getString(68)); // YesNo vale / Type.
+			ModelSippeers.buggymwi = YesNo_Values.valueOf(Cursor1.getString(69)); // YesNo vale / Type.
 			ModelSippeers.auth = Cursor1.getString(70);
 			ModelSippeers.fullname = Cursor1.getString(71);
 			ModelSippeers.trunkname = Cursor1.getString(72);
@@ -220,18 +221,18 @@ public class SippeersController {
 			ModelSippeers.mohinterpret = Cursor1.getString(75);
 			ModelSippeers.mohsuggest = Cursor1.getString(76);
 			ModelSippeers.parkinglot = Cursor1.getString(77);
-			ModelSippeers.hasvoicemail = Cursor1.getString(78); // YesNo vale / Type.
-			ModelSippeers.subscribemwi = Cursor1.getString(79); // YesNo vale / Type.
+			ModelSippeers.hasvoicemail = YesNo_Values.valueOf(Cursor1.getString(78)); // YesNo vale / Type.
+			ModelSippeers.subscribemwi = YesNo_Values.valueOf(Cursor1.getString(79)); // YesNo vale / Type.
 			ModelSippeers.vmexten = Cursor1.getString(80);
-			ModelSippeers.autoframing = Cursor1.getString(81); // YesNo vale / Type.
+			ModelSippeers.autoframing = YesNo_Values.valueOf(Cursor1.getString(81)); // YesNo vale / Type.
 			ModelSippeers.rtpkeepalive = Cursor1.getInt(82);
 			ModelSippeers.call_limit = Cursor1.getInt(83);
-			ModelSippeers.g726nonstandard = Cursor1.getString(84); // YesNo vale / Type.
-			ModelSippeers.ignoresdpversion = Cursor1.getString(85); // YesNo vale / Type.
-			ModelSippeers.allowtransfer = Cursor1.getString(86); // YesNo vale / Type.
-			ModelSippeers.dynamic = Cursor1.getString(87); // YesNo vale / Type.
+			ModelSippeers.g726nonstandard = YesNo_Values.valueOf(Cursor1.getString(84)); // YesNo vale / Type.
+			ModelSippeers.ignoresdpversion = YesNo_Values.valueOf(Cursor1.getString(85)); // YesNo vale / Type.
+			ModelSippeers.allowtransfer = YesNo_Values.valueOf(Cursor1.getString(86)); // YesNo vale / Type.
+			ModelSippeers.dynamic = YesNo_Values.valueOf(Cursor1.getString(87)); // YesNo vale / Type.
 			ModelSippeers.path = Cursor1.getString(88);
-			ModelSippeers.supportpath = Cursor1.getString(89); // YesNo vale / Type.
+			ModelSippeers.supportpath = YesNo_Values.valueOf(Cursor1.getString(89)); // YesNo vale / Type.
 			ModelSippeers.email = Cursor1.getString(90);
 			ListUser1.add(ModelSippeers);
 

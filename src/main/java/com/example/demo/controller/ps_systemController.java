@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.Enum.YesNo_Values;
 import com.example.demo.connection.stringkoneksi;
 import com.example.demo.model.*;
 import com.example.demo.query.*;
@@ -38,7 +39,7 @@ public class ps_systemController {
 		query_insert_ps_systems.setString(1, cfm.id);
 		query_insert_ps_systems.setInt(2, cfm.timer_t1);
 		query_insert_ps_systems.setInt(3, cfm.timer_b);
-		query_insert_ps_systems.setString(4, cfm.compact_headers);
+		query_insert_ps_systems.setString(4, cfm.compact_headers.toString());
 		query_insert_ps_systems.setInt(5, cfm.threadpool_initial_size);
 		query_insert_ps_systems.setInt(6, cfm.threadpool_auto_increment);
 		query_insert_ps_systems.setInt(7, cfm.threadpool_idle_timeout);
@@ -63,7 +64,7 @@ public class ps_systemController {
 			ModelPs_system.id = Cursor1.getString(1);
 			ModelPs_system.timer_t1 = Cursor1.getInt(2);
 			ModelPs_system.timer_b = Cursor1.getInt(3);
-			ModelPs_system.compact_headers = Cursor1.getString(4);
+			ModelPs_system.compact_headers = YesNo_Values.valueOf(Cursor1.getString(4));
 			ModelPs_system.threadpool_initial_size = Cursor1.getInt(5);
 			ModelPs_system.threadpool_auto_increment = Cursor1.getInt(6);
 			ModelPs_system.threadpool_idle_timeout = Cursor1.getInt(7);

@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import com.example.demo.Enum.YesNo_Values;
+
 public class ps_contactsModel {
 	public String id;
 	public String uri;
@@ -10,7 +12,7 @@ public class ps_contactsModel {
 	public String user_agent;
 	public double qualify_timeout;
 	public String reg_server;
-	public String authenticate_qualify;	// YesNo Type
+	public YesNo_Values authenticate_qualify;	// YesNo Type
 	public String via_addr;
 	public int via_port;
 	public String call_id;

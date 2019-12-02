@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.Enum.YesNo_Values;
 import com.example.demo.connection.stringkoneksi;
 import com.example.demo.model.*;
 import com.example.demo.query.*;
@@ -44,7 +45,7 @@ public class ps_contactsController {
 		queryinsert_ps_contact.setString(7, cfm.user_agent);
 		queryinsert_ps_contact.setDouble(8, cfm.qualify_timeout);
 		queryinsert_ps_contact.setString(9, cfm.reg_server);
-		queryinsert_ps_contact.setString(10, cfm.authenticate_qualify);
+		queryinsert_ps_contact.setString(10, cfm.authenticate_qualify.toString());
 		queryinsert_ps_contact.setString(11, cfm.via_addr);
 		queryinsert_ps_contact.setInt(12, cfm.via_port);
 		queryinsert_ps_contact.setString(13, cfm.call_id);
@@ -75,7 +76,7 @@ public class ps_contactsController {
 			ModelContact.user_agent = Cursor1.getString(7);
 			ModelContact.qualify_timeout = Cursor1.getInt(8);
 			ModelContact.reg_server = Cursor1.getString(9);
-			ModelContact.authenticate_qualify = Cursor1.getString(10);
+			ModelContact.authenticate_qualify = YesNo_Values.valueOf(Cursor1.getString(10));
 			ModelContact.via_addr = Cursor1.getString(11);
 			ModelContact.via_port = Cursor1.getInt(12);
 			ModelContact.call_id = Cursor1.getString(13);
