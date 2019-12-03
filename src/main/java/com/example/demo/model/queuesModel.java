@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import com.example.demo.Enum.YesNo_Values;
+import com.example.demo.Enum.queue_autopause_values;
 
 public class queuesModel {
 	public String name;
@@ -43,7 +44,7 @@ public class queuesModel {
 	public int penaltymemberslimit;
 	public String autofill;
 	public String monitor_type;
-	public String autopause;				// Queue_autopause value / Type.
+	public queue_autopause_values autopause;				// Queue_autopause value / Type.
 	public int autopausedelay;
 	public YesNo_Values autopausebusy;			// YesNo value / Type.
 	public YesNo_Values autopauseunavail;		// YesNo value / Type.

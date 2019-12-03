@@ -14,7 +14,7 @@ public class SippeersModel {
 	public String useragent;
 	public int lastms;
 	public String host;
-	public String type;					// type value / Type.
+	public type_values type;					// type value / Type.
 	public String context;
 	public String permit;
 	public String deny;
@@ -22,8 +22,8 @@ public class SippeersModel {
 	public String md5secret;
 	public String remotesecret;
 	public String transport;	
-	public String dtmfmode;				// sip_dtmf_mode value / Type.
-	public String directmedia;			// sip_direct_media value v2 / Type.
+	public sip_dtmfmode_values dtmfmode;				// sip_dtmf_mode value / Type.
+	public sip_directmedia_values_v2 directmedia;			// sip_direct_media value v2 / Type.
 	public String nat;
 	public String callgroup;
 	public String pickupgroup;
@@ -32,7 +32,7 @@ public class SippeersModel {
 	public String allow;
 	public String insecure;
 	public String trustrpid;
-	public String progressinband;		// sip_progressinband value / Type.
+	public sip_progressinband_values progressinband;		// sip_progressinband value / Type.
 	public YesNo_Values promiscredir;		// YesNo value / Type.
 	public YesNo_Values useclientcode;		// YesNo value / Type.
 	public String accountcode;
@@ -47,10 +47,10 @@ public class SippeersModel {
 	public int maxcallbitrate;
 	public YesNo_Values rfc2833compensate;	// YesNo value / Type.
 	public String mailbox;
-	public String session_timers;		// sip_session_timers value / Type.
+	public sip_session_timers_values session_timers;		// sip_session_timers value / Type.
 	public int session_expires;
 	public int session_minse;
-	public String session_refresher;	// sip_session_refresh value / Type.
+	public sip_session_refresher_values session_refresher;	// sip_session_refresh value / Type.
 	public String t38pt_usertpsource;
 	public String regexten;
 	public String fromdomain;
@@ -76,7 +76,7 @@ public class SippeersModel {
 	public String fullname;
 	public String trunkname;
 	public String cid_number;
-	public String callingpres;				// sip_callingpres value / Type.
+	public sip_callingpres_values callingpres;				// sip_callingpres value / Type.
 	public String mohinterpret;
 	public String mohsuggest;
 	public String parkinglot;
@@ -92,5 +92,5 @@ public class SippeersModel {
 	public YesNo_Values dynamic;					// YesNo vale / Type.
 	public String path;
 	public YesNo_Values supportpath;				// YesNo vale / Type.
-	public String email;					// bp_char value / Type.
+	public bp_char_values email;					// bp_char value / Type.
 }

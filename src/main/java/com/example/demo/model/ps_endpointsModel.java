@@ -1,6 +1,16 @@
 package com.example.demo.model;
 
 import com.example.demo.Enum.YesNo_Values;
+import com.example.demo.Enum.pjsip_100rel_values;
+import com.example.demo.Enum.pjsip_cid_privacy_values;
+import com.example.demo.Enum.pjsip_connected_line_method_values;
+import com.example.demo.Enum.pjsip_direct_media_glare_mitigation_values;
+import com.example.demo.Enum.pjsip_dtls_setup_values;
+import com.example.demo.Enum.pjsip_dtmf_mode_values_v3;
+import com.example.demo.Enum.pjsip_redirect_method_values;
+import com.example.demo.Enum.pjsip_t38udptl_ec_values;
+import com.example.demo.Enum.pjsip_timer_values;
+import com.example.demo.Enum.sha_hash_values;
 
 public class ps_endpointsModel {
 	public String id;
@@ -11,11 +21,11 @@ public class ps_endpointsModel {
 	public String disallow;
 	public String allow;
 	public YesNo_Values direct_media;			// YesNo value / Type.
-	public String connected_line_method;	// pjsip_connected_line_method value/type.
-	public String direct_media_method;		// pjsip_connected_line_method value/type.
-	public String direct_media_glare_mitigation;		// pjsip_direct_media_glare_mitigation value/Type.
+	public pjsip_connected_line_method_values connected_line_method;	// pjsip_connected_line_method value/type.
+	public pjsip_connected_line_method_values direct_media_method;		// pjsip_connected_line_method value/type.
+	public pjsip_direct_media_glare_mitigation_values direct_media_glare_mitigation;		// pjsip_direct_media_glare_mitigation value/Type.
 	public String disable_direct_media_on_nat;
-	public String dtmf_mode;				// pjsip_dtmf_mode value/Type.
+	public pjsip_dtmf_mode_values_v3 dtmf_mode;				// pjsip_dtmf_mode value/Type.
 	public String external_media_address;
 	public String force_rport;
 	public String ice_support;
@@ -31,12 +41,12 @@ public class ps_endpointsModel {
 	public String send_pai;
 	public String send_rpid;
 	public int timers_min_se;
-	public String timers;				// pjsip_timer value/Type.
+	public pjsip_timer_values timers;				// pjsip_timer value/Type.
 	public int timers_sess_expires;
 	public String callerid;
-	public String callerid_privacy;		// pjsip_cid_privacy value/Type.
+	public pjsip_cid_privacy_values callerid_privacy;		// pjsip_cid_privacy value/Type.
 	public String callerid_tag;
-	public String _100rel;				// pjsip_100rel value/Type.
+	public pjsip_100rel_values _100rel;				// pjsip_100rel value/Type.
 	public YesNo_Values aggregate_mwi;		// YesNo Value/Type
 	public YesNo_Values trust_id_inbound;	// YesNo Value/Type
 	public YesNo_Values trust_id_outbound;	// YesNo Value/Type
@@ -51,7 +61,7 @@ public class ps_endpointsModel {
 	public int device_state_busy_at;
 	public YesNo_Values fax_detect;			// YesNo Value/Type
 	public YesNo_Values t38_udptl;			// YesNo Value/Type
-	public String t38_udptl_ec;			// pjsip_t38_udptl value/type.
+	public pjsip_t38udptl_ec_values t38_udptl_ec;			// pjsip_t38_udptl value/type.
 	public int t38_udptl_maxdatagram;
 	public YesNo_Values t38_udptl_nat;		// YesNo value/Type.
 	public YesNo_Values t38_udptl_ipv6;		// YesNo value/Type.
@@ -78,10 +88,10 @@ public class ps_endpointsModel {
 	public String dtls_cipher;
 	public String dtls_ca_file;
 	public String dtls_ca_path;
-	public String dtls_setup;			// pjsip_dtls_setup value/Type.
+	public pjsip_dtls_setup_values dtls_setup;			// pjsip_dtls_setup value/Type.
 	public YesNo_Values srtp_tag_32;			// YesNo value/Type
 	public String media_address;
-	public String redirect_method;		// pjsip_redirect_method value/Type.
+	public pjsip_redirect_method_values redirect_method;		// pjsip_redirect_method value/Type.
 	public String set_var;				// Text value/Type.
 	public int cos_audio;
 	public int cos_video;
@@ -118,7 +128,7 @@ public class ps_endpointsModel {
 	public int max_audio_streams;
 	public int max_video_streams;
 	public YesNo_Values webrtc;							// YesNo value/Type.
-	public String dtls_fingerprint;					// sha_hash value/Type.
+	public sha_hash_values dtls_fingerprint;					// sha_hash value/Type.
 	public String incomming_mwi_mailbox;
 	public YesNo_Values bundle;							// YesNo value/Type.
 	public YesNo_Values dtls_auto_generate_cert;			// YesNo value/Type.

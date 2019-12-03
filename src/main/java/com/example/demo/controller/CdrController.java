@@ -23,7 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/cdr")
-public class cdrController {
+public class CdrController 
+{
 	AllInsertQuery query_string_insert = new AllInsertQuery();
 	PreparedStatement queryinsert_cdr = null;
 	PreparedStatement querydelete_cdr = null;
@@ -31,11 +32,10 @@ public class cdrController {
 	stringkoneksi sk = new stringkoneksi();
 	AllQuery query_string = new AllQuery();
 	PreparedStatement queryselect_cdr = null;
-
 	
-
-	@PutMapping(produces="application/json",path="/PutCdr")
-	public String putalembicversionconfig(@RequestBody cdrModel cfm) throws SQLException {
+	@PutMapping(produces="application/json",path="/putCdr")
+	public String putCdr(@RequestBody cdrModel cfm) throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryinsert_cdr = Connection1.prepareStatement(query_string_insert.query_insert_cdr);
 		queryinsert_cdr.setString(1, cfm.accountcode);
@@ -66,8 +66,8 @@ public class cdrController {
 		Connection1.close();
 		return a;
 	}
-	@GetMapping(produces="application/json",path="/Getcdr")
-	public ArrayList<cdrModel> TampilAlembicVersionConfig() throws SQLException {
+	@GetMapping(produces="application/json",path="/getCdr")
+	public ArrayList<cdrModel> getCdr() throws SQLException {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_cdr = Connection1.prepareStatement(query_string.query_select_cdr);
 		ResultSet Cursor1 = queryselect_cdr.executeQuery();// Evaluate (Connected_Expression1)
@@ -97,14 +97,13 @@ public class cdrController {
 			ModelCdr.peeraccount = Cursor1.getString(20);
 			ModelCdr.sequence = Cursor1.getInt(21);
 			ListUser1.add(ModelCdr);
-
 		}
 		Connection1.close();
 		return ListUser1;
 	}
 
-	@DeleteMapping(path = "/DeletePostcdrParameter", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int DeletePostcdr(@RequestBody cdrModel cfm) throws SQLException {
+	@DeleteMapping(path = "/deleteCdr", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public int deleteCdr(@RequestBody cdrModel cfm) throws SQLException {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_cdr = Connection1.prepareStatement(query_string_delete.query_delete_cdr);
 		querydelete_cdr.setString(1, cfm.accountcode);

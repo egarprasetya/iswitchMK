@@ -1,6 +1,8 @@
 package com.example.demo.model;
 
 import com.example.demo.Enum.YesNo_Values;
+import com.example.demo.Enum.pjsip_transport_method_values;
+import com.example.demo.Enum.pjsip_transport_protocol_values;
 
 public class ps_transportModel {
 	public String id;
@@ -13,11 +15,11 @@ public class ps_transportModel {
 	public String external_media_address;
 	public String external_signaling_address;
 	public int external_signaling_port;
-	public String method;				// pjsip_transport_method value/Type.
+	public pjsip_transport_method_values method;				// pjsip_transport_method value/Type.
 	public String local_net;
 	public String password;
 	public String priv_key_file;
-	public String protocol;				// pjsip_transport_protocol value/Type.
+	public pjsip_transport_protocol_values protocol;				// pjsip_transport_protocol value/Type.
 	public YesNo_Values require_client_cert;	// YesNo value/Type.
 	public YesNo_Values verify_client;		// YesNo value/Type.
 	public YesNo_Values verify_server;		// YesNo value/Type.

@@ -24,21 +24,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 
 @RequestMapping(produces="application/json",path="/meetme")
-public class meetmeController {
+public class MeetmeController
+{
+	
 	AllInsertQuery query_string_insert = new AllInsertQuery();
 	PreparedStatement queryinsert_meetme = null;
-
 	PreparedStatement querydelete_alembic_version_config = null;
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();
-
 	stringkoneksi sk = new stringkoneksi();
 	AllQuery query_string = new AllQuery();
 	PreparedStatement queryselect_meetme = null;
 
-	
-
-	@PutMapping("/Putmeetme")
-	public String putmeetme(@RequestBody meetmeModel cfm) throws SQLException {
+	@PutMapping("/putMeetme")
+	public String putMeetme(@RequestBody meetmeModel cfm) throws SQLException
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryinsert_meetme = Connection1.prepareStatement(query_string_insert.query_insert_meetme);
 		queryinsert_meetme.setString(1, cfm.confno);
@@ -52,15 +51,15 @@ public class meetmeController {
 		queryinsert_meetme.setString(9, cfm.recordingformat);
 		queryinsert_meetme.setInt(10, cfm.maxusers);
 		queryinsert_meetme.setInt(11, cfm.members);
-
 		int Cursor1 = queryinsert_meetme.executeUpdate();// Evaluate (Connected_Expression1)
 		String a = "1";
 		Connection1.close();
 		return a;
 	}
 
-	@GetMapping("/Getmeetme")
-	public ArrayList<meetmeModel> Tampilmetmee() throws SQLException {
+	@GetMapping("/getMeetme")
+	public ArrayList<meetmeModel> getMeetme() throws SQLException
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_meetme = Connection1.prepareStatement(query_string.query_select_meetme);
 		ResultSet Cursor1 = queryselect_meetme.executeQuery();// Evaluate (Connected_Expression1)
@@ -82,14 +81,14 @@ public class meetmeController {
 			ModelMeetme.maxusers = Cursor1.getInt(11);
 			ModelMeetme.members = Cursor1.getInt(12);
 			ListUser1.add(ModelMeetme);
-
 		}
 		Connection1.close();
 		return ListUser1;
 	}
 
-	@DeleteMapping(path = "/DeletePostmeetmess", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int DeletePostmeetme(@RequestBody meetmeModel cfm) throws SQLException {
+	@DeleteMapping(path = "/deleteMeetme", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public int deleteMeetme(@RequestBody meetmeModel cfm) throws SQLException
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1.prepareStatement(query_string_delete.query_delete_meetme);
 		querydelete_alembic_version_config.setInt(1, cfm.bookid);
@@ -98,5 +97,4 @@ public class meetmeController {
 		Connection1.close();
 		return a;
 	}
-
 }

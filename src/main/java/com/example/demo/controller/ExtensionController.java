@@ -23,7 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/extensions")
-public class extensionController {
+public class ExtensionController
+{
 	AllInsertQuery query_string_insert = new AllInsertQuery();
 	PreparedStatement queryinsert_extension = null;
 	PreparedStatement querydelete_alembic_version_config = null;
@@ -33,7 +34,8 @@ public class extensionController {
 	PreparedStatement queryselect_extension = null;
 
 	@PutMapping(produces="application/json",path="/Putextension")
-	public String putalembicversionconfig(@RequestBody extensionModel cfm) throws SQLException {
+	public String putalembicversionconfig(@RequestBody extensionModel cfm) throws SQLException
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryinsert_extension = Connection1.prepareStatement(query_string_insert.query_insert_extension);
 //		queryinsert_extension.setInt(1, cfm.id);

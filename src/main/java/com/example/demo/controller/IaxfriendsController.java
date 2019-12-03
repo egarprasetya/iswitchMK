@@ -23,24 +23,23 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/iaxfriends")
-public class iaxfriendsController {
+public class IaxfriendsController {
 	iax_encryption_values ix;
 	PreparedStatement querydelete_alembic_version_config = null;
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();
 	stringkoneksi sk = new stringkoneksi();
 	AllQuery query_string = new AllQuery();
 	PreparedStatement queryselect_iaxfriends = null;
-
 	AllInsertQuery query_string_insert = new AllInsertQuery();
 	PreparedStatement queryinsert_iaxfriend = null;
 
-	@PutMapping(produces="application/json",path="/Putiaxfirends")
-	public String putalembicversionconfig(@RequestBody iaxfriendsModel cfm) throws SQLException {
+	@PutMapping(produces="application/json",path="/putIaxfirends")
+	public String putIaxfirends(@RequestBody iaxfriendsModel cfm) throws SQLException {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryinsert_iaxfriend = Connection1.prepareStatement(query_string_insert.query_insert_iaxfriends);
 		queryinsert_iaxfriend.setInt(1, cfm.id);
 		queryinsert_iaxfriend.setString(1, cfm.name);
-		queryinsert_iaxfriend.setString(2, cfm.type); // type_value Type.
+		queryinsert_iaxfriend.setString(2, cfm.type.toString()); // type_value Type.
 		queryinsert_iaxfriend.setString(3, cfm.username);
 		queryinsert_iaxfriend.setString(4, cfm.mailbox);
 		queryinsert_iaxfriend.setString(5, cfm.secret);
@@ -68,9 +67,9 @@ public class iaxfriendsController {
 		queryinsert_iaxfriend.setString(27, cfm.trunk);
 		queryinsert_iaxfriend.setString(28, cfm.auth);
 		queryinsert_iaxfriend.setInt(29, cfm.maxauthreq);
-		queryinsert_iaxfriend.setString(30, cfm.requirecalltoken); // iax_requirecalltoken value/Type.
-		queryinsert_iaxfriend.setString(31, cfm.encryption); // iax_encryption value/Type.
-		queryinsert_iaxfriend.setString(32, cfm.transfer); // iax_transfer value/Type.
+		queryinsert_iaxfriend.setString(30, cfm.requirecalltoken.toString()); // iax_requirecalltoken value/Type.
+		queryinsert_iaxfriend.setString(31, cfm.encryption.toString()); // iax_encryption value/Type.
+		queryinsert_iaxfriend.setString(32, cfm.transfer.toString()); // iax_transfer value/Type.
 		queryinsert_iaxfriend.setString(33, cfm.jitterbuffer.toString()); // YesNo Value/Type.
 		queryinsert_iaxfriend.setString(34, cfm.forcejitterbuffer.toString()); // YesNo Value/Type.
 		queryinsert_iaxfriend.setString(35, cfm.disallow);
@@ -91,8 +90,8 @@ public class iaxfriendsController {
 		return a;
 	}
 
-	@GetMapping(produces="application/json",path="/Getiaxfriends")
-	public ArrayList<iaxfriendsModel> Tampiliaxfriends() throws SQLException {
+	@GetMapping(produces="application/json",path="/getIaxfriends")
+	public ArrayList<iaxfriendsModel> getIaxfriends() throws SQLException {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_iaxfriends = Connection1.prepareStatement(query_string.query_select_iaxfriends);
 		ResultSet Cursor1 = queryselect_iaxfriends.executeQuery();// Evaluate (Connected_Expression1)
@@ -102,7 +101,7 @@ public class iaxfriendsController {
 			iaxfriendsModel ModelIaxfriends = new iaxfriendsModel();
 			ModelIaxfriends.id = Cursor1.getInt(1);
 			ModelIaxfriends.name = Cursor1.getString(2);
-			ModelIaxfriends.type = Cursor1.getString(3); // type_value Type.
+			ModelIaxfriends.type = type_values.valueOf(Cursor1.getString(3)); // type_value Type.
 			ModelIaxfriends.username = Cursor1.getString(4);
 			ModelIaxfriends.mailbox = Cursor1.getString(5);
 			ModelIaxfriends.secret = Cursor1.getString(6);
@@ -130,9 +129,9 @@ public class iaxfriendsController {
 			ModelIaxfriends.trunk = Cursor1.getString(28);
 			ModelIaxfriends.auth = Cursor1.getString(29);
 			ModelIaxfriends.maxauthreq = Cursor1.getInt(30);
-			ModelIaxfriends.requirecalltoken = Cursor1.getString(31); // iax_requirecalltoken value/Type.
-			ModelIaxfriends.encryption = Cursor1.getString(32); // iax_encryption value/Type.
-			ModelIaxfriends.transfer = Cursor1.getString(33); // iax_transfer value/Type.
+			ModelIaxfriends.requirecalltoken = iax_requirecalltoken_values.valueOf(Cursor1.getString(31)); // iax_requirecalltoken value/Type.
+			ModelIaxfriends.encryption = iax_encryption_values.valueOf(Cursor1.getString(32)); // iax_encryption value/Type.
+			ModelIaxfriends.transfer = iax_transfer_values.valueOf(Cursor1.getString(33)); // iax_transfer value/Type.
 			ModelIaxfriends.jitterbuffer = YesNo_Values.valueOf(Cursor1.getString(34)); // YesNo Value/Type.
 			ModelIaxfriends.forcejitterbuffer = YesNo_Values.valueOf(Cursor1.getString(35)); // YesNo Value/Type.
 			ModelIaxfriends.disallow = Cursor1.getString(36);
@@ -153,8 +152,8 @@ public class iaxfriendsController {
 		return ListUser1;
 	}
 
-	@DeleteMapping(path = "/DeletePostiaxfriends", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int DeletePostiaxfriends(@RequestBody extensionModel cfm) throws SQLException {
+	@DeleteMapping(path = "/deleteIaxfriends", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public int deleteIaxfriends(@RequestBody extensionModel cfm) throws SQLException {
 
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1.prepareStatement(query_string_delete.query_delete_iaxfriends);
