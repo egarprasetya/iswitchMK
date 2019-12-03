@@ -13,6 +13,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -31,8 +32,8 @@ public class queuesContoller {
 	AllInsertQuery query_string_insert = new AllInsertQuery();
 	PreparedStatement query_insert_queues = null;
 
-	@PutMapping("/PutQueues")
-	public String putalembicversionconfig(@RequestBody queuesModel cfm) throws SQLException {
+	@PutMapping("/putQueues")
+	public String putQueues(@RequestBody queuesModel cfm) throws SQLException {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		
 		query_insert_queues = Connection1.prepareStatement(query_string_insert.query_insert_queues);
@@ -99,8 +100,8 @@ public class queuesContoller {
 		return a;
 	}
 
-	@GetMapping("/Getqueues")
-	public ArrayList<queuesModel> Tampilqueues() throws SQLException {
+	@GetMapping("/getQueues")
+	public ArrayList<queuesModel> getQueues() throws SQLException {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_queues = Connection1.prepareStatement(query_string.query_select_queues);
 		ResultSet Cursor1 = queryselect_queues.executeQuery();// Evaluate (Connected_Expression1)
@@ -171,8 +172,9 @@ public class queuesContoller {
 		return ListUser1;
 	}
 
-	@PostMapping(path = "/DeletePostQueues", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int DeletePostQueues(@RequestBody queuesModel cfm) throws SQLException {
+	@DeleteMapping(path = "/deleteQueues", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public int deleteQueues(@RequestBody queuesModel cfm) throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1.prepareStatement(query_string_delete.query_delete_queues);
 		querydelete_alembic_version_config.setString(1, cfm.name);

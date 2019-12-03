@@ -32,8 +32,9 @@ public class ps_globalController {
 	AllInsertQuery query_string_insert = new AllInsertQuery();
 	PreparedStatement queryinsert_ps_global = null;
 
-	@PutMapping("/PutPsGlobal")
-	public String putPsGlobal(@RequestBody ps_globalsModel cfm) throws SQLException {
+	@PutMapping("/putPsGlobal")
+	public String putPsGlobal(@RequestBody ps_globalsModel cfm) throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryinsert_ps_global = Connection1.prepareStatement(query_string_insert.query_insert_ps_globals);
 		queryinsert_ps_global.setString(1, cfm.id);
@@ -63,8 +64,9 @@ public class ps_globalController {
 		return a;
 	}
 
-	@GetMapping("/Getps_global")
-	public ArrayList<ps_globalsModel> TampilPsGlobal() throws SQLException {
+	@GetMapping("/getPsGlobal")
+	public ArrayList<ps_globalsModel> getPsGlobal() throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_ps_globals = Connection1.prepareStatement(query_string.query_select_ps_globals);
 		ResultSet Cursor1 = queryselect_ps_globals.executeQuery();// Evaluate (Connected_Expression1)
@@ -101,8 +103,9 @@ public class ps_globalController {
 
 	}
 
-	@DeleteMapping(path = "/DeletePostPsGlobal", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int DeletePostPsGlobal(@RequestBody ps_globalsModel cfm) throws SQLException {
+	@DeleteMapping(path = "/deletePsGlobal", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public int deletePsGlobal(@RequestBody ps_globalsModel cfm) throws SQLException
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1.prepareStatement(query_string_delete.query_delete_ps_globals);
 		querydelete_alembic_version_config.setString(1, cfm.id);

@@ -21,8 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(produces="application/json",path="/ps_inbound")
-public class ps_inbound_publicationsController {
+@RequestMapping(produces="application/json",path="/ps_inbound_publication")
+public class ps_inbound_publicationsController 
+{
 	PreparedStatement querydelete_alembic_version_config = null;
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();
 	stringkoneksi sk = new stringkoneksi();
@@ -31,8 +32,9 @@ public class ps_inbound_publicationsController {
 	AllInsertQuery query_string_insert = new AllInsertQuery();
 	PreparedStatement queryinsert_inbound_publication = null;
 
-	@PutMapping("/PutPsInbound")
-	public String putInboundPublication(@RequestBody ps_inboundModel cfm) throws SQLException {
+	@PutMapping("/putPsInbound")
+	public String putPsInbound(@RequestBody ps_inboundModel cfm) throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryinsert_inbound_publication = Connection1
 				.prepareStatement(query_string_insert.query_insert_ps_inbound_publications);
@@ -46,8 +48,9 @@ public class ps_inbound_publicationsController {
 		return a;
 	}
 
-	@GetMapping("/Getpsinbound")
-	public ArrayList<ps_inboundModel> Tampilps_inbound() throws SQLException {
+	@GetMapping("/getPsInbound")
+	public ArrayList<ps_inboundModel> getPsInbound() throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_psinbound = Connection1.prepareStatement(query_string.query_select_ps_inbound_publications);
 		ResultSet Cursor1 = queryselect_psinbound.executeQuery();// Evaluate (Connected_Expression1)
@@ -67,8 +70,9 @@ public class ps_inbound_publicationsController {
 		return ListUser1;
 	}
 
-	@DeleteMapping(path = "/DeletePostPsInbound", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int DeletePostPsInbound(@RequestBody ps_inboundModel cfm) throws SQLException {
+	@DeleteMapping(path = "/deletePsInbound", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public int deletePsInbound(@RequestBody ps_inboundModel cfm) throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1
 				.prepareStatement(query_string_delete.query_delete_ps_inbound_publications);

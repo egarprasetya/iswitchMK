@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(produces="application/json",path="/queuelog")
+@RequestMapping(produces="application/json",path="/queue_log")
 public class queue_logController {
 	PreparedStatement querydelete_alembic_version_config = null;
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();
@@ -33,8 +33,8 @@ public class queue_logController {
 	AllInsertQuery query_string_insert = new AllInsertQuery();
 	PreparedStatement query_insert_queue_log = null;
 
-	@PutMapping("/PutQueueLog")
-	public String putalembicversionconfig(@RequestBody queue_logModel cfm) throws SQLException {
+	@PutMapping("/putQueueLog")
+	public String putQueueLog(@RequestBody queue_logModel cfm) throws SQLException {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		query_insert_queue_log = Connection1.prepareStatement(query_string_insert.query_insert_queue_log);
 		
@@ -57,8 +57,9 @@ public class queue_logController {
 		return a;
 	}
 
-	@GetMapping("/Getqueuelog")
-	public ArrayList<queue_logModel> TampilAlembicVersionConfig() throws SQLException {
+	@GetMapping("/getQueueLog")
+	public ArrayList<queue_logModel> getQueueLog() throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_queuelog = Connection1.prepareStatement(query_string.query_select_queue_log);
 		ResultSet Cursor1 = queryselect_queuelog.executeQuery();// Evaluate (Connected_Expression1)
@@ -87,8 +88,9 @@ public class queue_logController {
 		return ListUser1;
 	}
 
-	@DeleteMapping(path = "/DeletePostQueueLog", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int DeletePostQueueLog(@RequestBody queue_logModel cfm) throws SQLException {
+	@DeleteMapping(path = "/deleteQueueLog", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public int deleteQueueLog(@RequestBody queue_logModel cfm) throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1.prepareStatement(query_string_delete.query_delete_queue_log);
 		querydelete_alembic_version_config.setInt(1, cfm.id);

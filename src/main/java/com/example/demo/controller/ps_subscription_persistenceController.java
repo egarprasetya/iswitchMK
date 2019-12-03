@@ -23,7 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(produces="application/json",path="/ps_subscription_persistence")
-public class ps_subscription_persistenceController {
+public class ps_subscription_persistenceController 
+{
 	PreparedStatement querydelete_alembic_version_config = null;
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();
 	stringkoneksi sk = new stringkoneksi();
@@ -33,8 +34,9 @@ public class ps_subscription_persistenceController {
 	AllInsertQuery query_string_insert = new AllInsertQuery();
 	PreparedStatement query_insert_ps_subscription_persistence = null;
 
-	@PutMapping("/PutPsSubscriptions")
-	public String putalembicversionconfig(@RequestBody ps_subscription_persistenceModel cfm) throws SQLException {
+	@PutMapping("/putPsSubscriptions")
+	public String putPsSubscriptions(@RequestBody ps_subscription_persistenceModel cfm) throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		query_insert_ps_subscription_persistence = Connection1
 				.prepareStatement(query_string_insert.query_insert_ps_subscription_persistence);
@@ -59,8 +61,9 @@ public class ps_subscription_persistenceController {
 		return a;
 	}
 
-	@GetMapping("/Getps_subscription_persistence")
-	public ArrayList<ps_subscription_persistenceModel> Tampilps_subscription_persistence() throws SQLException {
+	@GetMapping("/getPsSubscriptionPersistence")
+	public ArrayList<ps_subscription_persistenceModel> getPsSubscriptionPersistence() throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_ps_subscription_persistence = Connection1
 				.prepareStatement(query_string.query_select_ps_subscription_persistence);
@@ -89,8 +92,9 @@ public class ps_subscription_persistenceController {
 		return ListUser1;
 	}
 
-	@DeleteMapping(path = "/DeletePostPsSubscript", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int DeletePostPsSubscript(@RequestBody ps_subscription_persistenceModel cfm) throws SQLException {
+	@DeleteMapping(path = "/deletePsSubscript", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public int deletePsSubscript(@RequestBody ps_subscription_persistenceModel cfm) throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1
 				.prepareStatement(query_string_delete.query_delete_ps_subscription_persistence);

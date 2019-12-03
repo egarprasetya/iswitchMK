@@ -21,8 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(produces="application/json",path="/psresourcelist")
-public class ps_resourcelistController {
+@RequestMapping(produces="application/json",path="/ps_resource_list")
+public class ps_resourcelistController 
+{
 	PreparedStatement querydelete_alembic_version_config = null;
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();
 	stringkoneksi sk = new stringkoneksi();
@@ -31,8 +32,8 @@ public class ps_resourcelistController {
 	AllInsertQuery query_string_insert = new AllInsertQuery();
 	PreparedStatement query_insert_ps_resource_list = null;
 
-	@PutMapping("/PutPsResource")
-	public String putalembicversionconfig(@RequestBody ps_Resource_listModel cfm) throws SQLException {
+	@PutMapping("/putPsResource")
+	public String putPsResource(@RequestBody ps_Resource_listModel cfm) throws SQLException {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		query_insert_ps_resource_list = Connection1
 				.prepareStatement(query_string_insert.query_insert_ps_resource_list);
@@ -49,8 +50,9 @@ public class ps_resourcelistController {
 		return a;
 	}
 
-	@GetMapping("/Getpsresourcelist")
-	public ArrayList<ps_Resource_listModel> TampilAlembicVersionConfig() throws SQLException {
+	@GetMapping("/getPsResourceList")
+	public ArrayList<ps_Resource_listModel> getPsResourceList() throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_psresourcelist = Connection1.prepareStatement(query_string.query_select_ps_resource_list);
 		ResultSet Cursor1 = queryselect_psresourcelist.executeQuery();// Evaluate (Connected_Expression1)
@@ -71,8 +73,9 @@ public class ps_resourcelistController {
 		return ListUser1;
 	}
 
-	@DeleteMapping(path = "/DeletePostPsResource", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int DeletePostPsResource(@RequestBody ps_Resource_listModel cfm) throws SQLException {
+	@DeleteMapping(path = "/deletePsResource", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public int DeletePostPsResource(@RequestBody ps_Resource_listModel cfm) throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1
 				.prepareStatement(query_string_delete.query_delete_ps_resource_list);

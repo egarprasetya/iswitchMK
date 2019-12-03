@@ -22,8 +22,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(produces="application/json",path="/psendpointsid")
-public class ps_endpoints_id_ipsController {
+@RequestMapping(produces="application/json",path="/ps_endpoints_id")
+public class ps_endpoints_id_ipsController 
+{
 	PreparedStatement query_delete_ps_endpoints_id = null;
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();
 	stringkoneksi sk = new stringkoneksi();
@@ -32,8 +33,9 @@ public class ps_endpoints_id_ipsController {
 	AllInsertQuery query_string_insert = new AllInsertQuery();
 	PreparedStatement queryinsert_ps_endpoints_id_ip = null;
 
-	@PutMapping("/PutPsEndpoint")
-	public String putPsEndpointsIdIp(@RequestBody ps_endpoints_id_ipsModel cfm) throws SQLException {
+	@PutMapping("/putPsEndpointsId")
+	public String putPsEndpointsId(@RequestBody ps_endpoints_id_ipsModel cfm) throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryinsert_ps_endpoints_id_ip = Connection1.prepareStatement(query_string_insert.query_insert_ps_endpoints_id);
 		queryinsert_ps_endpoints_id_ip.setString(1, cfm.id);
@@ -47,8 +49,9 @@ public class ps_endpoints_id_ipsController {
 		return a;
 	}
 
-	@GetMapping("/Getpsendpointsid")
-	public ArrayList<ps_endpoints_id_ipsModel> TampilPsEndpointsIdIp() throws SQLException {
+	@GetMapping("/getPsEndpointsId")
+	public ArrayList<ps_endpoints_id_ipsModel> getPsEndpointsId() throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_psendpointsid = Connection1.prepareStatement(query_string.query_select_ps_endpoints_id);
 		ResultSet Cursor1 = queryselect_psendpointsid.executeQuery();// Evaluate (Connected_Expression1)
@@ -69,8 +72,9 @@ public class ps_endpoints_id_ipsController {
 		return ListUser1;
 	}
 
-	@DeleteMapping(path = "/DeletePostPsEndpointsId", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int DeletePostPsEndpoints(@RequestBody ps_endpoints_id_ipsModel cfm) throws SQLException {
+	@DeleteMapping(path = "/deletePsEndpointsId", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public int deletePsEndpointsId(@RequestBody ps_endpoints_id_ipsModel cfm) throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		query_delete_ps_endpoints_id = Connection1
 				.prepareStatement(query_string_delete.query_delete_ps_endpoints_id);

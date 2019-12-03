@@ -21,8 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(produces="application/json",path="/ps_domain_id")
-public class ps_domain_aliasesController {
+@RequestMapping(produces="application/json",path="/ps_domain_aliases")
+public class ps_domain_aliasesController 
+{
 	PreparedStatement querydelete_alembic_version_config = null;
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();
 	stringkoneksi sk = new stringkoneksi();
@@ -31,8 +32,9 @@ public class ps_domain_aliasesController {
 	AllInsertQuery query_string_insert = new AllInsertQuery();
 	PreparedStatement queryinsert_ps_domain_aliases = null;
 
-	@PutMapping("/PutPsDomains")
-	public String putPsDomainAliases(@RequestBody ps_domain_aliasesModel cfm) throws SQLException {
+	@PutMapping("/putPsDomain")
+	public String putPsDomainAliases(@RequestBody ps_domain_aliasesModel cfm) throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryinsert_ps_domain_aliases = Connection1
 				.prepareStatement(query_string_insert.query_insert_ps_domain_aliases);
@@ -44,8 +46,9 @@ public class ps_domain_aliasesController {
 		return a;
 	}
 
-	@GetMapping("/Getdomain")
-	public ArrayList<ps_domain_aliasesModel> TampilPsDomainAliases() throws SQLException {
+	@GetMapping("/getPsDomain")
+	public ArrayList<ps_domain_aliasesModel> getPsDomain() throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_ps_domain_id = Connection1.prepareStatement(query_string.query_select_domain_aliases);
 		ResultSet Cursor1 = queryselect_ps_domain_id.executeQuery();// Evaluate (Connected_Expression1)
@@ -63,8 +66,9 @@ public class ps_domain_aliasesController {
 		return ListUser1;
 	}
 
-	@DeleteMapping(path = "/DeletePostPsDomain", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int DeletePostPsDomainAliases(@RequestBody ps_domain_aliasesModel cfm) throws SQLException {
+	@DeleteMapping(path = "/deletePsDomain", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public int deletePsDomain(@RequestBody ps_domain_aliasesModel cfm) throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1
 				.prepareStatement(query_string_delete.query_delete_ps_domain_aliases);

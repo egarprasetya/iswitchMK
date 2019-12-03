@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(produces="application/json",path="/queuemember")
+@RequestMapping(produces="application/json",path="/queue_member")
 public class queue_memberController {
 	PreparedStatement querydelete_alembic_version_config = null;
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();
@@ -32,8 +32,9 @@ public class queue_memberController {
 	AllInsertQuery query_string_insert = new AllInsertQuery();
 	PreparedStatement query_insert_queue_members = null;
 
-	@PutMapping("/PutQueueMember")
-	public String putalembicversionconfig(@RequestBody queue_memberModel cfm) throws SQLException {
+	@PutMapping("/putQueueMember")
+	public String putQueueMember(@RequestBody queue_memberModel cfm) throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		query_insert_queue_members = Connection1.prepareStatement(query_string_insert.query_insert_queue_members);
 
@@ -51,8 +52,9 @@ public class queue_memberController {
 		return a;
 	}
 
-	@GetMapping("/Getqueuemember")
-	public ArrayList<queue_memberModel> TampilAlembicVersionConfig() throws SQLException {
+	@GetMapping("/getQueueMember")
+	public ArrayList<queue_memberModel> getQueueMember() throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_queuemember = Connection1.prepareStatement(query_string.query_select_queue_members);
 		ResultSet Cursor1 = queryselect_queuemember.executeQuery();// Evaluate (Connected_Expression1)
@@ -75,8 +77,9 @@ public class queue_memberController {
 		return ListUser1;
 	}
 
-	@DeleteMapping(path = "/DeletePostQueueMember", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int DeletePostqueuemember(@RequestBody queue_memberModel cfm) throws SQLException {
+	@DeleteMapping(path = "/deleteQueueMember", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public int deleteQueueMember(@RequestBody queue_memberModel cfm) throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1
 				.prepareStatement(query_string_delete.query_delete_queue_members);

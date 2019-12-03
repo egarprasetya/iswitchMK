@@ -33,8 +33,9 @@ public class queue_rulesController {
 	AllInsertQuery query_string_insert = new AllInsertQuery();
 	PreparedStatement query_insert_queue_rules = null;
 
-	@PutMapping("/PutQueueRules")
-	public String putalembicversionconfig(@RequestBody queue_rulesModel cfm) throws SQLException {
+	@PutMapping("/putQueueRules")
+	public String putQueueRules(@RequestBody queue_rulesModel cfm) throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		query_insert_queue_rules = Connection1.prepareStatement(query_string_insert.query_insert_queue_rules);
 		
@@ -49,8 +50,9 @@ public class queue_rulesController {
 		return a;
 	}
 
-	@GetMapping("/Getqueuerules")
-	public ArrayList<queue_rulesModel> Tampilqueuerules() throws SQLException {
+	@GetMapping("/getQueueRules")
+	public ArrayList<queue_rulesModel> getQueueRules() throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_queue_rules = Connection1.prepareStatement(query_string.query_select_queue_rules);
 		ResultSet Cursor1 = queryselect_queue_rules.executeQuery();// Evaluate (Connected_Expression1)
@@ -70,8 +72,9 @@ public class queue_rulesController {
 		return ListUser1;
 	}
 
-	@DeleteMapping(path = "/DeletePostQueueRules", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int DeletePostQueueRules(@RequestBody queue_rulesModel cfm) throws SQLException {
+	@DeleteMapping(path = "/deleteQueueRules", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public int DeletePostQueueRules(@RequestBody queue_rulesModel cfm) throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1.prepareStatement(query_string_delete.query_delete_queue_rules);
 		querydelete_alembic_version_config.setString(1, cfm.rule_name);

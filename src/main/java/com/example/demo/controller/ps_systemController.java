@@ -13,6 +13,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -31,8 +32,9 @@ public class ps_systemController {
 	AllInsertQuery query_string_insert = new AllInsertQuery();
 	PreparedStatement query_insert_ps_systems = null;
 
-	@PutMapping("/PutPsSystems")
-	public String putalembicversionconfig(@RequestBody ps_SystemsModel cfm) throws SQLException {
+	@PutMapping("/putPsSystems")
+	public String putPsSystems(@RequestBody ps_SystemsModel cfm) throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		query_insert_ps_systems = Connection1.prepareStatement(query_string_insert.query_insert_ps_systems);
 		
@@ -52,8 +54,8 @@ public class ps_systemController {
 		return a;
 	}
 
-	@GetMapping("/Getps_systems")
-	public ArrayList<ps_SystemsModel> TampilAlembicVersionConfig() throws SQLException {
+	@GetMapping("/getPsSystem")
+	public ArrayList<ps_SystemsModel> getPsSystem() throws SQLException {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_ps_systems = Connection1.prepareStatement(query_string.query_select_ps_systems);
 		ResultSet Cursor1 = queryselect_ps_systems.executeQuery();// Evaluate (Connected_Expression1)
@@ -78,8 +80,8 @@ public class ps_systemController {
 		return ListUser1;
 	}
 
-	@PostMapping(path = "/DeletePostPsSystem", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int DeletePostPsSystems(@RequestBody String id) throws SQLException {
+	@DeleteMapping(path = "/deletePsSystem", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public int deletePsSystem(@RequestBody String id) throws SQLException {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1.prepareStatement(query_string_delete.query_delete_ps_systems);
 		querydelete_alembic_version_config.setString(1, id);

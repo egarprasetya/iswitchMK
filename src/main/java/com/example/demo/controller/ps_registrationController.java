@@ -23,7 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(produces="application/json",path="/ps_registration")
-public class ps_registrationController {
+public class ps_registrationController 
+{
 	PreparedStatement querydelete_alembic_version_config = null;
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();
 	stringkoneksi sk = new stringkoneksi();
@@ -32,8 +33,9 @@ public class ps_registrationController {
 	AllInsertQuery query_string_insert = new AllInsertQuery();
 	PreparedStatement queryinsert_ps_registration = null;
 
-	@PutMapping("/PutPsRegistration")
-	public String putPsRegistration(@RequestBody ps_registrationsModel cfm) throws SQLException {
+	@PutMapping("/putPsRegistration")
+	public String putPsRegistration(@RequestBody ps_registrationsModel cfm) throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryinsert_ps_registration = Connection1.prepareStatement(query_string_insert.query_insert_ps_registrations);
 		queryinsert_ps_registration.setString(1, cfm.id);
@@ -58,9 +60,9 @@ public class ps_registrationController {
 		return a;
 	}
 
-	@GetMapping("/Getpsregistration")
-
-	public ArrayList<ps_registrationsModel> TampilPsRegistration() throws SQLException {
+	@GetMapping("/getPsRegistration")
+	public ArrayList<ps_registrationsModel> getPsRegistration() throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_ps_registration = Connection1.prepareStatement(query_string.query_select_ps_registrations);
 		ResultSet Cursor1 = queryselect_ps_registration.executeQuery();// Evaluate (Connected_Expression1)
@@ -93,8 +95,9 @@ public class ps_registrationController {
 		return ListUser1;
 	}
 
-	@DeleteMapping(path = "/DeletePostPsRegistration", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int DeletePostRegistration(@RequestBody ps_registrationsModel cfm) throws SQLException {
+	@DeleteMapping(path = "/deletePsRegistration", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public int deletePsRegistration(@RequestBody ps_registrationsModel cfm) throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1
 				.prepareStatement(query_string_delete.query_delete_ps_registrations);

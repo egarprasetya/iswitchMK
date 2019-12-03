@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/voicemail")
 public class voicemailController {
-	PreparedStatement querydelete_alembic_version_config = null;
+	PreparedStatement querydelete_voicemail = null;
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();
 	stringkoneksi sk = new stringkoneksi();
 	AllQuery query_string = new AllQuery();
@@ -34,8 +34,9 @@ public class voicemailController {
 	AllInsertQuery query_string_insert = new AllInsertQuery();
 	PreparedStatement query_insert_voicemail = null;
 
-	@PutMapping("/PutVoiceMail")
-	public String putalembicversionconfig(@RequestBody VoiceMailModel cfm) throws SQLException {
+	@PutMapping("/putVoiceMail")
+	public String putVoiceMail(@RequestBody VoiceMailModel cfm) throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		query_insert_voicemail = Connection1.prepareStatement(query_string_insert.query_insert_voicemail);
 		
@@ -79,8 +80,9 @@ public class voicemailController {
 		return a;
 	}
 
-	@GetMapping("/Getvoicemail")
-	public ArrayList<VoiceMailModel> TampilvoicemailConfig() throws SQLException {
+	@GetMapping("/getVoiceMail")
+	public ArrayList<VoiceMailModel> getVoiceMail() throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_voicemail = Connection1.prepareStatement(query_string.query_select_voicemail);
 		ResultSet Cursor1 = queryselect_voicemail.executeQuery();// Evaluate (Connected_Expression1)
@@ -131,12 +133,13 @@ public class voicemailController {
 		return ListUser1;
 	}
 
-	@DeleteMapping(path = "/DeletePostVoiceMail", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int DeletePostVoiceMail(@RequestBody VoiceMailModel cfm) throws SQLException {
+	@DeleteMapping(path = "/deleteVoiceMail", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public int deleteVoiceMail(@RequestBody VoiceMailModel cfm) throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-		querydelete_alembic_version_config = Connection1.prepareStatement(query_string_delete.query_delete_voicemail);
-		querydelete_alembic_version_config.setInt(1, cfm.uniqueid);
-		int Cursor1 = querydelete_alembic_version_config.executeUpdate();// Evaluate (Connected_Expression1)
+		querydelete_voicemail = Connection1.prepareStatement(query_string_delete.query_delete_voicemail);
+		querydelete_voicemail.setInt(1, cfm.uniqueid);
+		int Cursor1 = querydelete_voicemail.executeUpdate();// Evaluate (Connected_Expression1)
 		int a = 0;
 		Connection1.close();
 		return a;

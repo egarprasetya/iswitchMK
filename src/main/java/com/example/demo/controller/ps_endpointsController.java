@@ -22,8 +22,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(produces="application/json",path="/psendpoint")
-public class ps_endpointsController {
+@RequestMapping(produces="application/json",path="/ps_endpoint")
+public class ps_endpointsController 
+{
 	PreparedStatement querydelete_alembic_version_config = null;
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();
 	stringkoneksi sk = new stringkoneksi();
@@ -32,8 +33,9 @@ public class ps_endpointsController {
 	AllInsertQuery query_string_insert = new AllInsertQuery();
 	PreparedStatement query_insert_ps_endpoints = null;
 
-	@PutMapping("/PutPsEndpointse")
-	public String putalembicversionconfig(@RequestBody ps_endpointsModel cfm) throws SQLException {
+	@PutMapping("/putPsEndpoints")
+	public String putPsEndpoints(@RequestBody ps_endpointsModel cfm) throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		query_insert_ps_endpoints = Connection1.prepareStatement(query_string_insert.query_insert_ps_endpoints);
 
@@ -163,8 +165,9 @@ public class ps_endpointsController {
 		return a;
 	}
 
-	@GetMapping("/Getpsendpoint")
-	public ArrayList<ps_endpointsModel> TampilAlembicVersionConfig() throws SQLException {
+	@GetMapping("/getPsEndpoint")
+	public ArrayList<ps_endpointsModel> getPsEndpoint() throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_psendpoint = Connection1.prepareStatement(query_string.query_select_ps_endpoints);
 		ResultSet Cursor1 = queryselect_psendpoint.executeQuery();// Evaluate (Connected_Expression1)
@@ -299,8 +302,9 @@ public class ps_endpointsController {
 		return ListUser1;
 	}
 
-	@DeleteMapping(path = "/DeletePostPsEndpoint", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int DeletePostAlembicVersionConfig(@RequestBody ps_endpointsModel cfm) throws SQLException {
+	@DeleteMapping(path = "/deletePsEndpoint", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public int deletePsEndpoint(@RequestBody ps_endpointsModel cfm) throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1
 				.prepareStatement(query_string_delete.query_delete_ps_endpoints);
