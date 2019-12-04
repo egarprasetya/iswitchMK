@@ -2,9 +2,10 @@ package com.example.demo.model;
 
 import com.example.demo.Enum.YesNo_Values;
 
-public class Ps_RegistrationsModel {
+public class Ps_RegistrationsModel
+{
 	public String id;
-	public YesNo_Values auth_rejection_permanent;	// YesNo value/Type.
+	public YesNo_Values auth_rejection_permanent; // YesNo value/Type.
 	public String client_uri;
 	public String contact_user;
 	public int expiration;
@@ -17,6 +18,6 @@ public class Ps_RegistrationsModel {
 	public String transport;
 	public String support_path;
 	public int fatal_retry_interval;
-	public YesNo_Values line;						// YesNo value/Type.
+	public YesNo_Values line; // YesNo value/Type.
 	public String endpoint;
 }

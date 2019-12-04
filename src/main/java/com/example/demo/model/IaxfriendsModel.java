@@ -6,10 +6,11 @@ import com.example.demo.Enum.iax_requirecalltoken_values;
 import com.example.demo.Enum.iax_transfer_values;
 import com.example.demo.Enum.type_values;
 
-public class IaxfriendsModel {
+public class IaxfriendsModel
+{
 	public int id;
 	public String name;
-	public type_values type; 		// type_value Type.
+	public type_values type; // type_value Type.
 	public String username;
 	public String mailbox;
 	public String secret;
@@ -32,25 +33,25 @@ public class IaxfriendsModel {
 	public String language;
 	public String callerid;
 	public String cid_number;
-	public YesNo_Values sendani;		// YesNo Value/Type.
-	public YesNo_Values fullname;		// YesNo Value/Type
+	public YesNo_Values sendani; // YesNo Value/Type.
+	public YesNo_Values fullname; // YesNo Value/Type
 	public String trunk;
 	public String auth;
 	public int maxauthreq;
-	public iax_requirecalltoken_values requirecalltoken;		// iax_requirecalltoken value/Type.
-	public iax_encryption_values encryption;			// iax_encryption value/Type.
-	public iax_transfer_values transfer;				// iax_transfer value/Type.
-	public YesNo_Values jitterbuffer;		// YesNo Value/Type.
-	public YesNo_Values forcejitterbuffer;		// YesNo Value/Type.
+	public iax_requirecalltoken_values requirecalltoken; // iax_requirecalltoken value/Type.
+	public iax_encryption_values encryption; // iax_encryption value/Type.
+	public iax_transfer_values transfer; // iax_transfer value/Type.
+	public YesNo_Values jitterbuffer; // YesNo Value/Type.
+	public YesNo_Values forcejitterbuffer; // YesNo Value/Type.
 	public String disallow;
 	public String allow;
 	public String codecpriority;
 	public String qualify;
-	public YesNo_Values qualifysmoothing;		// YesNo Value/Type
+	public YesNo_Values qualifysmoothing; // YesNo Value/Type
 	public String qualifyfreqok;
 	public String qualifyfreqnotok;
 	public String timezone;
-	public YesNo_Values adsi;				// YesNo Value/Type.
+	public YesNo_Values adsi; // YesNo Value/Type.
 	public String amaflags;
 	public String setvar;
 }

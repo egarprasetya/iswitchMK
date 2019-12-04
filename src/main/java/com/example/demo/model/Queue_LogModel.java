@@ -1,7 +1,9 @@
 package com.example.demo.model;
+
 import java.sql.Date;
 
-public class Queue_LogModel {
+public class Queue_LogModel
+{
 	public int id;
 	public Date calldatetime;
 	public String time;

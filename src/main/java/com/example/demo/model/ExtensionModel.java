@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
-public class ExtensionModel {
+public class ExtensionModel
+{
 	public int id;
 	public String context;
 	public String exten;

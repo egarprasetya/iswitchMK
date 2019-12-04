@@ -19,8 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.query.*;
 import com.example.demo.model.*;
 import com.example.demo.Enum.YesNo_Values;
+import com.example.demo.Enum.sip_callingpres_values;
 import com.example.demo.Enum.sip_directmedia_values_v2;
+import com.example.demo.Enum.sip_dtmfmode_values;
 import com.example.demo.Enum.sip_progressinband_values;
+import com.example.demo.Enum.sip_session_refresher_values;
 import com.example.demo.Enum.sip_session_timers_values;
 import com.example.demo.Enum.type_values;
 import com.example.demo.connection.*;
@@ -133,7 +136,7 @@ public class SippeersController
 		query_insert_sippeers.setString(87, cfm.dynamic.toString());
 		query_insert_sippeers.setString(88, cfm.path);
 		query_insert_sippeers.setString(89, cfm.supportpath.toString());
-		query_insert_sippeers.setString(90, cfm.email.toString());
+		//query_insert_sippeers.setString(90, cfm.email.toString());
 
 		int Cursor1 = query_insert_sippeers.executeUpdate();// Evaluate (Connected_Expression1)
 		String a = "1";
@@ -170,7 +173,7 @@ public class SippeersController
 			ModelSippeers.md5secret = Cursor1.getString(17);
 			ModelSippeers.remotesecret = Cursor1.getString(18);
 			ModelSippeers.transport = Cursor1.getString(19); // sip_transport value / Type.
-			ModelSippeers.dtmfmode = Cursor1.getString(20); // sip_dtmf_mode value / Type.
+			ModelSippeers.dtmfmode = sip_dtmfmode_values.valueOf(Cursor1.getString(20)); // sip_dtmf_mode value / Type.
 			ModelSippeers.directmedia = sip_directmedia_values_v2.valueOf(Cursor1.getString(21)); // sip_direct_media value v2 / Type.
 			ModelSippeers.nat = Cursor1.getString(22);
 			ModelSippeers.callgroup = Cursor1.getString(23);
@@ -198,7 +201,7 @@ public class SippeersController
 			ModelSippeers.session_timers = sip_session_timers_values.valueOf(Cursor1.getString(45)); // sip_session_timers value / Type.
 			ModelSippeers.session_expires = Cursor1.getInt(46);
 			ModelSippeers.session_minse = Cursor1.getInt(47);
-			ModelSippeers.session_refresher = Cursor1.getString(48); // sip_session_refresh value / Type.
+			ModelSippeers.session_refresher = sip_session_refresher_values.valueOf(Cursor1.getString(48)); // sip_session_refresh value / Type.
 			ModelSippeers.t38pt_usertpsource = Cursor1.getString(49);
 			ModelSippeers.regexten = Cursor1.getString(50);
 			ModelSippeers.fromdomain = Cursor1.getString(51);
@@ -224,7 +227,7 @@ public class SippeersController
 			ModelSippeers.fullname = Cursor1.getString(71);
 			ModelSippeers.trunkname = Cursor1.getString(72);
 			ModelSippeers.cid_number = Cursor1.getString(73);
-			ModelSippeers.callingpres = Cursor1.getString(74); // sip_callingpres value / Type.
+			ModelSippeers.callingpres = sip_callingpres_values.valueOf(Cursor1.getString(74)); // sip_callingpres value / Type.
 			ModelSippeers.mohinterpret = Cursor1.getString(75);
 			ModelSippeers.mohsuggest = Cursor1.getString(76);
 			ModelSippeers.parkinglot = Cursor1.getString(77);
