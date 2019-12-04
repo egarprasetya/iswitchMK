@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(produces="application/json",path="/ps_resource_list")
-public class ps_resourcelistController 
+public class Ps_ResourcelistController 
 {
 	PreparedStatement querydelete_alembic_version_config = null;
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();
@@ -33,7 +33,8 @@ public class ps_resourcelistController
 	PreparedStatement query_insert_ps_resource_list = null;
 
 	@PutMapping("/putPsResource")
-	public String putPsResource(@RequestBody ps_Resource_listModel cfm) throws SQLException {
+	public String putPsResource(@RequestBody ps_Resource_listModel cfm) throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		query_insert_ps_resource_list = Connection1
 				.prepareStatement(query_string_insert.query_insert_ps_resource_list);

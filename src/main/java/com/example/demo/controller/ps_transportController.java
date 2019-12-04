@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
 import com.example.demo.Enum.YesNo_Values;
+import com.example.demo.Enum.pjsip_transport_method_values;
+import com.example.demo.Enum.pjsip_transport_protocol_values;
 import com.example.demo.connection.stringkoneksi;
 import com.example.demo.model.*;
 import com.example.demo.query.*;
@@ -23,7 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(produces="application/json",path="/ps_transport")
-public class ps_transportController {
+public class Ps_TransportController 
+{
 	PreparedStatement querydelete_alembic_version_config = null;
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();
 	stringkoneksi sk = new stringkoneksi();
@@ -34,11 +37,11 @@ public class ps_transportController {
 	PreparedStatement query_insert_ps_transports = null;
 
 	@PutMapping("/putPsTransport")
-	public String putPsTransport(@RequestBody ps_transportModel cfm) throws SQLException {
+	public String putPsTransport(@RequestBody ps_transportModel cfm) throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		query_insert_ps_transports = Connection1
 				.prepareStatement(query_string_insert.query_insert_ps_transports);
-		
 		query_insert_ps_transports.setString(1, cfm.id);
 		query_insert_ps_transports.setInt(2, cfm.async_operations);
 		query_insert_ps_transports.setString(3, cfm.bind);
@@ -49,11 +52,11 @@ public class ps_transportController {
 		query_insert_ps_transports.setString(8, cfm.external_media_address);
 		query_insert_ps_transports.setString(9, cfm.external_signaling_address);
 		query_insert_ps_transports.setInt(10, cfm.external_signaling_port);
-		query_insert_ps_transports.setString(11, cfm.method);
+		query_insert_ps_transports.setString(11, cfm.method.toString());
 		query_insert_ps_transports.setString(12, cfm.local_net);
 		query_insert_ps_transports.setString(13, cfm.password);
 		query_insert_ps_transports.setString(14, cfm.priv_key_file);
-		query_insert_ps_transports.setString(15, cfm.protocol);
+		query_insert_ps_transports.setString(15, cfm.protocol.toString());
 		query_insert_ps_transports.setString(16, cfm.require_client_cert.toString());
 		query_insert_ps_transports.setString(17, cfm.verify_client.toString());
 		query_insert_ps_transports.setString(18, cfm.verify_server.toString());
@@ -69,7 +72,8 @@ public class ps_transportController {
 	}
 
 	@GetMapping("/getPsTransport")
-	public ArrayList<ps_transportModel> getPsTransport() throws SQLException {
+	public ArrayList<ps_transportModel> getPsTransport() throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_ps_transport = Connection1.prepareStatement(query_string.query_select_ps_transports);
 		ResultSet Cursor1 = queryselect_ps_transport.executeQuery();// Evaluate (Connected_Expression1)
@@ -77,7 +81,6 @@ public class ps_transportController {
 		while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 		{
 			ps_transportModel ModelPs_transport = new ps_transportModel();
-
 			ModelPs_transport.id = Cursor1.getString(1);
 			ModelPs_transport.async_operations = Cursor1.getInt(2);
 			ModelPs_transport.bind = Cursor1.getString(3);
@@ -88,11 +91,11 @@ public class ps_transportController {
 			ModelPs_transport.external_media_address = Cursor1.getString(8);
 			ModelPs_transport.external_signaling_address = Cursor1.getString(9);
 			ModelPs_transport.external_signaling_port = Cursor1.getInt(10);
-			ModelPs_transport.method = Cursor1.getString(11);
+			ModelPs_transport.method = pjsip_transport_method_values.valueOf(Cursor1.getString(11));
 			ModelPs_transport.local_net = Cursor1.getString(12);
 			ModelPs_transport.password = Cursor1.getString(13);
 			ModelPs_transport.priv_key_file = Cursor1.getString(14);
-			ModelPs_transport.protocol = Cursor1.getString(15);
+			ModelPs_transport.protocol = pjsip_transport_protocol_values.valueOf(Cursor1.getString(15));
 			ModelPs_transport.require_client_cert = YesNo_Values.valueOf(Cursor1.getString(16));
 			ModelPs_transport.verify_client = YesNo_Values.valueOf(Cursor1.getString(17));
 			ModelPs_transport.verify_server = YesNo_Values.valueOf(Cursor1.getString(18));
@@ -100,7 +103,6 @@ public class ps_transportController {
 			ModelPs_transport.cos = Cursor1.getInt(20);
 			ModelPs_transport.allow_reload = YesNo_Values.valueOf(Cursor1.getString(21));
 			ModelPs_transport.symmetric_transport = YesNo_Values.valueOf(Cursor1.getString(22));
-
 			ListUser1.add(ModelPs_transport);
 
 		}
@@ -110,7 +112,8 @@ public class ps_transportController {
 	}
 
 	@DeleteMapping(path = "/deletePsTransport", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int deletePsTransport(@RequestBody ps_transportModel cfm) throws SQLException {
+	public int deletePsTransport(@RequestBody ps_transportModel cfm) throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1
 				.prepareStatement(query_string_delete.query_delete_ps_transports);

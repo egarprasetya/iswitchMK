@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.Enum.YesNo_Values;
+import com.example.demo.Enum.queue_autopause_values;
 import com.example.demo.connection.stringkoneksi;
 import com.example.demo.model.*;
 import com.example.demo.query.*;
@@ -23,7 +24,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(produces="application/json",path="/queues")
-public class queuesContoller {
+public class QueuesContoller 
+{
 	PreparedStatement querydelete_alembic_version_config = null;
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();
 	stringkoneksi sk = new stringkoneksi();
@@ -33,7 +35,8 @@ public class queuesContoller {
 	PreparedStatement query_insert_queues = null;
 
 	@PutMapping("/putQueues")
-	public String putQueues(@RequestBody queuesModel cfm) throws SQLException {
+	public String putQueues(@RequestBody queuesModel cfm) throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		
 		query_insert_queues = Connection1.prepareStatement(query_string_insert.query_insert_queues);
@@ -77,7 +80,7 @@ public class queuesContoller {
 		query_insert_queues.setInt(38, cfm.penaltymemberslimit);
 		query_insert_queues.setString(39, cfm.autofill);
 		query_insert_queues.setString(40, cfm.monitor_type);
-		query_insert_queues.setString(41, cfm.autopause);
+		query_insert_queues.setString(41, cfm.autopause.toString());
 		query_insert_queues.setInt(42, cfm.autopausedelay);
 		query_insert_queues.setString(43, cfm.autopausebusy.toString());
 		query_insert_queues.setString(44, cfm.autopauseunavail.toString());
@@ -101,7 +104,8 @@ public class queuesContoller {
 	}
 
 	@GetMapping("/getQueues")
-	public ArrayList<queuesModel> getQueues() throws SQLException {
+	public ArrayList<queuesModel> getQueues() throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_queues = Connection1.prepareStatement(query_string.query_select_queues);
 		ResultSet Cursor1 = queryselect_queues.executeQuery();// Evaluate (Connected_Expression1)
@@ -150,7 +154,7 @@ public class queuesContoller {
 			ModelQueues.penaltymemberslimit = Cursor1.getInt(38);
 			ModelQueues.autofill = Cursor1.getString(39);
 			ModelQueues.monitor_type = Cursor1.getString(40);
-			ModelQueues.autopause = Cursor1.getString(41); // Queue_autopause value / Type.
+			ModelQueues.autopause = queue_autopause_values.valueOf(Cursor1.getString(41)); // Queue_autopause value / Type.
 			ModelQueues.autopausedelay = Cursor1.getInt(42);
 			ModelQueues.autopausebusy = YesNo_Values.valueOf(Cursor1.getString(43)); // YesNo value / Type.
 			ModelQueues.autopauseunavail = YesNo_Values.valueOf(Cursor1.getString(44)); // YesNo value / Type.

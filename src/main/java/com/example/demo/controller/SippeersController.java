@@ -19,11 +19,16 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.query.*;
 import com.example.demo.model.*;
 import com.example.demo.Enum.YesNo_Values;
+import com.example.demo.Enum.sip_directmedia_values_v2;
+import com.example.demo.Enum.sip_progressinband_values;
+import com.example.demo.Enum.sip_session_timers_values;
+import com.example.demo.Enum.type_values;
 import com.example.demo.connection.*;
 
 @RestController
 @RequestMapping(produces="application/json",path="/Sippeers")
-public class SippeersController {
+public class SippeersController 
+{
 	PreparedStatement querydelete_alembic_version_config = null;
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();
 	stringkoneksi sk = new stringkoneksi();
@@ -33,8 +38,9 @@ public class SippeersController {
 	AllInsertQuery query_string_insert = new AllInsertQuery();
 	PreparedStatement query_insert_sippeers = null;
 
-	@PutMapping("/PutSippeers")
-	public String putalembicversionconfig(@RequestBody SippeersModel cfm) throws SQLException {
+	@PutMapping("/putSippeers")
+	public String putSippeers(@RequestBody SippeersModel cfm) throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		query_insert_sippeers = Connection1.prepareStatement(query_string_insert.query_insert_sippeers);
 
@@ -49,7 +55,7 @@ public class SippeersController {
 		query_insert_sippeers.setString(9, cfm.useragent);
 		query_insert_sippeers.setInt(10, cfm.lastms);
 		query_insert_sippeers.setString(11, cfm.host);
-		query_insert_sippeers.setString(12, cfm.type);
+		query_insert_sippeers.setString(12, cfm.type.toString());
 		query_insert_sippeers.setString(13, cfm.context);
 		query_insert_sippeers.setString(14, cfm.permit);
 		query_insert_sippeers.setString(15, cfm.deny);
@@ -57,8 +63,8 @@ public class SippeersController {
 		query_insert_sippeers.setString(17, cfm.md5secret);
 		query_insert_sippeers.setString(18, cfm.remotesecret);
 		query_insert_sippeers.setString(19, cfm.transport);
-		query_insert_sippeers.setString(20, cfm.dtmfmode);
-		query_insert_sippeers.setString(21, cfm.directmedia);
+		query_insert_sippeers.setString(20, cfm.dtmfmode.toString());
+		query_insert_sippeers.setString(21, cfm.directmedia.toString());
 		query_insert_sippeers.setString(22, cfm.nat);
 		query_insert_sippeers.setString(23, cfm.callgroup);
 		query_insert_sippeers.setString(24, cfm.pickupgroup);
@@ -67,7 +73,7 @@ public class SippeersController {
 		query_insert_sippeers.setString(27, cfm.allow);
 		query_insert_sippeers.setString(28, cfm.insecure);
 		query_insert_sippeers.setString(29, cfm.trustrpid);
-		query_insert_sippeers.setString(30, cfm.progressinband);
+		query_insert_sippeers.setString(30, cfm.progressinband.toString());
 		query_insert_sippeers.setString(31, cfm.promiscredir.toString());
 		query_insert_sippeers.setString(32, cfm.useclientcode.toString());
 		query_insert_sippeers.setString(33, cfm.accountcode);
@@ -82,10 +88,10 @@ public class SippeersController {
 		query_insert_sippeers.setInt(42, cfm.maxcallbitrate);
 		query_insert_sippeers.setString(43, cfm.rfc2833compensate.toString());
 		query_insert_sippeers.setString(44, cfm.mailbox);
-		query_insert_sippeers.setString(45, cfm.session_timers);
+		query_insert_sippeers.setString(45, cfm.session_timers.toString());
 		query_insert_sippeers.setInt(46, cfm.session_expires);
 		query_insert_sippeers.setInt(47, cfm.session_minse);
-		query_insert_sippeers.setString(48, cfm.session_refresher);
+		query_insert_sippeers.setString(48, cfm.session_refresher.toString());
 		query_insert_sippeers.setString(49, cfm.t38pt_usertpsource);
 		query_insert_sippeers.setString(50, cfm.regexten);
 		query_insert_sippeers.setString(51, cfm.fromdomain);
@@ -111,7 +117,7 @@ public class SippeersController {
 		query_insert_sippeers.setString(71, cfm.fullname);
 		query_insert_sippeers.setString(72, cfm.trunkname);
 		query_insert_sippeers.setString(73, cfm.cid_number);
-		query_insert_sippeers.setString(74, cfm.callingpres);
+		query_insert_sippeers.setString(74, cfm.callingpres.toString());
 		query_insert_sippeers.setString(75, cfm.mohinterpret);
 		query_insert_sippeers.setString(76, cfm.mohsuggest);
 		query_insert_sippeers.setString(77, cfm.parkinglot);
@@ -127,7 +133,7 @@ public class SippeersController {
 		query_insert_sippeers.setString(87, cfm.dynamic.toString());
 		query_insert_sippeers.setString(88, cfm.path);
 		query_insert_sippeers.setString(89, cfm.supportpath.toString());
-		query_insert_sippeers.setString(90, cfm.email);
+		query_insert_sippeers.setString(90, cfm.email.toString());
 
 		int Cursor1 = query_insert_sippeers.executeUpdate();// Evaluate (Connected_Expression1)
 		String a = "1";
@@ -135,8 +141,9 @@ public class SippeersController {
 		return a;
 	}
 
-	@GetMapping("/GetSippeers")
-	public ArrayList<SippeersModel> TampilSippeers() throws SQLException {
+	@GetMapping("/getSippeers")
+	public ArrayList<SippeersModel> getSippeers() throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_sippeers = Connection1.prepareStatement(query_string.query_select_sippeers);
 		ResultSet Cursor1 = queryselect_sippeers.executeQuery();// Evaluate (Connected_Expression1)
@@ -155,7 +162,7 @@ public class SippeersController {
 			ModelSippeers.useragent = Cursor1.getString(9);
 			ModelSippeers.lastms = Cursor1.getInt(10);
 			ModelSippeers.host = Cursor1.getString(11);
-			ModelSippeers.type = Cursor1.getString(12); // type value / Type.
+			ModelSippeers.type = type_values.valueOf(Cursor1.getString(12)); // type value / Type.
 			ModelSippeers.context = Cursor1.getString(13);
 			ModelSippeers.permit = Cursor1.getString(14);
 			ModelSippeers.deny = Cursor1.getString(15);
@@ -164,7 +171,7 @@ public class SippeersController {
 			ModelSippeers.remotesecret = Cursor1.getString(18);
 			ModelSippeers.transport = Cursor1.getString(19); // sip_transport value / Type.
 			ModelSippeers.dtmfmode = Cursor1.getString(20); // sip_dtmf_mode value / Type.
-			ModelSippeers.directmedia = Cursor1.getString(21); // sip_direct_media value v2 / Type.
+			ModelSippeers.directmedia = sip_directmedia_values_v2.valueOf(Cursor1.getString(21)); // sip_direct_media value v2 / Type.
 			ModelSippeers.nat = Cursor1.getString(22);
 			ModelSippeers.callgroup = Cursor1.getString(23);
 			ModelSippeers.pickupgroup = Cursor1.getString(24);
@@ -173,7 +180,7 @@ public class SippeersController {
 			ModelSippeers.allow = Cursor1.getString(27);
 			ModelSippeers.insecure = Cursor1.getString(28);
 			ModelSippeers.trustrpid = Cursor1.getString(29);
-			ModelSippeers.progressinband = Cursor1.getString(30); // sip_progressinband value / Type.
+			ModelSippeers.progressinband = sip_progressinband_values.valueOf(Cursor1.getString(30)); // sip_progressinband value / Type.
 			ModelSippeers.promiscredir = YesNo_Values.valueOf(Cursor1.getString(31)); // YesNo value / Type.
 			ModelSippeers.useclientcode = YesNo_Values.valueOf(Cursor1.getString(32)); // YesNo value / Type.
 			ModelSippeers.accountcode = Cursor1.getString(33);
@@ -188,7 +195,7 @@ public class SippeersController {
 			ModelSippeers.maxcallbitrate = Cursor1.getInt(42);
 			ModelSippeers.rfc2833compensate = YesNo_Values.valueOf(Cursor1.getString(43)); // YesNo value / Type.
 			ModelSippeers.mailbox = Cursor1.getString(44);
-			ModelSippeers.session_timers = Cursor1.getString(45); // sip_session_timers value / Type.
+			ModelSippeers.session_timers = sip_session_timers_values.valueOf(Cursor1.getString(45)); // sip_session_timers value / Type.
 			ModelSippeers.session_expires = Cursor1.getInt(46);
 			ModelSippeers.session_minse = Cursor1.getInt(47);
 			ModelSippeers.session_refresher = Cursor1.getString(48); // sip_session_refresh value / Type.
@@ -241,8 +248,9 @@ public class SippeersController {
 		return ListUser1;
 	}
 
-	@DeleteMapping(path = "/DeletePostSippeers", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int DeletePostAlembicVersionConfig(@RequestBody SippeersModel cfm) throws SQLException {
+	@DeleteMapping(path = "/deleteSippeers", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public int deleteSippeers(@RequestBody SippeersModel cfm) throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1.prepareStatement(query_string_delete.query_delete_sippeers);
 		querydelete_alembic_version_config.setInt(1, cfm.id);

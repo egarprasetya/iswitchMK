@@ -23,7 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(produces="application/json",path="/ps_system")
-public class ps_systemController {
+public class Ps_SystemController 
+{
 	PreparedStatement querydelete_alembic_version_config = null;
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();
 	stringkoneksi sk = new stringkoneksi();
@@ -55,7 +56,8 @@ public class ps_systemController {
 	}
 
 	@GetMapping("/getPsSystem")
-	public ArrayList<ps_SystemsModel> getPsSystem() throws SQLException {
+	public ArrayList<ps_SystemsModel> getPsSystem() throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_ps_systems = Connection1.prepareStatement(query_string.query_select_ps_systems);
 		ResultSet Cursor1 = queryselect_ps_systems.executeQuery();// Evaluate (Connected_Expression1)
@@ -81,7 +83,8 @@ public class ps_systemController {
 	}
 
 	@DeleteMapping(path = "/deletePsSystem", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int deletePsSystem(@RequestBody String id) throws SQLException {
+	public int deletePsSystem(@RequestBody String id) throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1.prepareStatement(query_string_delete.query_delete_ps_systems);
 		querydelete_alembic_version_config.setString(1, id);
@@ -92,7 +95,8 @@ public class ps_systemController {
 	}
 
 	@GetMapping(path = "/DeleteGetPsSystem ", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int DeleteGetPsSystems(@RequestBody String id) throws SQLException {
+	public int DeleteGetPsSystems(@RequestBody String id) throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1.prepareStatement(query_string_delete.query_delete_ps_systems);
 		querydelete_alembic_version_config.setString(1, id);

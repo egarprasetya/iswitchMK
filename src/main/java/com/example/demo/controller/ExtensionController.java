@@ -33,8 +33,8 @@ public class ExtensionController
 	AllQuery query_string = new AllQuery();
 	PreparedStatement queryselect_extension = null;
 
-	@PutMapping(produces="application/json",path="/Putextension")
-	public String putalembicversionconfig(@RequestBody extensionModel cfm) throws SQLException
+	@PutMapping(produces="application/json",path="/putExtension")
+	public String putExtension(@RequestBody extensionModel cfm) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryinsert_extension = Connection1.prepareStatement(query_string_insert.query_insert_extension);
@@ -44,15 +44,14 @@ public class ExtensionController
 		queryinsert_extension.setInt(3, cfm.priority);
 		queryinsert_extension.setString(4, cfm.app);
 		queryinsert_extension.setString(5, cfm.appdata);
-
 		int Cursor1 = queryinsert_extension.executeUpdate();// Evaluate (Connected_Expression1)
 		String a = "0";
 		Connection1.close();
 		return a;
 	}
 
-	@GetMapping(produces="application/json",path="/Getextensions")
-	public ArrayList<extensionModel> Tampilextension() throws SQLException {
+	@GetMapping(produces="application/json",path="/getExtensions")
+	public ArrayList<extensionModel> getExtensions() throws SQLException {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_extension = Connection1.prepareStatement(query_string.query_select_extension);
 		ResultSet Cursor1 = queryselect_extension.executeQuery();// Evaluate (Connected_Expression1)
@@ -67,13 +66,12 @@ public class ExtensionController
 			Modelextension.app = Cursor1.getString(5);
 			Modelextension.appdata = Cursor1.getString(6);
 			ListUser1.add(Modelextension);
-
 		}
 		Connection1.close();
 		return ListUser1;
 	}
 
-	@DeleteMapping(path = "/DeletePostExtension", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@DeleteMapping(path = "/deleteExtension", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public int DeletePostExtension(@RequestBody extensionModel cfm) throws SQLException {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1.prepareStatement(query_string_delete.query_delete_extension);

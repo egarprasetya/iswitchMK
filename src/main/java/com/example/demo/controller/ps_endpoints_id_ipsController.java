@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(produces="application/json",path="/ps_endpoints_id")
-public class ps_endpoints_id_ipsController 
+public class Ps_Endpoints_id_ipsController 
 {
 	PreparedStatement query_delete_ps_endpoints_id = null;
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();

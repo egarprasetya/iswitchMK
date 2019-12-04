@@ -1,6 +1,16 @@
 package com.example.demo.controller;
 
 import com.example.demo.Enum.YesNo_Values;
+import com.example.demo.Enum.pjsip_100rel_values;
+import com.example.demo.Enum.pjsip_cid_privacy_values;
+import com.example.demo.Enum.pjsip_connected_line_method_values;
+import com.example.demo.Enum.pjsip_direct_media_glare_mitigation_values;
+import com.example.demo.Enum.pjsip_dtls_setup_values;
+import com.example.demo.Enum.pjsip_dtmf_mode_values_v3;
+import com.example.demo.Enum.pjsip_redirect_method_values;
+import com.example.demo.Enum.pjsip_t38udptl_ec_values;
+import com.example.demo.Enum.pjsip_timer_values;
+import com.example.demo.Enum.sha_hash_values;
 import com.example.demo.connection.stringkoneksi;
 import com.example.demo.model.*;
 import com.example.demo.query.*;
@@ -23,7 +33,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(produces="application/json",path="/ps_endpoint")
-public class ps_endpointsController 
+public class Ps_EndpointsController 
 {
 	PreparedStatement querydelete_alembic_version_config = null;
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();
@@ -47,11 +57,11 @@ public class ps_endpointsController
 		query_insert_ps_endpoints.setString(6, cfm.disallow);
 		query_insert_ps_endpoints.setString(7, cfm.allow);
 		query_insert_ps_endpoints.setString(8, cfm.direct_media.toString());
-		query_insert_ps_endpoints.setString(9, cfm.connected_line_method);
-		query_insert_ps_endpoints.setString(10, cfm.direct_media_method);
-		query_insert_ps_endpoints.setString(11, cfm.direct_media_glare_mitigation);
+		query_insert_ps_endpoints.setString(9, cfm.connected_line_method.toString());
+		query_insert_ps_endpoints.setString(10, cfm.direct_media_method.toString());
+		query_insert_ps_endpoints.setString(11, cfm.direct_media_glare_mitigation.toString());
 		query_insert_ps_endpoints.setString(12, cfm.disable_direct_media_on_nat);
-		query_insert_ps_endpoints.setString(13, cfm.dtmf_mode);
+		query_insert_ps_endpoints.setString(13, cfm.dtmf_mode.toString());
 		query_insert_ps_endpoints.setString(14, cfm.external_media_address);
 		query_insert_ps_endpoints.setString(15, cfm.force_rport);
 		query_insert_ps_endpoints.setString(16, cfm.ice_support);
@@ -67,12 +77,12 @@ public class ps_endpointsController
 		query_insert_ps_endpoints.setString(26, cfm.send_pai);
 		query_insert_ps_endpoints.setString(27, cfm.send_rpid);
 		query_insert_ps_endpoints.setInt(28, cfm.timers_min_se);
-		query_insert_ps_endpoints.setString(29, cfm.timers);
+		query_insert_ps_endpoints.setString(29, cfm.timers.toString());
 		query_insert_ps_endpoints.setInt(30, cfm.timers_sess_expires);
 		query_insert_ps_endpoints.setString(31, cfm.callerid);
-		query_insert_ps_endpoints.setString(32, cfm.callerid_privacy);
+		query_insert_ps_endpoints.setString(32, cfm.callerid_privacy.toString());
 		query_insert_ps_endpoints.setString(33, cfm.callerid_tag);
-		query_insert_ps_endpoints.setString(34, cfm._100rel);
+		query_insert_ps_endpoints.setString(34, cfm._100rel.toString());
 		query_insert_ps_endpoints.setString(35, cfm.aggregate_mwi.toString());
 		query_insert_ps_endpoints.setString(36, cfm.trust_id_inbound.toString());
 		query_insert_ps_endpoints.setString(37, cfm.trust_id_outbound.toString());
@@ -87,7 +97,7 @@ public class ps_endpointsController
 		query_insert_ps_endpoints.setInt(46, cfm.device_state_busy_at);
 		query_insert_ps_endpoints.setString(47, cfm.fax_detect.toString());
 		query_insert_ps_endpoints.setString(48, cfm.t38_udptl.toString());
-		query_insert_ps_endpoints.setString(49, cfm.t38_udptl_ec);
+		query_insert_ps_endpoints.setString(49, cfm.t38_udptl_ec.toString());
 		query_insert_ps_endpoints.setInt(50, cfm.t38_udptl_maxdatagram);
 		query_insert_ps_endpoints.setString(51, cfm.t38_udptl_nat.toString());
 		query_insert_ps_endpoints.setString(52, cfm.t38_udptl_ipv6.toString());
@@ -114,10 +124,10 @@ public class ps_endpointsController
 		query_insert_ps_endpoints.setString(73, cfm.dtls_cipher);
 		query_insert_ps_endpoints.setString(74, cfm.dtls_ca_file);
 		query_insert_ps_endpoints.setString(75, cfm.dtls_ca_path);
-		query_insert_ps_endpoints.setString(76, cfm.dtls_setup);
+		query_insert_ps_endpoints.setString(76, cfm.dtls_setup.toString());
 		query_insert_ps_endpoints.setString(77, cfm.srtp_tag_32.toString());
 		query_insert_ps_endpoints.setString(78, cfm.media_address);
-		query_insert_ps_endpoints.setString(79, cfm.redirect_method);
+		query_insert_ps_endpoints.setString(79, cfm.redirect_method.toString());
 		query_insert_ps_endpoints.setString(80, cfm.set_var);
 		query_insert_ps_endpoints.setInt(81, cfm.cos_audio);
 		query_insert_ps_endpoints.setInt(82, cfm.cos_video);
@@ -154,7 +164,7 @@ public class ps_endpointsController
 		query_insert_ps_endpoints.setInt(113, cfm.max_audio_streams);
 		query_insert_ps_endpoints.setInt(114, cfm.max_video_streams);
 		query_insert_ps_endpoints.setString(115, cfm.webrtc.toString());
-		query_insert_ps_endpoints.setString(116, cfm.dtls_fingerprint);
+		query_insert_ps_endpoints.setString(116, cfm.dtls_fingerprint.toString());
 		query_insert_ps_endpoints.setString(117, cfm.incomming_mwi_mailbox);
 		query_insert_ps_endpoints.setString(118, cfm.bundle.toString());
 		query_insert_ps_endpoints.setString(119, cfm.dtls_auto_generate_cert.toString());
@@ -183,12 +193,11 @@ public class ps_endpointsController
 			ModelPs_enpoints.disallow = Cursor1.getString(6);
 			ModelPs_enpoints.allow = Cursor1.getString(7);
 			ModelPs_enpoints.direct_media = YesNo_Values.valueOf(Cursor1.getString(8)); // YesNo value / Type.
-			ModelPs_enpoints.connected_line_method = Cursor1.getString(9); // pjsip_connected_line_method value/type.
-			ModelPs_enpoints.direct_media_method = Cursor1.getString(10); // pjsip_connected_line_method value/type.
-			ModelPs_enpoints.direct_media_glare_mitigation = Cursor1.getString(11); // pjsip_direct_media_glare_mitigation
-																					// // value/Type.
+			ModelPs_enpoints.connected_line_method = pjsip_connected_line_method_values.valueOf(Cursor1.getString(9)); // pjsip_connected_line_method value/type.
+			ModelPs_enpoints.direct_media_method = pjsip_connected_line_method_values.valueOf(Cursor1.getString(10)); // pjsip_connected_line_method value/type.
+			ModelPs_enpoints.direct_media_glare_mitigation = pjsip_direct_media_glare_mitigation_values.valueOf(Cursor1.getString(11)); // pjsip_direct_media_glare_mitigation																					// // value/Type.
 			ModelPs_enpoints.disable_direct_media_on_nat = Cursor1.getString(12);
-			ModelPs_enpoints.dtmf_mode = Cursor1.getString(13); // pjsip_dtmf_mode value/Type.
+			ModelPs_enpoints.dtmf_mode = pjsip_dtmf_mode_values_v3.valueOf(Cursor1.getString(13)); // pjsip_dtmf_mode value/Type.
 			ModelPs_enpoints.external_media_address = Cursor1.getString(14);
 			ModelPs_enpoints.force_rport = Cursor1.getString(15);
 			ModelPs_enpoints.ice_support = Cursor1.getString(16);
@@ -204,12 +213,12 @@ public class ps_endpointsController
 			ModelPs_enpoints.send_pai = Cursor1.getString(26);
 			ModelPs_enpoints.send_rpid = Cursor1.getString(27);
 			ModelPs_enpoints.timers_min_se = Cursor1.getInt(28);
-			ModelPs_enpoints.timers = Cursor1.getString(29); // pjsip_timer value/Type.
+			ModelPs_enpoints.timers = pjsip_timer_values.valueOf(Cursor1.getString(29)); // pjsip_timer value/Type.
 			ModelPs_enpoints.timers_sess_expires = Cursor1.getInt(30);
 			ModelPs_enpoints.callerid = Cursor1.getString(31);
-			ModelPs_enpoints.callerid_privacy = Cursor1.getString(32); // pjsip_cid_privacy value/Type.
+			ModelPs_enpoints.callerid_privacy = pjsip_cid_privacy_values.valueOf(Cursor1.getString(32)); // pjsip_cid_privacy value/Type.
 			ModelPs_enpoints.callerid_tag = Cursor1.getString(33);
-			ModelPs_enpoints._100rel = Cursor1.getString(34); // pjsip_100rel value/Type.
+			ModelPs_enpoints._100rel = pjsip_100rel_values.valueOf(Cursor1.getString(34)); // pjsip_100rel value/Type.
 			ModelPs_enpoints.aggregate_mwi = YesNo_Values.valueOf(Cursor1.getString(35)); // YesNo Value/Type
 			ModelPs_enpoints.trust_id_inbound = YesNo_Values.valueOf(Cursor1.getString(36)); // YesNo Value/Type
 			ModelPs_enpoints.trust_id_outbound = YesNo_Values.valueOf(Cursor1.getString(37)); // YesNo Value/Type
@@ -224,7 +233,7 @@ public class ps_endpointsController
 			ModelPs_enpoints.device_state_busy_at = Cursor1.getInt(46);
 			ModelPs_enpoints.fax_detect = YesNo_Values.valueOf(Cursor1.getString(47)); // YesNo Value/Type
 			ModelPs_enpoints.t38_udptl = YesNo_Values.valueOf(Cursor1.getString(48)); // YesNo Value/Type
-			ModelPs_enpoints.t38_udptl_ec = Cursor1.getString(49); // pjsip_t38_udptl value/type.
+			ModelPs_enpoints.t38_udptl_ec = pjsip_t38udptl_ec_values.valueOf(Cursor1.getString(49)); // pjsip_t38_udptl value/type.
 			ModelPs_enpoints.t38_udptl_maxdatagram = Cursor1.getInt(50);
 			ModelPs_enpoints.t38_udptl_nat = YesNo_Values.valueOf(Cursor1.getString(51)); // YesNo value/Type.
 			ModelPs_enpoints.t38_udptl_ipv6 = YesNo_Values.valueOf(Cursor1.getString(52)); // YesNo value/Type.
@@ -251,10 +260,10 @@ public class ps_endpointsController
 			ModelPs_enpoints.dtls_cipher = Cursor1.getString(73);
 			ModelPs_enpoints.dtls_ca_file = Cursor1.getString(74);
 			ModelPs_enpoints.dtls_ca_path = Cursor1.getString(75);
-			ModelPs_enpoints.dtls_setup = Cursor1.getString(76); // pjsip_dtls_setup value/Type.
+			ModelPs_enpoints.dtls_setup = pjsip_dtls_setup_values.valueOf(Cursor1.getString(76)); // pjsip_dtls_setup value/Type.
 			ModelPs_enpoints.srtp_tag_32 = YesNo_Values.valueOf(Cursor1.getString(77)); // YesNo value/Type
 			ModelPs_enpoints.media_address = Cursor1.getString(78);
-			ModelPs_enpoints.redirect_method = Cursor1.getString(79); // pjsip_redirect_method value/Type.
+			ModelPs_enpoints.redirect_method = pjsip_redirect_method_values.valueOf(Cursor1.getString(79)); // pjsip_redirect_method value/Type.
 			ModelPs_enpoints.set_var = Cursor1.getString(80); // Text value/Type.
 			ModelPs_enpoints.cos_audio = Cursor1.getInt(81);
 			ModelPs_enpoints.cos_video = Cursor1.getInt(82);
@@ -291,7 +300,7 @@ public class ps_endpointsController
 			ModelPs_enpoints.max_audio_streams = Cursor1.getInt(113);
 			ModelPs_enpoints.max_video_streams = Cursor1.getInt(114);
 			ModelPs_enpoints.webrtc = YesNo_Values.valueOf(Cursor1.getString(115)); // YesNo value/Type.
-			ModelPs_enpoints.dtls_fingerprint = Cursor1.getString(116); // sha_hash value/Type.
+			ModelPs_enpoints.dtls_fingerprint = sha_hash_values.valueOf(Cursor1.getString(116)); // sha_hash value/Type.
 			ModelPs_enpoints.incomming_mwi_mailbox = Cursor1.getString(117);
 			ModelPs_enpoints.bundle = YesNo_Values.valueOf(Cursor1.getString(118)); // YesNo value/Type.
 			ModelPs_enpoints.dtls_auto_generate_cert = YesNo_Values.valueOf(Cursor1.getString(119));

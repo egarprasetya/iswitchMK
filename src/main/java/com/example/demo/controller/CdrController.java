@@ -39,7 +39,6 @@ public class CdrController
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryinsert_cdr = Connection1.prepareStatement(query_string_insert.query_insert_cdr);
 		queryinsert_cdr.setString(1, cfm.accountcode);
-
 		queryinsert_cdr.setString(2, cfm.src);
 		queryinsert_cdr.setString(3, cfm.dst);
 		queryinsert_cdr.setString(4, cfm.dcontext);
@@ -67,7 +66,8 @@ public class CdrController
 		return a;
 	}
 	@GetMapping(produces="application/json",path="/getCdr")
-	public ArrayList<cdrModel> getCdr() throws SQLException {
+	public ArrayList<cdrModel> getCdr() throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_cdr = Connection1.prepareStatement(query_string.query_select_cdr);
 		ResultSet Cursor1 = queryselect_cdr.executeQuery();// Evaluate (Connected_Expression1)
@@ -103,7 +103,8 @@ public class CdrController
 	}
 
 	@DeleteMapping(path = "/deleteCdr", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int deleteCdr(@RequestBody cdrModel cfm) throws SQLException {
+	public int deleteCdr(@RequestBody cdrModel cfm) throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_cdr = Connection1.prepareStatement(query_string_delete.query_delete_cdr);
 		querydelete_cdr.setString(1, cfm.accountcode);

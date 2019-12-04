@@ -23,7 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(produces="application/json",path="/queue_log")
-public class queue_logController {
+public class Queue_LogController 
+{
 	PreparedStatement querydelete_alembic_version_config = null;
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();
 	stringkoneksi sk = new stringkoneksi();
@@ -34,7 +35,8 @@ public class queue_logController {
 	PreparedStatement query_insert_queue_log = null;
 
 	@PutMapping("/putQueueLog")
-	public String putQueueLog(@RequestBody queue_logModel cfm) throws SQLException {
+	public String putQueueLog(@RequestBody queue_logModel cfm) throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		query_insert_queue_log = Connection1.prepareStatement(query_string_insert.query_insert_queue_log);
 		
