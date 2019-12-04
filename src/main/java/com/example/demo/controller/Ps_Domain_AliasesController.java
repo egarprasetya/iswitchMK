@@ -33,7 +33,7 @@ public class Ps_Domain_AliasesController
 	PreparedStatement queryinsert_ps_domain_aliases = null;
 
 	@PutMapping("/putPsDomain")
-	public String putPsDomainAliases(@RequestBody ps_domain_aliasesModel cfm) throws SQLException 
+	public String putPsDomain(@RequestBody ps_domain_aliasesModel cfm) throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryinsert_ps_domain_aliases = Connection1

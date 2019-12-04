@@ -25,8 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 
-@RequestMapping(produces="application/json",path="/psaors")
-public class ps_aorsController {
+@RequestMapping(produces="application/json",path="/ps_aors")
+public class Ps_AorsController {
 
 	PreparedStatement querydelete_alembic_version_config = null;
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();
@@ -38,8 +38,8 @@ public class ps_aorsController {
 	
 	YesNo_Values enumyesno;
 
-	@PutMapping("/PutPsAors")
-	public String putps_aor(@RequestBody ps_aorsModel cfm) throws SQLException {
+	@PutMapping("/putPsAors")
+	public String putPsAors(@RequestBody ps_aorsModel cfm) throws SQLException {
 
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryinsert_ps_aor = Connection1.prepareStatement(query_string_insert.query_insert_ps_aors);
@@ -50,12 +50,8 @@ public class ps_aorsController {
 		queryinsert_ps_aor.setInt(5, cfm.max_contacts);
 		queryinsert_ps_aor.setInt(6, cfm.minimum_expiration);
 		queryinsert_ps_aor.setString(7, cfm.remove_existing.toString());
-
 		queryinsert_ps_aor.setInt(8, cfm.qualify_frequency);
-
-
 		queryinsert_ps_aor.setString(9, cfm.authenticate_qualify.toString());
-
 		queryinsert_ps_aor.setInt(10, cfm.maximum_expiration);
 		queryinsert_ps_aor.setString(11, cfm.outbound_proxy);
 		queryinsert_ps_aor.setString(12, cfm.support_path.toString());
@@ -67,9 +63,9 @@ public class ps_aorsController {
 		return a;
 	}
 
-	@GetMapping("/Getpsaors")
+	@GetMapping("/getPsAors")
 
-	public ArrayList<ps_aorsModel> Tampilgetpsaors() throws SQLException {
+	public ArrayList<ps_aorsModel> getPsAors() throws SQLException {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_psaors = Connection1.prepareStatement(query_string.query_select_ps_aors);
 		ResultSet Cursor1 = queryselect_psaors.executeQuery();// Evaluate (Connected_Expression1)
@@ -98,8 +94,8 @@ public class ps_aorsController {
 		return ListUser1;
 	}
 
-	@DeleteMapping(path = "/DeletePostPsAors", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int DeletePostPsAors(@RequestBody ps_aorsModel cfm) throws SQLException {
+	@DeleteMapping(path = "/deletePsAors", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public int deletePsAors(@RequestBody ps_aorsModel cfm) throws SQLException {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1.prepareStatement(query_string_delete.query_delete_ps_aors);
 		querydelete_alembic_version_config.setString(1, cfm.id);

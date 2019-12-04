@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(produces="application/json",path="/ps_asterisk")
-public class ps_asterisk_publicationController {
+public class Ps_Asterisk_PublicationController {
 	PreparedStatement querydelete_alembic_version_config = null;
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();
 	stringkoneksi sk = new stringkoneksi();
@@ -31,8 +31,8 @@ public class ps_asterisk_publicationController {
 	AllInsertQuery query_string_insert = new AllInsertQuery();
 	PreparedStatement queryinsert_ps_asterisk_publication = null;
 
-	@PutMapping("/PutPsAsterisk")
-	public String putpsasteriskpublication(@RequestBody ps_asterisk_publicationsModel cfm) throws SQLException {
+	@PutMapping("/putPsAsterisk")
+	public String putPsAsterisk(@RequestBody ps_asterisk_publicationsModel cfm) throws SQLException {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryinsert_ps_asterisk_publication = Connection1
 				.prepareStatement(query_string_insert.query_insert_ps_asterisk_publications);
@@ -50,8 +50,8 @@ public class ps_asterisk_publicationController {
 		return a;
 	}
 
-	@GetMapping("/Getps_asterisk")
-	public ArrayList<ps_asterisk_publicationsModel> Tampilasterisk_publication() throws SQLException {
+	@GetMapping("/getPsAsterisk")
+	public ArrayList<ps_asterisk_publicationsModel> getPsAsterisk() throws SQLException {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_ps_asterisk = Connection1.prepareStatement(query_string.query_select_ps_asterisk_publications);
 		ResultSet Cursor1 = queryselect_ps_asterisk.executeQuery();// Evaluate (Connected_Expression1)
@@ -73,8 +73,8 @@ public class ps_asterisk_publicationController {
 		return ListUser1;
 	}
 
-	@DeleteMapping(path = "/DeletePostpsAsterisk", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int DeletePostpsasteriskpublication(@RequestBody ps_asterisk_publicationsModel cfm) throws SQLException {
+	@DeleteMapping(path = "/deletePsAsterisk", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public int deletePsAsterisk(@RequestBody ps_asterisk_publicationsModel cfm) throws SQLException {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1
 				.prepareStatement(query_string_delete.query_delete_ps_asterisk_publications);

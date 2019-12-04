@@ -22,8 +22,8 @@ import com.example.demo.model.*;
 import com.example.demo.query.*;
 
 @RestController
-@RequestMapping(produces="application/json",path="/psAuthVersion")
-public class ps_authsController {
+@RequestMapping(produces="application/json",path="/ps_auths")
+public class Ps_AuthsController {
 	PreparedStatement querydelete_alembic_version_config = null;
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();
 	stringkoneksi sk = new stringkoneksi();
@@ -33,8 +33,9 @@ public class ps_authsController {
 	AllInsertQuery query_string_insert = new AllInsertQuery();
 	PreparedStatement queryinsert_ps_auth = null;
 
-	@PutMapping("/PutPsAuths")
-	public String putpsauth(@RequestBody ps_authsModel cfm) throws SQLException {
+	@PutMapping("/putPsAuths")
+	public String putPsAuths(@RequestBody ps_authsModel cfm) throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryinsert_ps_auth = Connection1.prepareStatement(query_string_insert.query_insert_ps_auths);
 		queryinsert_ps_auth.setString(1, cfm.id);
@@ -50,10 +51,9 @@ public class ps_authsController {
 		return a;
 	}
 
-	@GetMapping("/psAuths")
-	public ArrayList<ps_authsModel> Tampilpsauth() throws SQLException {
-
-		
+	@GetMapping("/getPsAuths")
+	public ArrayList<ps_authsModel> getPsAuths() throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_ps_auths = Connection1.prepareStatement(query_string.query_select_ps_auths);
 		ResultSet Cursor1 = queryselect_ps_auths.executeQuery();// Evaluate (Connected_Expression1)
@@ -69,15 +69,14 @@ public class ps_authsController {
 			Modelpsauths.realm = Cursor1.getString(6);
 			Modelpsauths.username = Cursor1.getString(7);
 			ListUser1.add(Modelpsauths);
-
 		}
 		Connection1.close();
 		return ListUser1;
-
 	}
 	
 	@PostMapping("/postAuthsId")
-	public ArrayList<ps_authsModel> postAuthsId(@RequestBody ps_authsModel cfm) throws SQLException {
+	public ArrayList<ps_authsModel> postAuthsId(@RequestBody ps_authsModel cfm) throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		PreparedStatement a = Connection1.prepareStatement("select id, auth_type, username from ps_auths where username = ? and password = ?");
 		
@@ -99,8 +98,9 @@ public class ps_authsController {
 
 	}
 
-	@DeleteMapping(path = "/DeletePostPsAuths", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int DeletePostpsauth(@RequestBody ps_authsModel cfm) throws SQLException {
+	@DeleteMapping(path = "/deletePsAuths", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public int deletePsAuths(@RequestBody ps_authsModel cfm) throws SQLException 
+	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1.prepareStatement(query_string_delete.query_delete_ps_auths);
 		querydelete_alembic_version_config.setString(1, cfm.id);
