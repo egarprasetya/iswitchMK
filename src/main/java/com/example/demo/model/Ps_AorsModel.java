@@ -1,7 +1,7 @@
 package com.example.demo.model;
 import com.example.demo.Enum.*;
 import com.example.demo.Enum.yesenum.yesno_values;
-public class ps_aorsModel {
+public class Ps_AorsModel {
 	YesNo_Values po;
 	yesno_values ys;
 	public String id;

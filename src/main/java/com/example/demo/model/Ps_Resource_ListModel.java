@@ -1,6 +1,6 @@
 package com.example.demo.model;
 
-public class ps_Resource_listModel {
+public class Ps_Resource_ListModel {
 	public String id;
 	public String list_item;
 	public String event;

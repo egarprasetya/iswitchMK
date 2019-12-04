@@ -6,7 +6,7 @@ import com.example.demo.Enum.iax_requirecalltoken_values;
 import com.example.demo.Enum.iax_transfer_values;
 import com.example.demo.Enum.type_values;
 
-public class iaxfriendsModel {
+public class IaxfriendsModel {
 	public int id;
 	public String name;
 	public type_values type; 		// type_value Type.

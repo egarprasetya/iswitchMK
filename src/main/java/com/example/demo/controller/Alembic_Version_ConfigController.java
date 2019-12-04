@@ -37,7 +37,7 @@ public class Alembic_Version_ConfigController
 	PreparedStatement queryinsert_alembic_version_config = null;
 
 	@GetMapping("/getAlembicVersionConfig")
-	public ArrayList<alembic_version_configModel> TampilAlembicVersionConfig() throws SQLException 
+	public ArrayList<Alembic_Version_ConfigModel> TampilAlembicVersionConfig() throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_alembic_version_config = Connection1
@@ -47,10 +47,10 @@ public class Alembic_Version_ConfigController
 		// Connected_Expression1.setFetchSize(100);
 		ResultSet Cursor1 = queryselect_alembic_version_config.executeQuery();
 		// ("select*from alembic_version_config");// Evaluate (Connected_Expression1)
-		ArrayList<alembic_version_configModel> ListUser1 = new ArrayList<alembic_version_configModel>();
+		ArrayList<Alembic_Version_ConfigModel> ListUser1 = new ArrayList<Alembic_Version_ConfigModel>();
 		while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 		{
-			alembic_version_configModel ModelAlembic = new alembic_version_configModel();
+			Alembic_Version_ConfigModel ModelAlembic = new Alembic_Version_ConfigModel();
 			ModelAlembic.version_num = Cursor1.getString(1);
 			ListUser1.add(ModelAlembic);
 		}
@@ -81,7 +81,7 @@ public class Alembic_Version_ConfigController
 //	}
 
 	@PutMapping("/putAlembicVersionConfig")
-	public String putAlembicVersionConfig(@RequestBody alembic_version_configModel cfm) throws SQLException 
+	public String putAlembicVersionConfig(@RequestBody Alembic_Version_ConfigModel cfm) throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryinsert_alembic_version_config = Connection1
@@ -94,7 +94,7 @@ public class Alembic_Version_ConfigController
 	}
 
 	@DeleteMapping("/deleteAlembicVersionConfig")
-	public int deleteAlembicVersionConfig(@RequestBody alembic_version_configModel cfm) throws SQLException 
+	public int deleteAlembicVersionConfig(@RequestBody Alembic_Version_ConfigModel cfm) throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1

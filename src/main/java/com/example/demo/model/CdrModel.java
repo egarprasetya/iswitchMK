@@ -1,7 +1,7 @@
 package com.example.demo.model;
 import java.sql.Date;
 
-public class cdrModel
+public class CdrModel
 {
 	public String accountcode;
 	public String src;

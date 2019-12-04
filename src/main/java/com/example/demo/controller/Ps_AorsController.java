@@ -39,7 +39,7 @@ public class Ps_AorsController {
 	YesNo_Values enumyesno;
 
 	@PutMapping("/putPsAors")
-	public String putPsAors(@RequestBody ps_aorsModel cfm) throws SQLException {
+	public String putPsAors(@RequestBody Ps_AorsModel cfm) throws SQLException {
 
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryinsert_ps_aor = Connection1.prepareStatement(query_string_insert.query_insert_ps_aors);
@@ -65,14 +65,14 @@ public class Ps_AorsController {
 
 	@GetMapping("/getPsAors")
 
-	public ArrayList<ps_aorsModel> getPsAors() throws SQLException {
+	public ArrayList<Ps_AorsModel> getPsAors() throws SQLException {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_psaors = Connection1.prepareStatement(query_string.query_select_ps_aors);
 		ResultSet Cursor1 = queryselect_psaors.executeQuery();// Evaluate (Connected_Expression1)
-		ArrayList<ps_aorsModel> ListUser1 = new ArrayList<ps_aorsModel>();
+		ArrayList<Ps_AorsModel> ListUser1 = new ArrayList<Ps_AorsModel>();
 		while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 		{
-			ps_aorsModel ModelPs_aors = new ps_aorsModel();
+			Ps_AorsModel ModelPs_aors = new Ps_AorsModel();
 			ModelPs_aors.id = Cursor1.getString(1);
 			ModelPs_aors.contact = Cursor1.getString(2);
 			ModelPs_aors.default_expiration = Cursor1.getInt(3);
@@ -95,7 +95,7 @@ public class Ps_AorsController {
 	}
 
 	@DeleteMapping(path = "/deletePsAors", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int deletePsAors(@RequestBody ps_aorsModel cfm) throws SQLException {
+	public int deletePsAors(@RequestBody Ps_AorsModel cfm) throws SQLException {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1.prepareStatement(query_string_delete.query_delete_ps_aors);
 		querydelete_alembic_version_config.setString(1, cfm.id);

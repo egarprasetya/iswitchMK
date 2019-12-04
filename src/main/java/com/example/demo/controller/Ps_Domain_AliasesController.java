@@ -33,7 +33,7 @@ public class Ps_Domain_AliasesController
 	PreparedStatement queryinsert_ps_domain_aliases = null;
 
 	@PutMapping("/putPsDomain")
-	public String putPsDomain(@RequestBody ps_domain_aliasesModel cfm) throws SQLException 
+	public String putPsDomain(@RequestBody Ps_Domain_AliasesModel cfm) throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryinsert_ps_domain_aliases = Connection1
@@ -47,15 +47,15 @@ public class Ps_Domain_AliasesController
 	}
 
 	@GetMapping("/getPsDomain")
-	public ArrayList<ps_domain_aliasesModel> getPsDomain() throws SQLException 
+	public ArrayList<Ps_Domain_AliasesModel> getPsDomain() throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_ps_domain_id = Connection1.prepareStatement(query_string.query_select_domain_aliases);
 		ResultSet Cursor1 = queryselect_ps_domain_id.executeQuery();// Evaluate (Connected_Expression1)
-		ArrayList<ps_domain_aliasesModel> ListUser1 = new ArrayList<ps_domain_aliasesModel>();
+		ArrayList<Ps_Domain_AliasesModel> ListUser1 = new ArrayList<Ps_Domain_AliasesModel>();
 		while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 		{
-			ps_domain_aliasesModel ModelDomain = new ps_domain_aliasesModel();
+			Ps_Domain_AliasesModel ModelDomain = new Ps_Domain_AliasesModel();
 			ModelDomain.id = Cursor1.getString(1);
 			ModelDomain.domain = Cursor1.getString(2);
 
@@ -67,7 +67,7 @@ public class Ps_Domain_AliasesController
 	}
 
 	@DeleteMapping(path = "/deletePsDomain", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int deletePsDomain(@RequestBody ps_domain_aliasesModel cfm) throws SQLException 
+	public int deletePsDomain(@RequestBody Ps_Domain_AliasesModel cfm) throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1

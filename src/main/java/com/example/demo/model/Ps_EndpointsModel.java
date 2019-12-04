@@ -12,7 +12,7 @@ import com.example.demo.Enum.pjsip_t38udptl_ec_values;
 import com.example.demo.Enum.pjsip_timer_values;
 import com.example.demo.Enum.sha_hash_values;
 
-public class ps_endpointsModel {
+public class Ps_EndpointsModel {
 	public String id;
 	public String transport;
 	public String aors;

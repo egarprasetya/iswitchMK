@@ -2,7 +2,7 @@ package com.example.demo.model;
 
 import com.example.demo.Enum.YesNo_Values;
 
-public class ps_endpoints_id_ipsModel {
+public class Ps_Endpoints_Id_IpsModel {
 	public String id;
 	public String endpoint;
 	public String match;

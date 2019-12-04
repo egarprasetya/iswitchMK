@@ -35,7 +35,7 @@ public class Queue_LogController
 	PreparedStatement query_insert_queue_log = null;
 
 	@PutMapping("/putQueueLog")
-	public String putQueueLog(@RequestBody queue_logModel cfm) throws SQLException 
+	public String putQueueLog(@RequestBody Queue_LogModel cfm) throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		query_insert_queue_log = Connection1.prepareStatement(query_string_insert.query_insert_queue_log);
@@ -60,15 +60,15 @@ public class Queue_LogController
 	}
 
 	@GetMapping("/getQueueLog")
-	public ArrayList<queue_logModel> getQueueLog() throws SQLException 
+	public ArrayList<Queue_LogModel> getQueueLog() throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_queuelog = Connection1.prepareStatement(query_string.query_select_queue_log);
 		ResultSet Cursor1 = queryselect_queuelog.executeQuery();// Evaluate (Connected_Expression1)
-		ArrayList<queue_logModel> ListUser1 = new ArrayList<queue_logModel>();
+		ArrayList<Queue_LogModel> ListUser1 = new ArrayList<Queue_LogModel>();
 		while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 		{
-			queue_logModel ModelQueue_log = new queue_logModel();
+			Queue_LogModel ModelQueue_log = new Queue_LogModel();
 			ModelQueue_log.id = Cursor1.getInt(1);
 			ModelQueue_log.calldatetime = Cursor1.getDate(2);
 			ModelQueue_log.time = Cursor1.getString(3);
@@ -91,7 +91,7 @@ public class Queue_LogController
 	}
 
 	@DeleteMapping(path = "/deleteQueueLog", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int deleteQueueLog(@RequestBody queue_logModel cfm) throws SQLException 
+	public int deleteQueueLog(@RequestBody Queue_LogModel cfm) throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1.prepareStatement(query_string_delete.query_delete_queue_log);

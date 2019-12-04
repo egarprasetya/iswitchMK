@@ -34,7 +34,7 @@ public class Ps_SystemController
 	PreparedStatement query_insert_ps_systems = null;
 
 	@PutMapping("/putPsSystems")
-	public String putPsSystems(@RequestBody ps_SystemsModel cfm) throws SQLException 
+	public String putPsSystems(@RequestBody Ps_SystemsModel cfm) throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		query_insert_ps_systems = Connection1.prepareStatement(query_string_insert.query_insert_ps_systems);
@@ -56,15 +56,15 @@ public class Ps_SystemController
 	}
 
 	@GetMapping("/getPsSystem")
-	public ArrayList<ps_SystemsModel> getPsSystem() throws SQLException 
+	public ArrayList<Ps_SystemsModel> getPsSystem() throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_ps_systems = Connection1.prepareStatement(query_string.query_select_ps_systems);
 		ResultSet Cursor1 = queryselect_ps_systems.executeQuery();// Evaluate (Connected_Expression1)
-		ArrayList<ps_SystemsModel> ListUser1 = new ArrayList<ps_SystemsModel>();
+		ArrayList<Ps_SystemsModel> ListUser1 = new ArrayList<Ps_SystemsModel>();
 		while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 		{
-			ps_SystemsModel ModelPs_system = new ps_SystemsModel();
+			Ps_SystemsModel ModelPs_system = new Ps_SystemsModel();
 			ModelPs_system.id = Cursor1.getString(1);
 			ModelPs_system.timer_t1 = Cursor1.getInt(2);
 			ModelPs_system.timer_b = Cursor1.getInt(3);

@@ -34,7 +34,7 @@ public class CdrController
 	PreparedStatement queryselect_cdr = null;
 	
 	@PutMapping(produces="application/json",path="/putCdr")
-	public String putCdr(@RequestBody cdrModel cfm) throws SQLException 
+	public String putCdr(@RequestBody CdrModel cfm) throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryinsert_cdr = Connection1.prepareStatement(query_string_insert.query_insert_cdr);
@@ -66,15 +66,15 @@ public class CdrController
 		return a;
 	}
 	@GetMapping(produces="application/json",path="/getCdr")
-	public ArrayList<cdrModel> getCdr() throws SQLException 
+	public ArrayList<CdrModel> getCdr() throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_cdr = Connection1.prepareStatement(query_string.query_select_cdr);
 		ResultSet Cursor1 = queryselect_cdr.executeQuery();// Evaluate (Connected_Expression1)
-		ArrayList<cdrModel> ListUser1 = new ArrayList<cdrModel>();
+		ArrayList<CdrModel> ListUser1 = new ArrayList<CdrModel>();
 		while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 		{
-			cdrModel ModelCdr = new cdrModel();
+			CdrModel ModelCdr = new CdrModel();
 			ModelCdr.accountcode = Cursor1.getString(1);
 			ModelCdr.src = Cursor1.getString(2);
 			ModelCdr.dst = Cursor1.getString(3);
@@ -103,7 +103,7 @@ public class CdrController
 	}
 
 	@DeleteMapping(path = "/deleteCdr", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int deleteCdr(@RequestBody cdrModel cfm) throws SQLException 
+	public int deleteCdr(@RequestBody CdrModel cfm) throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_cdr = Connection1.prepareStatement(query_string_delete.query_delete_cdr);

@@ -34,7 +34,7 @@ public class IaxfriendsController {
 	PreparedStatement queryinsert_iaxfriend = null;
 
 	@PutMapping(produces="application/json",path="/putIaxfirends")
-	public String putIaxfirends(@RequestBody iaxfriendsModel cfm) throws SQLException {
+	public String putIaxfirends(@RequestBody IaxfriendsModel cfm) throws SQLException {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryinsert_iaxfriend = Connection1.prepareStatement(query_string_insert.query_insert_iaxfriends);
 		queryinsert_iaxfriend.setInt(1, cfm.id);
@@ -91,14 +91,14 @@ public class IaxfriendsController {
 	}
 
 	@GetMapping(produces="application/json",path="/getIaxfriends")
-	public ArrayList<iaxfriendsModel> getIaxfriends() throws SQLException {
+	public ArrayList<IaxfriendsModel> getIaxfriends() throws SQLException {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_iaxfriends = Connection1.prepareStatement(query_string.query_select_iaxfriends);
 		ResultSet Cursor1 = queryselect_iaxfriends.executeQuery();// Evaluate (Connected_Expression1)
-		ArrayList<iaxfriendsModel> ListUser1 = new ArrayList<iaxfriendsModel>();
+		ArrayList<IaxfriendsModel> ListUser1 = new ArrayList<IaxfriendsModel>();
 		while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 		{
-			iaxfriendsModel ModelIaxfriends = new iaxfriendsModel();
+			IaxfriendsModel ModelIaxfriends = new IaxfriendsModel();
 			ModelIaxfriends.id = Cursor1.getInt(1);
 			ModelIaxfriends.name = Cursor1.getString(2);
 			ModelIaxfriends.type = type_values.valueOf(Cursor1.getString(3)); // type_value Type.
@@ -153,7 +153,7 @@ public class IaxfriendsController {
 	}
 
 	@DeleteMapping(path = "/deleteIaxfriends", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int deleteIaxfriends(@RequestBody extensionModel cfm) throws SQLException {
+	public int deleteIaxfriends(@RequestBody ExtensionModel cfm) throws SQLException {
 
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1.prepareStatement(query_string_delete.query_delete_iaxfriends);

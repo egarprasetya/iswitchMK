@@ -2,7 +2,7 @@ package com.example.demo.model;
 
 import com.example.demo.Enum.YesNo_Values;
 
-public class ps_OutboundModel {
+public class Ps_OutboundModel {
 	public String id;
 	public int expiration;
 	public String outbound_auth;

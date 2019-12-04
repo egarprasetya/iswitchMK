@@ -2,10 +2,10 @@ package com.example.demo.service;
 import com.example.demo.model.*;
 
 
-public interface getCurrentMasterAlembicVersion extends BaseService<alembic_version_configModel> 
+public interface getCurrentMasterAlembicVersion extends BaseService<Alembic_Version_ConfigModel> 
 {
 	
-	alembic_version_configModel getCurrentMasterDataPemrek2();
+	Alembic_Version_ConfigModel getCurrentMasterDataPemrek2();
 	
 }
 	 

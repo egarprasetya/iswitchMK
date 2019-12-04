@@ -4,7 +4,7 @@ import java.sql.Date;
 
 import com.example.demo.Enum.moh_mode_values;
 
-public class musiconholdeModel {
+public class MusiconholdeModel {
 	public String name;
 	public moh_mode_values mode;					// Moh_mode value/type.
 	public String directory;

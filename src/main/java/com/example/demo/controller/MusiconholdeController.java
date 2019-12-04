@@ -36,7 +36,7 @@ public class MusiconholdeController
 	PreparedStatement queryselect_musiconhold = null;
 
 	@PutMapping("/putMusiconhold")
-	public String putMusiconholde(@RequestBody musiconholdeModel cfm) throws SQLException 
+	public String putMusiconholde(@RequestBody MusiconholdeModel cfm) throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryinsert_musiconholde = Connection1.prepareStatement(query_string_insert.query_insert_musiconhold);
@@ -55,15 +55,15 @@ public class MusiconholdeController
 	}
 	
 	@GetMapping("/getMusiconhold")
-	public ArrayList<musiconholdeModel> getMusiconhold() throws SQLException 
+	public ArrayList<MusiconholdeModel> getMusiconhold() throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_musiconhold = Connection1.prepareStatement(query_string.query_select_musiconhold);
 		ResultSet Cursor1 = queryselect_musiconhold.executeQuery();// Evaluate (Connected_Expression1)
-		ArrayList<musiconholdeModel> ListUser1 = new ArrayList<musiconholdeModel>();
+		ArrayList<MusiconholdeModel> ListUser1 = new ArrayList<MusiconholdeModel>();
 		while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 		{
-			musiconholdeModel Modelmusiconhold = new musiconholdeModel();
+			MusiconholdeModel Modelmusiconhold = new MusiconholdeModel();
 			Modelmusiconhold.name = Cursor1.getString(1);
 			Modelmusiconhold.mode = moh_mode_values.valueOf(Cursor1.getString(2)); // Moh_mode value/type.
 			Modelmusiconhold.directory = Cursor1.getString(3);
@@ -79,7 +79,7 @@ public class MusiconholdeController
 	}
 
 	@DeleteMapping(path = "/deleteMusiconhold", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int deleteMusiconhold(@RequestBody musiconholdeModel cfm) throws SQLException 
+	public int deleteMusiconhold(@RequestBody MusiconholdeModel cfm) throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1.prepareStatement(query_string_delete.query_delete_musiconhold);

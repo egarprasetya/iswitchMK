@@ -33,7 +33,7 @@ public class Ps_ResourcelistController
 	PreparedStatement query_insert_ps_resource_list = null;
 
 	@PutMapping("/putPsResource")
-	public String putPsResource(@RequestBody ps_Resource_listModel cfm) throws SQLException 
+	public String putPsResource(@RequestBody Ps_Resource_ListModel cfm) throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		query_insert_ps_resource_list = Connection1
@@ -52,15 +52,15 @@ public class Ps_ResourcelistController
 	}
 
 	@GetMapping("/getPsResourceList")
-	public ArrayList<ps_Resource_listModel> getPsResourceList() throws SQLException 
+	public ArrayList<Ps_Resource_ListModel> getPsResourceList() throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_psresourcelist = Connection1.prepareStatement(query_string.query_select_ps_resource_list);
 		ResultSet Cursor1 = queryselect_psresourcelist.executeQuery();// Evaluate (Connected_Expression1)
-		ArrayList<ps_Resource_listModel> ListUser1 = new ArrayList<ps_Resource_listModel>();
+		ArrayList<Ps_Resource_ListModel> ListUser1 = new ArrayList<Ps_Resource_ListModel>();
 		while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 		{
-			ps_Resource_listModel ModelPs_resource_list = new ps_Resource_listModel();
+			Ps_Resource_ListModel ModelPs_resource_list = new Ps_Resource_ListModel();
 
 			ModelPs_resource_list.id = Cursor1.getString(1);
 			ModelPs_resource_list.list_item = Cursor1.getString(2);
@@ -75,7 +75,7 @@ public class Ps_ResourcelistController
 	}
 
 	@DeleteMapping(path = "/deletePsResource", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int DeletePostPsResource(@RequestBody ps_Resource_listModel cfm) throws SQLException 
+	public int DeletePostPsResource(@RequestBody Ps_Resource_ListModel cfm) throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1

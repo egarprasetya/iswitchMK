@@ -1,6 +1,6 @@
 package com.example.demo.model;
 
-public class alembic_versionModel 
-{
+public class Alembic_Version_ConfigModel {
 	public String version_num;
+
 }

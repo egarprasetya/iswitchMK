@@ -37,7 +37,7 @@ public class Ps_TransportController
 	PreparedStatement query_insert_ps_transports = null;
 
 	@PutMapping("/putPsTransport")
-	public String putPsTransport(@RequestBody ps_transportModel cfm) throws SQLException 
+	public String putPsTransport(@RequestBody Ps_TransportModel cfm) throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		query_insert_ps_transports = Connection1
@@ -72,15 +72,15 @@ public class Ps_TransportController
 	}
 
 	@GetMapping("/getPsTransport")
-	public ArrayList<ps_transportModel> getPsTransport() throws SQLException 
+	public ArrayList<Ps_TransportModel> getPsTransport() throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_ps_transport = Connection1.prepareStatement(query_string.query_select_ps_transports);
 		ResultSet Cursor1 = queryselect_ps_transport.executeQuery();// Evaluate (Connected_Expression1)
-		ArrayList<ps_transportModel> ListUser1 = new ArrayList<ps_transportModel>();
+		ArrayList<Ps_TransportModel> ListUser1 = new ArrayList<Ps_TransportModel>();
 		while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 		{
-			ps_transportModel ModelPs_transport = new ps_transportModel();
+			Ps_TransportModel ModelPs_transport = new Ps_TransportModel();
 			ModelPs_transport.id = Cursor1.getString(1);
 			ModelPs_transport.async_operations = Cursor1.getInt(2);
 			ModelPs_transport.bind = Cursor1.getString(3);
@@ -112,7 +112,7 @@ public class Ps_TransportController
 	}
 
 	@DeleteMapping(path = "/deletePsTransport", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int deletePsTransport(@RequestBody ps_transportModel cfm) throws SQLException 
+	public int deletePsTransport(@RequestBody Ps_TransportModel cfm) throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1

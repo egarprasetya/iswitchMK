@@ -2,7 +2,7 @@ package com.example.demo.model;
 
 import com.example.demo.Enum.YesNo_Values;
 
-public class ps_globalsModel {
+public class Ps_GlobalsModel {
 	public String id;
 	public int max_forwards;
 	public String user_agent;

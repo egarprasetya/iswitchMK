@@ -34,7 +34,7 @@ public class Ps_RegistrationController
 	PreparedStatement queryinsert_ps_registration = null;
 
 	@PutMapping("/putPsRegistration")
-	public String putPsRegistration(@RequestBody ps_registrationsModel cfm) throws SQLException 
+	public String putPsRegistration(@RequestBody Ps_RegistrationsModel cfm) throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryinsert_ps_registration = Connection1.prepareStatement(query_string_insert.query_insert_ps_registrations);
@@ -61,15 +61,15 @@ public class Ps_RegistrationController
 	}
 
 	@GetMapping("/getPsRegistration")
-	public ArrayList<ps_registrationsModel> getPsRegistration() throws SQLException 
+	public ArrayList<Ps_RegistrationsModel> getPsRegistration() throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_ps_registration = Connection1.prepareStatement(query_string.query_select_ps_registrations);
 		ResultSet Cursor1 = queryselect_ps_registration.executeQuery();// Evaluate (Connected_Expression1)
-		ArrayList<ps_registrationsModel> ListUser1 = new ArrayList<ps_registrationsModel>();
+		ArrayList<Ps_RegistrationsModel> ListUser1 = new ArrayList<Ps_RegistrationsModel>();
 		while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 		{
-			ps_registrationsModel ModelPs_registration = new ps_registrationsModel();
+			Ps_RegistrationsModel ModelPs_registration = new Ps_RegistrationsModel();
 
 			ModelPs_registration.id = Cursor1.getString(1);
 			ModelPs_registration.auth_rejection_permanent = YesNo_Values.valueOf(Cursor1.getString(2));
@@ -96,7 +96,7 @@ public class Ps_RegistrationController
 	}
 
 	@DeleteMapping(path = "/deletePsRegistration", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int deletePsRegistration(@RequestBody ps_registrationsModel cfm) throws SQLException 
+	public int deletePsRegistration(@RequestBody Ps_RegistrationsModel cfm) throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1

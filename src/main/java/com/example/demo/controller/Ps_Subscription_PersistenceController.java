@@ -35,7 +35,7 @@ public class Ps_Subscription_PersistenceController
 	PreparedStatement query_insert_ps_subscription_persistence = null;
 
 	@PutMapping("/putPsSubscriptions")
-	public String putPsSubscriptions(@RequestBody ps_subscription_persistenceModel cfm) throws SQLException 
+	public String putPsSubscriptions(@RequestBody Ps_Subscription_PersistenceModel cfm) throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		query_insert_ps_subscription_persistence = Connection1
@@ -62,16 +62,16 @@ public class Ps_Subscription_PersistenceController
 	}
 
 	@GetMapping("/getPsSubscriptionPersistence")
-	public ArrayList<ps_subscription_persistenceModel> getPsSubscriptionPersistence() throws SQLException 
+	public ArrayList<Ps_Subscription_PersistenceModel> getPsSubscriptionPersistence() throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_ps_subscription_persistence = Connection1
 				.prepareStatement(query_string.query_select_ps_subscription_persistence);
 		ResultSet Cursor1 = queryselect_ps_subscription_persistence.executeQuery();// Evaluate (Connected_Expression1)
-		ArrayList<ps_subscription_persistenceModel> ListUser1 = new ArrayList<ps_subscription_persistenceModel>();
+		ArrayList<Ps_Subscription_PersistenceModel> ListUser1 = new ArrayList<Ps_Subscription_PersistenceModel>();
 		while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 		{
-			ps_subscription_persistenceModel ModelPs_subscription_persistance = new ps_subscription_persistenceModel();
+			Ps_Subscription_PersistenceModel ModelPs_subscription_persistance = new Ps_Subscription_PersistenceModel();
 			ModelPs_subscription_persistance.id = Cursor1.getString(1);
 			ModelPs_subscription_persistance.packet = Cursor1.getString(2);
 			ModelPs_subscription_persistance.src_name = Cursor1.getString(3);
@@ -93,7 +93,7 @@ public class Ps_Subscription_PersistenceController
 	}
 
 	@DeleteMapping(path = "/deletePsSubscript", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int deletePsSubscript(@RequestBody ps_subscription_persistenceModel cfm) throws SQLException 
+	public int deletePsSubscript(@RequestBody Ps_Subscription_PersistenceModel cfm) throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1

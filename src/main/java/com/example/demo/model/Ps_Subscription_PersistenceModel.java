@@ -2,7 +2,7 @@ package com.example.demo.model;
 
 import com.example.demo.Enum.YesNo_Values;
 
-public class ps_subscription_persistenceModel {
+public class Ps_Subscription_PersistenceModel {
 	public String id;
 	public String packet;
 	public String src_name;

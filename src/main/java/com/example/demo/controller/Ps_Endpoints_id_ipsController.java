@@ -34,7 +34,7 @@ public class Ps_Endpoints_id_ipsController
 	PreparedStatement queryinsert_ps_endpoints_id_ip = null;
 
 	@PutMapping("/putPsEndpointsId")
-	public String putPsEndpointsId(@RequestBody ps_endpoints_id_ipsModel cfm) throws SQLException 
+	public String putPsEndpointsId(@RequestBody Ps_Endpoints_Id_IpsModel cfm) throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryinsert_ps_endpoints_id_ip = Connection1.prepareStatement(query_string_insert.query_insert_ps_endpoints_id);
@@ -50,15 +50,15 @@ public class Ps_Endpoints_id_ipsController
 	}
 
 	@GetMapping("/getPsEndpointsId")
-	public ArrayList<ps_endpoints_id_ipsModel> getPsEndpointsId() throws SQLException 
+	public ArrayList<Ps_Endpoints_Id_IpsModel> getPsEndpointsId() throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_psendpointsid = Connection1.prepareStatement(query_string.query_select_ps_endpoints_id);
 		ResultSet Cursor1 = queryselect_psendpointsid.executeQuery();// Evaluate (Connected_Expression1)
-		ArrayList<ps_endpoints_id_ipsModel> ListUser1 = new ArrayList<ps_endpoints_id_ipsModel>();
+		ArrayList<Ps_Endpoints_Id_IpsModel> ListUser1 = new ArrayList<Ps_Endpoints_Id_IpsModel>();
 		while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 		{
-			ps_endpoints_id_ipsModel ModelPs_enpoints_id = new ps_endpoints_id_ipsModel();
+			Ps_Endpoints_Id_IpsModel ModelPs_enpoints_id = new Ps_Endpoints_Id_IpsModel();
 			ModelPs_enpoints_id.id = Cursor1.getString(1);
 			ModelPs_enpoints_id.endpoint = Cursor1.getString(2);
 			ModelPs_enpoints_id.match = Cursor1.getString(3);
@@ -73,7 +73,7 @@ public class Ps_Endpoints_id_ipsController
 	}
 
 	@DeleteMapping(path = "/deletePsEndpointsId", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int deletePsEndpointsId(@RequestBody ps_endpoints_id_ipsModel cfm) throws SQLException 
+	public int deletePsEndpointsId(@RequestBody Ps_Endpoints_Id_IpsModel cfm) throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		query_delete_ps_endpoints_id = Connection1

@@ -4,7 +4,7 @@ import com.example.demo.Enum.YesNo_Values;
 import com.example.demo.Enum.pjsip_transport_method_values;
 import com.example.demo.Enum.pjsip_transport_protocol_values;
 
-public class ps_transportModel {
+public class Ps_TransportModel {
 	public String id;
 	public int async_operations;
 	public String bind;

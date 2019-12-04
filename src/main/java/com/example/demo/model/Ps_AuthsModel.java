@@ -2,7 +2,7 @@ package com.example.demo.model;
 
 import com.example.demo.Enum.pjsip_auth_type_values;
 
-public class ps_authsModel
+public class Ps_AuthsModel
 {
 	public String id;
 	public pjsip_auth_type_values auth_type;			//pjsip_auth Type

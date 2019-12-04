@@ -2,7 +2,7 @@ package com.example.demo.model;
 
 import com.example.demo.Enum.YesNo_Values;
 
-public class ps_contactsModel {
+public class Ps_ContactsModel {
 	public String id;
 	public String uri;
 	public int expiration_time;

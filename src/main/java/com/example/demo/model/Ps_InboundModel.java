@@ -1,6 +1,6 @@
 package com.example.demo.model;
 
-public class ps_inboundModel {
+public class Ps_InboundModel {
 	public String id;
 	public String endpoint;
 	public String event_asterisk_devicestate;				

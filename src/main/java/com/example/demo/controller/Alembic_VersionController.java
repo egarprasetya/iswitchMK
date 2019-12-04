@@ -35,7 +35,7 @@ public class Alembic_VersionController
 	PreparedStatement queryselect_alembic_version = null;
 
 	@PutMapping(path = "/putAlembicVersion", produces = "application/json")
-	public String putAlembicVersion(@RequestBody alembic_versionModel cfm) throws SQLException 
+	public String putAlembicVersion(@RequestBody Alembic_VersionModel cfm) throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryinsert_alembic_version = Connection1.prepareStatement(query_string_insert.query_insert_alembic_version);
@@ -47,15 +47,15 @@ public class Alembic_VersionController
 	}
 
 	@GetMapping(path = "/getAlembicVersion", produces = "application/json")
-	public ArrayList<alembic_versionModel> getAlembicVersion() throws SQLException 
+	public ArrayList<Alembic_VersionModel> getAlembicVersion() throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_alembic_version = Connection1.prepareStatement(query_string.query_select_alembic_version);
 		ResultSet Cursor1 = queryselect_alembic_version.executeQuery();// Evaluate (Connected_Expression1)
-		ArrayList<alembic_versionModel> ListUser1 = new ArrayList<alembic_versionModel>();
+		ArrayList<Alembic_VersionModel> ListUser1 = new ArrayList<Alembic_VersionModel>();
 		while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 		{
-			alembic_versionModel ModelAlembic = new alembic_versionModel();
+			Alembic_VersionModel ModelAlembic = new Alembic_VersionModel();
 			ModelAlembic.version_num = Cursor1.getString(1);
 			ListUser1.add(ModelAlembic);
 		}
@@ -87,7 +87,7 @@ public class Alembic_VersionController
 //	}
 
 	@DeleteMapping(path = "/deleteAlembicVersion", produces = "application/json")
-	public int deleteAlembicVersion(@RequestBody alembic_versionModel cfm) throws SQLException
+	public int deleteAlembicVersion(@RequestBody Alembic_VersionModel cfm) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version = Connection1.prepareStatement(query_string_delete.query_delete_alembic_version);

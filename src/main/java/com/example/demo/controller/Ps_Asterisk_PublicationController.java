@@ -32,7 +32,7 @@ public class Ps_Asterisk_PublicationController {
 	PreparedStatement queryinsert_ps_asterisk_publication = null;
 
 	@PutMapping("/putPsAsterisk")
-	public String putPsAsterisk(@RequestBody ps_asterisk_publicationsModel cfm) throws SQLException {
+	public String putPsAsterisk(@RequestBody Ps_Asterisk_PublicationsModel cfm) throws SQLException {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryinsert_ps_asterisk_publication = Connection1
 				.prepareStatement(query_string_insert.query_insert_ps_asterisk_publications);
@@ -51,14 +51,14 @@ public class Ps_Asterisk_PublicationController {
 	}
 
 	@GetMapping("/getPsAsterisk")
-	public ArrayList<ps_asterisk_publicationsModel> getPsAsterisk() throws SQLException {
+	public ArrayList<Ps_Asterisk_PublicationsModel> getPsAsterisk() throws SQLException {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_ps_asterisk = Connection1.prepareStatement(query_string.query_select_ps_asterisk_publications);
 		ResultSet Cursor1 = queryselect_ps_asterisk.executeQuery();// Evaluate (Connected_Expression1)
-		ArrayList<ps_asterisk_publicationsModel> ListUser1 = new ArrayList<ps_asterisk_publicationsModel>();
+		ArrayList<Ps_Asterisk_PublicationsModel> ListUser1 = new ArrayList<Ps_Asterisk_PublicationsModel>();
 		while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 		{
-			ps_asterisk_publicationsModel ModelPs_asterisk = new ps_asterisk_publicationsModel();
+			Ps_Asterisk_PublicationsModel ModelPs_asterisk = new Ps_Asterisk_PublicationsModel();
 			ModelPs_asterisk.id = Cursor1.getString(1);
 			ModelPs_asterisk.devicestate_publish = Cursor1.getString(2);
 			ModelPs_asterisk.mailboxstate_publish = Cursor1.getString(3);
@@ -74,7 +74,7 @@ public class Ps_Asterisk_PublicationController {
 	}
 
 	@DeleteMapping(path = "/deletePsAsterisk", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int deletePsAsterisk(@RequestBody ps_asterisk_publicationsModel cfm) throws SQLException {
+	public int deletePsAsterisk(@RequestBody Ps_Asterisk_PublicationsModel cfm) throws SQLException {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1
 				.prepareStatement(query_string_delete.query_delete_ps_asterisk_publications);

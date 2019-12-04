@@ -1,6 +1,6 @@
 package com.example.demo.model;
 
-public class ps_asterisk_publicationsModel {
+public class Ps_Asterisk_PublicationsModel {
 	public String id;
 	public String devicestate_publish;
 	public String mailboxstate_publish;

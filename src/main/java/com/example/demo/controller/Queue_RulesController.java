@@ -35,7 +35,7 @@ public class Queue_RulesController
 	PreparedStatement query_insert_queue_rules = null;
 
 	@PutMapping("/putQueueRules")
-	public String putQueueRules(@RequestBody queue_rulesModel cfm) throws SQLException 
+	public String putQueueRules(@RequestBody Queue_RulesModel cfm) throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		query_insert_queue_rules = Connection1.prepareStatement(query_string_insert.query_insert_queue_rules);
@@ -52,15 +52,15 @@ public class Queue_RulesController
 	}
 
 	@GetMapping("/getQueueRules")
-	public ArrayList<queue_rulesModel> getQueueRules() throws SQLException 
+	public ArrayList<Queue_RulesModel> getQueueRules() throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_queue_rules = Connection1.prepareStatement(query_string.query_select_queue_rules);
 		ResultSet Cursor1 = queryselect_queue_rules.executeQuery();// Evaluate (Connected_Expression1)
-		ArrayList<queue_rulesModel> ListUser1 = new ArrayList<queue_rulesModel>();
+		ArrayList<Queue_RulesModel> ListUser1 = new ArrayList<Queue_RulesModel>();
 		while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 		{
-			queue_rulesModel ModelQueue_rules = new queue_rulesModel();
+			Queue_RulesModel ModelQueue_rules = new Queue_RulesModel();
 			ModelQueue_rules.rule_name = Cursor1.getString(1);
 			ModelQueue_rules.time = Cursor1.getString(2);
 			ModelQueue_rules.min_penalty = Cursor1.getString(3); // type_value Type.
@@ -74,7 +74,7 @@ public class Queue_RulesController
 	}
 
 	@DeleteMapping(path = "/deleteQueueRules", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int DeletePostQueueRules(@RequestBody queue_rulesModel cfm) throws SQLException 
+	public int DeletePostQueueRules(@RequestBody Queue_RulesModel cfm) throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1.prepareStatement(query_string_delete.query_delete_queue_rules);

@@ -34,7 +34,7 @@ public class ExtensionController
 	PreparedStatement queryselect_extension = null;
 
 	@PutMapping(produces="application/json",path="/putExtension")
-	public String putExtension(@RequestBody extensionModel cfm) throws SQLException
+	public String putExtension(@RequestBody ExtensionModel cfm) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryinsert_extension = Connection1.prepareStatement(query_string_insert.query_insert_extension);
@@ -51,14 +51,14 @@ public class ExtensionController
 	}
 
 	@GetMapping(produces="application/json",path="/getExtensions")
-	public ArrayList<extensionModel> getExtensions() throws SQLException {
+	public ArrayList<ExtensionModel> getExtensions() throws SQLException {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_extension = Connection1.prepareStatement(query_string.query_select_extension);
 		ResultSet Cursor1 = queryselect_extension.executeQuery();// Evaluate (Connected_Expression1)
-		ArrayList<extensionModel> ListUser1 = new ArrayList<extensionModel>();
+		ArrayList<ExtensionModel> ListUser1 = new ArrayList<ExtensionModel>();
 		while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 		{
-			extensionModel Modelextension = new extensionModel();
+			ExtensionModel Modelextension = new ExtensionModel();
 			Modelextension.id = Cursor1.getInt(1);
 			Modelextension.context = Cursor1.getString(2);
 			Modelextension.exten = Cursor1.getString(3);
@@ -72,7 +72,7 @@ public class ExtensionController
 	}
 
 	@DeleteMapping(path = "/deleteExtension", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int DeletePostExtension(@RequestBody extensionModel cfm) throws SQLException {
+	public int DeletePostExtension(@RequestBody ExtensionModel cfm) throws SQLException {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1.prepareStatement(query_string_delete.query_delete_extension);
 		querydelete_alembic_version_config.setInt(1, cfm.id);

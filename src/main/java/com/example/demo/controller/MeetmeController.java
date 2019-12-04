@@ -36,7 +36,7 @@ public class MeetmeController
 	PreparedStatement queryselect_meetme = null;
 
 	@PutMapping("/putMeetme")
-	public String putMeetme(@RequestBody meetmeModel cfm) throws SQLException
+	public String putMeetme(@RequestBody MeetmeModel cfm) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryinsert_meetme = Connection1.prepareStatement(query_string_insert.query_insert_meetme);
@@ -58,15 +58,15 @@ public class MeetmeController
 	}
 
 	@GetMapping("/getMeetme")
-	public ArrayList<meetmeModel> getMeetme() throws SQLException
+	public ArrayList<MeetmeModel> getMeetme() throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_meetme = Connection1.prepareStatement(query_string.query_select_meetme);
 		ResultSet Cursor1 = queryselect_meetme.executeQuery();// Evaluate (Connected_Expression1)
-		ArrayList<meetmeModel> ListUser1 = new ArrayList<meetmeModel>();
+		ArrayList<MeetmeModel> ListUser1 = new ArrayList<MeetmeModel>();
 		while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 		{
-			meetmeModel ModelMeetme = new meetmeModel();
+			MeetmeModel ModelMeetme = new MeetmeModel();
 			// ModelMeetme.version_num=Cursor1.getString(1);
 			ModelMeetme.bookid = Cursor1.getInt(1);
 			ModelMeetme.confno = Cursor1.getString(2);
@@ -87,7 +87,7 @@ public class MeetmeController
 	}
 
 	@DeleteMapping(path = "/deleteMeetme", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int deleteMeetme(@RequestBody meetmeModel cfm) throws SQLException
+	public int deleteMeetme(@RequestBody MeetmeModel cfm) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1.prepareStatement(query_string_delete.query_delete_meetme);

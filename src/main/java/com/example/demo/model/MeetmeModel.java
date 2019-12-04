@@ -1,7 +1,7 @@
 package com.example.demo.model;
 import java.sql.Date;
 
-public class meetmeModel {
+public class MeetmeModel {
 	public int bookid;
 	public String confno;
 	public Date starttime;		// Timestamp value/type.

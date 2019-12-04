@@ -2,7 +2,7 @@ package com.example.demo.model;
 
 import com.example.demo.Enum.YesNo_Values;
 
-public class ps_registrationsModel {
+public class Ps_RegistrationsModel {
 	public String id;
 	public YesNo_Values auth_rejection_permanent;	// YesNo value/Type.
 	public String client_uri;

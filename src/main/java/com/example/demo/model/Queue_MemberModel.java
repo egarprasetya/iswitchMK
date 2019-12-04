@@ -1,6 +1,6 @@
 package com.example.demo.model;
 
-public class queue_memberModel {
+public class Queue_MemberModel {
 	public String queue_name;
 	public String _interface;
 	public String membername;

@@ -34,7 +34,7 @@ public class Ps_Outbound_PublishesController
 	PreparedStatement queryinsert_ps_outbound_publishes = null;
 
 	@PutMapping("/putPsOutbound")
-	public String putPsOutbound(@RequestBody ps_OutboundModel cfm) throws SQLException 
+	public String putPsOutbound(@RequestBody Ps_OutboundModel cfm) throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryinsert_ps_outbound_publishes = Connection1
@@ -61,15 +61,15 @@ public class Ps_Outbound_PublishesController
 	}
 
 	@GetMapping("/getPsOutbound")
-	public ArrayList<ps_OutboundModel> TampilOutbound() throws SQLException 
+	public ArrayList<Ps_OutboundModel> TampilOutbound() throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_psoutbond = Connection1.prepareStatement(query_string.query_select_ps_outbound_publishes);
 		ResultSet Cursor1 = queryselect_psoutbond.executeQuery();// Evaluate (Connected_Expression1)
-		ArrayList<ps_OutboundModel> ListUser1 = new ArrayList<ps_OutboundModel>();
+		ArrayList<Ps_OutboundModel> ListUser1 = new ArrayList<Ps_OutboundModel>();
 		while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 		{
-			ps_OutboundModel ModelPs_outbound = new ps_OutboundModel();
+			Ps_OutboundModel ModelPs_outbound = new Ps_OutboundModel();
 			ModelPs_outbound.id = Cursor1.getString(1);
 			ModelPs_outbound.expiration = Cursor1.getInt(2);
 			ModelPs_outbound.outbound_auth = Cursor1.getString(3);
@@ -93,7 +93,7 @@ public class Ps_Outbound_PublishesController
 	}
 
 	@DeleteMapping(path = "/deletePsOutbound", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int deletePsOutbound(@RequestBody ps_OutboundModel cfm) throws SQLException 
+	public int deletePsOutbound(@RequestBody Ps_OutboundModel cfm) throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1

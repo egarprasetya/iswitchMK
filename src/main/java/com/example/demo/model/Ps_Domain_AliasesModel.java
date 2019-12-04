@@ -1,6 +1,6 @@
 package com.example.demo.model;
 
-public class ps_domain_aliasesModel {
+public class Ps_Domain_AliasesModel {
 	public String id;
 	public String domain;
 }

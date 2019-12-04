@@ -34,7 +34,7 @@ public class Ps_ContactsController
 	PreparedStatement queryinsert_ps_contact = null;
 
 	@PutMapping("/putPsContacts")
-	public String putPsContacts(@RequestBody ps_contactsModel cfm) throws SQLException 
+	public String putPsContacts(@RequestBody Ps_ContactsModel cfm) throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryinsert_ps_contact = Connection1.prepareStatement(query_string_insert.query_insert_ps_contacts);
@@ -60,15 +60,15 @@ public class Ps_ContactsController
 	}
 
 	@GetMapping("/getPsContact")
-	public ArrayList<ps_contactsModel> getPsContact() throws SQLException 
+	public ArrayList<Ps_ContactsModel> getPsContact() throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_ps_contact = Connection1.prepareStatement(query_string.query_select_ps_contacts);
 		ResultSet Cursor1 = queryselect_ps_contact.executeQuery();// Evaluate (Connected_Expression1)
-		ArrayList<ps_contactsModel> ListUser1 = new ArrayList<ps_contactsModel>();
+		ArrayList<Ps_ContactsModel> ListUser1 = new ArrayList<Ps_ContactsModel>();
 		while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 		{
-			ps_contactsModel ModelContact = new ps_contactsModel();
+			Ps_ContactsModel ModelContact = new Ps_ContactsModel();
 			ModelContact.id = Cursor1.getString(1);
 			ModelContact.uri = Cursor1.getString(2);
 			ModelContact.expiration_time = Cursor1.getInt(3);
@@ -92,7 +92,7 @@ public class Ps_ContactsController
 	}
 
 	@DeleteMapping(path = "/deletePsContacts", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int deletePsContacts(@RequestBody ps_contactsModel cfm) throws SQLException 
+	public int deletePsContacts(@RequestBody Ps_ContactsModel cfm) throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1.prepareStatement(query_string_delete.query_delete_ps_contacts);

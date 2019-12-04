@@ -34,7 +34,7 @@ public class Ps_AuthsController {
 	PreparedStatement queryinsert_ps_auth = null;
 
 	@PutMapping("/putPsAuths")
-	public String putPsAuths(@RequestBody ps_authsModel cfm) throws SQLException 
+	public String putPsAuths(@RequestBody Ps_AuthsModel cfm) throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryinsert_ps_auth = Connection1.prepareStatement(query_string_insert.query_insert_ps_auths);
@@ -52,15 +52,15 @@ public class Ps_AuthsController {
 	}
 
 	@GetMapping("/getPsAuths")
-	public ArrayList<ps_authsModel> getPsAuths() throws SQLException 
+	public ArrayList<Ps_AuthsModel> getPsAuths() throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_ps_auths = Connection1.prepareStatement(query_string.query_select_ps_auths);
 		ResultSet Cursor1 = queryselect_ps_auths.executeQuery();// Evaluate (Connected_Expression1)
-		ArrayList<ps_authsModel> ListUser1 = new ArrayList<ps_authsModel>();
+		ArrayList<Ps_AuthsModel> ListUser1 = new ArrayList<Ps_AuthsModel>();
 		while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 		{
-			ps_authsModel Modelpsauths = new ps_authsModel();
+			Ps_AuthsModel Modelpsauths = new Ps_AuthsModel();
 			Modelpsauths.id = Cursor1.getString(1);
 			Modelpsauths.auth_type = pjsip_auth_type_values.valueOf(Cursor1.getString(2));
 			Modelpsauths.nonce_lifetime = Cursor1.getInt(3);
@@ -75,7 +75,7 @@ public class Ps_AuthsController {
 	}
 	
 	@PostMapping("/postAuthsId")
-	public ArrayList<ps_authsModel> postAuthsId(@RequestBody ps_authsModel cfm) throws SQLException 
+	public ArrayList<Ps_AuthsModel> postAuthsId(@RequestBody Ps_AuthsModel cfm) throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		PreparedStatement a = Connection1.prepareStatement("select id, auth_type, username from ps_auths where username = ? and password = ?");
@@ -83,10 +83,10 @@ public class Ps_AuthsController {
 		a.setString(1, cfm.username);
 		a.setString(2, cfm.password);
 		ResultSet Cursor1 = a.executeQuery();// Evaluate (Connected_Expression1)
-		ArrayList<ps_authsModel> ListUser1 = new ArrayList<ps_authsModel>();
+		ArrayList<Ps_AuthsModel> ListUser1 = new ArrayList<Ps_AuthsModel>();
 		while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 		{
-			ps_authsModel Modelpsauths = new ps_authsModel();
+			Ps_AuthsModel Modelpsauths = new Ps_AuthsModel();
 			Modelpsauths.id = Cursor1.getString(1);
 			Modelpsauths.auth_type = pjsip_auth_type_values.valueOf(Cursor1.getString(2));
 			Modelpsauths.username = Cursor1.getString(3);
@@ -99,7 +99,7 @@ public class Ps_AuthsController {
 	}
 
 	@DeleteMapping(path = "/deletePsAuths", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int deletePsAuths(@RequestBody ps_authsModel cfm) throws SQLException 
+	public int deletePsAuths(@RequestBody Ps_AuthsModel cfm) throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1.prepareStatement(query_string_delete.query_delete_ps_auths);

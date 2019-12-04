@@ -2,7 +2,7 @@ package com.example.demo.model;
 
 import com.example.demo.Enum.YesNo_Values;
 
-public class ps_SystemsModel {
+public class Ps_SystemsModel {
 	public String id;
 	public int timer_t1;
 	public int timer_b;

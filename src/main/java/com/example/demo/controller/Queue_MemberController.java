@@ -34,7 +34,7 @@ public class Queue_MemberController
 	PreparedStatement query_insert_queue_members = null;
 
 	@PutMapping("/putQueueMember")
-	public String putQueueMember(@RequestBody queue_memberModel cfm) throws SQLException 
+	public String putQueueMember(@RequestBody Queue_MemberModel cfm) throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		query_insert_queue_members = Connection1.prepareStatement(query_string_insert.query_insert_queue_members);
@@ -54,15 +54,15 @@ public class Queue_MemberController
 	}
 
 	@GetMapping("/getQueueMember")
-	public ArrayList<queue_memberModel> getQueueMember() throws SQLException 
+	public ArrayList<Queue_MemberModel> getQueueMember() throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_queuemember = Connection1.prepareStatement(query_string.query_select_queue_members);
 		ResultSet Cursor1 = queryselect_queuemember.executeQuery();// Evaluate (Connected_Expression1)
-		ArrayList<queue_memberModel> ListUser1 = new ArrayList<queue_memberModel>();
+		ArrayList<Queue_MemberModel> ListUser1 = new ArrayList<Queue_MemberModel>();
 		while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 		{
-			queue_memberModel ModelQueue_member = new queue_memberModel();
+			Queue_MemberModel ModelQueue_member = new Queue_MemberModel();
 			ModelQueue_member.queue_name = Cursor1.getString(1);
 			ModelQueue_member._interface = Cursor1.getString(2);
 			ModelQueue_member.membername = Cursor1.getString(3);
@@ -79,7 +79,7 @@ public class Queue_MemberController
 	}
 
 	@DeleteMapping(path = "/deleteQueueMember", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int deleteQueueMember(@RequestBody queue_memberModel cfm) throws SQLException 
+	public int deleteQueueMember(@RequestBody Queue_MemberModel cfm) throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1

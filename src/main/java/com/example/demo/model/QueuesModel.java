@@ -3,7 +3,7 @@ package com.example.demo.model;
 import com.example.demo.Enum.YesNo_Values;
 import com.example.demo.Enum.queue_autopause_values;
 
-public class queuesModel {
+public class QueuesModel {
 	public String name;
 	public String musiconhold;
 	public String announce;
