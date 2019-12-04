@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,7 +22,11 @@ import com.example.demo.connection.stringkoneksi;
 import com.example.demo.model.*;
 import com.example.demo.query.*;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
+@Api(value = "Otentikasi, User login")
 @RequestMapping(produces="application/json",path="/ps_auths")
 public class Ps_AuthsController {
 	PreparedStatement querydelete_alembic_version_config = null;
@@ -50,7 +55,8 @@ public class Ps_AuthsController {
 		Connection1.close();
 		return a;
 	}
-
+	
+	@ApiOperation(value = "View a list of available ps_auths", response = List.class)
 	@GetMapping("/getPsAuths")
 	public ArrayList<Ps_AuthsModel> getPsAuths() throws SQLException 
 	{
@@ -74,6 +80,7 @@ public class Ps_AuthsController {
 		return ListUser1;
 	}
 	
+	@ApiOperation(value = "Coba login (body)")
 	@PostMapping("/postAuthsId")
 	public ArrayList<Ps_AuthsModel> postAuthsId(@RequestBody Ps_AuthsModel cfm) throws SQLException 
 	{
@@ -98,6 +105,7 @@ public class Ps_AuthsController {
 
 	}
 
+	@ApiOperation(value = "delete ps_auths data by Id (body)")
 	@DeleteMapping(path = "/deletePsAuths", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public int deletePsAuths(@RequestBody Ps_AuthsModel cfm) throws SQLException 
 	{
