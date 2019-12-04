@@ -165,7 +165,7 @@ String hasil="Sukses";
 
 	        		count++;
 	        	  UserModel1.nama=Cursor1.getString(2);
-	        	  UserModel1.umur=Cursor1.getInt(3);
+	        	 // UserModel1.umur=Cursor1.getInt(3);
 	        	
 	        	  
 	        	  ListUser1.add(UserModel1);
