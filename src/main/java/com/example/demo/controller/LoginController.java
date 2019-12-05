@@ -28,22 +28,33 @@ public class LoginController
 	stringkoneksi sk = new stringkoneksi();
 
 	@PostMapping("/login")
-	public ArrayList<UserModel> postAuthsId(@RequestBody UserModel cfm) throws SQLException
+	public ArrayList<UserModel> postAuthsId(@RequestBody UserModel cfm)
 	{
-		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-		PreparedStatement a = Connection1.prepareStatement(loginquery.query_login);
-
-		a.setString(1, cfm.username);
-		a.setString(2, cfm.password);
-		ResultSet Cursor1 = a.executeQuery();// Evaluate (Connected_Expression1)
 		ArrayList<UserModel> ListUser1 = new ArrayList<UserModel>();
-		Cursor1.next();
-		UserModel Modeluser = new UserModel();
-		Modeluser.user_id = Cursor1.getString(1);
-		Modeluser.username = Cursor1.getString(2);
-		Modeluser.extensions_user = Cursor1.getString(3);
-		ListUser1.add(Modeluser);
-		Connection1.close();
+		try
+		{
+			Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+			PreparedStatement a = Connection1.prepareStatement(loginquery.query_login);
+
+			a.setString(1, cfm.username);
+			a.setString(2, cfm.password);
+			ResultSet Cursor1 = a.executeQuery();// Evaluate (Connected_Expression1)
+			
+			Cursor1.next();
+			UserModel Modeluser = new UserModel();
+			Modeluser.user_id = Cursor1.getString(1);
+			Modeluser.username = Cursor1.getString(2);
+			Modeluser.extensions_user = Cursor1.getString(3);
+			ListUser1.add(Modeluser);
+			Connection1.close();
+		}
+		catch (SQLException error)
+		{
+			//return null;
+			UserModel Modeluser = new UserModel();
+			ListUser1.add(Modeluser);
+		}
+		
 		try
 		{
 			updateStatus(ListUser1.get(0).user_id, "1");
