@@ -52,7 +52,7 @@ public class DashboardController
 	}
 
 	@GetMapping("/dashboard_status")
-	public ArrayList<StatusModel> getDashboardStatus(@RequestBody UserModel cfm) throws SQLException
+	public ArrayList<StatusModel> getDashboardStatus() throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		PreparedStatement a = Connection1.prepareStatement(menuUtamaQuery.query_status);
