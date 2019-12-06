@@ -24,7 +24,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/voicemail")
-public class VoiceMailController {
+public class VoiceMailController
+{
 	PreparedStatement querydelete_voicemail = null;
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();
 	stringkoneksi sk = new stringkoneksi();
@@ -35,11 +36,11 @@ public class VoiceMailController {
 	PreparedStatement query_insert_voicemail = null;
 
 	@PutMapping("/putVoiceMail")
-	public String putVoiceMail(@RequestBody VoiceMailModel cfm) throws SQLException 
+	public String putVoiceMail(@RequestBody VoiceMailModel cfm) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		query_insert_voicemail = Connection1.prepareStatement(query_string_insert.query_insert_voicemail);
-		
+
 		query_insert_voicemail.setString(1, cfm.context);
 		query_insert_voicemail.setString(2, cfm.mailbox);
 		query_insert_voicemail.setString(3, cfm.password);
@@ -73,7 +74,7 @@ public class VoiceMailController {
 		query_insert_voicemail.setString(31, cfm.imapport);
 		query_insert_voicemail.setString(32, cfm.imapflags);
 		query_insert_voicemail.setDate(33, cfm.stamp);
-		
+
 		int Cursor1 = query_insert_voicemail.executeUpdate();// Evaluate (Connected_Expression1)
 		String a = "1";
 		Connection1.close();
@@ -81,7 +82,7 @@ public class VoiceMailController {
 	}
 
 	@GetMapping("/getVoiceMail")
-	public ArrayList<VoiceMailModel> getVoiceMail() throws SQLException 
+	public ArrayList<VoiceMailModel> getVoiceMail() throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_voicemail = Connection1.prepareStatement(query_string.query_select_voicemail);
@@ -134,7 +135,7 @@ public class VoiceMailController {
 	}
 
 	@DeleteMapping(path = "/deleteVoiceMail", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int deleteVoiceMail(@RequestBody VoiceMailModel cfm) throws SQLException 
+	public int deleteVoiceMail(@RequestBody VoiceMailModel cfm) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_voicemail = Connection1.prepareStatement(query_string_delete.query_delete_voicemail);

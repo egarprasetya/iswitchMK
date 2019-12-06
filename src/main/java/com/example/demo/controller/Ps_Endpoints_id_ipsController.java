@@ -22,8 +22,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(produces="application/json",path="/ps_endpoints_id")
-public class Ps_Endpoints_id_ipsController 
+@RequestMapping(produces = "application/json", path = "/ps_endpoints_id")
+public class Ps_Endpoints_id_ipsController
 {
 	PreparedStatement query_delete_ps_endpoints_id = null;
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();
@@ -34,7 +34,7 @@ public class Ps_Endpoints_id_ipsController
 	PreparedStatement queryinsert_ps_endpoints_id_ip = null;
 
 	@PutMapping("/putPsEndpointsId")
-	public String putPsEndpointsId(@RequestBody Ps_Endpoints_Id_IpsModel cfm) throws SQLException 
+	public String putPsEndpointsId(@RequestBody Ps_Endpoints_Id_IpsModel cfm) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryinsert_ps_endpoints_id_ip = Connection1.prepareStatement(query_string_insert.query_insert_ps_endpoints_id);
@@ -50,7 +50,7 @@ public class Ps_Endpoints_id_ipsController
 	}
 
 	@GetMapping("/getPsEndpointsId")
-	public ArrayList<Ps_Endpoints_Id_IpsModel> getPsEndpointsId() throws SQLException 
+	public ArrayList<Ps_Endpoints_Id_IpsModel> getPsEndpointsId() throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_psendpointsid = Connection1.prepareStatement(query_string.query_select_ps_endpoints_id);
@@ -73,11 +73,10 @@ public class Ps_Endpoints_id_ipsController
 	}
 
 	@DeleteMapping(path = "/deletePsEndpointsId", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int deletePsEndpointsId(@RequestBody Ps_Endpoints_Id_IpsModel cfm) throws SQLException 
+	public int deletePsEndpointsId(@RequestBody Ps_Endpoints_Id_IpsModel cfm) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-		query_delete_ps_endpoints_id = Connection1
-				.prepareStatement(query_string_delete.query_delete_ps_endpoints_id);
+		query_delete_ps_endpoints_id = Connection1.prepareStatement(query_string_delete.query_delete_ps_endpoints_id);
 		query_delete_ps_endpoints_id.setString(1, cfm.id);
 		int Cursor1 = query_delete_ps_endpoints_id.executeUpdate();// Evaluate (Connected_Expression1)
 		int a = 0;

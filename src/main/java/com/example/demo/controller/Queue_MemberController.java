@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(produces="application/json",path="/queue_member")
-public class Queue_MemberController 
+@RequestMapping(produces = "application/json", path = "/queue_member")
+public class Queue_MemberController
 {
 	PreparedStatement querydelete_alembic_version_config = null;
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();
@@ -34,7 +34,7 @@ public class Queue_MemberController
 	PreparedStatement query_insert_queue_members = null;
 
 	@PutMapping("/putQueueMember")
-	public String putQueueMember(@RequestBody Queue_MemberModel cfm) throws SQLException 
+	public String putQueueMember(@RequestBody Queue_MemberModel cfm) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		query_insert_queue_members = Connection1.prepareStatement(query_string_insert.query_insert_queue_members);
@@ -54,7 +54,7 @@ public class Queue_MemberController
 	}
 
 	@GetMapping("/getQueueMember")
-	public ArrayList<Queue_MemberModel> getQueueMember() throws SQLException 
+	public ArrayList<Queue_MemberModel> getQueueMember() throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_queuemember = Connection1.prepareStatement(query_string.query_select_queue_members);
@@ -79,11 +79,10 @@ public class Queue_MemberController
 	}
 
 	@DeleteMapping(path = "/deleteQueueMember", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int deleteQueueMember(@RequestBody Queue_MemberModel cfm) throws SQLException 
+	public int deleteQueueMember(@RequestBody Queue_MemberModel cfm) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-		querydelete_alembic_version_config = Connection1
-				.prepareStatement(query_string_delete.query_delete_queue_members);
+		querydelete_alembic_version_config = Connection1.prepareStatement(query_string_delete.query_delete_queue_members);
 		querydelete_alembic_version_config.setString(1, cfm.queue_name);
 		int Cursor1 = querydelete_alembic_version_config.executeUpdate();// Evaluate (Connected_Expression1)
 		int a = 0;

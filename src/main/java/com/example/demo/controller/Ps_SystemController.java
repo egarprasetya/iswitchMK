@@ -22,8 +22,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(produces="application/json",path="/ps_system")
-public class Ps_SystemController 
+@RequestMapping(produces = "application/json", path = "/ps_system")
+public class Ps_SystemController
 {
 	PreparedStatement querydelete_alembic_version_config = null;
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();
@@ -34,11 +34,11 @@ public class Ps_SystemController
 	PreparedStatement query_insert_ps_systems = null;
 
 	@PutMapping("/putPsSystems")
-	public String putPsSystems(@RequestBody Ps_SystemsModel cfm) throws SQLException 
+	public String putPsSystems(@RequestBody Ps_SystemsModel cfm) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		query_insert_ps_systems = Connection1.prepareStatement(query_string_insert.query_insert_ps_systems);
-		
+
 		query_insert_ps_systems.setString(1, cfm.id);
 		query_insert_ps_systems.setInt(2, cfm.timer_t1);
 		query_insert_ps_systems.setInt(3, cfm.timer_b);
@@ -48,7 +48,7 @@ public class Ps_SystemController
 		query_insert_ps_systems.setInt(7, cfm.threadpool_idle_timeout);
 		query_insert_ps_systems.setInt(8, cfm.threadpool_max_size);
 		query_insert_ps_systems.setString(9, cfm.disable_tcp_switch);
-		
+
 		int Cursor1 = query_insert_ps_systems.executeUpdate();// Evaluate (Connected_Expression1)
 		String a = "1";
 		Connection1.close();
@@ -56,7 +56,7 @@ public class Ps_SystemController
 	}
 
 	@GetMapping("/getPsSystem")
-	public ArrayList<Ps_SystemsModel> getPsSystem() throws SQLException 
+	public ArrayList<Ps_SystemsModel> getPsSystem() throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_ps_systems = Connection1.prepareStatement(query_string.query_select_ps_systems);
@@ -83,7 +83,7 @@ public class Ps_SystemController
 	}
 
 	@DeleteMapping(path = "/deletePsSystem", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int deletePsSystem(@RequestBody String id) throws SQLException 
+	public int deletePsSystem(@RequestBody String id) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1.prepareStatement(query_string_delete.query_delete_ps_systems);
@@ -95,7 +95,7 @@ public class Ps_SystemController
 	}
 
 	@GetMapping(path = "/DeleteGetPsSystem ", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int DeleteGetPsSystems(@RequestBody String id) throws SQLException 
+	public int DeleteGetPsSystems(@RequestBody String id) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1.prepareStatement(query_string_delete.query_delete_ps_systems);

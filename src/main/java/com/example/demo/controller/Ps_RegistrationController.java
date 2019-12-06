@@ -22,8 +22,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(produces="application/json",path="/ps_registration")
-public class Ps_RegistrationController 
+@RequestMapping(produces = "application/json", path = "/ps_registration")
+public class Ps_RegistrationController
 {
 	PreparedStatement querydelete_alembic_version_config = null;
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();
@@ -34,7 +34,7 @@ public class Ps_RegistrationController
 	PreparedStatement queryinsert_ps_registration = null;
 
 	@PutMapping("/putPsRegistration")
-	public String putPsRegistration(@RequestBody Ps_RegistrationsModel cfm) throws SQLException 
+	public String putPsRegistration(@RequestBody Ps_RegistrationsModel cfm) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryinsert_ps_registration = Connection1.prepareStatement(query_string_insert.query_insert_ps_registrations);
@@ -61,7 +61,7 @@ public class Ps_RegistrationController
 	}
 
 	@GetMapping("/getPsRegistration")
-	public ArrayList<Ps_RegistrationsModel> getPsRegistration() throws SQLException 
+	public ArrayList<Ps_RegistrationsModel> getPsRegistration() throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_ps_registration = Connection1.prepareStatement(query_string.query_select_ps_registrations);
@@ -96,7 +96,7 @@ public class Ps_RegistrationController
 	}
 
 	@DeleteMapping(path = "/deletePsRegistration", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int deletePsRegistration(@RequestBody Ps_RegistrationsModel cfm) throws SQLException 
+	public int deletePsRegistration(@RequestBody Ps_RegistrationsModel cfm) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1

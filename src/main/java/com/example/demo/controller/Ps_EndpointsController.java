@@ -32,8 +32,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(produces="application/json",path="/ps_endpoint")
-public class Ps_EndpointsController 
+@RequestMapping(produces = "application/json", path = "/ps_endpoint")
+public class Ps_EndpointsController
 {
 	PreparedStatement querydelete_alembic_version_config = null;
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();
@@ -44,7 +44,7 @@ public class Ps_EndpointsController
 	PreparedStatement query_insert_ps_endpoints = null;
 
 	@PutMapping("/putPsEndpoints")
-	public String putPsEndpoints(@RequestBody Ps_EndpointsModel cfm) throws SQLException 
+	public String putPsEndpoints(@RequestBody Ps_EndpointsModel cfm) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		query_insert_ps_endpoints = Connection1.prepareStatement(query_string_insert.query_insert_ps_endpoints);
@@ -176,7 +176,7 @@ public class Ps_EndpointsController
 	}
 
 	@GetMapping("/getPsEndpoint")
-	public ArrayList<Ps_EndpointsModel> getPsEndpoint() throws SQLException 
+	public ArrayList<Ps_EndpointsModel> getPsEndpoint() throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_psendpoint = Connection1.prepareStatement(query_string.query_select_ps_endpoints);
@@ -193,11 +193,15 @@ public class Ps_EndpointsController
 			ModelPs_enpoints.disallow = Cursor1.getString(6);
 			ModelPs_enpoints.allow = Cursor1.getString(7);
 			ModelPs_enpoints.direct_media = YesNo_Values.valueOf(Cursor1.getString(8)); // YesNo value / Type.
-			ModelPs_enpoints.connected_line_method = pjsip_connected_line_method_values.valueOf(Cursor1.getString(9)); // pjsip_connected_line_method value/type.
-			ModelPs_enpoints.direct_media_method = pjsip_connected_line_method_values.valueOf(Cursor1.getString(10)); // pjsip_connected_line_method value/type.
-			ModelPs_enpoints.direct_media_glare_mitigation = pjsip_direct_media_glare_mitigation_values.valueOf(Cursor1.getString(11)); // pjsip_direct_media_glare_mitigation																					// // value/Type.
+			ModelPs_enpoints.connected_line_method = pjsip_connected_line_method_values.valueOf(Cursor1.getString(9)); // pjsip_connected_line_method
+																																																									// value/type.
+			ModelPs_enpoints.direct_media_method = pjsip_connected_line_method_values.valueOf(Cursor1.getString(10)); // pjsip_connected_line_method
+																																																								// value/type.
+			ModelPs_enpoints.direct_media_glare_mitigation = pjsip_direct_media_glare_mitigation_values
+					.valueOf(Cursor1.getString(11)); // pjsip_direct_media_glare_mitigation // // value/Type.
 			ModelPs_enpoints.disable_direct_media_on_nat = Cursor1.getString(12);
-			ModelPs_enpoints.dtmf_mode = pjsip_dtmf_mode_values_v3.valueOf(Cursor1.getString(13)); // pjsip_dtmf_mode value/Type.
+			ModelPs_enpoints.dtmf_mode = pjsip_dtmf_mode_values_v3.valueOf(Cursor1.getString(13)); // pjsip_dtmf_mode
+																																															// value/Type.
 			ModelPs_enpoints.external_media_address = Cursor1.getString(14);
 			ModelPs_enpoints.force_rport = Cursor1.getString(15);
 			ModelPs_enpoints.ice_support = Cursor1.getString(16);
@@ -216,7 +220,8 @@ public class Ps_EndpointsController
 			ModelPs_enpoints.timers = pjsip_timer_values.valueOf(Cursor1.getString(29)); // pjsip_timer value/Type.
 			ModelPs_enpoints.timers_sess_expires = Cursor1.getInt(30);
 			ModelPs_enpoints.callerid = Cursor1.getString(31);
-			ModelPs_enpoints.callerid_privacy = pjsip_cid_privacy_values.valueOf(Cursor1.getString(32)); // pjsip_cid_privacy value/Type.
+			ModelPs_enpoints.callerid_privacy = pjsip_cid_privacy_values.valueOf(Cursor1.getString(32)); // pjsip_cid_privacy
+																																																		// value/Type.
 			ModelPs_enpoints.callerid_tag = Cursor1.getString(33);
 			ModelPs_enpoints._100rel = pjsip_100rel_values.valueOf(Cursor1.getString(34)); // pjsip_100rel value/Type.
 			ModelPs_enpoints.aggregate_mwi = YesNo_Values.valueOf(Cursor1.getString(35)); // YesNo Value/Type
@@ -233,7 +238,8 @@ public class Ps_EndpointsController
 			ModelPs_enpoints.device_state_busy_at = Cursor1.getInt(46);
 			ModelPs_enpoints.fax_detect = YesNo_Values.valueOf(Cursor1.getString(47)); // YesNo Value/Type
 			ModelPs_enpoints.t38_udptl = YesNo_Values.valueOf(Cursor1.getString(48)); // YesNo Value/Type
-			ModelPs_enpoints.t38_udptl_ec = pjsip_t38udptl_ec_values.valueOf(Cursor1.getString(49)); // pjsip_t38_udptl value/type.
+			ModelPs_enpoints.t38_udptl_ec = pjsip_t38udptl_ec_values.valueOf(Cursor1.getString(49)); // pjsip_t38_udptl
+																																																// value/type.
 			ModelPs_enpoints.t38_udptl_maxdatagram = Cursor1.getInt(50);
 			ModelPs_enpoints.t38_udptl_nat = YesNo_Values.valueOf(Cursor1.getString(51)); // YesNo value/Type.
 			ModelPs_enpoints.t38_udptl_ipv6 = YesNo_Values.valueOf(Cursor1.getString(52)); // YesNo value/Type.
@@ -260,10 +266,12 @@ public class Ps_EndpointsController
 			ModelPs_enpoints.dtls_cipher = Cursor1.getString(73);
 			ModelPs_enpoints.dtls_ca_file = Cursor1.getString(74);
 			ModelPs_enpoints.dtls_ca_path = Cursor1.getString(75);
-			ModelPs_enpoints.dtls_setup = pjsip_dtls_setup_values.valueOf(Cursor1.getString(76)); // pjsip_dtls_setup value/Type.
+			ModelPs_enpoints.dtls_setup = pjsip_dtls_setup_values.valueOf(Cursor1.getString(76)); // pjsip_dtls_setup
+																																														// value/Type.
 			ModelPs_enpoints.srtp_tag_32 = YesNo_Values.valueOf(Cursor1.getString(77)); // YesNo value/Type
 			ModelPs_enpoints.media_address = Cursor1.getString(78);
-			ModelPs_enpoints.redirect_method = pjsip_redirect_method_values.valueOf(Cursor1.getString(79)); // pjsip_redirect_method value/Type.
+			ModelPs_enpoints.redirect_method = pjsip_redirect_method_values.valueOf(Cursor1.getString(79)); // pjsip_redirect_method
+																																																			// value/Type.
 			ModelPs_enpoints.set_var = Cursor1.getString(80); // Text value/Type.
 			ModelPs_enpoints.cos_audio = Cursor1.getInt(81);
 			ModelPs_enpoints.cos_video = Cursor1.getInt(82);
@@ -312,11 +320,10 @@ public class Ps_EndpointsController
 	}
 
 	@DeleteMapping(path = "/deletePsEndpoint", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int deletePsEndpoint(@RequestBody Ps_EndpointsModel cfm) throws SQLException 
+	public int deletePsEndpoint(@RequestBody Ps_EndpointsModel cfm) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-		querydelete_alembic_version_config = Connection1
-				.prepareStatement(query_string_delete.query_delete_ps_endpoints);
+		querydelete_alembic_version_config = Connection1.prepareStatement(query_string_delete.query_delete_ps_endpoints);
 		querydelete_alembic_version_config.setString(1, cfm.id);
 		int Cursor1 = querydelete_alembic_version_config.executeUpdate();// Evaluate (Connected_Expression1)
 		int a = 0;

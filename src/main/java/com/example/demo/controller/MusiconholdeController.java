@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(produces="application/json",path="/musiconhold")
+@RequestMapping(produces = "application/json", path = "/musiconhold")
 public class MusiconholdeController
 
 {
@@ -36,7 +36,7 @@ public class MusiconholdeController
 	PreparedStatement queryselect_musiconhold = null;
 
 	@PutMapping("/putMusiconhold")
-	public String putMusiconholde(@RequestBody MusiconholdeModel cfm) throws SQLException 
+	public String putMusiconholde(@RequestBody MusiconholdeModel cfm) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryinsert_musiconholde = Connection1.prepareStatement(query_string_insert.query_insert_musiconhold);
@@ -53,9 +53,9 @@ public class MusiconholdeController
 		Connection1.close();
 		return a;
 	}
-	
+
 	@GetMapping("/getMusiconhold")
-	public ArrayList<MusiconholdeModel> getMusiconhold() throws SQLException 
+	public ArrayList<MusiconholdeModel> getMusiconhold() throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_musiconhold = Connection1.prepareStatement(query_string.query_select_musiconhold);
@@ -79,7 +79,7 @@ public class MusiconholdeController
 	}
 
 	@DeleteMapping(path = "/deleteMusiconhold", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int deleteMusiconhold(@RequestBody MusiconholdeModel cfm) throws SQLException 
+	public int deleteMusiconhold(@RequestBody MusiconholdeModel cfm) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1.prepareStatement(query_string_delete.query_delete_musiconhold);

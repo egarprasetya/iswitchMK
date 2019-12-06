@@ -23,8 +23,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(produces="application/json",path="/queues")
-public class QueuesContoller 
+@RequestMapping(produces = "application/json", path = "/queues")
+public class QueuesContoller
 {
 	PreparedStatement querydelete_alembic_version_config = null;
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();
@@ -35,10 +35,10 @@ public class QueuesContoller
 	PreparedStatement query_insert_queues = null;
 
 	@PutMapping("/putQueues")
-	public String putQueues(@RequestBody QueuesModel cfm) throws SQLException 
+	public String putQueues(@RequestBody QueuesModel cfm) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-		
+
 		query_insert_queues = Connection1.prepareStatement(query_string_insert.query_insert_queues);
 		query_insert_queues.setString(1, cfm.name);
 		query_insert_queues.setString(2, cfm.musiconhold);
@@ -96,7 +96,6 @@ public class QueuesContoller
 		query_insert_queues.setString(54, cfm.defaultrule);
 		query_insert_queues.setString(55, cfm.timeoutpriority);
 
-		
 		int Cursor1 = query_insert_queues.executeUpdate();// Evaluate (Connected_Expression1)
 		String a = "1";
 		Connection1.close();
@@ -104,7 +103,7 @@ public class QueuesContoller
 	}
 
 	@GetMapping("/getQueues")
-	public ArrayList<QueuesModel> getQueues() throws SQLException 
+	public ArrayList<QueuesModel> getQueues() throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_queues = Connection1.prepareStatement(query_string.query_select_queues);
@@ -177,7 +176,7 @@ public class QueuesContoller
 	}
 
 	@DeleteMapping(path = "/deleteQueues", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int deleteQueues(@RequestBody QueuesModel cfm) throws SQLException 
+	public int deleteQueues(@RequestBody QueuesModel cfm) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1.prepareStatement(query_string_delete.query_delete_queues);

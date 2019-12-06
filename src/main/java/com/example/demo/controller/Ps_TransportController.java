@@ -24,8 +24,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(produces="application/json",path="/ps_transport")
-public class Ps_TransportController 
+@RequestMapping(produces = "application/json", path = "/ps_transport")
+public class Ps_TransportController
 {
 	PreparedStatement querydelete_alembic_version_config = null;
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();
@@ -37,11 +37,10 @@ public class Ps_TransportController
 	PreparedStatement query_insert_ps_transports = null;
 
 	@PutMapping("/putPsTransport")
-	public String putPsTransport(@RequestBody Ps_TransportModel cfm) throws SQLException 
+	public String putPsTransport(@RequestBody Ps_TransportModel cfm) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-		query_insert_ps_transports = Connection1
-				.prepareStatement(query_string_insert.query_insert_ps_transports);
+		query_insert_ps_transports = Connection1.prepareStatement(query_string_insert.query_insert_ps_transports);
 		query_insert_ps_transports.setString(1, cfm.id);
 		query_insert_ps_transports.setInt(2, cfm.async_operations);
 		query_insert_ps_transports.setString(3, cfm.bind);
@@ -64,7 +63,7 @@ public class Ps_TransportController
 		query_insert_ps_transports.setInt(20, cfm.cos);
 		query_insert_ps_transports.setString(21, cfm.allow_reload.toString());
 		query_insert_ps_transports.setString(22, cfm.symmetric_transport.toString());
-		
+
 		int Cursor1 = query_insert_ps_transports.executeUpdate();// Evaluate (Connected_Expression1)
 		String a = "1";
 		Connection1.close();
@@ -72,7 +71,7 @@ public class Ps_TransportController
 	}
 
 	@GetMapping("/getPsTransport")
-	public ArrayList<Ps_TransportModel> getPsTransport() throws SQLException 
+	public ArrayList<Ps_TransportModel> getPsTransport() throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_ps_transport = Connection1.prepareStatement(query_string.query_select_ps_transports);
@@ -112,11 +111,10 @@ public class Ps_TransportController
 	}
 
 	@DeleteMapping(path = "/deletePsTransport", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int deletePsTransport(@RequestBody Ps_TransportModel cfm) throws SQLException 
+	public int deletePsTransport(@RequestBody Ps_TransportModel cfm) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-		querydelete_alembic_version_config = Connection1
-				.prepareStatement(query_string_delete.query_delete_ps_transports);
+		querydelete_alembic_version_config = Connection1.prepareStatement(query_string_delete.query_delete_ps_transports);
 		querydelete_alembic_version_config.setString(1, cfm.id);
 		int Cursor1 = querydelete_alembic_version_config.executeUpdate();// Evaluate (Connected_Expression1)
 		int a = 0;

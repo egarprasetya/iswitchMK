@@ -1,5 +1,6 @@
 package com.example.demo.Enum;
 
-public interface yesno {
+public interface yesno
+{
 
 }

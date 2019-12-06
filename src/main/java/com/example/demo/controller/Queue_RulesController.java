@@ -21,30 +21,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(produces="application/json",path="/queue_rules")
-public class Queue_RulesController 
+@RequestMapping(produces = "application/json", path = "/queue_rules")
+public class Queue_RulesController
 {
 
 	PreparedStatement querydelete_alembic_version_config = null;
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();
 	stringkoneksi sk = new stringkoneksi();
 	AllQuery query_string = new AllQuery();
-	
+
 	PreparedStatement queryselect_queue_rules = null;
 	AllInsertQuery query_string_insert = new AllInsertQuery();
 	PreparedStatement query_insert_queue_rules = null;
 
 	@PutMapping("/putQueueRules")
-	public String putQueueRules(@RequestBody Queue_RulesModel cfm) throws SQLException 
+	public String putQueueRules(@RequestBody Queue_RulesModel cfm) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		query_insert_queue_rules = Connection1.prepareStatement(query_string_insert.query_insert_queue_rules);
-		
+
 		query_insert_queue_rules.setString(1, cfm.rule_name);
 		query_insert_queue_rules.setString(2, cfm.time);
 		query_insert_queue_rules.setString(3, cfm.min_penalty); // type_value Type.
 		query_insert_queue_rules.setString(4, cfm.max_penalty);
-		
+
 		int Cursor1 = query_insert_queue_rules.executeUpdate();// Evaluate (Connected_Expression1)
 		String a = "1";
 		Connection1.close();
@@ -52,7 +52,7 @@ public class Queue_RulesController
 	}
 
 	@GetMapping("/getQueueRules")
-	public ArrayList<Queue_RulesModel> getQueueRules() throws SQLException 
+	public ArrayList<Queue_RulesModel> getQueueRules() throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_queue_rules = Connection1.prepareStatement(query_string.query_select_queue_rules);
@@ -74,7 +74,7 @@ public class Queue_RulesController
 	}
 
 	@DeleteMapping(path = "/deleteQueueRules", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int DeletePostQueueRules(@RequestBody Queue_RulesModel cfm) throws SQLException 
+	public int DeletePostQueueRules(@RequestBody Queue_RulesModel cfm) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1.prepareStatement(query_string_delete.query_delete_queue_rules);

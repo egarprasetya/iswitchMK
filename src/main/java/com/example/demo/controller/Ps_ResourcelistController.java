@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(produces="application/json",path="/ps_resource_list")
-public class Ps_ResourcelistController 
+@RequestMapping(produces = "application/json", path = "/ps_resource_list")
+public class Ps_ResourcelistController
 {
 	PreparedStatement querydelete_alembic_version_config = null;
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();
@@ -33,18 +33,17 @@ public class Ps_ResourcelistController
 	PreparedStatement query_insert_ps_resource_list = null;
 
 	@PutMapping("/putPsResource")
-	public String putPsResource(@RequestBody Ps_Resource_ListModel cfm) throws SQLException 
+	public String putPsResource(@RequestBody Ps_Resource_ListModel cfm) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-		query_insert_ps_resource_list = Connection1
-				.prepareStatement(query_string_insert.query_insert_ps_resource_list);
-		
+		query_insert_ps_resource_list = Connection1.prepareStatement(query_string_insert.query_insert_ps_resource_list);
+
 		query_insert_ps_resource_list.setString(1, cfm.id);
 		query_insert_ps_resource_list.setString(2, cfm.list_item);
 		query_insert_ps_resource_list.setString(3, cfm.event);
 		query_insert_ps_resource_list.setString(4, cfm.full_state);
 		query_insert_ps_resource_list.setInt(5, cfm.notification_batch_interval);
-		
+
 		int Cursor1 = query_insert_ps_resource_list.executeUpdate();// Evaluate (Connected_Expression1)
 		String a = "1";
 		Connection1.close();
@@ -52,7 +51,7 @@ public class Ps_ResourcelistController
 	}
 
 	@GetMapping("/getPsResourceList")
-	public ArrayList<Ps_Resource_ListModel> getPsResourceList() throws SQLException 
+	public ArrayList<Ps_Resource_ListModel> getPsResourceList() throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_psresourcelist = Connection1.prepareStatement(query_string.query_select_ps_resource_list);
@@ -75,7 +74,7 @@ public class Ps_ResourcelistController
 	}
 
 	@DeleteMapping(path = "/deletePsResource", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int DeletePostPsResource(@RequestBody Ps_Resource_ListModel cfm) throws SQLException 
+	public int DeletePostPsResource(@RequestBody Ps_Resource_ListModel cfm) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1

@@ -22,8 +22,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(produces="application/json",path="/ps_contact")
-public class Ps_ContactsController 
+@RequestMapping(produces = "application/json", path = "/ps_contact")
+public class Ps_ContactsController
 {
 	PreparedStatement querydelete_alembic_version_config = null;
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();
@@ -34,7 +34,7 @@ public class Ps_ContactsController
 	PreparedStatement queryinsert_ps_contact = null;
 
 	@PutMapping("/putPsContacts")
-	public String putPsContacts(@RequestBody Ps_ContactsModel cfm) throws SQLException 
+	public String putPsContacts(@RequestBody Ps_ContactsModel cfm) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryinsert_ps_contact = Connection1.prepareStatement(query_string_insert.query_insert_ps_contacts);
@@ -60,7 +60,7 @@ public class Ps_ContactsController
 	}
 
 	@GetMapping("/getPsContact")
-	public ArrayList<Ps_ContactsModel> getPsContact() throws SQLException 
+	public ArrayList<Ps_ContactsModel> getPsContact() throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_ps_contact = Connection1.prepareStatement(query_string.query_select_ps_contacts);
@@ -92,7 +92,7 @@ public class Ps_ContactsController
 	}
 
 	@DeleteMapping(path = "/deletePsContacts", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int deletePsContacts(@RequestBody Ps_ContactsModel cfm) throws SQLException 
+	public int deletePsContacts(@RequestBody Ps_ContactsModel cfm) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1.prepareStatement(query_string_delete.query_delete_ps_contacts);

@@ -27,8 +27,9 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @Api(value = "Otentikasi, User login")
-@RequestMapping(produces="application/json",path="/ps_auths")
-public class Ps_AuthsController {
+@RequestMapping(produces = "application/json", path = "/ps_auths")
+public class Ps_AuthsController
+{
 	PreparedStatement querydelete_alembic_version_config = null;
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();
 	stringkoneksi sk = new stringkoneksi();
@@ -39,7 +40,7 @@ public class Ps_AuthsController {
 	PreparedStatement queryinsert_ps_auth = null;
 
 	@PutMapping("/putPsAuths")
-	public String putPsAuths(@RequestBody Ps_AuthsModel cfm) throws SQLException 
+	public String putPsAuths(@RequestBody Ps_AuthsModel cfm) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryinsert_ps_auth = Connection1.prepareStatement(query_string_insert.query_insert_ps_auths);
@@ -55,10 +56,10 @@ public class Ps_AuthsController {
 		Connection1.close();
 		return a;
 	}
-	
+
 	@ApiOperation(value = "View a list of available ps_auths", response = List.class)
 	@GetMapping("/getPsAuths")
-	public ArrayList<Ps_AuthsModel> getPsAuths() throws SQLException 
+	public ArrayList<Ps_AuthsModel> getPsAuths() throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_ps_auths = Connection1.prepareStatement(query_string.query_select_ps_auths);
@@ -79,14 +80,15 @@ public class Ps_AuthsController {
 		Connection1.close();
 		return ListUser1;
 	}
-	
+
 	@ApiOperation(value = "Coba login (body)")
 	@PostMapping("/postAuthsId")
-	public ArrayList<Ps_AuthsModel> postAuthsId(@RequestBody Ps_AuthsModel cfm) throws SQLException 
+	public ArrayList<Ps_AuthsModel> postAuthsId(@RequestBody Ps_AuthsModel cfm) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-		PreparedStatement a = Connection1.prepareStatement("select id, auth_type, username from ps_auths where username = ? and password = ?");
-		
+		PreparedStatement a = Connection1
+				.prepareStatement("select id, auth_type, username from ps_auths where username = ? and password = ?");
+
 		a.setString(1, cfm.username);
 		a.setString(2, cfm.password);
 		ResultSet Cursor1 = a.executeQuery();// Evaluate (Connected_Expression1)
@@ -107,7 +109,7 @@ public class Ps_AuthsController {
 
 	@ApiOperation(value = "delete ps_auths data by Id (body)")
 	@DeleteMapping(path = "/deletePsAuths", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int deletePsAuths(@RequestBody Ps_AuthsModel cfm) throws SQLException 
+	public int deletePsAuths(@RequestBody Ps_AuthsModel cfm) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1.prepareStatement(query_string_delete.query_delete_ps_auths);

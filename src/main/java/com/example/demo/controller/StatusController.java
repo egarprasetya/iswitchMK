@@ -25,33 +25,12 @@ import com.example.demo.query.query_select_parameter;
 
 @RestController
 @RequestMapping(produces = "application/json", path = "/dashboard")
-public class DashboardController
+public class StatusController
 {
 	MenuUtamaQuery menuUtamaQuery = new MenuUtamaQuery();
 	stringkoneksi sk = new stringkoneksi();
 
-	@PostMapping("/dashboard_profil")
-	public ArrayList<UserModel> postDashboardProfil(@RequestBody UserModel cfm) throws SQLException
-	{
-		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-		PreparedStatement a = Connection1.prepareStatement(menuUtamaQuery.query_profil);
-
-		a.setString(1, cfm.user_id);
-		ResultSet Cursor1 = a.executeQuery();// Evaluate (Connected_Expression1)
-		ArrayList<UserModel> ListUser1 = new ArrayList<UserModel>();
-		Cursor1.next();
-		UserModel Modeluser = new UserModel();
-		Modeluser.nama = Cursor1.getString(1);
-		Modeluser.status = Cursor1.getString(2);
-		Modeluser.avatar = Cursor1.getString(3);
-		ListUser1.add(Modeluser);
-		Connection1.close();
-		
-		//
-		return ListUser1;
-	}
-
-	@GetMapping("/dashboard_status")
+	@GetMapping("/getStatus")
 	public ArrayList<StatusModel> getDashboardStatus() throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
