@@ -1,6 +1,8 @@
 package com.example.demo.model;
 
-import java.util.Date;
+import java.sql.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class UserModel
 {
@@ -9,6 +11,7 @@ public class UserModel
 	public String username;
 	public String password;
 	public Date created;
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	public Date modified;
 	public String email;
 	public String password_email;

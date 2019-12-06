@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -116,6 +117,39 @@ public class UserController
 		
 		//
 		return ListUser1;
+	}
+	
+	@PostMapping("/editUserStatus")
+	public int editUserStatus (@RequestBody UserModel cfm) //throws SQLException
+	{
+		int flag = 0;
+		try
+		{
+			Connection connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+			PreparedStatement query = connection1.prepareStatement("UPDATE users " + 
+					"SET nama=?, username=?, \"password\"=?, modified=?, email=?, password_email=?, phone_number=?, extensions_user=?, skill=?, status=?, avatar=? " + 
+					"WHERE user_id=?;");
+			query.setString(1, cfm.nama);
+			query.setString(2, cfm.username);
+			query.setString(3, cfm.password);
+			query.setDate(4, cfm.modified);
+			query.setString(5, cfm.email);
+			query.setString(6, cfm.password_email);
+			query.setLong(7, Long.parseLong(cfm.phone_number));
+			query.setString(8, cfm.extensions_user);
+			query.setString(9, cfm.skill);
+			query.setString(10, cfm.status);
+			query.setString(11, cfm.avatar);
+			query.setString(12, cfm.user_id);
+			
+			flag = query.executeUpdate();
+			return flag;
+		}
+		catch (SQLException error)
+		{
+			error.printStackTrace();
+		}
+		return flag;
 	}
 	
 }
