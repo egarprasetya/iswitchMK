@@ -9,9 +9,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.Enum.pjsip_auth_type_values;
@@ -22,16 +25,98 @@ import com.example.demo.query.LoginQuery;
 import com.example.demo.query.MenuUtamaQuery;
 import com.example.demo.query.query_select_parameter;
 
+
 @RestController
+@CrossOrigin(origins = "http://localhost:8080")
 @RequestMapping(produces = "application/json", path = "/user")
 public class UserController
 {
 	LoginQuery loginquery = new LoginQuery();
 	stringkoneksi sk = new stringkoneksi();
 	MenuUtamaQuery menuUtamaQuery = new MenuUtamaQuery();
-	
+
 	@PostMapping("/login")
-	public ArrayList<UserModel> postAuthsId(@RequestBody UserModel cfm) throws SQLException
+	public int postAuthsId(@RequestParam(name = "username") String username,
+			@RequestParam(value = "password") String password)
+	{
+		int flag = 0;
+		try
+		{
+			Connection connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+			PreparedStatement query = connection1.prepareStatement(loginquery.query_login0);
+			System.out.println(username + password);
+			query.setString(1, username);
+			query.setString(2, password);
+			ResultSet Cursor1 = query.executeQuery();
+			// Cursor1.next();
+
+			ArrayList<UserModel> ListUser1 = new ArrayList<UserModel>();
+			while (Cursor1.next())
+			{
+				UserModel Modeluser = new UserModel();
+				Modeluser.user_id = Cursor1.getString(1);
+				Modeluser.username = Cursor1.getString(2);
+				Modeluser.extensions_user = Cursor1.getString(3);
+				ListUser1.add(Modeluser);
+			}
+
+			if (ListUser1.size() > 0)
+			{
+				flag = 1;
+			} else
+			{
+				flag = 0;
+			}
+			connection1.close();
+		} catch (SQLException error)
+		{
+			error.printStackTrace();
+		}
+		return flag;
+	}
+
+	@PostMapping("/changeStatusId")
+	public int changeStatusId(@RequestParam(name = "id") String id, @RequestParam(value = "status") String status)
+	{
+		int flag = 0;
+		try
+		{
+			Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+			PreparedStatement a = Connection1.prepareStatement("SELECT * FROM users WHERE user_id=?");
+
+			a.setString(1, id);
+			ResultSet Cursor1 = a.executeQuery();// Evaluate (Connected_Expression1)
+			ArrayList<UserModel> ListUser1 = new ArrayList<UserModel>();
+			while (Cursor1.next())
+			{
+				UserModel Modeluser = new UserModel();
+				Modeluser.user_id = Cursor1.getString(1);
+				ListUser1.add(Modeluser);
+			}
+			Connection1.close();
+			
+			if (ListUser1.size() > 0)
+			{
+				updateStatus(id, status);
+				flag = 1;
+			}
+			else
+			{
+				flag = 0;
+			}
+			
+		}
+		catch (SQLException error)
+		{
+			error.printStackTrace();
+			flag = 0;
+		}
+
+		return flag;
+	}
+
+	@PostMapping("/loginBody")
+	public int postAuthsIdBody(@RequestBody UserModel cfm) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		PreparedStatement a = Connection1.prepareStatement(loginquery.query_login);
@@ -40,58 +125,85 @@ public class UserController
 		a.setString(2, cfm.password);
 		ResultSet Cursor1 = a.executeQuery();// Evaluate (Connected_Expression1)
 		ArrayList<UserModel> ListUser1 = new ArrayList<UserModel>();
-		Cursor1.next();
-		UserModel Modeluser = new UserModel();
-		Modeluser.user_id = Cursor1.getString(1);
-		Modeluser.username = Cursor1.getString(2);
-		Modeluser.extensions_user = Cursor1.getString(3);
-		ListUser1.add(Modeluser);
-		Connection1.close();
-		try
+		while (Cursor1.next())
 		{
-			updateStatus(ListUser1.get(0).user_id, "1");
-		} catch (Exception error)
-		{
-			error.printStackTrace();
+			UserModel Modeluser = new UserModel();
+			Modeluser.user_id = Cursor1.getString(1);
+			Modeluser.username = Cursor1.getString(2);
+			Modeluser.extensions_user = Cursor1.getString(3);
+			ListUser1.add(Modeluser);
 		}
-		//
-		return ListUser1;
+		Connection1.close();
+
+		if (ListUser1.size() > 0)
+		{
+			try
+			{
+				updateStatus(ListUser1.get(0).user_id, "1");
+			} catch (Exception error)
+			{
+				error.printStackTrace();
+			}
+			return 1;
+		} else
+		{
+			return 0;
+		}
+
 	}
 
-	public void updateStatus(String id, String status)
+	public void updateStatus(String id, String status) throws SQLException
 	{
+		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+		PreparedStatement a = Connection1.prepareStatement(loginquery.query_login2);
+
+		a.setString(1, status);
+		a.setString(2, id);
+		a.executeUpdate();
+
+	}
+
+	@GetMapping("/getInitData")
+	public ArrayList<UserModel> getInitData(@RequestBody UserModel cfm)
+	{
+		ArrayList<UserModel> ListUser1 = new ArrayList<UserModel>();
 		try
 		{
-			Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-			PreparedStatement a = Connection1.prepareStatement(loginquery.query_login2);
-
-			a.setString(1, status);
-			a.setString(2, id);
-			a.executeUpdate();
+			Connection connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+			PreparedStatement query = connection1.prepareStatement(loginquery.query_login);
+			ResultSet Cursor1 = query.executeQuery();
+			while (Cursor1.next())
+			{
+				UserModel Modeluser = new UserModel();
+				Modeluser.user_id = Cursor1.getString(1);
+				Modeluser.username = Cursor1.getString(2);
+				Modeluser.extensions_user = Cursor1.getString(3);
+				ListUser1.add(Modeluser);
+			}
+			connection1.close();
 		} catch (SQLException error)
 		{
 			error.printStackTrace();
 		}
-
+		return ListUser1;
 	}
+
 	@PostMapping("/logout")
 	public int postAuthsLogout(@RequestBody UserModel cfm)
 	{
-		
+
 		try
 		{
 			if (cfm.user_id != null)
 			{
 				updateStatus(cfm.user_id, "0");
 				return 1;
-			}
-			else
+			} else
 			{
 				return 0;
 			}
-			
-		}
-		catch (Exception error)
+
+		} catch (Exception error)
 		{
 			error.printStackTrace();
 			return 0;
@@ -114,21 +226,21 @@ public class UserController
 		Modeluser.avatar = Cursor1.getString(3);
 		ListUser1.add(Modeluser);
 		Connection1.close();
-		
+
 		//
 		return ListUser1;
 	}
-	
+
 	@PostMapping("/editUserStatus")
-	public int editUserStatus (@RequestBody UserModel cfm) //throws SQLException
+	public int editUserStatus(@RequestBody UserModel cfm) // throws SQLException
 	{
 		int flag = 0;
 		try
 		{
 			Connection connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-			PreparedStatement query = connection1.prepareStatement("UPDATE users " + 
-					"SET nama=?, username=?, \"password\"=?, modified=?, email=?, password_email=?, phone_number=?, extensions_user=?, skill=?, status=?, avatar=? " + 
-					"WHERE user_id=?;");
+			PreparedStatement query = connection1.prepareStatement("UPDATE users "
+					+ "SET nama=?, username=?, \"password\"=?, modified=?, email=?, password_email=?, phone_number=?, extensions_user=?, skill=?, status=?, avatar=? "
+					+ "WHERE user_id=?;");
 			query.setString(1, cfm.nama);
 			query.setString(2, cfm.username);
 			query.setString(3, cfm.password);
@@ -141,15 +253,14 @@ public class UserController
 			query.setString(10, cfm.status);
 			query.setString(11, cfm.avatar);
 			query.setString(12, cfm.user_id);
-			
+
 			flag = query.executeUpdate();
 			return flag;
-		}
-		catch (SQLException error)
+		} catch (SQLException error)
 		{
 			error.printStackTrace();
 		}
 		return flag;
 	}
-	
+
 }

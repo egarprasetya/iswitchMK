@@ -24,7 +24,7 @@ import com.example.demo.query.MenuUtamaQuery;
 import com.example.demo.query.query_select_parameter;
 
 @RestController
-@RequestMapping(produces = "application/json", path = "/dashboard")
+@RequestMapping(produces = "application/json", path = "/status")
 public class StatusController
 {
 	MenuUtamaQuery menuUtamaQuery = new MenuUtamaQuery();
