@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,6 +25,8 @@ import com.example.demo.query.MenuUtamaQuery;
 import com.example.demo.query.query_select_parameter;
 
 @RestController
+
+@CrossOrigin(origins = "*")
 @RequestMapping(produces = "application/json", path = "/status")
 public class StatusController
 {

@@ -31,6 +31,7 @@ public class CdrController
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();
 	stringkoneksi sk = new stringkoneksi();
 	AllQuery query_string = new AllQuery();
+	MenuUtamaQuery query_string2 = new MenuUtamaQuery();
 	PreparedStatement queryselect_cdr = null;
 	
 	@PutMapping(produces="application/json",path="/putCdr")
@@ -113,5 +114,44 @@ public class CdrController
 		Connection1.close();
 		return a;
 	}
-
+	
+	@PostMapping(produces="application/json",path="/postUserCdr")
+	public ArrayList<CdrModel> postUserCdr(@RequestBody CdrModel cfm) throws SQLException 
+	{
+		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+		
+		PreparedStatement queryselect_cdr = Connection1.prepareStatement(query_string2.query_get_user_cdr);
+		queryselect_cdr.setString(1, cfm.dst);
+		
+		ResultSet Cursor1 = queryselect_cdr.executeQuery();// Evaluate (Connected_Expression1)
+		ArrayList<CdrModel> ListUser1 = new ArrayList<CdrModel>();
+		while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
+		{
+			CdrModel ModelCdr = new CdrModel();
+			ModelCdr.accountcode = Cursor1.getString(1);
+			ModelCdr.src = Cursor1.getString(2);
+			ModelCdr.dst = Cursor1.getString(3);
+			ModelCdr.dcontext = Cursor1.getString(4);
+			ModelCdr.clid = Cursor1.getString(5);
+			ModelCdr.channel = Cursor1.getString(6);
+			ModelCdr.dstchannel = Cursor1.getString(7);
+			ModelCdr.lastapp = Cursor1.getString(8); // YesNo value / Type.
+			ModelCdr.lastdata = Cursor1.getString(9); // pjsip_connected_line_method value/type.
+			ModelCdr.start = Cursor1.getDate(10); // pjsip_connected_line_method value/type.
+			ModelCdr.answer = Cursor1.getDate(11); // pjsip_direct_media_glare_mitigation value/Type.
+			ModelCdr.end = Cursor1.getDate(12);
+			ModelCdr.duration = Cursor1.getInt(13); // pjsip_dtmf_mode value/Type.
+			ModelCdr.billsec = Cursor1.getInt(14);
+			ModelCdr.disposition = Cursor1.getString(15);
+			ModelCdr.amaflags = Cursor1.getString(16);
+			ModelCdr.userfield = Cursor1.getString(17);
+			ModelCdr.uniqueid = Cursor1.getString(18);
+			ModelCdr.linkedid = Cursor1.getString(19);
+			ModelCdr.peeraccount = Cursor1.getString(20);
+			ModelCdr.sequence = Cursor1.getInt(21);
+			ListUser1.add(ModelCdr);
+		}
+		Connection1.close();
+		return ListUser1;
+	}
 }
