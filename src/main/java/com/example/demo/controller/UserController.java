@@ -115,7 +115,7 @@ public class UserController
 	}
 
 	@PostMapping("/loginBody")
-	public int postAuthsIdBody(@RequestBody UserModel cfm) throws SQLException
+	public String postAuthsIdBody(@RequestBody UserModel cfm) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		PreparedStatement a = Connection1.prepareStatement(loginquery.query_login);
@@ -143,10 +143,10 @@ public class UserController
 			{
 				error.printStackTrace();
 			}
-			return 1;
+			return ListUser1.get(0).user_id;
 		} else
 		{
-			return 0;
+			return "0";
 		}
 
 	}
