@@ -143,10 +143,10 @@ public class UserController
 			{
 				error.printStackTrace();
 			}
-			return ListUser1.get(0).user_id;
+			return "{ " + "\"user_id\":"+"\""+ListUser1.get(0).user_id+"\" }";
 		} else
 		{
-			return "0";
+			return "{ " + "\"user_id\":"+"\""+"0"+"\" }";
 		}
 
 	}
@@ -230,8 +230,8 @@ public class UserController
 		return ListUser1;
 	}
 
-	@PostMapping("/editUserStatus")
-	public int editUserStatus(@RequestBody UserModel cfm) // throws SQLException
+	@PostMapping("/editUserId")
+	public int editUserId(@RequestBody UserModel cfm) // throws SQLException
 	{
 		int flag = 0;
 		try

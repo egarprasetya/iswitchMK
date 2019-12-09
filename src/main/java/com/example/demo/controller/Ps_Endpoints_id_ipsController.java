@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "*")
 @RequestMapping(produces = "application/json", path = "/ps_endpoints_id")
 public class Ps_Endpoints_id_ipsController
-{
+{ 
 	PreparedStatement query_delete_ps_endpoints_id = null;
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();
 	stringkoneksi sk = new stringkoneksi();
