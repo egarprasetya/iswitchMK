@@ -27,7 +27,7 @@ import com.example.demo.query.query_select_parameter;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "*")
 @RequestMapping(produces = "application/json", path = "/user")
 public class UserController
 {
@@ -44,7 +44,6 @@ public class UserController
 		{
 			Connection connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 			PreparedStatement query = connection1.prepareStatement(loginquery.query_login0);
-			System.out.println(username + password);
 			query.setString(1, username);
 			query.setString(2, password);
 			ResultSet Cursor1 = query.executeQuery();
