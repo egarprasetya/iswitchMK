@@ -25,7 +25,7 @@ import com.example.demo.connection.*;
 
 @RestController
 @RequestMapping("/AlembicVersionConfig")
-@CrossOrigin(origins = "http://10.0.30.188:8080")
+@CrossOrigin(origins = "*")
 public class Alembic_Version_ConfigController 
 {
 	stringkoneksi sk = new stringkoneksi();
