@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,6 +30,8 @@ import com.example.demo.Enum.type_values;
 import com.example.demo.connection.*;
 
 @RestController
+
+@CrossOrigin(origins = "*")
 @RequestMapping(produces = "application/json", path = "/Sippeers")
 public class SippeersController
 {
