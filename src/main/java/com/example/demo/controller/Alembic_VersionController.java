@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +23,7 @@ import com.example.demo.model.*;
 import com.example.demo.query.*;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/AlembicVersion")
 public class Alembic_VersionController
 {
