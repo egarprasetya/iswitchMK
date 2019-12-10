@@ -32,5 +32,35 @@ public class AllSelectParameterQuery {
 	public String query_select_parameter_domain_aliases="select*from ps_domain_aliases where id = ?";
 //	public String query_select_parameter_user="select*from users where nama=? where id = ?";
 
-
+	public String query_login = "select users.user_id, users.username, ps_auths.realm "
+			+ "from users join ps_auths on users.extensions_user = ps_auths.id  "
+			+ "where users.username = ? and users.password = ? "; 
+	
+	public String query_login0 = "select * "
+			+ "from users "
+			+ "where users.username = ? and users.password = ? "; 
+	 
+	public String query_login1 = "select id_user, extension_user" + 
+			"from users"
+			+ "where username = ? and password = ?";
+	
+	public String query_logout = "SELECT * FROM users WHERE user_id = ?";
+	
+	public String query_changeStatus = "SELECT * FROM users WHERE user_id=?";
+	
+	public String query_profil = "select * "
+			+ "from users "
+			+ "where user_id = ?";
+	
+	public String query_get_user_cdr ="select cdr.* "
+			+ "from users join cdr on users.user_id = cdr.dst "
+			+ "where cdr.dst = ?";
+	
+	public String query_setting_profil = "select users.nama, users.username, users.password, users.phone_number, status.status_nama, users.avatar  "
+			+ "from users join status on users.status = status.status_id"
+			+ "where users.id = ?";
+	
+	public String query_setting_update_profil = "UPDATE users " + 
+			"SET nama=?, username = ?, password = ?, number = ?, status = ?" + 
+			"WHERE user_id=?;";
 }

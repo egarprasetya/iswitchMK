@@ -20,9 +20,8 @@ import com.example.demo.connection.stringkoneksi;
 import com.example.demo.model.Ps_AuthsModel;
 import com.example.demo.model.StatusModel;
 import com.example.demo.model.UserModel;
-import com.example.demo.query.MenuUtamaQuery;
-import com.example.demo.query.MenuUtamaQuery;
-import com.example.demo.query.query_select_parameter;
+import com.example.demo.query.AllQuery;
+import com.example.demo.query.AllSelectParameterQuery;
 
 @RestController
 
@@ -30,14 +29,15 @@ import com.example.demo.query.query_select_parameter;
 @RequestMapping(produces = "application/json", path = "/status")
 public class StatusController
 {
-	MenuUtamaQuery menuUtamaQuery = new MenuUtamaQuery();
+	AllSelectParameterQuery select_query = new AllSelectParameterQuery();
+	AllQuery select_query2 = new AllQuery();
 	stringkoneksi sk = new stringkoneksi();
 
 	@GetMapping("/getStatus")
 	public ArrayList<StatusModel> getDashboardStatus() throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-		PreparedStatement a = Connection1.prepareStatement(menuUtamaQuery.query_status);
+		PreparedStatement a = Connection1.prepareStatement(select_query2.query_status);
 
 		ResultSet Cursor1 = a.executeQuery();// Evaluate (Connected_Expression1)
 		ArrayList<StatusModel> ListUser1 = new ArrayList<StatusModel>();

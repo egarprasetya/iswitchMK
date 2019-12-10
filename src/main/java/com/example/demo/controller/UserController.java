@@ -21,9 +21,9 @@ import com.example.demo.Enum.pjsip_auth_type_values;
 import com.example.demo.connection.stringkoneksi;
 import com.example.demo.model.Ps_AuthsModel;
 import com.example.demo.model.UserModel;
-import com.example.demo.query.LoginQuery;
-import com.example.demo.query.MenuUtamaQuery;
-import com.example.demo.query.query_select_parameter;
+import com.example.demo.query.AllQuery;
+import com.example.demo.query.AllSelectParameterQuery;
+import com.example.demo.query.AllUpdateQuery;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 
@@ -32,9 +32,10 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @RequestMapping(produces = "application/json", path = "/user")
 public class UserController
 {
-	LoginQuery loginquery = new LoginQuery();
+	AllSelectParameterQuery select_query = new AllSelectParameterQuery();
+	AllQuery select_query2 = new AllQuery();
+	AllUpdateQuery select_query3 = new AllUpdateQuery();
 	stringkoneksi sk = new stringkoneksi();
-	MenuUtamaQuery menuUtamaQuery = new MenuUtamaQuery();
 
 	@PostMapping("/login")
 	public int postAuthsId(@RequestParam(name = "username") String username,
@@ -44,7 +45,7 @@ public class UserController
 		try
 		{
 			Connection connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-			PreparedStatement query = connection1.prepareStatement(loginquery.query_login0);
+			PreparedStatement query = connection1.prepareStatement(select_query.query_login0);
 			query.setString(1, username);
 			query.setString(2, password);
 			ResultSet Cursor1 = query.executeQuery();
@@ -82,7 +83,7 @@ public class UserController
 		try
 		{
 			Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-			PreparedStatement a = Connection1.prepareStatement(loginquery.query_changeStatus);
+			PreparedStatement a = Connection1.prepareStatement(select_query.query_changeStatus);
 
 			a.setString(1, id);
 			ResultSet Cursor1 = a.executeQuery();// Evaluate (Connected_Expression1)
@@ -119,7 +120,7 @@ public class UserController
 	public String postAuthsIdBody(@RequestBody UserModel cfm) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-		PreparedStatement a = Connection1.prepareStatement(loginquery.query_login);
+		PreparedStatement a = Connection1.prepareStatement(select_query.query_login);
 
 		a.setString(1, cfm.username);
 		a.setString(2, cfm.password);
@@ -155,7 +156,7 @@ public class UserController
 	public void updateStatus(String id, String status) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-		PreparedStatement a = Connection1.prepareStatement(loginquery.query_login2);
+		PreparedStatement a = Connection1.prepareStatement(select_query3.query_login2);
 
 		a.setString(1, status);
 		a.setString(2, id);
@@ -170,7 +171,7 @@ public class UserController
 		try
 		{
 			Connection connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-			PreparedStatement query = connection1.prepareStatement(loginquery.query_login);
+			PreparedStatement query = connection1.prepareStatement(select_query.query_login);
 			ResultSet Cursor1 = query.executeQuery();
 			while (Cursor1.next())
 			{
@@ -195,7 +196,7 @@ public class UserController
 		try
 		{
 				Connection connection = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-				PreparedStatement a = connection.prepareStatement(loginquery.query_logout);
+				PreparedStatement a = connection.prepareStatement(select_query.query_logout);
 
 				a.setString(1, cfm.user_id);
 				ResultSet Cursor1 = a.executeQuery();// Evaluate (Connected_Expression1)
@@ -232,7 +233,7 @@ public class UserController
 	public ArrayList<UserModel> postDashboardProfil(@RequestBody UserModel cfm) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-		PreparedStatement a = Connection1.prepareStatement(menuUtamaQuery.query_profil);
+		PreparedStatement a = Connection1.prepareStatement(select_query.query_profil);
 
 		a.setString(1, cfm.user_id);
 		ResultSet Cursor1 = a.executeQuery();// Evaluate (Connected_Expression1)
@@ -265,7 +266,7 @@ public class UserController
 		try
 		{
 			Connection connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-			PreparedStatement query = connection1.prepareStatement(loginquery.query_updateUserById);
+			PreparedStatement query = connection1.prepareStatement(select_query3.query_updateUserById);
 			query.setString(1, cfm.nama);
 			query.setString(2, cfm.username);
 			query.setString(3, cfm.password);

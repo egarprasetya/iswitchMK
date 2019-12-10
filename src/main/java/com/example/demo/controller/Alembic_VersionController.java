@@ -33,7 +33,6 @@ public class Alembic_VersionController
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();
 	stringkoneksi sk = new stringkoneksi();
 	AllQuery query_string = new AllQuery();
-	query_select_parameter query_String_param = new query_select_parameter();
 	PreparedStatement queryselect_alembic_version = null;
 
 	@PutMapping(path = "/putAlembicVersion", produces = "application/json")

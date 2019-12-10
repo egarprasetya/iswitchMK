@@ -33,7 +33,7 @@ public class CdrController
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();
 	stringkoneksi sk = new stringkoneksi();
 	AllQuery query_string = new AllQuery();
-	MenuUtamaQuery query_string2 = new MenuUtamaQuery();
+	AllSelectParameterQuery query_string2 = new AllSelectParameterQuery();
 	PreparedStatement queryselect_cdr = null;
 	
 	@PutMapping(produces="application/json",path="/putCdr")
