@@ -51,7 +51,7 @@ public class UsersController
 			Modelusers.nama = Cursor1.getString(1);
 			Modelusers.username = Cursor1.getString(2);
 			Modelusers.password = Cursor1.getString(3);
-			Modelusers.phone_number = Cursor1.getString(4);
+//			Modelusers.phone_number = Cursor1.getString(4);
 			Modelusers.status = Cursor1.getString(5);
 			Modelusers.avatar = Cursor1.getString(6);
 

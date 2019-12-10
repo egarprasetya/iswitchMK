@@ -82,7 +82,7 @@ public class UserController
 		try
 		{
 			Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-			PreparedStatement a = Connection1.prepareStatement("SELECT * FROM users WHERE user_id=?");
+			PreparedStatement a = Connection1.prepareStatement(loginquery.query_changeStatus);
 
 			a.setString(1, id);
 			ResultSet Cursor1 = a.executeQuery();// Evaluate (Connected_Expression1)
@@ -195,7 +195,7 @@ public class UserController
 		try
 		{
 				Connection connection = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-				PreparedStatement a = connection.prepareStatement("SELECT * FROM users WHERE user_id = ?");
+				PreparedStatement a = connection.prepareStatement(loginquery.query_logout);
 
 				a.setString(1, cfm.user_id);
 				ResultSet Cursor1 = a.executeQuery();// Evaluate (Connected_Expression1)
@@ -265,21 +265,19 @@ public class UserController
 		try
 		{
 			Connection connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-			PreparedStatement query = connection1.prepareStatement("UPDATE users "
-					+ "SET nama=?, username=?, \"password\"=?, modified=?, email=?, password_email=?, phone_number=?, extensions_user=?, skill=?, status=?, avatar=? "
-					+ "WHERE user_id=?;");
+			PreparedStatement query = connection1.prepareStatement(loginquery.query_updateUserById);
 			query.setString(1, cfm.nama);
 			query.setString(2, cfm.username);
 			query.setString(3, cfm.password);
 			query.setTimestamp(4, cfm.modified);
 			query.setString(5, cfm.email);
 			query.setString(6, cfm.password_email);
-			query.setLong(7, Long.parseLong(cfm.phone_number));
-			query.setString(8, cfm.extensions_user);
-			query.setString(9, cfm.skill);
-			query.setString(10, cfm.status);
-			query.setString(11, cfm.avatar);
-			query.setString(12, cfm.user_id);
+//			query.setLong(7, Long.parseLong(cfm.phone_number));
+			query.setString(7, cfm.extensions_user);
+			query.setString(8, cfm.skill);
+			query.setString(9, cfm.status);
+			query.setString(10, cfm.avatar);
+			query.setString(11, cfm.user_id);
 
 			flag = query.executeUpdate();
 			return "{ " + "\"response\":"+"\""+ flag +"\" }";

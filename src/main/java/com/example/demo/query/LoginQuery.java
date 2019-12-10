@@ -14,4 +14,11 @@ public class LoginQuery
 				"from users"
 				+ "where username = ? and password = ?";
 	public String query_login2 = "UPDATE users SET status = ? WHERE user_id=?"; 
+	
+	public String query_updateUserById = "UPDATE users "
+	+ "SET nama=?, username=?, \"password\"=?, modified=?, email=?, password_email=?, extensions_user=?, skill=?, status=?, avatar=? "
+	+ "WHERE user_id=?;";
+	
+	public String query_logout = "SELECT * FROM users WHERE user_id = ?";
+	public String query_changeStatus = "SELECT * FROM users WHERE user_id=?";
 }
