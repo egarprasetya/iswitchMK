@@ -160,7 +160,7 @@ public class UserController
 		a.setString(1, status);
 		a.setString(2, id);
 		a.executeUpdate();
-
+		System.out.println(id);
 	}
 
 	@GetMapping("/getInitData")
@@ -189,25 +189,43 @@ public class UserController
 	}
 
 	@PostMapping("/logout")
-	public int postAuthsLogout(@RequestBody UserModel cfm)
+	public String postAuthsLogout(@RequestBody UserModel cfm)
 	{
 
 		try
 		{
-			if (cfm.user_id != null)
-			{
-				updateStatus(cfm.user_id, "0");
-				return 1;
-			} else
-			{
-				return 0;
-			}
+				Connection connection = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+				PreparedStatement a = connection.prepareStatement("SELECT * FROM users WHERE user_id = ?");
 
-		} catch (Exception error)
+				a.setString(1, cfm.user_id);
+				ResultSet Cursor1 = a.executeQuery();// Evaluate (Connected_Expression1)
+				List<UserModel> listModel = new ArrayList<UserModel>();
+				
+				while(Cursor1.next())
+				{
+					UserModel userModel = new UserModel();
+					userModel.user_id = Cursor1.getString(1);
+					listModel.add(userModel);
+				}
+				
+				if (listModel.size() > 0)
+				{
+					updateStatus(cfm.user_id, "0");
+					return "{ " + "\"response\":"+"\""+ "1" +"\" }";
+				}
+				else
+				{
+					return "{ " + "\"response\":"+"\""+ "0" +"\" }";
+				}
+				
+				
+
+		} catch (SQLException error)
 		{
 			error.printStackTrace();
-			return 0;
+			return "{ " + "\"response\":"+"\""+ "0" +"\" }";
 		}
+		
 	}
 
 	@PostMapping("/profil")
