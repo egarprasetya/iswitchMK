@@ -260,7 +260,7 @@ public class UserController
 	}
 
 	@PostMapping("/editUserId")
-	public int editUserId(@RequestBody UserModel cfm) // throws SQLException
+	public String editUserId(@RequestBody UserModel cfm) // throws SQLException
 	{
 		int flag = 0;
 		try
@@ -283,12 +283,13 @@ public class UserController
 			query.setString(12, cfm.user_id);
 
 			flag = query.executeUpdate();
-			return flag;
+			return "{ " + "\"response\":"+"\""+ flag +"\" }";
 		} catch (SQLException error)
 		{
 			error.printStackTrace();
+			return "{ " + "\"response\":"+"\""+ error.getErrorCode() +"\" }";
 		}
-		return flag;
+		
 	}
 
 }
