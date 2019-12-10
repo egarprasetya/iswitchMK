@@ -24,6 +24,7 @@ import com.example.demo.model.UserModel;
 import com.example.demo.query.LoginQuery;
 import com.example.demo.query.MenuUtamaQuery;
 import com.example.demo.query.query_select_parameter;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 
 @RestController
@@ -220,9 +221,19 @@ public class UserController
 		ArrayList<UserModel> ListUser1 = new ArrayList<UserModel>();
 		Cursor1.next();
 		UserModel Modeluser = new UserModel();
-		Modeluser.nama = Cursor1.getString(1);
-		Modeluser.status = Cursor1.getString(2);
-		Modeluser.avatar = Cursor1.getString(3);
+		Modeluser.user_id = Cursor1.getString(1);
+		Modeluser.nama = Cursor1.getString(2);
+		Modeluser.username = Cursor1.getString(3);
+		Modeluser.password = Cursor1.getString(4);
+		Modeluser.created = Cursor1.getDate(5);
+		Modeluser.modified = Cursor1.getDate(6);
+		Modeluser.email = Cursor1.getString(7);
+		Modeluser.password_email = Cursor1.getString(8);
+		Modeluser.phone_number = Cursor1.getString(9);
+		Modeluser.extensions_user = Cursor1.getString(10);
+		Modeluser.skill = Cursor1.getString(11);
+		Modeluser.status = Cursor1.getString(12);
+		Modeluser.avatar = Cursor1.getString(13);
 		ListUser1.add(Modeluser);
 		Connection1.close();
 
