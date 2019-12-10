@@ -243,15 +243,14 @@ public class UserController
 		Modeluser.nama = Cursor1.getString(2);
 		Modeluser.username = Cursor1.getString(3);
 		Modeluser.password = Cursor1.getString(4);
-		Modeluser.created = Cursor1.getDate(5);
-		Modeluser.modified = Cursor1.getDate(6);
+		Modeluser.created = Cursor1.getTimestamp(5);
+		Modeluser.modified = Cursor1.getTimestamp(6);
 		Modeluser.email = Cursor1.getString(7);
 		Modeluser.password_email = Cursor1.getString(8);
-		Modeluser.phone_number = Cursor1.getString(9);
-		Modeluser.extensions_user = Cursor1.getString(10);
-		Modeluser.skill = Cursor1.getString(11);
-		Modeluser.status = Cursor1.getString(12);
-		Modeluser.avatar = Cursor1.getString(13);
+		Modeluser.extensions_user = Cursor1.getString(9);
+		Modeluser.skill = Cursor1.getString(10);
+		Modeluser.status = Cursor1.getString(11);
+		Modeluser.avatar = Cursor1.getString(12);
 		ListUser1.add(Modeluser);
 		Connection1.close();
 
@@ -272,7 +271,7 @@ public class UserController
 			query.setString(1, cfm.nama);
 			query.setString(2, cfm.username);
 			query.setString(3, cfm.password);
-			query.setDate(4, cfm.modified);
+			query.setTimestamp(4, cfm.modified);
 			query.setString(5, cfm.email);
 			query.setString(6, cfm.password_email);
 			query.setLong(7, Long.parseLong(cfm.phone_number));
