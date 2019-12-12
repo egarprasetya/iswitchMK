@@ -116,8 +116,46 @@ public class UserController
 		return flag;
 	}
 
+//	@PostMapping("/loginBody")
+//	public String postAuthsIdBody(@RequestBody UserModel cfm) throws SQLException
+//	{
+//		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+//		PreparedStatement a = Connection1.prepareStatement(select_query.query_login);
+//
+//		a.setString(1, cfm.username);
+//		a.setString(2, cfm.password);
+//		ResultSet Cursor1 = a.executeQuery();// Evaluate (Connected_Expression1)
+//		ArrayList<UserModel> ListUser1 = new ArrayList<UserModel>();
+//		while (Cursor1.next())
+//		{
+//			UserModel Modeluser = new UserModel();
+//			Modeluser.user_id = Cursor1.getString(1);
+//			Modeluser.username = Cursor1.getString(2);
+//			Modeluser.extensions_user = Cursor1.getString(3);
+//			ListUser1.add(Modeluser);
+//		}
+//		Connection1.close();
+//
+//		if (ListUser1.size() > 0)
+//		{
+//			try
+//			{
+//				updateStatus(ListUser1.get(0).user_id, "1");
+//				
+//			} catch (Exception error)
+//			{
+//				error.printStackTrace();
+//			}
+//			return "{ " + "\"user_id\":"+"\""+ListUser1.get(0).user_id+"\" }";
+//		} 
+//		else
+//		{
+//			return "{ " + "\"user_id\":"+"\""+"0"+"\" }";
+//		}
+//	}
+	
 	@PostMapping("/loginBody")
-	public String postAuthsIdBody(@RequestBody UserModel cfm) throws SQLException
+	public ArrayList<UserModel> postAuthsIdBody(@RequestBody UserModel cfm) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		PreparedStatement a = Connection1.prepareStatement(select_query.query_login);
@@ -129,9 +167,19 @@ public class UserController
 		while (Cursor1.next())
 		{
 			UserModel Modeluser = new UserModel();
-			Modeluser.user_id = Cursor1.getString(1);
-			Modeluser.username = Cursor1.getString(2);
-			Modeluser.extensions_user = Cursor1.getString(3);
+			Modeluser.nama = Cursor1.getString(1);
+			Modeluser.user_id = Cursor1.getString(2);
+			Modeluser.username = Cursor1.getString(3);
+			Modeluser.password = Cursor1.getString(4);
+			Modeluser.created = Cursor1.getTimestamp(5);
+			Modeluser.modified = Cursor1.getTimestamp(6);
+			Modeluser.email = Cursor1.getString(7);
+			Modeluser.password_email = Cursor1.getString(8);
+			Modeluser.phone_number = Cursor1.getString(9);
+			Modeluser.extensions_user = Cursor1.getString(10);
+			Modeluser.skill = Cursor1.getString(11);
+			Modeluser.status = Cursor1.getString(12);
+			Modeluser.avatar = Cursor1.getString(13);
 			ListUser1.add(Modeluser);
 		}
 		Connection1.close();
@@ -141,16 +189,17 @@ public class UserController
 			try
 			{
 				updateStatus(ListUser1.get(0).user_id, "1");
+				
 			} catch (Exception error)
 			{
 				error.printStackTrace();
 			}
-			return "{ " + "\"user_id\":"+"\""+ListUser1.get(0).user_id+"\" }";
-		} else
+			return ListUser1;
+		} 
+		else
 		{
-			return "{ " + "\"user_id\":"+"\""+"0"+"\" }";
+			return ListUser1;
 		}
-
 	}
 
 	public void updateStatus(String id, String status) throws SQLException
@@ -230,7 +279,7 @@ public class UserController
 	}
 
 	@PostMapping("/profil")
-	public ArrayList<UserModel> postDashboardProfil(@RequestBody UserModel cfm) throws SQLException
+	public ArrayList<UserModel> postProfil(@RequestBody UserModel cfm) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		PreparedStatement a = Connection1.prepareStatement(select_query.query_profil);
@@ -240,18 +289,19 @@ public class UserController
 		ArrayList<UserModel> ListUser1 = new ArrayList<UserModel>();
 		Cursor1.next();
 		UserModel Modeluser = new UserModel();
-		Modeluser.user_id = Cursor1.getString(1);
-		Modeluser.nama = Cursor1.getString(2);
+		Modeluser.nama = Cursor1.getString(1);
+		Modeluser.user_id = Cursor1.getString(2);
 		Modeluser.username = Cursor1.getString(3);
 		Modeluser.password = Cursor1.getString(4);
 		Modeluser.created = Cursor1.getTimestamp(5);
 		Modeluser.modified = Cursor1.getTimestamp(6);
 		Modeluser.email = Cursor1.getString(7);
 		Modeluser.password_email = Cursor1.getString(8);
-		Modeluser.extensions_user = Cursor1.getString(9);
-		Modeluser.skill = Cursor1.getString(10);
-		Modeluser.status = Cursor1.getString(11);
-		Modeluser.avatar = Cursor1.getString(12);
+		Modeluser.phone_number = Cursor1.getString(9);
+		Modeluser.extensions_user = Cursor1.getString(10);
+		Modeluser.skill = Cursor1.getString(11);
+		Modeluser.status = Cursor1.getString(12);
+		Modeluser.avatar = Cursor1.getString(13);
 		ListUser1.add(Modeluser);
 		Connection1.close();
 

@@ -17,7 +17,7 @@ public class UserModel
 	public Timestamp modified;
 	public String email;
 	public String password_email;
-//	public String phone_number;
+	public String phone_number;
 	public String extensions_user;
 	public String skill;
 	public String status;
