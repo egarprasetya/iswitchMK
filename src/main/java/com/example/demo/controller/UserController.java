@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,7 +28,6 @@ import com.example.demo.query.AllSelectParameterQuery;
 import com.example.demo.query.AllUpdateQuery;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping(produces = "application/json", path = "/user")
@@ -37,136 +38,72 @@ public class UserController
 	AllUpdateQuery select_query3 = new AllUpdateQuery();
 	stringkoneksi sk = new stringkoneksi();
 
-	@PostMapping("/login")
-	public int postAuthsId(@RequestParam(name = "username") String username,
-			@RequestParam(value = "password") String password)
-	{
-		int flag = 0;
-		try
-		{
-			Connection connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-			PreparedStatement query = connection1.prepareStatement(select_query.query_login0);
-			query.setString(1, username);
-			query.setString(2, password);
-			ResultSet Cursor1 = query.executeQuery();
-			// Cursor1.next();
-
-			ArrayList<UserModel> ListUser1 = new ArrayList<UserModel>();
-			while (Cursor1.next())
-			{
-				UserModel Modeluser = new UserModel();
-				Modeluser.user_id = Cursor1.getString(1);
-				Modeluser.username = Cursor1.getString(2);
-				Modeluser.extensions_user = Cursor1.getString(3);
-				ListUser1.add(Modeluser);
-			}
-
-			if (ListUser1.size() > 0)
-			{
-				flag = 1;
-			} else
-			{
-				flag = 0;
-			}
-			connection1.close();
-		} catch (SQLException error)
-		{
-			error.printStackTrace();
-		}
-		return flag;
-	}
-
 	@PostMapping("/changeStatusId")
-	public int changeStatusId(@RequestParam(name = "id") String id, @RequestParam(value = "status") String status)
+	public String changeStatusId(@RequestBody UserModel cfm) throws SQLException
 	{
 		int flag = 0;
 		try
 		{
 			Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-			PreparedStatement a = Connection1.prepareStatement(select_query.query_changeStatus);
+			PreparedStatement a = Connection1.prepareStatement(select_query3.query_changeStatus);
 
-			a.setString(1, id);
-			ResultSet Cursor1 = a.executeQuery();// Evaluate (Connected_Expression1)
-			ArrayList<UserModel> ListUser1 = new ArrayList<UserModel>();
-			while (Cursor1.next())
+			a.setString(1, cfm.status);
+			a.setString(2, cfm.user_id);
+			flag = a.executeUpdate();
+			return "{ " + "\"response\":" + "\"" + flag + "\" }";
+		} catch (SQLException error)
+		{
+			error.printStackTrace();
+			return "{ " + "\"response\":" + "\"" + error.getErrorCode() + "\" }";
+		}
+	}
+
+	@PostMapping("/loginBody")
+	public ResponseEntity<UserModel> postAuthsIdBody(@RequestBody UserModel cfm)
+	{
+		try
+		{
+			UserModel result = login(cfm);
+			if(!result.equals(null))
 			{
-				UserModel Modeluser = new UserModel();
-				Modeluser.user_id = Cursor1.getString(1);
-				ListUser1.add(Modeluser);
-			}
-			Connection1.close();
-			
-			if (ListUser1.size() > 0)
-			{
-				updateStatus(id, status);
-				flag = 1;
+				return new ResponseEntity<UserModel>(result, HttpStatus.OK);
 			}
 			else
 			{
-				flag = 0;
+				return new ResponseEntity<UserModel>(HttpStatus.NOT_FOUND);
 			}
 			
 		}
-		catch (SQLException error)
+		catch (SQLException | NullPointerException error_null)
 		{
-			error.printStackTrace();
-			flag = 0;
+			return new ResponseEntity<UserModel>(HttpStatus.UNAUTHORIZED);
+//			return ResponseEntity
+//		      .status(HttpStatus.UNAUTHORIZED)
+//		      .header("X-Reason", "user-invalid").body(body).build();
 		}
-
-		return flag;
+		
 	}
-
-//	@PostMapping("/loginBody")
-//	public String postAuthsIdBody(@RequestBody UserModel cfm) throws SQLException
-//	{
-//		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-//		PreparedStatement a = Connection1.prepareStatement(select_query.query_login);
-//
-//		a.setString(1, cfm.username);
-//		a.setString(2, cfm.password);
-//		ResultSet Cursor1 = a.executeQuery();// Evaluate (Connected_Expression1)
-//		ArrayList<UserModel> ListUser1 = new ArrayList<UserModel>();
-//		while (Cursor1.next())
-//		{
-//			UserModel Modeluser = new UserModel();
-//			Modeluser.user_id = Cursor1.getString(1);
-//			Modeluser.username = Cursor1.getString(2);
-//			Modeluser.extensions_user = Cursor1.getString(3);
-//			ListUser1.add(Modeluser);
-//		}
-//		Connection1.close();
-//
-//		if (ListUser1.size() > 0)
-//		{
-//			try
-//			{
-//				updateStatus(ListUser1.get(0).user_id, "1");
-//				
-//			} catch (Exception error)
-//			{
-//				error.printStackTrace();
-//			}
-//			return "{ " + "\"user_id\":"+"\""+ListUser1.get(0).user_id+"\" }";
-//		} 
-//		else
-//		{
-//			return "{ " + "\"user_id\":"+"\""+"0"+"\" }";
-//		}
-//	}
 	
-	@PostMapping("/loginBody")
-	public ArrayList<UserModel> postAuthsIdBody(@RequestBody UserModel cfm) throws SQLException
+	public UserModel login(UserModel cfm) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		PreparedStatement a = Connection1.prepareStatement(select_query.query_login);
 
 		a.setString(1, cfm.username);
 		a.setString(2, cfm.password);
+		try
+		{
+			updateStatus2(cfm.username, cfm.password , "1");
+
+		} catch (Exception error)
+		{
+			error.printStackTrace();
+		}
 		ResultSet Cursor1 = a.executeQuery();// Evaluate (Connected_Expression1)
 		ArrayList<UserModel> ListUser1 = new ArrayList<UserModel>();
-		while (Cursor1.next())
+		UserModel Modeluser = new UserModel();
+		if (Cursor1.next())
 		{
-			UserModel Modeluser = new UserModel();
 			Modeluser.nama = Cursor1.getString(1);
 			Modeluser.user_id = Cursor1.getString(2);
 			Modeluser.username = Cursor1.getString(3);
@@ -180,6 +117,47 @@ public class UserController
 			Modeluser.skill = Cursor1.getString(11);
 			Modeluser.status = Cursor1.getString(12);
 			Modeluser.avatar = Cursor1.getString(13);
+			Connection1.close();
+			return Modeluser;
+		}
+		else
+		{
+			return null;
+		}
+		
+	}
+	
+
+	@PostMapping("/loginGila")
+	public String gila(@RequestBody UserModel cfm) throws SQLException
+	{
+		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+		PreparedStatement a = Connection1.prepareStatement(select_query.query_login);
+		String coy= "{ ";
+		a.setString(1, cfm.username);
+		a.setString(2, cfm.password);
+		ResultSet Cursor1 = a.executeQuery();// Evaluate (Connected_Expression1)
+		ArrayList<UserModel> ListUser1 = new ArrayList<UserModel>();
+		while (Cursor1.next())
+		{
+			
+			UserModel Modeluser = new UserModel();
+			
+			coy += "\"nama\":" + "\"" + Cursor1.getString(1) + "\",";
+			coy += "\"user_id\":" + "\"" + Cursor1.getString(2) + "\",";
+			coy += "\"username\":" + "\"" + Cursor1.getString(3) + "\"";
+			
+			Modeluser.password = Cursor1.getString(4);
+			Modeluser.created = Cursor1.getTimestamp(5);
+			Modeluser.modified = Cursor1.getTimestamp(6);
+			Modeluser.email = Cursor1.getString(7);
+			Modeluser.password_email = Cursor1.getString(8);
+			Modeluser.phone_number = Cursor1.getString(9);
+			Modeluser.extensions_user = Cursor1.getString(10);
+			Modeluser.skill = Cursor1.getString(11);
+			Modeluser.status = Cursor1.getString(12);
+			Modeluser.avatar = Cursor1.getString(13);
+			coy+="}";
 			ListUser1.add(Modeluser);
 		}
 		Connection1.close();
@@ -189,19 +167,22 @@ public class UserController
 			try
 			{
 				updateStatus(ListUser1.get(0).user_id, "1");
-				
+
 			} catch (Exception error)
 			{
 				error.printStackTrace();
 			}
-			return ListUser1;
-		} 
-		else
+			return coy;
+		} else
 		{
-			return ListUser1;
+			UserModel Modeluser = new UserModel();
+			Modeluser.nama = "0";
+			
+			ListUser1.add(Modeluser);
+			return coy += "\"response\":" + "\" Tidak ada data\" }";
 		}
 	}
-
+	
 	public void updateStatus(String id, String status) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
@@ -211,6 +192,17 @@ public class UserController
 		a.setString(2, id);
 		a.executeUpdate();
 		System.out.println(id);
+	}
+	public void updateStatus2(String username, String password, String status) throws SQLException
+	{
+		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+		PreparedStatement a = Connection1.prepareStatement(select_query3.query_login3);
+
+		a.setString(1, status);
+		a.setString(2, username);
+		a.setString(3, password);
+		a.executeUpdate();
+		System.out.println(status);
 	}
 
 	@GetMapping("/getInitData")
@@ -244,38 +236,35 @@ public class UserController
 
 		try
 		{
-				Connection connection = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-				PreparedStatement a = connection.prepareStatement(select_query.query_logout);
+			Connection connection = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+			PreparedStatement a = connection.prepareStatement(select_query.query_logout);
 
-				a.setString(1, cfm.user_id);
-				ResultSet Cursor1 = a.executeQuery();// Evaluate (Connected_Expression1)
-				List<UserModel> listModel = new ArrayList<UserModel>();
-				
-				while(Cursor1.next())
-				{
-					UserModel userModel = new UserModel();
-					userModel.user_id = Cursor1.getString(1);
-					listModel.add(userModel);
-				}
-				
-				if (listModel.size() > 0)
-				{
-					updateStatus(cfm.user_id, "0");
-					return "{ " + "\"response\":"+"\""+ "1" +"\" }";
-				}
-				else
-				{
-					return "{ " + "\"response\":"+"\""+ "0" +"\" }";
-				}
-				
-				
+			a.setString(1, cfm.user_id);
+			ResultSet Cursor1 = a.executeQuery();// Evaluate (Connected_Expression1)
+			List<UserModel> listModel = new ArrayList<UserModel>();
+
+			while (Cursor1.next())
+			{
+				UserModel userModel = new UserModel();
+				userModel.user_id = Cursor1.getString(1);
+				listModel.add(userModel);
+			}
+
+			if (listModel.size() > 0)
+			{
+				updateStatus(cfm.user_id, "0");
+				return "{ " + "\"response\":" + "\"" + "1" + "\" }";
+			} else
+			{
+				return "{ " + "\"response\":" + "\"" + "0" + "\" }";
+			}
 
 		} catch (SQLException error)
 		{
 			error.printStackTrace();
-			return "{ " + "\"response\":"+"\""+ "0" +"\" }";
+			return "{ " + "\"response\":" + "\"" + "0" + "\" }";
 		}
-		
+
 	}
 
 	@PostMapping("/profil")
@@ -323,21 +312,21 @@ public class UserController
 			query.setTimestamp(4, cfm.modified);
 			query.setString(5, cfm.email);
 			query.setString(6, cfm.password_email);
-//			query.setLong(7, Long.parseLong(cfm.phone_number));
-			query.setString(7, cfm.extensions_user);
-			query.setString(8, cfm.skill);
-			query.setString(9, cfm.status);
-			query.setString(10, cfm.avatar);
-			query.setString(11, cfm.user_id);
+			query.setString(7, cfm.phone_number);
+			query.setString(8, cfm.extensions_user);
+			query.setString(9, cfm.skill);
+			query.setString(10, cfm.status);
+			query.setString(11, cfm.avatar);
+			query.setString(12, cfm.user_id);
 
 			flag = query.executeUpdate();
-			return "{ " + "\"response\":"+"\""+ flag +"\" }";
+			return "{ " + "\"response\":" + "\"" + flag + "\" }";
 		} catch (SQLException error)
 		{
 			error.printStackTrace();
-			return "{ " + "\"response\":"+"\""+ error.getErrorCode() +"\" }";
+			return "{ " + "\"response\":" + "\"" + error.getErrorCode() + "\" }";
 		}
-		
+
 	}
 
 }

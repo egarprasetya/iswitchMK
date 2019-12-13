@@ -46,8 +46,6 @@ public class AllSelectParameterQuery {
 	
 	public String query_logout = "SELECT * FROM users WHERE user_id = ?";
 	
-	public String query_changeStatus = "SELECT * FROM users WHERE user_id=?";
-	
 	public String query_profil = "select * "
 			+ "from users "
 			+ "where user_id = ?";

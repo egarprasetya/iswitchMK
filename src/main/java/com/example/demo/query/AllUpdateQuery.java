@@ -127,9 +127,15 @@ public class AllUpdateQuery {
 			"SET context=?, mailbox=?, password=?, fullname=?, alias=?, email=?, pager=?, attach=?::yesno_values, attachfmt=?, serveremail=?, language=?, tz=?, deletevoicemail=?::yesno_values, saycid=?::yesno_values, sendvoicemail=?::yesno_values, review=?::yesno_values, tempgreetwarn=?::yesno_values, operator=?::yesno_values, envelope=?::yesno_values, sayduration=?, forcename=?::yesno_values, forcegreetings=?::yesno_values, callback=?, dialout=?, exitcontext=?, maxmsg=?, volgain=?, imapuser=?, imappassword=?, imapserver=?, imapport=?, imapflags=?, stamp=? " + 
 			"WHERE uniqueid=?;";
 
-	public String query_login2 = "UPDATE users SET status = ? WHERE user_id=?"; 
+	public String query_login2 = "UPDATE users SET status = ? WHERE user_id=?";
+	
+	public String query_login3 = "UPDATE users SET status = ? WHERE username=? and password=?";
 	
 	public String query_updateUserById = "UPDATE users "
 	+ "SET nama=?, username=?, \"password\"=?, modified=?, email=?, password_email=?, extensions_user=?, skill=?, status=?, avatar=? "
 	+ "WHERE user_id=?;";
+	
+	public String query_changeStatus = "UPDATE users "
+			+ "SET status=?"
+			+ " WHERE user_id=?";
 }
