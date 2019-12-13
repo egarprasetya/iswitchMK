@@ -138,4 +138,5 @@ public class AllUpdateQuery {
 	public String query_changeStatus = "UPDATE users "
 			+ "SET status=?"
 			+ " WHERE user_id=?";
+	String a;
 }
