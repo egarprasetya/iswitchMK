@@ -13,7 +13,6 @@ public class UserModel
 	public String password;
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	public Timestamp created;
-	String a;
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	public Timestamp modified;
 	public String email;
