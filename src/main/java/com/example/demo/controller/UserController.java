@@ -58,7 +58,7 @@ public class UserController
 		}
 	}
 
-	@PostMapping("/loginBody")
+	@PostMapping("/login")
 	public ResponseEntity<UserModel> postAuthsIdBody(@RequestBody UserModel cfm)
 	{
 		try
@@ -70,7 +70,7 @@ public class UserController
 			}
 			else
 			{
-				return new ResponseEntity<UserModel>(HttpStatus.NOT_FOUND);
+				return new ResponseEntity<UserModel>(HttpStatus.UNAUTHORIZED);
 			}
 			
 		}
