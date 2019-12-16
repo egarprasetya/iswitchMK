@@ -127,62 +127,6 @@ public class UserController
 		
 	}
 	
-
-	@PostMapping("/loginGila")
-	public String gila(@RequestBody UserModel cfm) throws SQLException
-	{
-		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-		PreparedStatement a = Connection1.prepareStatement(select_query.query_login);
-		String coy= "{ ";
-		a.setString(1, cfm.username);
-		a.setString(2, cfm.password);
-		ResultSet Cursor1 = a.executeQuery();// Evaluate (Connected_Expression1)
-		ArrayList<UserModel> ListUser1 = new ArrayList<UserModel>();
-		while (Cursor1.next())
-		{
-			
-			UserModel Modeluser = new UserModel();
-			
-			coy += "\"nama\":" + "\"" + Cursor1.getString(1) + "\",";
-			coy += "\"user_id\":" + "\"" + Cursor1.getString(2) + "\",";
-			coy += "\"username\":" + "\"" + Cursor1.getString(3) + "\"";
-			
-			Modeluser.password = Cursor1.getString(4);
-			Modeluser.created = Cursor1.getTimestamp(5);
-			Modeluser.modified = Cursor1.getTimestamp(6);
-			Modeluser.email = Cursor1.getString(7);
-			Modeluser.password_email = Cursor1.getString(8);
-			Modeluser.phone_number = Cursor1.getString(9);
-			Modeluser.extensions_user = Cursor1.getString(10);
-			Modeluser.skill = Cursor1.getString(11);
-			Modeluser.status = Cursor1.getString(12);
-			Modeluser.avatar = Cursor1.getString(13);
-			coy+="}";
-			ListUser1.add(Modeluser);
-		}
-		Connection1.close();
-
-		if (ListUser1.size() > 0)
-		{
-			try
-			{
-				updateStatus(ListUser1.get(0).user_id, "1");
-
-			} catch (Exception error)
-			{
-				error.printStackTrace();
-			}
-			return coy;
-		} else
-		{
-			UserModel Modeluser = new UserModel();
-			Modeluser.nama = "0";
-			
-			ListUser1.add(Modeluser);
-			return coy += "\"response\":" + "\" Tidak ada data\" }";
-		}
-	}
-	
 	public void updateStatus(String id, String status) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
@@ -212,14 +156,24 @@ public class UserController
 		try
 		{
 			Connection connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-			PreparedStatement query = connection1.prepareStatement(select_query.query_login);
+			PreparedStatement query = connection1.prepareStatement(select_query2.query_select_users);
 			ResultSet Cursor1 = query.executeQuery();
 			while (Cursor1.next())
 			{
 				UserModel Modeluser = new UserModel();
-				Modeluser.user_id = Cursor1.getString(1);
-				Modeluser.username = Cursor1.getString(2);
-				Modeluser.extensions_user = Cursor1.getString(3);
+				Modeluser.nama = Cursor1.getString(1);
+				Modeluser.user_id = Cursor1.getString(2);
+				Modeluser.username = Cursor1.getString(3);
+				Modeluser.password = Cursor1.getString(4);
+				Modeluser.created = Cursor1.getTimestamp(5);
+				Modeluser.modified = Cursor1.getTimestamp(6);
+				Modeluser.email = Cursor1.getString(7);
+				Modeluser.password_email = Cursor1.getString(8);
+				Modeluser.phone_number = Cursor1.getString(9);
+				Modeluser.extensions_user = Cursor1.getString(10);
+				Modeluser.skill = Cursor1.getString(11);
+				Modeluser.status = Cursor1.getString(12);
+				Modeluser.avatar = Cursor1.getString(13);
 				ListUser1.add(Modeluser);
 			}
 			connection1.close();

@@ -37,7 +37,7 @@ public class StatusController
 	public ArrayList<StatusModel> getDashboardStatus() throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-		PreparedStatement a = Connection1.prepareStatement(select_query2.query_status);
+		PreparedStatement a = Connection1.prepareStatement(select_query2.query_select_status);
 
 		ResultSet Cursor1 = a.executeQuery();// Evaluate (Connected_Expression1)
 		ArrayList<StatusModel> ListUser1 = new ArrayList<StatusModel>();
