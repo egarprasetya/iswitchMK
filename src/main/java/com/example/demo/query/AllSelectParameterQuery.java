@@ -34,7 +34,7 @@ public class AllSelectParameterQuery {
 
 	public String query_login = "select users.* "
 			+ "from users  "
-			+ "where users.username = ? and users.password = ? "; 
+			+ "where users.username = ? "; 
 	
 	public String query_login0 = "select * "
 			+ "from users "

@@ -129,7 +129,7 @@ public class AllUpdateQuery {
 
 	public String query_login2 = "UPDATE users SET status = ? WHERE user_id=?";
 	
-	public String query_login3 = "UPDATE users SET status = ? WHERE username=? and password=?";
+	public String query_login3 = "UPDATE users SET status = ? WHERE username=?";
 	
 	public String query_updateUserById = "UPDATE users "
 	+ "SET nama=?, username=?, \"password\"=?, email=?, modified=?::timestamp, password_email=?, phone_number=?::numeric, extension_user=?, skill=?, status=?, avatar=? "

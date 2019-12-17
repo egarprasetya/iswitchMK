@@ -49,66 +49,91 @@ public class UserController
 	{
 		Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
 		PreparedStatement query = connection
-				.prepareStatement("INSERT INTO users (nama, user_id, username, password, password_email) VALUES (?,?,?,?,?);");
+				.prepareStatement ("INSERT INTO users (nama, user_id, username, password, password_email) VALUES (?,?,?,?,?);");
 		
-		//String encodedPassword = bCryptPasswordEncoder.encode(akun.getPassword());
-		akun.password = bCryptPasswordEncoder.encode(akun.password);
+		// String encodedPassword = bCryptPasswordEncoder.encode(akun.getPassword());
+		akun.password = bCryptPasswordEncoder.encode (akun.password);
 		query.setString (1, akun.nama);
-		query.setString(2, akun.user_id);
-		query.setString(3, akun.username);
-		query.setString(4, akun.password);
-		query.setString(5, akun.password_email);
-		int flag = query.executeUpdate();
-		return String.valueOf(String.valueOf(flag) + " - Data pengguna ditambahkan!.");
+		query.setString (2, akun.user_id);
+		query.setString (3, akun.username);
+		query.setString (4, akun.password);
+		query.setString (5, akun.password_email);
+		int flag = query.executeUpdate ();
+		return String.valueOf (String.valueOf (flag) + " - Data pengguna ditambahkan!.");
 	}
 	
-	@PostMapping("/login2")
-	public ResponseEntity<String> login2 (@RequestBody UserModel akun)
+	@PostMapping("/login")
+	public ResponseEntity<UserModel> login2 (@RequestBody UserModel cfm)
 	{
 		try
 		{
-			String result = doLogin2(akun);
-			return new ResponseEntity<String>(result, HttpStatus.OK);
-		}
-		catch (SQLException error_sql)
+			UserModel result = doLogin (cfm);
+			if (!result.equals (null))
+			{
+				return new ResponseEntity<UserModel> (result, HttpStatus.OK);
+			} else
+			{
+				return new ResponseEntity<UserModel> (HttpStatus.INTERNAL_SERVER_ERROR);
+			} 
+		} catch (SQLException | NullPointerException error_null)
 		{
-			error_sql.printStackTrace();
-			return new ResponseEntity<String>("500 - Internal Server Error", HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<UserModel> (HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
-	public String doLogin2 (UserModel akun) throws SQLException
+	public UserModel doLogin (UserModel cfm) throws SQLException
 	{
 		boolean hasil = false;
-		String log = "";
-		Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
-		PreparedStatement query = connection.prepareStatement("SELECT password FROM users WHERE username=?");
+		Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+		PreparedStatement a = Connection1.prepareStatement (select_query.query_login);
 		
-		query.setString(1, akun.username);
+		a.setString (1, cfm.username);
 		
-		ResultSet result = query.executeQuery();
-		if(result.next())
+		ResultSet Cursor1 = a.executeQuery ();
+		if (Cursor1.next ())
 		{
-			String encodedPassword = result.getString(1);
-			hasil = bCryptPasswordEncoder.matches(akun.password, encodedPassword);
+			String encodedPassword = Cursor1.getString (4);
+			hasil = bCryptPasswordEncoder.matches (cfm.password, encodedPassword);
 			if (hasil)
 			{
-				log = "login berhasil!. selamat menikmati yang mantap-mantap :)";
-			}
-			else
+				try
+				{
+					updateStatus2 (cfm.username, "1");
+					
+				} catch (Exception error)
+				{
+					error.printStackTrace ();
+				}
+				System.out.println (cfm.password + encodedPassword);
+				ArrayList<UserModel> ListUser1 = new ArrayList<UserModel> ();
+				UserModel Modeluser = new UserModel ();
+				
+				Modeluser.nama = Cursor1.getString (1);
+				Modeluser.user_id = Cursor1.getString (2);
+				Modeluser.username = Cursor1.getString (3);
+				Modeluser.password = Cursor1.getString (4);
+				Modeluser.created = Cursor1.getTimestamp (5);
+				Modeluser.modified = Cursor1.getTimestamp (6);
+				Modeluser.email = Cursor1.getString (7);
+				Modeluser.password_email = Cursor1.getString (8);
+				Modeluser.phone_number = Cursor1.getString (9);
+				Modeluser.extensions_user = Cursor1.getString (10);
+				Modeluser.skill = Cursor1.getString (11);
+				Modeluser.status = Cursor1.getString (12);
+				Modeluser.avatar = Cursor1.getString (13);
+				Connection1.close ();
+				System.out.println (cfm.password + encodedPassword);
+				return Modeluser;
+			} else
 			{
-				log = "login gagal!. password salah!.";
+				return null;
 			}
-		}
-		else
+		} else
 		{
-			log = "login gagal!, username tidak ditemukan!.";
+			return null;
 		}
 		
-		return log;
 	}
-
-
 	
 	@PostMapping("/changeStatusId")
 	public ResponseEntity<String> postChangeStatusId (@RequestBody UserModel cfm)
@@ -126,9 +151,6 @@ public class UserController
 		} catch (SQLException | NullPointerException error_null)
 		{
 			return new ResponseEntity<String> (HttpStatus.INTERNAL_SERVER_ERROR);
-//			return ResponseEntity
-//		      .status(HttpStatus.UNAUTHORIZED)
-//		      .header("X-Reason", "user-invalid").body(body).build();
 		}
 		
 	}
@@ -152,71 +174,6 @@ public class UserController
 		}
 	}
 	
-	@PostMapping("/login")
-	public ResponseEntity<UserModel> postLogin (@RequestBody UserModel cfm)
-	{
-		try
-		{
-			UserModel result = doLogin (cfm);
-			if (!result.equals (null))
-			{
-				return new ResponseEntity<UserModel> (result, HttpStatus.OK);
-			} else
-			{
-				return new ResponseEntity<UserModel> (HttpStatus.INTERNAL_SERVER_ERROR);
-			}
-		} catch (SQLException | NullPointerException error_null)
-		{
-			return new ResponseEntity<UserModel> (HttpStatus.INTERNAL_SERVER_ERROR);
-//			return ResponseEntity
-//		      .status(HttpStatus.UNAUTHORIZED)
-//		      .header("X-Reason", "user-invalid").body(body).build();
-		}
-		
-	}
-	
-	public UserModel doLogin (UserModel cfm) throws SQLException
-	{
-		Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
-		PreparedStatement a = Connection1.prepareStatement (select_query.query_login);
-		
-		a.setString (1, cfm.username);
-		a.setString (2, cfm.password);
-		try
-		{
-			updateStatus2 (cfm.username, cfm.password, "1");
-			
-		} catch (Exception error)
-		{
-			error.printStackTrace ();
-		}
-		ResultSet Cursor1 = a.executeQuery ();// Evaluate (Connected_Expression1)
-		ArrayList<UserModel> ListUser1 = new ArrayList<UserModel> ();
-		UserModel Modeluser = new UserModel ();
-		if (Cursor1.next ())
-		{
-			Modeluser.nama = Cursor1.getString (1);
-			Modeluser.user_id = Cursor1.getString (2);
-			Modeluser.username = Cursor1.getString (3);
-			Modeluser.password = Cursor1.getString (4);
-			Modeluser.created = Cursor1.getTimestamp (5);
-			Modeluser.modified = Cursor1.getTimestamp (6);
-			Modeluser.email = Cursor1.getString (7);
-			Modeluser.password_email = Cursor1.getString (8);
-			Modeluser.phone_number = Cursor1.getString (9);
-			Modeluser.extensions_user = Cursor1.getString (10);
-			Modeluser.skill = Cursor1.getString (11);
-			Modeluser.status = Cursor1.getString (12);
-			Modeluser.avatar = Cursor1.getString (13);
-			Connection1.close ();
-			return Modeluser;
-		} else
-		{
-			return null;
-		}
-		
-	}
-	
 	public void updateStatus (String id, String status) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
@@ -228,14 +185,13 @@ public class UserController
 		System.out.println (id);
 	}
 	
-	public void updateStatus2 (String username, String password, String status) throws SQLException
+	public void updateStatus2 (String username, String status) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
 		PreparedStatement a = Connection1.prepareStatement (select_query3.query_login3);
 		
 		a.setString (1, status);
 		a.setString (2, username);
-		a.setString (3, password);
 		a.executeUpdate ();
 		System.out.println (status);
 	}
