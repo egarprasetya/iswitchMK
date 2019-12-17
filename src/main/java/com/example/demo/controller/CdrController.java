@@ -12,7 +12,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,7 +39,22 @@ public class CdrController
 	PreparedStatement queryselect_cdr = null;
 	
 	@PutMapping(produces="application/json",path="/putCdr")
-	public String putCdr(@RequestBody CdrModel cfm) throws SQLException 
+	public ResponseEntity<String> putCdr (@RequestBody CdrModel cfm)
+	{
+		try
+		{
+			String result = doPutCdr(cfm);
+			return new ResponseEntity<String>(result, HttpStatus.OK);
+		}
+		catch (SQLException error_sql)
+		{
+			error_sql.printStackTrace();
+			return new ResponseEntity<String>("{ " + "\"response\":" + "\"" + "0" + "\" }", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+	}
+	
+	public String doPutCdr(CdrModel cfm) throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryinsert_cdr = Connection1.prepareStatement(query_string_insert.query_insert_cdr);
@@ -63,10 +80,10 @@ public class CdrController
 		queryinsert_cdr.setString(20, cfm.peeraccount);
 		queryinsert_cdr.setInt(21, cfm.sequence);
 
-		int Cursor1 = queryinsert_cdr.executeUpdate();// Evaluate (Connected_Expression1)
-		String a = "1";
+		int flag = queryinsert_cdr.executeUpdate();// Evaluate (Connected_Expression1)
 		Connection1.close();
-		return a;
+		return "{ " + "\"response\":" + "\"" + flag + "\" }";
+		
 	}
 	@GetMapping(produces="application/json",path="/getCdr")
 	public ArrayList<CdrModel> getCdr() throws SQLException 
@@ -118,7 +135,24 @@ public class CdrController
 	}
 	
 	@PostMapping(produces="application/json",path="/postUserCdr")
-	public ArrayList<CdrModel> postUserCdr(@RequestBody CdrModel cfm) throws SQLException 
+	public ResponseEntity<ArrayList<CdrModel>> postUserCdr(@RequestBody CdrModel cfm)
+	{
+		try
+		{
+			ArrayList<CdrModel> result = doPostUserCdr(cfm);
+			if (result.size() > 0)
+				return new ResponseEntity<ArrayList<CdrModel>>(result, HttpStatus.OK);
+			else
+				return new ResponseEntity<ArrayList<CdrModel>>(HttpStatus.NOT_FOUND);
+		}
+		catch (SQLException error_sql)
+		{
+			error_sql.printStackTrace();
+			return new ResponseEntity<ArrayList<CdrModel>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	public ArrayList<CdrModel> doPostUserCdr(CdrModel cfm) throws SQLException 
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		

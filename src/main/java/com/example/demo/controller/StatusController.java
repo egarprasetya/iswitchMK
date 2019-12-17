@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,7 +36,21 @@ public class StatusController
 	stringkoneksi sk = new stringkoneksi();
 
 	@GetMapping("/getStatus")
-	public ArrayList<StatusModel> getDashboardStatus() throws SQLException
+	public ResponseEntity<List<StatusModel>> getStatus ()
+	{
+		try
+		{
+			List<StatusModel> result = doGetDashboardStatus();
+			return new ResponseEntity<List<StatusModel>>(result, HttpStatus.OK);
+		}
+		catch (SQLException error_sql)
+		{
+			error_sql.printStackTrace();
+			return new ResponseEntity<List<StatusModel>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	public ArrayList<StatusModel> doGetDashboardStatus() throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		PreparedStatement a = Connection1.prepareStatement(select_query2.query_select_status);
