@@ -77,7 +77,7 @@ public class UserController
 			} 
 		} catch (SQLException | NullPointerException error_null)
 		{
-			return new ResponseEntity<UserModel> (HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<UserModel> (HttpStatus.UNAUTHORIZED);
 		}
 	}
 	
