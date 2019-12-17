@@ -63,23 +63,56 @@ public class UserController
 	}
 	
 	@PostMapping("/login")
-	public ResponseEntity<UserModel> login2 (@RequestBody UserModel cfm)
+	
+	public ResponseEntity<String> login2 (@RequestBody UserModel cfm)
 	{
 		try
 		{
 			UserModel result = doLogin (cfm);
+			
+			ArrayList<String> formatedResultField = new ArrayList<String> ();
+			formatedResultField.add ("user_id");
+			formatedResultField.add ("websocket");
+			formatedResultField.add ("url_websocket");
+			
+			ArrayList<String> formatedResultValues = new ArrayList<String> ();
+			formatedResultValues.add (result.user_id);
+			formatedResultValues.add (result.websocket);
+			formatedResultValues.add (result.url_websocket);
+			
+			String parsedResult = parseToStringJSON (formatedResultField, formatedResultValues);
+			
 			if (!result.equals (null))
 			{
-				return new ResponseEntity<UserModel> (result, HttpStatus.OK);
+				return new ResponseEntity<String> (parsedResult, HttpStatus.OK);
 			} else
 			{
-				return new ResponseEntity<UserModel> (HttpStatus.INTERNAL_SERVER_ERROR);
+				return new ResponseEntity<String> (HttpStatus.INTERNAL_SERVER_ERROR);
 			} 
 		} catch (SQLException | NullPointerException error_null)
 		{
-			return new ResponseEntity<UserModel> (HttpStatus.UNAUTHORIZED);
+			return new ResponseEntity<String> (HttpStatus.UNAUTHORIZED);
 		}
 	}
+
+	
+//	public ResponseEntity<UserModel> login2 (@RequestBody UserModel cfm)
+//	{
+//		try
+//		{
+//			UserModel result = doLogin (cfm);
+//			if (!result.equals (null))
+//			{
+//				return new ResponseEntity<UserModel> (result, HttpStatus.OK);
+//			} else
+//			{
+//				return new ResponseEntity<UserModel> (HttpStatus.INTERNAL_SERVER_ERROR);
+//			} 
+//		} catch (SQLException | NullPointerException error_null)
+//		{
+//			return new ResponseEntity<UserModel> (HttpStatus.UNAUTHORIZED);
+//		}
+//	}
 	
 	public UserModel doLogin (UserModel cfm) throws SQLException
 	{
@@ -121,6 +154,8 @@ public class UserController
 				Modeluser.skill = Cursor1.getString (11);
 				Modeluser.status = Cursor1.getString (12);
 				Modeluser.avatar = Cursor1.getString (13);
+				Modeluser.websocket = Cursor1.getString (14);
+				Modeluser.url_websocket = Cursor1.getString (15);
 				Connection1.close ();
 				System.out.println (cfm.password + encodedPassword);
 				return Modeluser;
@@ -373,7 +408,7 @@ public class UserController
 		{
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern ("yyyy-MM-dd HH:mm:ss");
 			LocalDateTime now = LocalDateTime.now ();
-			System.out.println (dtf.format (now));
+			//System.out.println (dtf.format (now));
 			Connection connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
 			PreparedStatement query = connection1.prepareStatement (select_query3.query_updateUserById);
 			query.setString (1, cfm.nama);
@@ -397,6 +432,28 @@ public class UserController
 			return "{ " + "\"response\":" + "\"" + error.getErrorCode () + "\" }";
 		}
 		
+	}
+	
+	private String parseToStringJSON (ArrayList<String> field, ArrayList<String> values)
+	{
+		String JSONHeader = "{\n\t";
+		String JSONFooter = "\n}";
+		String parsedJSON = "";
+		String endLineJSON = ",\n\t";
+		String quote = "\"";
+		String equal = " : ";
+	
+		for (int i = 0; i < field.size (); i++)
+		{
+			if (i < field.size () - 1)
+				parsedJSON += quote + field.get(i) + quote + equal + quote + values.get (i) + quote + endLineJSON;
+			else
+				parsedJSON += quote + field.get(i) + quote + equal + quote + values.get (i) + quote;
+		}
+		
+		parsedJSON = JSONHeader + parsedJSON + JSONFooter;
+		//System.out.println(parsedJSON);
+		return parsedJSON;
 	}
 	
 }

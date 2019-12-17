@@ -22,4 +22,6 @@ public class UserModel
 	public String skill;
 	public String status;
 	public String avatar;
+	public String websocket;
+	public String url_websocket;
 }
