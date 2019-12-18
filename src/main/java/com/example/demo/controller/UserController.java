@@ -49,8 +49,9 @@ public class UserController
 	{
 		Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
 		PreparedStatement query = connection
-				.prepareStatement ("INSERT INTO users (nama, user_id, username, password, password_email) VALUES (?,?,?,?,?);");
-
+				.prepareStatement ("INSERT INTO users (nama, user_id, username, password, password_email, extension_user) VALUES (?,?,?,?,?,?);"
+						+ "	INSERT INTO ps_auths (id, password) VALUES (?,?);");
+		String rawPassword = akun.password;
 		// String encodedPassword = bCryptPasswordEncoder.encode(akun.getPassword());
 		akun.password = bCryptPasswordEncoder.encode (akun.password);
 		query.setString (1, akun.nama);
@@ -58,6 +59,10 @@ public class UserController
 		query.setString (3, akun.username);
 		query.setString (4, akun.password);
 		query.setString (5, akun.password_email);
+		query.setString (6, akun.extensions_user);
+		
+		query.setString (7, akun.extensions_user);
+		query.setString (8, rawPassword);
 		int flag = query.executeUpdate ();
 		return String.valueOf (String.valueOf (flag) + " - Data pengguna ditambahkan!.");
 	}
