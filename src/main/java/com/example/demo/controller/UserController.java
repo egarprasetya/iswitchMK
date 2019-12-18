@@ -433,20 +433,20 @@ public class UserController
 
 	}
 	
-	@PostMapping("/updatePasswordSingleBody")
-	public ResponseEntity<String> updatePasswordSingleBody (@RequestBody UserModel data)
+	@PostMapping("/updatePassword")
+	public ResponseEntity<String> updatePassword (@RequestBody UserModel data)
 	{
 		try
 		{
 			String result;
 			if(doUpdatePasswordSingleBody (data))
 			{
-				result = "Password diubah!.";
+				result = "{ " + "\"response\":" + "\"" + "1" + "\" }";
 				return new ResponseEntity<String> (result, HttpStatus.OK);
 			}
 			else
 			{
-				result = "Password tidak cocok!.";
+				result = "{ " + "\"response\":" + "\"" + "0" + "\" }";
 				return new ResponseEntity<String> (result, HttpStatus.BAD_REQUEST);
 			}
 		} catch (SQLException error_sql)
