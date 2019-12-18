@@ -325,29 +325,64 @@ public class UserController
 	}
 
 	@PostMapping("/profil")
-	public ResponseEntity<ArrayList<UserModel>> postAuthsProfil (@RequestBody UserModel cfm)
+	public ResponseEntity<String> postAuthsProfil (@RequestBody UserModel cfm)
 	{
 		try
 		{
 			ArrayList<UserModel> result = postProfil (cfm);
-			if (!result.equals (null))
+			String parsedResult = "[\n\t";
+			for (int i = 0; i < result.size (); i++)
 			{
-				return new ResponseEntity<ArrayList<UserModel>> (result, HttpStatus.OK);
-			} else
-			{
-				return new ResponseEntity<ArrayList<UserModel>> (HttpStatus.INTERNAL_SERVER_ERROR);
+				
+				ArrayList<String> formatedResultField = new ArrayList<String> ();
+				formatedResultField.add ("nama");
+				formatedResultField.add ("status");
+				formatedResultField.add ("avatar");
+				
+				ArrayList<String> formatedResultValues = new ArrayList<String> ();
+				formatedResultValues.add (result.get (i).nama);
+				formatedResultValues.add (result.get (i).status);
+				formatedResultValues.add (result.get (i).avatar);
+				parsedResult += parseToStringJSON (formatedResultField, formatedResultValues);
+				if (result.size () - 1 > i)
+				{
+					parsedResult += ",\n";
+				}
 			}
-		} catch (SQLException | NullPointerException error_null)
+			parsedResult += "]";
+			
+			if (result.size () > 0)
+				return new ResponseEntity<String> (parsedResult, HttpStatus.OK);
+			else
+				return new ResponseEntity<String> (HttpStatus.NOT_FOUND);
+		} catch (SQLException error_sql)
 		{
-			return new ResponseEntity<ArrayList<UserModel>> (HttpStatus.INTERNAL_SERVER_ERROR);
-//			return ResponseEntity
-//		      .status(HttpStatus.UNAUTHORIZED)
-//		      .header("X-Reason", "user-invalid").body(body).build();
+			error_sql.printStackTrace ();
+			return new ResponseEntity<String> (HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 	}
 
 	public ArrayList<UserModel> postProfil (@RequestBody UserModel cfm) throws SQLException
+	{
+		Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+		PreparedStatement a = Connection1.prepareStatement (select_query.query_profil);
+
+		a.setString (1, cfm.user_id);
+		ResultSet Cursor1 = a.executeQuery ();// Evaluate (Connected_Expression1)
+		ArrayList<UserModel> ListUser1 = new ArrayList<UserModel> ();
+		Cursor1.next ();
+		UserModel Modeluser = new UserModel ();
+		Modeluser.nama = Cursor1.getString (1);
+		Modeluser.status = Cursor1.getString (2);
+		Modeluser.avatar = Cursor1.getString (3);
+		ListUser1.add (Modeluser);
+		Connection1.close ();
+
+		return ListUser1;
+	}
+	
+	public ArrayList<UserModel> postUserData (@RequestBody UserModel cfm) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
 		PreparedStatement a = Connection1.prepareStatement (select_query.query_profil);

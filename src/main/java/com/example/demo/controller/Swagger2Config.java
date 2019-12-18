@@ -1,4 +1,4 @@
-package com.example.demo.config;
+package com.example.demo.controller;
 
 import static springfox.documentation.builders.PathSelectors.regex;
 import java.util.Collections;
