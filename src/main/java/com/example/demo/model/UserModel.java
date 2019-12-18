@@ -24,4 +24,7 @@ public class UserModel
 	public String avatar;
 	public String websocket;
 	public String url_websocket;
+	
+	// Dummy
+	public String old_password;
 }

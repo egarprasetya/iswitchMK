@@ -433,6 +433,29 @@ public class UserController
 
 	}
 	
+	@PostMapping("/updatePasswordSingleBody")
+	public ResponseEntity<String> updatePasswordSingleBody (@RequestBody UserModel data)
+	{
+		try
+		{
+			String result;
+			if(doUpdatePasswordSingleBody (data))
+			{
+				result = "Password diubah!.";
+				return new ResponseEntity<String> (result, HttpStatus.OK);
+			}
+			else
+			{
+				result = "Password tidak cocok!.";
+				return new ResponseEntity<String> (result, HttpStatus.BAD_REQUEST);
+			}
+		} catch (SQLException error_sql)
+		{
+			error_sql.printStackTrace ();
+			return new ResponseEntity<String> (HttpStatus.INTERNAL_SERVER_ERROR);
+		}	
+	}
+	
 	@PostMapping("/updatePasswordMix")
 	public ResponseEntity<String> updatePasswordMix (@RequestBody UserModel dataLama, @RequestParam String passBaru)
 	{
@@ -525,6 +548,32 @@ public class UserController
 			return new ResponseEntity<String> (HttpStatus.INTERNAL_SERVER_ERROR);
 		}	
 	}
+	
+	public boolean doUpdatePasswordSingleBody(UserModel userModel) throws SQLException
+	{
+		UserModel usr = new UserModel();
+		usr.user_id = userModel.user_id;
+		usr.password = userModel.old_password;
+		
+		if(passwordChecker (usr))
+		{
+			Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+			PreparedStatement query = Connection1.prepareStatement (select_query3.query_updatePassword);
+
+			userModel.password = bCryptPasswordEncoder.encode (userModel.password);
+			
+			query.setString (1, userModel.password);
+			query.setString (2, usr.user_id);
+			int flag = query.executeUpdate ();
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+
+	}
+	
 	
 	public boolean doUpdatePasswordMix(UserModel dataLama, String passBaru) throws SQLException
 	{
