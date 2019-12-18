@@ -135,6 +135,10 @@ public class AllUpdateQuery {
 	+ "SET nama=?, username=?, \"password\"=?, email=?, modified=?::timestamp, password_email=?, phone_number=?::numeric, extension_user=?, skill=?, status=?, avatar=? "
 	+ "WHERE user_id=?;";
 	
+	public String query_updatePassword = "UPDATE users "
+			+ "SET \"password\"=? "
+			+ "WHERE user_id=?;";
+	
 	public String query_changeStatus = "UPDATE users "
 			+ "SET status=?"
 			+ " WHERE user_id=?";
