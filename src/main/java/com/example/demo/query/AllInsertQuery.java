@@ -121,6 +121,10 @@ public class AllInsertQuery {
 			+ "?, ?, ?::yesno_values, ?::yesno_values, ?::yesno_values, ?::yesno_values, ?::yesno_values, ?::yesno_values, ?::yesno_values, ?,"
 			+ "?::yesno_values, ?::yesno_values, ?, ?, ?, ?, ?, ?, ?, ?,"
 			+ "?, ?, ?)";
+	
+	public String query_insert_customer = "INSERT INTO public.customers " + 
+			"(id, nama, nomor_telepon, alamat, \"extension\") " + 
+			"VALUES(?, ?, ?, ?, ?);";
 
 
 }

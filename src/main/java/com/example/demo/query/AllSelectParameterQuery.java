@@ -67,5 +67,7 @@ public class AllSelectParameterQuery {
 			"SET nama=?, username = ?, password = ?, number = ?, status = ?" + 
 			"WHERE user_id=?;";
 	
-	public String query_customer = "SELECT * FROM customers WHERE nomor_telepon = ?";
+	
+	public String query_customer = "SELECT * FROM customers WHERE extension = ?";
+	
 }
