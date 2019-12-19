@@ -5,6 +5,7 @@ public class CustomersModel
 	public String id;
 	public String nama;
 	public String nomor_telepon;
+	public String alamat;
 	public String extension;
 
 }
