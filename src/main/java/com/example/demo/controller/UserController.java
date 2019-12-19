@@ -64,6 +64,7 @@ public class UserController
 		query.setString (7, akun.extensions_user);
 		query.setString (8, rawPassword);
 		int flag = query.executeUpdate ();
+		connection.close ();
 		return String.valueOf (String.valueOf (flag) + " - Data pengguna ditambahkan!.");
 	}
 
@@ -165,10 +166,12 @@ public class UserController
 				return Modeluser;
 			} else
 			{
+				Connection1.close ();
 				return null;
 			}
 		} else
 		{
+			Connection1.close ();
 			return null;
 		}
 
@@ -205,6 +208,7 @@ public class UserController
 			a.setString (1, cfm.status);
 			a.setString (2, cfm.user_id);
 			flag = a.executeUpdate ();
+			Connection1.close ();
 			return "{ " + "\"response\":" + "\"" + flag + "\" }";
 		} catch (SQLException error)
 		{
@@ -315,12 +319,13 @@ public class UserController
 			if (listModel.size () > 0)
 			{
 				updateStatus (cfm.user_id, "0");
+				connection.close ();
 				return "{ " + "\"response\":" + "\"" + "1" + "\" }";
 			} else
 			{
+				connection.close ();
 				return "{ " + "\"response\":" + "\"" + "0" + "\" }";
 			}
-
 		} catch (SQLException error)
 		{
 			error.printStackTrace ();
@@ -464,6 +469,7 @@ public class UserController
 			query.setString (12, cfm.user_id);
 
 			flag = query.executeUpdate ();
+			connection1.close ();
 			return "{ " + "\"response\":" + "\"" + flag + "\" }";
 		} catch (SQLException error)
 		{
@@ -604,6 +610,7 @@ public class UserController
 			
 			query.setString (1, userModel.password);
 			query.setString (2, usr.user_id);
+			Connection1.close ();
 			int flag = query.executeUpdate ();
 			return true;
 		}
@@ -628,6 +635,7 @@ public class UserController
 			query.setString (1, passBaru);
 			query.setString (2, dataLama.user_id);
 			int flag = query.executeUpdate ();
+			Connection1.close ();
 			return true;
 		}
 		else
@@ -653,6 +661,7 @@ public class UserController
 			query.setString (1, userModel.password);
 			query.setString (2, usr.user_id);
 			int flag = query.executeUpdate ();
+			Connection1.close ();
 			return true;
 		}
 		else
@@ -678,6 +687,7 @@ public class UserController
 			query.setString (1, passBaru);
 			query.setString (2, usr.user_id);
 			int flag = query.executeUpdate ();
+			Connection1.close ();
 			return true;
 		}
 		else
@@ -699,6 +709,7 @@ public class UserController
 			query.setString (1, dataBaru.password);
 			query.setString (2, dataBaru.user_id);
 			int flag = query.executeUpdate ();
+			Connection1.close ();
 			return true;
 		}
 		else
@@ -722,10 +733,12 @@ public class UserController
 			{
 				encodedPassword = Cursor1.getString (1);
 				//System.out.println(userModel.password + "  |  "+ encodedPassword);
+				Connection1.close ();
 				return bCryptPasswordEncoder.matches (userModel.password, encodedPassword);
 			}
 			else
 			{
+				Connection1.close ();
 				throw new SQLException ("Not Found");
 			}
 		} catch (SQLException error_sql)
