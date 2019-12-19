@@ -151,11 +151,13 @@ public class CdrController
 				formatedResultField.add ("nomor_telepon");
 				formatedResultField.add ("duration");
 				formatedResultField.add ("start");
+				formatedResultField.add ("disposition");
 				
 				ArrayList<String> formatedResultValues = new ArrayList<String> ();
 				formatedResultValues.add (result.get (i).src);
 				formatedResultValues.add (String.valueOf (result.get (i).duration));
 				formatedResultValues.add (String.valueOf (result.get (i).start));
+				formatedResultValues.add (result.get (i).disposition);
 				parsedResult += parseToStringJSON (formatedResultField, formatedResultValues);
 				if (result.size () - 1 > i)
 				{
@@ -190,6 +192,7 @@ public class CdrController
 			ModelCdr.src = Cursor1.getString (1);
 			ModelCdr.duration = Cursor1.getInt (2);
 			ModelCdr.start = Cursor1.getDate (3);	
+			ModelCdr.disposition = Cursor1.getString (4);
 			ListUser1.add (ModelCdr);
 		}
 		

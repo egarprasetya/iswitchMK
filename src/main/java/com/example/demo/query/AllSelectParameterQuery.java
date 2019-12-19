@@ -54,10 +54,10 @@ public class AllSelectParameterQuery {
 			+ "from users "
 			+ "where user_id = ?";
 	
-	public String query_get_user_cdr ="select customers.nomor_telepon, cdr.duration, cdr.\"start\" "
+
+	public String query_get_user_cdr ="select customers.nomor_telepon, cdr.duration, cdr.\"start\", cdr.disposition "
 			+	"from users join cdr on users.extension_user = cdr.dst join customers on cdr.src = customers.extension "
 			+ "where users.user_id = ? order by cdr.\"start\" desc limit 10";
-
 	
 	public String query_setting_profil = "select users.nama, users.username, users.password, users.phone_number, status.status_nama, users.avatar  "
 			+ "from users join status on users.status = status.status_id"
