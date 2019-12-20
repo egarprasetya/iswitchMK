@@ -610,8 +610,9 @@ public class UserController
 			
 			query.setString (1, userModel.password);
 			query.setString (2, usr.user_id);
-			Connection1.close ();
+			
 			int flag = query.executeUpdate ();
+			Connection1.close ();
 			return true;
 		}
 		else

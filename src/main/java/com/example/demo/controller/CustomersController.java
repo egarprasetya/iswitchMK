@@ -55,6 +55,7 @@ public class CustomersController
 			listCustomers.add (customerModel);
 			
 		}
+		connection.close ();
 		return listCustomers;
 	}
 	
@@ -74,6 +75,7 @@ public class CustomersController
 			query.setString (5, cm.extension);
 			
 			int flag = query.executeUpdate ();
+			connection.close ();
 			return "{ " + "\"response\":" + "\"" + flag + "\" }";
 		}
 		catch (SQLException error_sql)
@@ -99,6 +101,7 @@ public class CustomersController
 			query.setString (4, cm.extension);
 			
 			int flag = query.executeUpdate ();
+			connection.close ();
 			return "{ " + "\"response\":" + "\"" + flag + "\" }";
 		}
 		catch (SQLException error_sql)
