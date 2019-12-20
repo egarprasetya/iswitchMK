@@ -10,8 +10,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -68,7 +71,7 @@ public class CdrController
 		queryinsert_cdr.setString (7, cfm.dstchannel);
 		queryinsert_cdr.setString (8, cfm.lastapp);
 		queryinsert_cdr.setString (9, cfm.lastdata);
-		queryinsert_cdr.setDate (10, cfm.start);
+		queryinsert_cdr.setTimestamp (10, cfm.start);
 		queryinsert_cdr.setDate (11, cfm.answer);
 		queryinsert_cdr.setDate (12, cfm.end);
 		queryinsert_cdr.setInt (13, cfm.duration);
@@ -106,7 +109,7 @@ public class CdrController
 			ModelCdr.dstchannel = Cursor1.getString (7);
 			ModelCdr.lastapp = Cursor1.getString (8); // YesNo value / Type.
 			ModelCdr.lastdata = Cursor1.getString (9); // pjsip_connected_line_method value/type.
-			ModelCdr.start = Cursor1.getDate (10); // pjsip_connected_line_method value/type.
+			ModelCdr.start = Cursor1.getTimestamp (10); // pjsip_connected_line_method value/type.
 			ModelCdr.answer = Cursor1.getDate (11); // pjsip_direct_media_glare_mitigation value/Type.
 			ModelCdr.end = Cursor1.getDate (12);
 			ModelCdr.duration = Cursor1.getInt (13); // pjsip_dtmf_mode value/Type.
@@ -144,6 +147,8 @@ public class CdrController
 		{
 			List<CdrModel> result = doPostUserCdr (cfm);
 			String parsedResult = "[\n\t";
+			Locale locale = new Locale("us", "US");
+			DateFormat dateFormat = DateFormat.getTimeInstance(DateFormat.DEFAULT, locale);
 			for (int i = 0; i < result.size (); i++)
 			{
 				
@@ -156,7 +161,8 @@ public class CdrController
 				ArrayList<String> formatedResultValues = new ArrayList<String> ();
 				formatedResultValues.add (result.get (i).src);
 				formatedResultValues.add (String.valueOf (result.get (i).duration));
-				formatedResultValues.add (String.valueOf (result.get (i).start));
+				
+				formatedResultValues.add (dateFormat.format (result.get (i).start));
 				formatedResultValues.add (result.get (i).disposition);
 				parsedResult += parseToStringJSON (formatedResultField, formatedResultValues);
 				if (result.size () - 1 > i)
@@ -191,7 +197,7 @@ public class CdrController
 			CdrModel ModelCdr = new CdrModel ();
 			ModelCdr.src = Cursor1.getString (1);
 			ModelCdr.duration = Cursor1.getInt (2);
-			ModelCdr.start = Cursor1.getDate (3);	
+			ModelCdr.start = Cursor1.getTimestamp (3);	
 			ModelCdr.disposition = Cursor1.getString (4);
 			ListUser1.add (ModelCdr);
 		}

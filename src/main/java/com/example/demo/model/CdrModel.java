@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class CdrModel
 {
@@ -13,7 +14,7 @@ public class CdrModel
 	public String dstchannel;
 	public String lastapp;
 	public String lastdata;
-	public Date start;
+	public Timestamp start;
 	public Date answer;
 	public Date end;
 	public int duration;
