@@ -64,7 +64,10 @@ public class UserController
 		query.setString (7, akun.extensions_user);
 		query.setString (8, rawPassword);
 		int flag = query.executeUpdate ();
+		
+		query.close ();
 		connection.close ();
+		
 		return String.valueOf (String.valueOf (flag) + " - Data pengguna ditambahkan!.");
 	}
 
@@ -155,16 +158,23 @@ public class UserController
 				Modeluser.avatar = Cursor1.getString (13);
 				Modeluser.websocket = Cursor1.getString (14);
 				Modeluser.url_websocket = Cursor1.getString (15);
+				
+				a.close ();
+				Cursor1.close ();
 				Connection1.close ();
 				//System.out.println (cfm.password + encodedPassword);
 				return Modeluser;
 			} else
 			{
+				a.close ();
+				Cursor1.close ();
 				Connection1.close ();
 				return null;
 			}
 		} else
 		{
+			a.close ();
+			Cursor1.close ();
 			Connection1.close ();
 			return null;
 		}
@@ -202,7 +212,10 @@ public class UserController
 			a.setString (1, cfm.status);
 			a.setString (2, cfm.user_id);
 			flag = a.executeUpdate ();
+			
+			a.close ();
 			Connection1.close ();
+			
 			return "{ " + "\"response\":" + "\"" + flag + "\" }";
 		} catch (SQLException error)
 		{
@@ -219,6 +232,8 @@ public class UserController
 		a.setString (1, status);
 		a.setString (2, id);
 		a.executeUpdate ();
+		
+		a.close ();
 		Connection1.close ();
 		//System.out.println (id);
 	}
@@ -232,6 +247,7 @@ public class UserController
 		a.setString (2, username);
 		a.executeUpdate ();
 
+		a.close ();
 		Connection1.close ();
 		//System.out.println (status);
 	}
@@ -263,6 +279,9 @@ public class UserController
 				Modeluser.avatar = Cursor1.getString (13);
 				ListUser1.add (Modeluser);
 			}
+			
+			query.close ();
+			Cursor1.close ();
 			connection1.close ();
 		} catch (SQLException error)
 		{
@@ -316,10 +335,14 @@ public class UserController
 			if (listModel.size () > 0)
 			{
 				updateStatus (cfm.user_id, "0");
+				a.close ();
+				Cursor1.close ();
 				connection.close ();
 				return "{ " + "\"response\":" + "\"" + "1" + "\" }";
 			} else
 			{
+				a.close ();
+				Cursor1.close ();
 				connection.close ();
 				return "{ " + "\"response\":" + "\"" + "0" + "\" }";
 			}
@@ -384,6 +407,9 @@ public class UserController
 		Modeluser.status = Cursor1.getString (2);
 		Modeluser.avatar = Cursor1.getString (3);
 		ListUser1.add (Modeluser);
+		
+		a.close ();
+		Cursor1.close ();
 		Connection1.close ();
 
 		return ListUser1;
@@ -413,6 +439,9 @@ public class UserController
 		Modeluser.status = Cursor1.getString (12);
 		Modeluser.avatar = Cursor1.getString (13);
 		ListUser1.add (Modeluser);
+		
+		a.close ();
+		Cursor1.close ();
 		Connection1.close ();
 
 		return ListUser1;
@@ -466,7 +495,10 @@ public class UserController
 			query.setString (12, cfm.user_id);
 
 			flag = query.executeUpdate ();
+			
+			query.close ();
 			connection1.close ();
+			
 			return "{ " + "\"response\":" + "\"" + flag + "\" }";
 		} catch (SQLException error)
 		{
@@ -609,7 +641,10 @@ public class UserController
 			query.setString (2, usr.user_id);
 			
 			int flag = query.executeUpdate ();
+			
+			query.close ();
 			Connection1.close ();
+			
 			return true;
 		}
 		else
@@ -633,7 +668,10 @@ public class UserController
 			query.setString (1, passBaru);
 			query.setString (2, dataLama.user_id);
 			int flag = query.executeUpdate ();
+			
+			query.close ();
 			Connection1.close ();
+			
 			return true;
 		}
 		else
@@ -659,7 +697,10 @@ public class UserController
 			query.setString (1, userModel.password);
 			query.setString (2, usr.user_id);
 			int flag = query.executeUpdate ();
+			
+			query.close ();
 			Connection1.close ();
+			
 			return true;
 		}
 		else
@@ -685,7 +726,10 @@ public class UserController
 			query.setString (1, passBaru);
 			query.setString (2, usr.user_id);
 			int flag = query.executeUpdate ();
+			
+			query.close ();
 			Connection1.close ();
+			
 			return true;
 		}
 		else
@@ -707,7 +751,10 @@ public class UserController
 			query.setString (1, dataBaru.password);
 			query.setString (2, dataBaru.user_id);
 			int flag = query.executeUpdate ();
+			
+			query.close ();
 			Connection1.close ();
+			
 			return true;
 		}
 		else
@@ -731,6 +778,9 @@ public class UserController
 			{
 				encodedPassword = Cursor1.getString (1);
 				//System.out.println(userModel.password + "  |  "+ encodedPassword);
+				
+				a.close ();
+				Cursor1.close ();
 				Connection1.close ();
 				return bCryptPasswordEncoder.matches (userModel.password, encodedPassword);
 			}

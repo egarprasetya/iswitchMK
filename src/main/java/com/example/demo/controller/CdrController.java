@@ -85,7 +85,10 @@ public class CdrController
 		queryinsert_cdr.setInt (21, cfm.sequence);
 		
 		int flag = queryinsert_cdr.executeUpdate ();// Evaluate (Connected_Expression1)
+		
+		queryinsert_cdr.close ();
 		Connection1.close ();
+		
 		return "{ " + "\"response\":" + "\"" + flag + "\" }";
 		
 	}
@@ -123,7 +126,11 @@ public class CdrController
 			ModelCdr.sequence = Cursor1.getInt (21);
 			ListUser1.add (ModelCdr);
 		}
+		
+		queryselect_cdr.close ();
+		Cursor1.close ();
 		Connection1.close ();
+		
 		return ListUser1;
 	}
 	
@@ -135,7 +142,10 @@ public class CdrController
 		querydelete_cdr.setString (1, cfm.accountcode);
 		int Cursor1 = querydelete_cdr.executeUpdate ();// Evaluate (Connected_Expression1)
 		int a = 1;
+		
+		querydelete_cdr.close ();
 		Connection1.close ();
+		
 		return a;
 	}
 	
@@ -202,6 +212,8 @@ public class CdrController
 			ListUser1.add (ModelCdr);
 		}
 		
+		queryselect_cdr.close ();
+		Cursor1.close ();
 		Connection1.close ();
 		return ListUser1;
 	}

@@ -57,7 +57,11 @@ public class CustomersController
 			listCustomers.add (customerModel);
 			
 		}
+		
+		query.close ();
+		Cursor1.close ();
 		connection.close ();
+
 		return listCustomers;
 	}
 	
@@ -77,7 +81,10 @@ public class CustomersController
 			query.setString (5, cm.extension);
 			
 			int flag = query.executeUpdate ();
+			
+			query.close ();
 			connection.close ();
+
 			return "{ " + "\"response\":" + "\"" + flag + "\" }";
 		}
 		catch (SQLException error_sql)
@@ -104,7 +111,10 @@ public class CustomersController
 			query.setString (4, cm.extension);
 			
 			int flag = query.executeUpdate ();
+			
+			query.close ();
 			connection.close ();
+			
 			return "{ " + "\"response\":" + "\"" + flag + "\" }";
 		}
 		catch (SQLException error_sql)
@@ -130,7 +140,10 @@ public class CustomersController
 			query.setString (5, cm.extension);
 			
 			int flag = query.executeUpdate ();
+			
+			query.close ();
 			connection.close ();
+			
 			return flag;
 		}
 		catch (SQLException error_sql)
@@ -161,7 +174,11 @@ public class CustomersController
 			listCustomers.add (customerModel);
 			
 		}
+		
+		query.close ();
+		Cursor1.close ();
 		connection.close ();
+
 		return listCustomers;
 	}
 	
@@ -179,7 +196,10 @@ public class CustomersController
 			query.setString (4, cm.extension);
 			
 			int flag = query.executeUpdate ();
+			
+			query.close ();
 			connection.close ();
+			
 			return flag ;
 		}
 		catch (SQLException error_sql)
