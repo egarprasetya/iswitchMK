@@ -128,6 +128,7 @@ public class UserController
 
 		a.setString (1, cfm.username);
 
+		
 		ResultSet Cursor1 = a.executeQuery ();
 		if (Cursor1.next ())
 		{
@@ -135,14 +136,7 @@ public class UserController
 			hasil = bCryptPasswordEncoder.matches (cfm.password, encodedPassword);
 			if (hasil)
 			{
-				try
-				{
-					updateStatus2 (cfm.username, "1");
-
-				} catch (Exception error)
-				{
-					error.printStackTrace ();
-				}
+				
 				//System.out.println (cfm.password + encodedPassword);
 				UserModel Modeluser = new UserModel ();
 
