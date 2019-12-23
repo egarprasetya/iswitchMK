@@ -225,6 +225,7 @@ public class UserController
 		a.setString (1, status);
 		a.setString (2, id);
 		a.executeUpdate ();
+		Connection1.close ();
 		//System.out.println (id);
 	}
 
@@ -236,6 +237,8 @@ public class UserController
 		a.setString (1, status);
 		a.setString (2, username);
 		a.executeUpdate ();
+
+		Connection1.close ();
 		//System.out.println (status);
 	}
 
