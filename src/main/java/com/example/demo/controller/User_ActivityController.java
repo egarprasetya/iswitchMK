@@ -73,7 +73,7 @@ public class User_ActivityController
 			a.setString (1, cfm.status);
 			a.setString (2, cfm.status);
 			a.setString (3, cfm.skill);
-			a.setTimestamp (4, cfm.modified);
+			a.setTimestamp (4, cfm.date_begin);
 			a.setString (5, cfm.extensions_user);
 			
 			flag = a.executeUpdate ();// Evaluate (Connected_Expression1)
