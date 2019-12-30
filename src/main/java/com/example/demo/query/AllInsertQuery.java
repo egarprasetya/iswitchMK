@@ -125,6 +125,9 @@ public class AllInsertQuery {
 	public String query_insert_customer = "INSERT INTO public.customers " + 
 			"(id, nama, nomor_telepon, alamat, \"extension\") " + 
 			"VALUES(?, ?, ?, ?, ?);";
-
+	
+	public String query_insert_user_history = "INSERT INTO public.user_history" + 
+			"(\"extension\", nama_user, reason, status, skill, date_begin, date_end)" + 
+			"VALUES(?, ?, ?, ?, ?, ?, ?);";
 
 }

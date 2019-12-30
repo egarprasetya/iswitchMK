@@ -145,4 +145,11 @@ public class AllUpdateQuery {
 	public String query_update_customer = "UPDATE public.customers " + 
 			"SET nama=?, nomor_telepon=?, alamat=? "
 			+ "where \"extension\"=?; ";
+	public String query_update_user_activity="UPDATE public.user_activity" + 
+			"SET reason=?, status=?, skill=?, last_update=?" + 
+			"WHERE \"extension\"=?;";
+	public String query_update_user_history="UPDATE public.user_history" + 
+			"SET date_end=?" + 
+			"WHERE \"extension\"=? AND date_begin=NULL;";
+	
 }
