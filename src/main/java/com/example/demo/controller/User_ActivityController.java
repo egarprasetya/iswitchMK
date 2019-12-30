@@ -10,30 +10,37 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.connection.stringkoneksi;
+import com.example.demo.model.UserModel;
 import com.example.demo.model.User_ActivityModel;
+import com.example.demo.query.AllQuery;
+import com.example.demo.query.AllSelectParameterQuery;
+import com.example.demo.query.AllUpdateQuery;
 
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/user_activity")
 public class User_ActivityController
 {
-	stringkoneksi sk = new stringkoneksi();
-	
+	stringkoneksi sk = new stringkoneksi ();
+	AllSelectParameterQuery select_query = new AllSelectParameterQuery ();
+	AllQuery select_query2 = new AllQuery ();
+	AllUpdateQuery select_query3 = new AllUpdateQuery ();
 	
 	@GetMapping("/getAllActivity")
 	public List<User_ActivityModel> getAll (@RequestBody User_ActivityModel ua) throws SQLException
 	{
 		Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
 		PreparedStatement query = connection.prepareStatement ("SELECT * FROM user_activity");
-
+		
 		ResultSet Cursor1 = query.executeQuery ();
-		List<User_ActivityModel> ls = new ArrayList<User_ActivityModel>();
-		while(Cursor1.next ())
+		List<User_ActivityModel> ls = new ArrayList<User_ActivityModel> ();
+		while (Cursor1.next ())
 		{
 			User_ActivityModel uas = new User_ActivityModel ();
 			uas.extension = Cursor1.getString (1);
@@ -52,5 +59,33 @@ public class User_ActivityController
 		
 		return ls;
 	}
-
+	
+	@PostMapping("/postUpdateUserActivity")
+	public String postUpdateUserActivity (@RequestBody UserModel cfm) throws SQLException
+	{
+		
+		int flag = 0;
+		try
+		{
+			Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+			PreparedStatement a = Connection1.prepareStatement (select_query3.query_update_user_activity);
+			
+			a.setString (1, cfm.status);
+			a.setString (2, cfm.status);
+			a.setString (3, cfm.skill);
+			a.setTimestamp (4, cfm.modified);
+			a.setString (5, cfm.extensions_user);
+			
+			flag = a.executeUpdate ();// Evaluate (Connected_Expression1)
+			
+			a.close ();
+			Connection1.close ();
+			
+			return "{ " + "\"response\":" + "\"" + flag + "\" }";
+		} catch (SQLException error)
+		{
+			error.printStackTrace ();
+			return "{ " + "\"response\":" + "\"" + error.getErrorCode () + "\" }";
+		}
+	}
 }
