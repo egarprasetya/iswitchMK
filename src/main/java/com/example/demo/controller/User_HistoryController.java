@@ -10,13 +10,17 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.connection.stringkoneksi;
+import com.example.demo.model.UserModel;
 import com.example.demo.model.User_ActivityModel;
 import com.example.demo.model.User_HistoryModel;
+import com.example.demo.query.AllInsertQuery;
+import com.example.demo.query.AllUpdateQuery;
 
 @RestController
 @CrossOrigin("*")
@@ -25,6 +29,8 @@ import com.example.demo.model.User_HistoryModel;
 public class User_HistoryController
 {
 	stringkoneksi sk = new stringkoneksi ();
+	AllInsertQuery insert_query = new AllInsertQuery ();
+	AllUpdateQuery update_query = new AllUpdateQuery ();
 	
 	@GetMapping("/getAllHistory")
 	public List<User_HistoryModel> getAll (@RequestBody User_HistoryModel uh) throws SQLException
@@ -55,5 +61,46 @@ public class User_HistoryController
 		
 		return ls;
 	}
+	
+	//@PostMapping("/addUserHistory")
+	public int addUserHistory (@RequestBody UserModel um) throws SQLException
+	{
+		Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+		PreparedStatement query = connection.prepareStatement (insert_query.query_insert_user_history);
+		
+		query.setString (1, um.extensions_user);
+		query.setString (2, um.nama);
+		query.setString (3, um.status);
+		query.setString (4, um.status);
+		query.setString (5, um.skill);
+		query.setTimestamp (6, um.date_begin);
+		query.setTimestamp (7, null);
+		
+		int result = query.executeUpdate ();
+		
+		query.close ();
+		connection.close ();
+		
+		return result;
+	}
+	
+	//@PostMapping("/updateUserHistory")
+	public int updateUserHistory (@RequestBody UserModel um) throws SQLException
+	{
+		Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+		PreparedStatement query = connection.prepareStatement (update_query.query_update_user_history);
+		
+		
+		query.setTimestamp (1, um.date_end);
+		query.setString (2, um.extensions_user);
+		
+		int result = query.executeUpdate ();
+		
+		query.close ();
+		connection.close ();
+		
+		return result;
+	}
+
 
 }

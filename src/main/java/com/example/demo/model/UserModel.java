@@ -27,4 +27,8 @@ public class UserModel
 	
 	// Dummy
 	public String old_password;
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	public Timestamp date_begin;
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	public Timestamp date_end;
 }

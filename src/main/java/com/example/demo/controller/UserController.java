@@ -29,10 +29,12 @@ import com.example.demo.Enum.pjsip_auth_type_values;
 import com.example.demo.connection.stringkoneksi;
 import com.example.demo.model.CdrModel;
 import com.example.demo.model.UserModel;
+import com.example.demo.model.User_HistoryModel;
 import com.example.demo.query.AllQuery;
 import com.example.demo.query.AllSelectParameterQuery;
 import com.example.demo.query.AllUpdateQuery;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.example.demo.controller.User_HistoryController;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -95,6 +97,16 @@ public class UserController
 
 			if (!result.equals (null))
 			{
+				User_HistoryController uhc = new User_HistoryController ();
+				UserModel um = new UserModel ();
+				
+				um = result;
+				um.date_end = cfm.date_begin;
+				uhc.updateUserHistory (um);
+				
+				um.date_begin = cfm.date_begin;
+				uhc.addUserHistory (um);
+				
 				return new ResponseEntity<String> (parsedResult, HttpStatus.OK);
 			} else
 			{
@@ -323,6 +335,7 @@ public class UserController
 			String result = postAuthsLogout (cfm);
 			if (!result.equals (null))
 			{
+				
 				return new ResponseEntity<String> (result, HttpStatus.OK);
 			} else
 			{

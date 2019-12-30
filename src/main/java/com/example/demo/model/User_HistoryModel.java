@@ -14,5 +14,6 @@ public class User_HistoryModel
 	public String skill;
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	public Timestamp date_begin;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	public Timestamp date_end;
 }
