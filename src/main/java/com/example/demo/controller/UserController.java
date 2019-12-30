@@ -8,8 +8,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.Enum.pjsip_auth_type_values;
 import com.example.demo.connection.stringkoneksi;
+import com.example.demo.model.CdrModel;
 import com.example.demo.model.UserModel;
 import com.example.demo.query.AllQuery;
 import com.example.demo.query.AllSelectParameterQuery;
@@ -72,8 +75,7 @@ public class UserController
 	}
 
 	@PostMapping("/login")
-
-	public ResponseEntity<String> login2 (@RequestBody UserModel cfm)
+	public ResponseEntity<String> login (@RequestBody UserModel cfm)
 	{
 		try
 		{
@@ -179,6 +181,29 @@ public class UserController
 			return null;
 		}
 
+	}
+	
+	public String doUserActivity (UserModel cfm) throws SQLException
+	{
+		int flag = 0;
+		try
+		{
+			Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+			PreparedStatement a = Connection1.prepareStatement (select_query3.query_changeStatus);
+
+			a.setString (1, cfm.status);
+			a.setString (2, cfm.user_id);
+			flag = a.executeUpdate ();
+			
+			a.close ();
+			Connection1.close ();
+			
+			return "{ " + "\"response\":" + "\"" + flag + "\" }";
+		} catch (SQLException error)
+		{
+			error.printStackTrace ();
+			return "{ " + "\"response\":" + "\"" + error.getErrorCode () + "\" }";
+		}
 	}
 
 	@PostMapping("/changeStatusId")
@@ -795,6 +820,103 @@ public class UserController
 			return false;
 		}
 
+	}
+	
+	@PostMapping(produces = "application/json", path = "/postUserByStatusSkill")
+	public ResponseEntity<String> postUserCdr (@RequestBody UserModel cfm)
+	{
+		try
+		{
+			List<UserModel> result = doPostUserCdr (cfm);
+			String parsedResult = "[\n\t";
+			Locale locale = new Locale("us", "US");
+			DateFormat dateFormat = DateFormat.getTimeInstance(DateFormat.DEFAULT, locale);
+			for (int i = 0; i < result.size (); i++)
+			{
+				
+				ArrayList<String> formatedResultField = new ArrayList<String> ();
+				formatedResultField.add ("nama");
+				formatedResultField.add ("user_id");
+				formatedResultField.add ("username");
+				formatedResultField.add ("password");
+				formatedResultField.add ("created");
+				formatedResultField.add ("modified");
+				formatedResultField.add ("email");
+				formatedResultField.add ("password_email");
+				formatedResultField.add ("phone_number");
+				formatedResultField.add ("extensions_user");
+				formatedResultField.add ("skill");
+				formatedResultField.add ("status");
+				formatedResultField.add ("avatar");
+				
+				ArrayList<String> formatedResultValues = new ArrayList<String> ();
+				formatedResultValues.add (result.get (i).nama);
+				formatedResultValues.add (result.get (i).user_id);
+				formatedResultValues.add (result.get (i).username);
+				formatedResultValues.add (result.get (i).password);
+				formatedResultValues.add (result.get (i).created.toString ());
+				formatedResultValues.add (result.get (i).modified.toString ());
+				formatedResultValues.add (result.get (i).email);
+				formatedResultValues.add (result.get (i).password_email);
+				formatedResultValues.add (result.get (i).phone_number);
+				formatedResultValues.add (result.get (i).extensions_user);
+				formatedResultValues.add (result.get (i).skill);
+				formatedResultValues.add (result.get (i).status);
+				formatedResultValues.add (result.get (i).avatar);
+				
+				
+				parsedResult += parseToStringJSON (formatedResultField, formatedResultValues);
+				if (result.size () - 1 > i)
+				{
+					parsedResult += ",\n";
+				}
+			}
+			parsedResult += "]";
+			
+			if (result.size () > 0)
+				return new ResponseEntity<String> (parsedResult, HttpStatus.OK);
+			else
+				return new ResponseEntity<String> (HttpStatus.NOT_FOUND);
+		} catch (SQLException error_sql)
+		{
+			error_sql.printStackTrace ();
+			return new ResponseEntity<String> (HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	public List<UserModel> doPostUserCdr (UserModel cfm) throws SQLException
+	{
+		Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+		
+		PreparedStatement queryselect_cdr = Connection1.prepareStatement (select_query.query_user_by_status_skill);
+		queryselect_cdr.setString (1, cfm.status);
+		queryselect_cdr.setString (2, cfm.skill);
+		
+		ResultSet Cursor1 = queryselect_cdr.executeQuery ();// Evaluate (Connected_Expression1)
+		List<UserModel> ListUser1 = new ArrayList<UserModel> ();
+		while (Cursor1.next ()) // while there_is_next_record_in (Cursor1)
+		{
+			UserModel Modeluser = new UserModel ();
+			Modeluser.nama = Cursor1.getString (1);
+			Modeluser.user_id = Cursor1.getString (2);
+			Modeluser.username = Cursor1.getString (3);
+			Modeluser.password = Cursor1.getString (4);
+			Modeluser.created = Cursor1.getTimestamp (5);
+			Modeluser.modified = Cursor1.getTimestamp (6);
+			Modeluser.email = Cursor1.getString (7);
+			Modeluser.password_email = Cursor1.getString (8);
+			Modeluser.phone_number = Cursor1.getString (9);
+			Modeluser.extensions_user = Cursor1.getString (10);
+			Modeluser.skill = Cursor1.getString (11);
+			Modeluser.status = Cursor1.getString (12);
+			Modeluser.avatar = Cursor1.getString (13);
+			ListUser1.add (Modeluser);
+		}
+		
+		queryselect_cdr.close ();
+		Cursor1.close ();
+		Connection1.close ();
+		return ListUser1;
 	}
 
 	private String parseToStringJSON (ArrayList<String> field, ArrayList<String> values)
