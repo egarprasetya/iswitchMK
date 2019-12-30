@@ -150,6 +150,6 @@ public class AllUpdateQuery {
 			"WHERE \"extension\" = ?;";
 	public String query_update_user_history="UPDATE public.user_history" + 
 			"SET date_end=?" + 
-			"WHERE \"extension\"=? AND date_begin=NULL;";
+			"WHERE \"extension\"=? AND date_begin is NULL;";
 	
 }
