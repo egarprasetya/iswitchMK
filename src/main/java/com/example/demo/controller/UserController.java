@@ -124,24 +124,6 @@ public class UserController
 		}
 	}
 	
-//	public ResponseEntity<UserModel> login2 (@RequestBody UserModel cfm)
-//	{
-//		try
-//		{
-//			UserModel result = doLogin (cfm);
-//			if (!result.equals (null))
-//			{
-//				return new ResponseEntity<UserModel> (result, HttpStatus.OK);
-//			} else
-//			{
-//				return new ResponseEntity<UserModel> (HttpStatus.INTERNAL_SERVER_ERROR);
-//			} 
-//		} catch (SQLException | NullPointerException error_null)
-//		{
-//			return new ResponseEntity<UserModel> (HttpStatus.UNAUTHORIZED);
-//		}
-//	}
-	
 	public UserModel doLogin (UserModel cfm) throws SQLException
 	{
 		boolean hasil = false;
@@ -368,7 +350,7 @@ public class UserController
 				UserModel um = new UserModel ();
 				
 				um = result;
-				System.out.print (cfm.date_begin + "sslalalal");
+				//System.out.print (cfm.date_begin + "sslalalal");
 				um.date_end = cfm.date_begin;
 				uhc.updateUserHistory (um);
 				
@@ -405,7 +387,7 @@ public class UserController
 			
 			while (Cursor1.next ())
 			{
-				System.out.println (Cursor1.getString (1));
+				//System.out.println (Cursor1.getString (1));
 				Modeluser.nama = Cursor1.getString (1);
 				Modeluser.user_id = Cursor1.getString (2);
 				Modeluser.username = Cursor1.getString (3);
@@ -423,10 +405,10 @@ public class UserController
 				Modeluser.url_websocket = Cursor1.getString (15);
 				
 			}
-			System.out.println (Modeluser.user_id);
+			//System.out.println (Modeluser.user_id);
 			if (Modeluser.user_id != null)
 			{
-				System.out.println (Modeluser.user_id + "ssddas");
+				//System.out.println (Modeluser.user_id + "ssddas");
 				updateStatus (cfm.user_id, "0");
 				a.close ();
 				Cursor1.close ();
@@ -623,97 +605,6 @@ public class UserController
 		}
 	}
 	
-	@PostMapping("/updatePasswordMix")
-	public ResponseEntity<String> updatePasswordMix (@RequestBody UserModel dataLama, @RequestParam String passBaru)
-	{
-		try
-		{
-			String result;
-			if (doUpdatePasswordMix (dataLama, passBaru))
-			{
-				result = "Password diubah!.";
-				return new ResponseEntity<String> (result, HttpStatus.OK);
-			} else
-			{
-				result = "Password tidak cocok!.";
-				return new ResponseEntity<String> (result, HttpStatus.BAD_REQUEST);
-			}
-		} catch (SQLException error_sql)
-		{
-			error_sql.printStackTrace ();
-			return new ResponseEntity<String> (HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-	
-	@PostMapping("/updatePasswordMix2")
-	public ResponseEntity<String> updatePasswordMix2 (@RequestParam String user_id, @RequestParam String passLama,
-			@RequestBody UserModel userModel)
-	{
-		try
-		{
-			String result;
-			if (doUpdatePasswordMix2 (user_id, passLama, userModel))
-			{
-				result = "Password diubah!.";
-				return new ResponseEntity<String> (result, HttpStatus.OK);
-			} else
-			{
-				result = "Password tidak cocok!.";
-				return new ResponseEntity<String> (result, HttpStatus.BAD_REQUEST);
-			}
-		} catch (SQLException error_sql)
-		{
-			error_sql.printStackTrace ();
-			return new ResponseEntity<String> (HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-	
-	@GetMapping("/updatePasswordParam")
-	public ResponseEntity<String> updatePasswordParam (@RequestParam String id, @RequestParam String passLama,
-			@RequestParam String passBaru)
-	{
-		try
-		{
-			String result;
-			if (doUpdatePasswordParam (id, passLama, passBaru))
-			{
-				result = "Password diubah!.";
-				return new ResponseEntity<String> (result, HttpStatus.OK);
-			} else
-			{
-				result = "Password tidak cocok!.";
-				return new ResponseEntity<String> (result, HttpStatus.BAD_REQUEST);
-			}
-		} catch (SQLException error_sql)
-		{
-			error_sql.printStackTrace ();
-			return new ResponseEntity<String> (HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		
-	}
-	
-	@PostMapping("/updatePasswordBody")
-	public ResponseEntity<String> updatePasswordBody (@RequestBody UserModel data[])
-	{
-		try
-		{
-			String result;
-			if (doUpdatePasswordBody (data[0], data[1]))
-			{
-				result = "Password diubah!.";
-				return new ResponseEntity<String> (result, HttpStatus.OK);
-			} else
-			{
-				result = "Password tidak cocok!.";
-				return new ResponseEntity<String> (result, HttpStatus.BAD_REQUEST);
-			}
-		} catch (SQLException error_sql)
-		{
-			error_sql.printStackTrace ();
-			return new ResponseEntity<String> (HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-	
 	public boolean doUpdatePasswordSingleBody (UserModel userModel) throws SQLException
 	{
 		UserModel usr = new UserModel ();
@@ -741,110 +632,6 @@ public class UserController
 			return false;
 		}
 		
-	}
-	
-	public boolean doUpdatePasswordMix (UserModel dataLama, String passBaru) throws SQLException
-	{
-		
-		if (passwordChecker (dataLama))
-		{
-			Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
-			PreparedStatement query = Connection1.prepareStatement (select_query3.query_updatePassword);
-			
-			passBaru = bCryptPasswordEncoder.encode (passBaru);
-			
-			query.setString (1, passBaru);
-			query.setString (2, dataLama.user_id);
-			int flag = query.executeUpdate ();
-			
-			query.close ();
-			Connection1.close ();
-			
-			return true;
-		} else
-		{
-			return false;
-		}
-		
-	}
-	
-	public boolean doUpdatePasswordMix2 (String user_id, String passLama, UserModel userModel) throws SQLException
-	{
-		UserModel usr = new UserModel ();
-		usr.user_id = user_id;
-		usr.password = passLama;
-		
-		if (passwordChecker (usr))
-		{
-			Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
-			PreparedStatement query = Connection1.prepareStatement (select_query3.query_updatePassword);
-			
-			userModel.password = bCryptPasswordEncoder.encode (userModel.password);
-			
-			query.setString (1, userModel.password);
-			query.setString (2, usr.user_id);
-			int flag = query.executeUpdate ();
-			
-			query.close ();
-			Connection1.close ();
-			
-			return true;
-		} else
-		{
-			return false;
-		}
-		
-	}
-	
-	public boolean doUpdatePasswordParam (String user_id, String passLama, String passBaru) throws SQLException
-	{
-		UserModel usr = new UserModel ();
-		usr.user_id = user_id;
-		usr.password = passLama;
-		
-		if (passwordChecker (usr))
-		{
-			Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
-			PreparedStatement query = Connection1.prepareStatement (select_query3.query_updatePassword);
-			
-			passBaru = bCryptPasswordEncoder.encode (passBaru);
-			
-			query.setString (1, passBaru);
-			query.setString (2, usr.user_id);
-			int flag = query.executeUpdate ();
-			
-			query.close ();
-			Connection1.close ();
-			
-			return true;
-		} else
-		{
-			return false;
-		}
-		
-	}
-	
-	public boolean doUpdatePasswordBody (UserModel dataLama, UserModel dataBaru) throws SQLException
-	{
-		if (passwordChecker (dataLama))
-		{
-			Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
-			PreparedStatement query = Connection1.prepareStatement (select_query3.query_updatePassword);
-			
-			dataBaru.password = bCryptPasswordEncoder.encode (dataBaru.password);
-			
-			query.setString (1, dataBaru.password);
-			query.setString (2, dataBaru.user_id);
-			int flag = query.executeUpdate ();
-			
-			query.close ();
-			Connection1.close ();
-			
-			return true;
-		} else
-		{
-			return false;
-		}
 	}
 	
 	public boolean passwordChecker (UserModel userModel)
