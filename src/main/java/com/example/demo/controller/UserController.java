@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.Enum.pjsip_auth_type_values;
 import com.example.demo.connection.stringkoneksi;
 import com.example.demo.model.CdrModel;
+import com.example.demo.model.Queue_MemberModel;
 import com.example.demo.model.UserModel;
 import com.example.demo.model.User_HistoryModel;
 import com.example.demo.query.AllQuery;
@@ -668,11 +669,11 @@ public class UserController
 	}
 	
 	@PostMapping(produces = "application/json", path = "/postUserByStatusSkill")
-	public ResponseEntity<String> postUserCdr (@RequestBody UserModel cfm)
+	public ResponseEntity<String> postUserCdr (@RequestBody Queue_MemberModel cfm)
 	{
 		try
 		{
-			List<UserModel> result = doPostUserCdr (cfm);
+			List<UserModel> result = doUserByStatusSkill  (cfm);
 			String parsedResult = "[\n\t";
 			Locale locale = new Locale ("us", "US");
 			DateFormat dateFormat = DateFormat.getTimeInstance (DateFormat.DEFAULT, locale);
@@ -728,13 +729,12 @@ public class UserController
 		}
 	}
 	
-	public List<UserModel> doPostUserCdr (UserModel cfm) throws SQLException
+	public List<UserModel> doUserByStatusSkill (Queue_MemberModel cfm) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
 		
 		PreparedStatement queryselect_cdr = Connection1.prepareStatement (select_query.query_user_by_status_skill);
-		queryselect_cdr.setString (1, cfm.status);
-		queryselect_cdr.setString (2, cfm.skill);
+		queryselect_cdr.setString (1, cfm.queue_name);
 		
 		ResultSet Cursor1 = queryselect_cdr.executeQuery ();// Evaluate (Connected_Expression1)
 		List<UserModel> ListUser1 = new ArrayList<UserModel> ();
@@ -762,6 +762,7 @@ public class UserController
 		Connection1.close ();
 		return ListUser1;
 	}
+	
 	
 	private String parseToStringJSON (ArrayList<String> field, ArrayList<String> values)
 	{

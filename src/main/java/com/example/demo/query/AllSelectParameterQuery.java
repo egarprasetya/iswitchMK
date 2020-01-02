@@ -70,6 +70,9 @@ public class AllSelectParameterQuery {
 	
 	public String query_customer = "SELECT * FROM customers WHERE extension = ?";
 	
-	public String query_user_by_status_skill = "SELECT * FROM users WHERE status = ? and skill = ?";
+	public String query_user_by_status_skill = "select users.* " + 
+			"from users join queue_members on users.skill = queue_members.interface " + 
+			"where " + 
+			"queue_members.queue_name = '?' and users.status = '1' and queue_members.paused = 0;";
 	
 }
