@@ -35,8 +35,8 @@ public class Queue_MemberController
 	AllInsertQuery query_string_insert = new AllInsertQuery();
 	PreparedStatement query_insert_queue_members = null;
 
-	@PutMapping("/putQueueMember")
-	public String putQueueMember(@RequestBody Queue_MemberModel cfm) throws SQLException
+	@PostMapping("/addQueueMember")
+	public String addQueueMember(@RequestBody Queue_MemberModel cfm) throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		query_insert_queue_members = Connection1.prepareStatement(query_string_insert.query_insert_queue_members);
@@ -47,15 +47,43 @@ public class Queue_MemberController
 		query_insert_queue_members.setString(4, cfm.state_interface);
 		query_insert_queue_members.setInt(5, cfm.penalty);
 		query_insert_queue_members.setInt(6, cfm.paused);
-		query_insert_queue_members.setInt(7, cfm.uniqueid);
+		query_insert_queue_members.setInt(7, cfm.wrapuptime);
 
 		int Cursor1 = query_insert_queue_members.executeUpdate();// Evaluate (Connected_Expression1)
 		String a = "1";
 		Connection1.close();
 		return a;
 	}
+	
+	@PostMapping("/updateQueueName")
+	public int updateQueueName(@RequestBody Queue_MemberModel cfm) throws SQLException
+	{
+		Connection connection = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+		PreparedStatement query = connection.prepareStatement ("UPDATE queue_members SET queue_name = ? WHERE interface = concat('PJSIP/',?) ; ");
+		
+		query.setString (1, cfm.queue_name);
+		query.setString (2, cfm.extension);
+		
+		int Cursor1 = query.executeUpdate ();
+		
+		return Cursor1;
+	}
+	
+	@PostMapping("/updatePaused")
+	public int updatePaused(@RequestBody Queue_MemberModel cfm) throws SQLException
+	{
+		Connection connection = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+		PreparedStatement query = connection.prepareStatement ("UPDATE queue_members SET paused = ? WHERE interface = concat('PJSIP/',?) ; ");
+		
+		query.setInt (1, cfm.paused);
+		query.setString (2, cfm.extension);
+		
+		int Cursor1 = query.executeUpdate ();
+		
+		return Cursor1;
+	}
 
-	@GetMapping("/getQueueMember")
+	@GetMapping("/getAllQueueMember")
 	public ArrayList<Queue_MemberModel> getQueueMember() throws SQLException
 	{
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
@@ -79,6 +107,8 @@ public class Queue_MemberController
 		Connection1.close();
 		return ListUser1;
 	}
+	
+	
 
 	@DeleteMapping(path = "/deleteQueueMember", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public int deleteQueueMember(@RequestBody Queue_MemberModel cfm) throws SQLException

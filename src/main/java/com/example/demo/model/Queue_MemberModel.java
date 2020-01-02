@@ -9,4 +9,8 @@ public class Queue_MemberModel
 	public int penalty;
 	public int paused;
 	public int uniqueid;
+	public int wrapuptime;
+	
+	// Dummy
+	public String extension;
 }

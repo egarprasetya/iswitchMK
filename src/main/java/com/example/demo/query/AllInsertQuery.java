@@ -88,7 +88,7 @@ public class AllInsertQuery {
 			"(calldatetime, time, callid, queuename, agent, event, data, data1, data2, data3, data4, data5) " + 
 			"VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	public String query_insert_queue_members="INSERT INTO queue_members " + 
-			"(queue_name, interface, membername, state_interface, penalty, paused, uniqueid) " + 
+			"(queue_name, interface, membername, state_interface, penalty, paused, wrapuptime) " + 
 			"VALUES(?, ?, ?, ?, ?, ?, ?)";
 	public String query_insert_queue_rules="INSERT INTO queue_rules " + 
 			"(rule_name, time, min_penalty, max_penalty) " + 
