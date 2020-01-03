@@ -90,7 +90,7 @@ public class User_HistoryController
 		Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
 		PreparedStatement query = connection.prepareStatement (update_query.query_update_user_history);
 		
-		System.out.print (um.date_end + "jncjndsjc");
+		//System.out.print (um.date_end + "jncjndsjc");
 		query.setTimestamp (1, um.date_end);
 		query.setString (2, um.extensions_user);
 		

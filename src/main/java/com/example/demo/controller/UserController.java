@@ -135,7 +135,7 @@ public class UserController
 		ResultSet Cursor1 = a.executeQuery ();
 		if (Cursor1.next ())
 		{
-			String encodedPassword = Cursor1.getString (4);
+			String encodedPassword = Cursor1.getString (3);
 			hasil = bCryptPasswordEncoder.matches (cfm.password, encodedPassword);
 			if (hasil)
 			{
