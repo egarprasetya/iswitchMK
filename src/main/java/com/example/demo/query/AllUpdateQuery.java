@@ -127,21 +127,21 @@ public class AllUpdateQuery {
 			"SET context=?, mailbox=?, password=?, fullname=?, alias=?, email=?, pager=?, attach=?::yesno_values, attachfmt=?, serveremail=?, language=?, tz=?, deletevoicemail=?::yesno_values, saycid=?::yesno_values, sendvoicemail=?::yesno_values, review=?::yesno_values, tempgreetwarn=?::yesno_values, operator=?::yesno_values, envelope=?::yesno_values, sayduration=?, forcename=?::yesno_values, forcegreetings=?::yesno_values, callback=?, dialout=?, exitcontext=?, maxmsg=?, volgain=?, imapuser=?, imappassword=?, imapserver=?, imapport=?, imapflags=?, stamp=? " + 
 			"WHERE uniqueid=?;";
 
-	public String query_login2 = "UPDATE users SET status = ? WHERE user_id=?";
+	public String query_login2 = "UPDATE users SET status = ? WHERE extension_user=?";			// user_id;
 	
 	public String query_login3 = "UPDATE users SET status = ? WHERE username=?";
 	
 	public String query_updateUserById = "UPDATE users "
 	+ "SET nama=?, username=?, \"password\"=?, email=?, modified=?::timestamp, password_email=?, phone_number=?::numeric, extension_user=?, skill=?, status=?, avatar=? "
-	+ "WHERE user_id=?;";
+	+ "WHERE extension_user=?;";			// user_id;
 	
 	public String query_updatePassword = "UPDATE users "
 			+ "SET \"password\"=? "
-			+ "WHERE user_id=?;";
+			+ "WHERE extension_user=?;";			// user_id
 	
 	public String query_changeStatus = "UPDATE users "
 			+ "SET status=?"
-			+ " WHERE user_id=?";
+			+ " WHERE extension_user=?";			// user_id
 	public String query_update_customer = "UPDATE public.customers " + 
 			"SET nama=?, nomor_telepon=?, alamat=? "
 			+ "where \"extension\"=?; ";
