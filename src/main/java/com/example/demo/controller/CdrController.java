@@ -198,7 +198,7 @@ public class CdrController
 		Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
 		
 		PreparedStatement queryselect_cdr = Connection1.prepareStatement (query_string2.query_get_user_cdr);
-		queryselect_cdr.setString (1, cfm.user_id);
+		queryselect_cdr.setString (1, cfm.extensions_user);
 		
 		ResultSet Cursor1 = queryselect_cdr.executeQuery ();// Evaluate (Connected_Expression1)
 		List<CdrModel> ListUser1 = new ArrayList<CdrModel> ();

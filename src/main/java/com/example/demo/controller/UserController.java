@@ -55,7 +55,7 @@ public class UserController
 	{
 		Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
 		PreparedStatement query = connection.prepareStatement (
-				"INSERT INTO users (nama, user_id, username, password, password_email, extension_user) VALUES (?,?,?,?,?,?);"
+				"INSERT INTO users (nama, username, password, password_email, extension_user) VALUES (?,?,?,?,?,?);"
 						+ "	INSERT INTO ps_auths (id, password) VALUES (?,?);");
 		String rawPassword = akun.password;
 		// String encodedPassword = bCryptPasswordEncoder.encode(akun.getPassword());
