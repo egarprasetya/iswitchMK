@@ -51,6 +51,7 @@ public class Queue_MemberController
 
 		int Cursor1 = query_insert_queue_members.executeUpdate();// Evaluate (Connected_Expression1)
 		String a = "1";
+		query_insert_queue_members.close ();
 		Connection1.close();
 		return a;
 	}
@@ -65,6 +66,8 @@ public class Queue_MemberController
 		query.setString (2, cfm.extension);
 		
 		int Cursor1 = query.executeUpdate ();
+		query.close ();
+		connection.close ();
 		
 		return Cursor1;
 	}
@@ -79,6 +82,8 @@ public class Queue_MemberController
 		query.setString (2, cfm.extension);
 		
 		int Cursor1 = query.executeUpdate ();
+		query.close ();
+		connection.close ();
 		
 		return Cursor1;
 	}
@@ -105,6 +110,7 @@ public class Queue_MemberController
 
 		}
 		Connection1.close();
+		queryselect_queuemember.close ();
 		return ListUser1;
 	}
 	
@@ -119,6 +125,7 @@ public class Queue_MemberController
 		int Cursor1 = querydelete_alembic_version_config.executeUpdate();// Evaluate (Connected_Expression1)
 		int a = 0;
 		Connection1.close();
+		querydelete_alembic_version_config.close ();
 		return a;
 	}
 
