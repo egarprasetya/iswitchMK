@@ -61,14 +61,13 @@ public class UserController
 		// String encodedPassword = bCryptPasswordEncoder.encode(akun.getPassword());
 		akun.password = bCryptPasswordEncoder.encode (akun.password);
 		query.setString (1, akun.nama);
-		query.setString (2, akun.user_id);
-		query.setString (3, akun.username);
-		query.setString (4, akun.password);
-		query.setString (5, akun.password_email);
-		query.setString (6, akun.extensions_user);
+		query.setString (2, akun.username);
+		query.setString (3, akun.password);
+		query.setString (4, akun.password_email);
+		query.setString (5, akun.extensions_user);
 		
-		query.setString (7, akun.extensions_user);
-		query.setString (8, rawPassword);
+		query.setString (6, akun.extensions_user);
+		query.setString (7, rawPassword);
 		int flag = query.executeUpdate ();
 		
 		query.close ();
@@ -85,12 +84,12 @@ public class UserController
 			UserModel result = doLogin (cfm);
 			
 			ArrayList<String> formatedResultField = new ArrayList<String> ();
-			formatedResultField.add ("user_id");
+			formatedResultField.add ("extension_user");
 			formatedResultField.add ("websocket");
 			formatedResultField.add ("url_websocket");
 			
 			ArrayList<String> formatedResultValues = new ArrayList<String> ();
-			formatedResultValues.add (result.user_id);
+			formatedResultValues.add (result.extensions_user);
 			formatedResultValues.add (result.websocket);
 			formatedResultValues.add (result.url_websocket);
 			
@@ -145,20 +144,19 @@ public class UserController
 				UserModel Modeluser = new UserModel ();
 				
 				Modeluser.nama = Cursor1.getString (1);
-				Modeluser.user_id = Cursor1.getString (2);
-				Modeluser.username = Cursor1.getString (3);
-				Modeluser.password = Cursor1.getString (4);
-				Modeluser.created = Cursor1.getTimestamp (5);
-				Modeluser.modified = Cursor1.getTimestamp (6);
-				Modeluser.email = Cursor1.getString (7);
-				Modeluser.password_email = Cursor1.getString (8);
-				Modeluser.phone_number = Cursor1.getString (9);
-				Modeluser.extensions_user = Cursor1.getString (10);
-				Modeluser.skill = Cursor1.getString (11);
-				Modeluser.status = Cursor1.getString (12);
-				Modeluser.avatar = Cursor1.getString (13);
-				Modeluser.websocket = Cursor1.getString (14);
-				Modeluser.url_websocket = Cursor1.getString (15);
+				Modeluser.username = Cursor1.getString (2);
+				Modeluser.password = Cursor1.getString (3);
+				Modeluser.created = Cursor1.getTimestamp (4);
+				Modeluser.modified = Cursor1.getTimestamp (5);
+				Modeluser.email = Cursor1.getString (6);
+				Modeluser.password_email = Cursor1.getString (7);
+				Modeluser.phone_number = Cursor1.getString (8);
+				Modeluser.extensions_user = Cursor1.getString (9);
+				Modeluser.skill = Cursor1.getString (10);
+				Modeluser.status = Cursor1.getString (11);
+				Modeluser.avatar = Cursor1.getString (12);
+				Modeluser.websocket = Cursor1.getString (13);
+				Modeluser.url_websocket = Cursor1.getString (14);
 				
 				a.close ();
 				Cursor1.close ();
@@ -225,7 +223,7 @@ public class UserController
 			PreparedStatement a = Connection1.prepareStatement (select_query3.query_changeStatus);
 			
 			a.setString (1, cfm.status);
-			a.setString (2, cfm.user_id);
+			a.setString (2, cfm.extensions_user);
 			flag = a.executeUpdate ();
 			
 			a.close ();
@@ -234,27 +232,26 @@ public class UserController
 			Connection Connection2 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
 			PreparedStatement b = Connection2.prepareStatement (select_query.query_logout);
 			
-			b.setString (1, cfm.user_id);
+			b.setString (1, cfm.extensions_user);
 			ResultSet Cursor1 = b.executeQuery ();// Evaluate (Connected_Expression1)
 			
 			while (Cursor1.next ())
 			{
 				
 				Modeluser.nama = Cursor1.getString (1);
-				Modeluser.user_id = Cursor1.getString (2);
-				Modeluser.username = Cursor1.getString (3);
-				Modeluser.password = Cursor1.getString (4);
-				Modeluser.created = Cursor1.getTimestamp (5);
-				Modeluser.modified = Cursor1.getTimestamp (6);
-				Modeluser.email = Cursor1.getString (7);
-				Modeluser.password_email = Cursor1.getString (8);
-				Modeluser.phone_number = Cursor1.getString (9);
-				Modeluser.extensions_user = Cursor1.getString (10);
-				Modeluser.skill = Cursor1.getString (11);
-				Modeluser.status = Cursor1.getString (12);
-				Modeluser.avatar = Cursor1.getString (13);
-				Modeluser.websocket = Cursor1.getString (14);
-				Modeluser.url_websocket = Cursor1.getString (15);
+				Modeluser.username = Cursor1.getString (2);
+				Modeluser.password = Cursor1.getString (3);
+				Modeluser.created = Cursor1.getTimestamp (4);
+				Modeluser.modified = Cursor1.getTimestamp (5);
+				Modeluser.email = Cursor1.getString (6);
+				Modeluser.password_email = Cursor1.getString (7);
+				Modeluser.phone_number = Cursor1.getString (8);
+				Modeluser.extensions_user = Cursor1.getString (9);
+				Modeluser.skill = Cursor1.getString (10);
+				Modeluser.status = Cursor1.getString (11);
+				Modeluser.avatar = Cursor1.getString (12);
+				Modeluser.websocket = Cursor1.getString (13);
+				Modeluser.url_websocket = Cursor1.getString (14);
 				
 			}
 			b.close ();
@@ -311,18 +308,17 @@ public class UserController
 			{
 				UserModel Modeluser = new UserModel ();
 				Modeluser.nama = Cursor1.getString (1);
-				Modeluser.user_id = Cursor1.getString (2);
-				Modeluser.username = Cursor1.getString (3);
-				Modeluser.password = Cursor1.getString (4);
-				Modeluser.created = Cursor1.getTimestamp (5);
-				Modeluser.modified = Cursor1.getTimestamp (6);
-				Modeluser.email = Cursor1.getString (7);
-				Modeluser.password_email = Cursor1.getString (8);
-				Modeluser.phone_number = Cursor1.getString (9);
-				Modeluser.extensions_user = Cursor1.getString (10);
-				Modeluser.skill = Cursor1.getString (11);
-				Modeluser.status = Cursor1.getString (12);
-				Modeluser.avatar = Cursor1.getString (13);
+				Modeluser.username = Cursor1.getString (2);
+				Modeluser.password = Cursor1.getString (3);
+				Modeluser.created = Cursor1.getTimestamp (4);
+				Modeluser.modified = Cursor1.getTimestamp (5);
+				Modeluser.email = Cursor1.getString (6);
+				Modeluser.password_email = Cursor1.getString (7);
+				Modeluser.phone_number = Cursor1.getString (8);
+				Modeluser.extensions_user = Cursor1.getString (9);
+				Modeluser.skill = Cursor1.getString (10);
+				Modeluser.status = Cursor1.getString (11);
+				Modeluser.avatar = Cursor1.getString (12);
 				ListUser1.add (Modeluser);
 			}
 			
@@ -383,34 +379,33 @@ public class UserController
 			Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
 			PreparedStatement a = connection.prepareStatement (select_query.query_logout);
 			
-			a.setString (1, cfm.user_id);
+			a.setString (1, cfm.extensions_user);
 			ResultSet Cursor1 = a.executeQuery ();// Evaluate (Connected_Expression1)
 			
 			while (Cursor1.next ())
 			{
 				//System.out.println (Cursor1.getString (1));
 				Modeluser.nama = Cursor1.getString (1);
-				Modeluser.user_id = Cursor1.getString (2);
-				Modeluser.username = Cursor1.getString (3);
-				Modeluser.password = Cursor1.getString (4);
-				Modeluser.created = Cursor1.getTimestamp (5);
-				Modeluser.modified = Cursor1.getTimestamp (6);
-				Modeluser.email = Cursor1.getString (7);
-				Modeluser.password_email = Cursor1.getString (8);
-				Modeluser.phone_number = Cursor1.getString (9);
-				Modeluser.extensions_user = Cursor1.getString (10);
-				Modeluser.skill = Cursor1.getString (11);
-				Modeluser.status = Cursor1.getString (12);
-				Modeluser.avatar = Cursor1.getString (13);
-				Modeluser.websocket = Cursor1.getString (14);
-				Modeluser.url_websocket = Cursor1.getString (15);
+				Modeluser.username = Cursor1.getString (2);
+				Modeluser.password = Cursor1.getString (3);
+				Modeluser.created = Cursor1.getTimestamp (4);
+				Modeluser.modified = Cursor1.getTimestamp (5);
+				Modeluser.email = Cursor1.getString (6);
+				Modeluser.password_email = Cursor1.getString (7);
+				Modeluser.phone_number = Cursor1.getString (8);
+				Modeluser.extensions_user = Cursor1.getString (9);
+				Modeluser.skill = Cursor1.getString (10);
+				Modeluser.status = Cursor1.getString (11);
+				Modeluser.avatar = Cursor1.getString (12);
+				Modeluser.websocket = Cursor1.getString (13);
+				Modeluser.url_websocket = Cursor1.getString (14);
 				
 			}
 			//System.out.println (Modeluser.user_id);
-			if (Modeluser.user_id != null)
+			if (Modeluser.extensions_user != null)
 			{
 				//System.out.println (Modeluser.user_id + "ssddas");
-				updateStatus (cfm.user_id, "0");
+				updateStatus (cfm.extensions_user, "0");
 				a.close ();
 				Cursor1.close ();
 				connection.close ();
@@ -474,7 +469,7 @@ public class UserController
 		Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
 		PreparedStatement a = Connection1.prepareStatement (select_query.query_profil);
 		
-		a.setString (1, cfm.user_id);
+		a.setString (1, cfm.extensions_user);
 		ResultSet Cursor1 = a.executeQuery ();// Evaluate (Connected_Expression1)
 		ArrayList<UserModel> ListUser1 = new ArrayList<UserModel> ();
 		Cursor1.next ();
@@ -496,24 +491,23 @@ public class UserController
 		Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
 		PreparedStatement a = Connection1.prepareStatement (select_query.query_profil);
 		
-		a.setString (1, cfm.user_id);
+		a.setString (1, cfm.extensions_user);
 		ResultSet Cursor1 = a.executeQuery ();// Evaluate (Connected_Expression1)
 		ArrayList<UserModel> ListUser1 = new ArrayList<UserModel> ();
 		Cursor1.next ();
 		UserModel Modeluser = new UserModel ();
 		Modeluser.nama = Cursor1.getString (1);
-		Modeluser.user_id = Cursor1.getString (2);
-		Modeluser.username = Cursor1.getString (3);
-		Modeluser.password = Cursor1.getString (4);
-		Modeluser.created = Cursor1.getTimestamp (5);
-		Modeluser.modified = Cursor1.getTimestamp (6);
-		Modeluser.email = Cursor1.getString (7);
-		Modeluser.password_email = Cursor1.getString (8);
-		Modeluser.phone_number = Cursor1.getString (9);
-		Modeluser.extensions_user = Cursor1.getString (10);
-		Modeluser.skill = Cursor1.getString (11);
-		Modeluser.status = Cursor1.getString (12);
-		Modeluser.avatar = Cursor1.getString (13);
+		Modeluser.username = Cursor1.getString (2);
+		Modeluser.password = Cursor1.getString (3);
+		Modeluser.created = Cursor1.getTimestamp (4);
+		Modeluser.modified = Cursor1.getTimestamp (5);
+		Modeluser.email = Cursor1.getString (6);
+		Modeluser.password_email = Cursor1.getString (7);
+		Modeluser.phone_number = Cursor1.getString (8);
+		Modeluser.extensions_user = Cursor1.getString (9);
+		Modeluser.skill = Cursor1.getString (10);
+		Modeluser.status = Cursor1.getString (11);
+		Modeluser.avatar = Cursor1.getString (12);
 		ListUser1.add (Modeluser);
 		
 		a.close ();
@@ -564,11 +558,10 @@ public class UserController
 			query.setString (5, dtf.format (now).toString ());
 			query.setString (6, cfm.password_email);
 			query.setString (7, cfm.phone_number);
-			query.setString (8, cfm.extensions_user);
-			query.setString (9, cfm.skill);
-			query.setString (10, cfm.status);
-			query.setString (11, cfm.avatar);
-			query.setString (12, cfm.user_id);
+			query.setString (8, cfm.skill);
+			query.setString (9, cfm.status);
+			query.setString (10, cfm.avatar);
+			query.setString (11, cfm.extensions_user);
 			
 			flag = query.executeUpdate ();
 			
@@ -609,7 +602,7 @@ public class UserController
 	public boolean doUpdatePasswordSingleBody (UserModel userModel) throws SQLException
 	{
 		UserModel usr = new UserModel ();
-		usr.user_id = userModel.user_id;
+		usr.extensions_user = userModel.extensions_user;
 		usr.password = userModel.old_password;
 		
 		if (passwordChecker (usr))
@@ -620,7 +613,7 @@ public class UserController
 			userModel.password = bCryptPasswordEncoder.encode (userModel.password);
 			
 			query.setString (1, userModel.password);
-			query.setString (2, usr.user_id);
+			query.setString (2, usr.extensions_user);
 			
 			int flag = query.executeUpdate ();
 			
@@ -643,7 +636,7 @@ public class UserController
 			Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
 			PreparedStatement a = Connection1.prepareStatement (select_query.query_password);
 			
-			a.setString (1, userModel.user_id);
+			a.setString (1, userModel.extensions_user);
 			
 			ResultSet Cursor1 = a.executeQuery ();
 			if (Cursor1.next ())
@@ -682,7 +675,6 @@ public class UserController
 				
 				ArrayList<String> formatedResultField = new ArrayList<String> ();
 				formatedResultField.add ("nama");
-				formatedResultField.add ("user_id");
 				formatedResultField.add ("username");
 				formatedResultField.add ("password");
 				formatedResultField.add ("created");
@@ -697,7 +689,6 @@ public class UserController
 				
 				ArrayList<String> formatedResultValues = new ArrayList<String> ();
 				formatedResultValues.add (result.get (i).nama);
-				formatedResultValues.add (result.get (i).user_id);
 				formatedResultValues.add (result.get (i).username);
 				formatedResultValues.add (result.get (i).password);
 				formatedResultValues.add (result.get (i).created.toString ());
@@ -742,18 +733,17 @@ public class UserController
 		{
 			UserModel Modeluser = new UserModel ();
 			Modeluser.nama = Cursor1.getString (1);
-			Modeluser.user_id = Cursor1.getString (2);
-			Modeluser.username = Cursor1.getString (3);
-			Modeluser.password = Cursor1.getString (4);
-			Modeluser.created = Cursor1.getTimestamp (5);
-			Modeluser.modified = Cursor1.getTimestamp (6);
-			Modeluser.email = Cursor1.getString (7);
-			Modeluser.password_email = Cursor1.getString (8);
-			Modeluser.phone_number = Cursor1.getString (9);
-			Modeluser.extensions_user = Cursor1.getString (10);
-			Modeluser.skill = Cursor1.getString (11);
-			Modeluser.status = Cursor1.getString (12);
-			Modeluser.avatar = Cursor1.getString (13);
+			Modeluser.username = Cursor1.getString (2);
+			Modeluser.password = Cursor1.getString (3);
+			Modeluser.created = Cursor1.getTimestamp (4);
+			Modeluser.modified = Cursor1.getTimestamp (5);
+			Modeluser.email = Cursor1.getString (6);
+			Modeluser.password_email = Cursor1.getString (7);
+			Modeluser.phone_number = Cursor1.getString (8);
+			Modeluser.extensions_user = Cursor1.getString (9);
+			Modeluser.skill = Cursor1.getString (10);
+			Modeluser.status = Cursor1.getString (11);
+			Modeluser.avatar = Cursor1.getString (12);
 			ListUser1.add (Modeluser);
 		}
 		

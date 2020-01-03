@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class UserModel
 {
-	public String user_id;
 	public String nama;
 	public String username;
 	public String password;
