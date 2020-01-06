@@ -60,6 +60,35 @@ public class User_ActivityController
 		return ls;
 	}
 	
+	@PostMapping("/insertUserActivity")
+	public String insertUserActivity (@RequestBody User_ActivityModel cfm) throws SQLException
+	{
+		
+		int flag = 0;
+		try
+		{
+			Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+			PreparedStatement a = Connection1.prepareStatement (select_query3.query_update_user_activity);
+			a.setString (1, cfm.extension);
+			a.setString (2, cfm.nama_user);
+			a.setString (3, cfm.status);
+			a.setString (4, cfm.status);
+			a.setString (5, cfm.skill);
+			a.setTimestamp (6, cfm.last_update);
+			
+			flag = a.executeUpdate ();// Evaluate (Connected_Expression1)
+			
+			a.close ();
+			Connection1.close ();
+			
+			return "{ " + "\"response\":" + "\"" + flag + "\" }";
+		} catch (SQLException error)
+		{
+			error.printStackTrace ();
+			return "{ " + "\"response\":" + "\"" + error.getErrorCode () + "\" }";
+		}
+	}
+	
 	@PostMapping("/postUpdateUserActivity")
 	public String postUpdateUserActivity (@RequestBody UserModel cfm) throws SQLException
 	{

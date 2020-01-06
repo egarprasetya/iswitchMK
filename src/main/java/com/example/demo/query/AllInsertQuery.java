@@ -129,5 +129,9 @@ public class AllInsertQuery {
 	public String query_insert_user_history = "INSERT INTO public.user_history" + 
 			"(\"extension\", nama_user, reason, status, skill, date_begin, date_end)" + 
 			"VALUES(?, ?, ?, ?, ?, ?, ?);";
+	
+	public String query_insert_user_activity = "INSERT INTO public.user_activity " + 
+			"(\"extension\", nama_user, reason, status, skill, last_update) " + 
+			"VALUES(?, ?, ?, ?, ?, ?);";
 
 }
