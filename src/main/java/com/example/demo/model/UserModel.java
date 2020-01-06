@@ -1,6 +1,5 @@
 package com.example.demo.model;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
