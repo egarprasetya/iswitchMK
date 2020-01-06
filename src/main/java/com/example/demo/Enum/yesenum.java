@@ -6,7 +6,7 @@ public class yesenum
 	{
 		yes("yes"), no("no");
 
-		private yesno_values name;
+//		private yesno_values name;
 		public String as;
 
 		private String action;

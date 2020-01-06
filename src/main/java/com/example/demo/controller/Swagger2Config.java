@@ -27,7 +27,7 @@ public class Swagger2Config
 
 	private ApiInfo apiEndPointsInfo()
 	{
-		return new ApiInfoBuilder().title("Spring Boot REST API").description("iSwitch API")
+		return new ApiInfoBuilder().title("PT. MITRA KREASINDO REST API").description("i-Switch API Project")
 				/*
 				 * .contact(new Contact("Ramesh Fadatare", "www.javaguides.net",
 				 * "ramesh24fadatare@gmail.com")) .license("Apache 2.0")
