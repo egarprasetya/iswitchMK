@@ -108,7 +108,7 @@ public class UserController
 			
 			if (!result.equals (null))
 			{
-				User_HistoryController uhc = new User_HistoryController ();
+				User_HistoryController uhc = new User_HistoryController (ds);
 				User_ActivityController uac = new User_ActivityController ();
 				UserModel um = new UserModel ();
 				
@@ -200,7 +200,7 @@ public class UserController
 			UserModel result = doChangeStatusId (cfm);
 			if (!result.equals (null))
 			{
-				User_HistoryController uhc = new User_HistoryController ();
+				User_HistoryController uhc = new User_HistoryController (ds);
 				User_ActivityController uac = new User_ActivityController ();
 				UserModel um = new UserModel ();
 				
@@ -359,7 +359,7 @@ public class UserController
 			
 			if (!result.equals (null))
 			{
-				User_HistoryController uhc = new User_HistoryController ();
+				User_HistoryController uhc = new User_HistoryController (ds);
 				User_ActivityController uac = new User_ActivityController ();
 				UserModel um = new UserModel ();
 				

@@ -1,23 +1,25 @@
 package com.example.demo.controller;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
+//import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+//import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.connection.stringkoneksi;
+//import com.example.demo.connection.stringkoneksi;
 import com.example.demo.model.UserModel;
-import com.example.demo.model.User_ActivityModel;
+//import com.example.demo.model.User_ActivityModel;
 import com.example.demo.model.User_HistoryModel;
 import com.example.demo.query.AllInsertQuery;
 import com.example.demo.query.AllUpdateQuery;
@@ -28,14 +30,24 @@ import com.example.demo.query.AllUpdateQuery;
 
 public class User_HistoryController
 {
-	stringkoneksi sk = new stringkoneksi ();
+	//stringkoneksi sk = new stringkoneksi ();
 	AllInsertQuery insert_query = new AllInsertQuery ();
 	AllUpdateQuery update_query = new AllUpdateQuery ();
+	
+	DataSource ds = null;
+	
+	public User_HistoryController(DataSource ds) {
+		this.ds = ds;
+	}
+	
+//	public User_HistoryController() {
+//	}
 	
 	@GetMapping("/getAllHistory")
 	public List<User_HistoryModel> getAll (@RequestBody User_HistoryModel uh) throws SQLException
 	{
-		Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+		//Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+		Connection connection = ds.getConnection();
 		PreparedStatement query = connection.prepareStatement ("SELECT * FROM user_history");
 		
 		ResultSet Cursor1 = query.executeQuery ();
@@ -65,7 +77,8 @@ public class User_HistoryController
 	//@PostMapping("/addUserHistory")
 	public int addUserHistory (@RequestBody UserModel um) throws SQLException
 	{
-		Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+		//Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+		Connection connection = ds.getConnection();
 		PreparedStatement query = connection.prepareStatement (insert_query.query_insert_user_history);
 		
 		query.setString (1, um.extensions_user);
@@ -87,7 +100,8 @@ public class User_HistoryController
 	//@PostMapping("/updateUserHistory")
 	public int updateUserHistory (@RequestBody UserModel um) throws SQLException
 	{
-		Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+		//Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+		Connection connection = ds.getConnection();
 		PreparedStatement query = connection.prepareStatement (update_query.query_update_user_history);
 		
 		//System.out.print (um.date_end + "jncjndsjc");
