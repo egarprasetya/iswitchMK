@@ -95,11 +95,13 @@ public class UserController
 			UserModel result = doLogin (cfm);
 			
 			ArrayList<String> formatedResultField = new ArrayList<String> ();
+			formatedResultField.add ("user_id");
 			formatedResultField.add ("extension_user");
 			formatedResultField.add ("websocket");
 			formatedResultField.add ("url_websocket");
 			
 			ArrayList<String> formatedResultValues = new ArrayList<String> ();
+			formatedResultValues.add (String.valueOf(result.user_id));
 			formatedResultValues.add (result.extensions_user);
 			formatedResultValues.add (result.websocket);
 			formatedResultValues.add (result.url_websocket);
