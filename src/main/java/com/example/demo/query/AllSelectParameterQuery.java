@@ -38,34 +38,34 @@ public class AllSelectParameterQuery {
 	
 	public String query_password = "select users.password "
 			+ "from users  "
-			+ "where extension_user = ? "; 			// where user_id
+			+ "where user_id = ? "; 			// where user_id
 	
 	public String query_login0 = "select * "
 			+ "from users "
 			+ "where users.username = ? and users.password = ? "; 
 	 
-	public String query_login1 = "select id_user, extension_user" + 
-			"from users"
-			+ "where username = ? and password = ?";
+//	public String query_login1 = "select id_user, extension_user" + 
+//			"from users"
+//			+ "where username = ? and password = ?";
 	
-	public String query_logout = "SELECT * FROM users WHERE extension_user = ?"; // where user_id;
+	public String query_logout = "SELECT * FROM users WHERE user_id = ?"; // where user_id;
 	
 	public String query_profil = "select nama, status, avatar "
 			+ "from users "
-			+ "where extension_user = ?";				// where user_id;
+			+ "where user_id = ?";				// where user_id;
 	
 
 	public String query_get_user_cdr ="select customers.nomor_telepon, cdr.duration, cdr.\"start\", cdr.disposition "
 			+	"from users join cdr on users.extension_user = cdr.dst join customers on cdr.src = customers.extension "
 			+ "where extension_user = ? order by cdr.\"start\" desc limit 10";		// where user_id
 	
-	public String query_setting_profil = "select users.nama, users.username, users.password, users.phone_number, status.status_nama, users.avatar  "
+	public String query_setting_profil = "select users.nama, users.username, users.password, users.phone_number, users.extension_user, status.status_nama, users.avatar  "
 			+ "from users join status on users.status = status.status_id"
-			+ "where extension_user = ?";		// where user_id;
+			+ "where user_id = ?";		// where user_id;
 	
 	public String query_setting_update_profil = "UPDATE users " + 
-			"SET nama=?, username = ?, password = ?, number = ?, status = ?" + 
-			"WHERE extension_user=?;";			// where user_id;
+			"SET nama=?, username = ?, password = ?, number = ?, status = ?, extension_user = ? " + 
+			"WHERE user_id=?;";			// where user_id;
 	
 	
 	public String query_customer = "SELECT * FROM customers WHERE extension = ?";

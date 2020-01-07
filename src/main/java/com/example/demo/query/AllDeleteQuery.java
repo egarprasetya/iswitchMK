@@ -32,5 +32,5 @@ public class AllDeleteQuery {
 	public String query_delete_ps_endpoints_id = "delete from ps_endpoint_id_ips where id = ?";
 	public String query_delete_domain_aliases = "delete from ps_domain_aliases where id = ?";
 
-	public String query_delete_user = "delete from users where nama=?";
+	public String query_delete_user = "delete from users where user_id=?";
 }
