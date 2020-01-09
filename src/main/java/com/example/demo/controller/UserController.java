@@ -450,7 +450,12 @@ public class UserController
 	{
 		try
 		{
-			ArrayList<UserModel> result = postProfil (cfm);
+			ArrayList<UserModel> result;
+			if (cfm.user_id == 0)
+				throw new NullPointerException();
+			else
+				result = postProfil (cfm);
+
 			String parsedResult = "[\n\t ";
 			for (int i = 0; i < result.size (); i++)
 			{
@@ -480,6 +485,10 @@ public class UserController
 		{
 			error_sql.printStackTrace ();
 			return new ResponseEntity<String> (HttpStatus.INTERNAL_SERVER_ERROR);
+		} catch (NullPointerException error_id)
+		{
+			error_id.printStackTrace();
+			return new ResponseEntity<String> (HttpStatus.NOT_FOUND);
 		}
 		
 	}
