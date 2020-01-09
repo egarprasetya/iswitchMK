@@ -445,13 +445,13 @@ public class UserController
 		
 	}
 	
-	@PostMapping("/profil")
+	@PostMapping("/getProfil")
 	public ResponseEntity<String> postAuthsProfil (@RequestBody UserModel cfm)
 	{
 		try
 		{
 			ArrayList<UserModel> result = postProfil (cfm);
-			String parsedResult = "[\n\t";
+			String parsedResult = "[\n\t ";
 			for (int i = 0; i < result.size (); i++)
 			{
 				
@@ -467,10 +467,10 @@ public class UserController
 				parsedResult += parseToStringJSON (formatedResultField, formatedResultValues);
 				if (result.size () - 1 > i)
 				{
-					parsedResult += ",\n";
+					parsedResult += ",\n ";
 				}
 			}
-			parsedResult += "]";
+			parsedResult += " ]";
 			
 			if (result.size () > 0)
 				return new ResponseEntity<String> (parsedResult, HttpStatus.OK);
