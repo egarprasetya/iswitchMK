@@ -139,7 +139,7 @@ public class Queue_MemberController
 		return a;
 	}
 
-	@GetMapping("/test")
+	@GetMapping("/getQueueMemberBy")
 	public ResponseEntity<ArrayList<Queue_MemberModel2>> getData(@RequestParam String bla)
 			throws KeyManagementException, NoSuchAlgorithmException, KeyStoreException
 	{
@@ -163,7 +163,7 @@ public class Queue_MemberController
 			return new ResponseEntity<ArrayList<Queue_MemberModel2>>(HttpStatus.NOT_FOUND);
 	}
 
-	@GetMapping("/allTest")
+	@GetMapping("/getAllQueueMembers")
 	public ArrayList<Queue_MemberModel2> getAllData()
 			throws KeyManagementException, NoSuchAlgorithmException, KeyStoreException
 	{
@@ -221,10 +221,10 @@ public class Queue_MemberController
 					listQueue.add(queueMember);
 				}
 			}
-			if (i > sentence.length)
-			{
-				break;
-			}
+//			if (i > sentence.length)
+//			{
+//				break;
+//			}
 		}
 
 		return listQueue;
@@ -262,10 +262,10 @@ public class Queue_MemberController
 
 				listQueue.add(queueMember);
 			}
-			if (i > sentence.length)
-			{
-				break;
-			}
+//			if (i > sentence.length)
+//			{
+//				break;
+//			}
 		}
 
 		return listQueue;
