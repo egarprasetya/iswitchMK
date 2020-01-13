@@ -17,6 +17,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -139,24 +140,27 @@ public class Queue_MemberController
 	}
 
 	@GetMapping("/test")
-	public ArrayList<Queue_MemberModel2> getData(@RequestParam String bla)
+	public ResponseEntity<ArrayList<Queue_MemberModel2>> getData(@RequestParam String bla)
 			throws KeyManagementException, NoSuchAlgorithmException, KeyStoreException
 	{
 		// RestTempleteConfig.disableSslVerification();
 		RestTemplate restTemplate = new RestTempleteConfig().getRestTemplate();
 		String uri = "https://10.30.1.17:8089/amxml?action=queuestatus";
 		ResponseEntity<String> entity = restTemplate.exchange(uri, HttpMethod.GET, null, String.class);
-		System.out.println(entity.getBody());
+//		System.out.println(entity.getBody());
 
 		String[] str_array = entity.getBody().split("\n");
 		ArrayList<Queue_MemberModel2> result = getQueueByBla(str_array, bla);
 
-		for (Queue_MemberModel2 i : result)
-		{
-			System.out.println(i.name);
-		}
-
-		return result;
+//		for (Queue_MemberModel2 i : result)
+//		{
+//			System.out.println(i.name);
+//		}
+		
+		if (result.size() > 0)
+			return new ResponseEntity<ArrayList<Queue_MemberModel2>>(result, HttpStatus.OK);
+		else
+			return new ResponseEntity<ArrayList<Queue_MemberModel2>>(HttpStatus.NOT_FOUND);
 	}
 
 	@GetMapping("/allTest")
