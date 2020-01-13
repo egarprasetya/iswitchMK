@@ -119,6 +119,8 @@ public class CdrController {
 			ModelCdr.peeraccount = Cursor1.getString(20);
 			ModelCdr.sequence = Cursor1.getInt(21);
 			ListUser1.add(ModelCdr);
+			
+			
 		}
 
 		queryselect_cdr.close();
