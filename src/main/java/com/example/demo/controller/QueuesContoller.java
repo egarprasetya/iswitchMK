@@ -26,8 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping(produces = "application/json", path = "/queues")
-public class QueuesContoller
-{
+public class QueuesContoller {
 	PreparedStatement querydelete_alembic_version_config = null;
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();
 	stringkoneksi sk = new stringkoneksi();
@@ -37,8 +36,7 @@ public class QueuesContoller
 	PreparedStatement query_insert_queues = null;
 
 	@PutMapping("/putQueues")
-	public String putQueues(@RequestBody QueuesModel cfm) throws SQLException
-	{
+	public String putQueues(@RequestBody QueuesModel cfm) throws SQLException {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 
 		query_insert_queues = Connection1.prepareStatement(query_string_insert.query_insert_queues);
@@ -105,8 +103,7 @@ public class QueuesContoller
 	}
 
 	@GetMapping("/getQueues")
-	public ArrayList<QueuesModel> getQueues() throws SQLException
-	{
+	public ArrayList<QueuesModel> getQueues() throws SQLException {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		queryselect_queues = Connection1.prepareStatement(query_string.query_select_queues);
 		ResultSet Cursor1 = queryselect_queues.executeQuery();// Evaluate (Connected_Expression1)
@@ -155,7 +152,8 @@ public class QueuesContoller
 			ModelQueues.penaltymemberslimit = Cursor1.getInt(38);
 			ModelQueues.autofill = Cursor1.getString(39);
 			ModelQueues.monitor_type = Cursor1.getString(40);
-			ModelQueues.autopause = queue_autopause_values.valueOf(Cursor1.getString(41)); // Queue_autopause value / Type.
+			ModelQueues.autopause = queue_autopause_values.valueOf(Cursor1.getString(41)); // Queue_autopause value /
+																							// Type.
 			ModelQueues.autopausedelay = Cursor1.getInt(42);
 			ModelQueues.autopausebusy = YesNo_Values.valueOf(Cursor1.getString(43)); // YesNo value / Type.
 			ModelQueues.autopauseunavail = YesNo_Values.valueOf(Cursor1.getString(44)); // YesNo value / Type.
@@ -178,8 +176,7 @@ public class QueuesContoller
 	}
 
 	@DeleteMapping(path = "/deleteQueues", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public int deleteQueues(@RequestBody QueuesModel cfm) throws SQLException
-	{
+	public int deleteQueues(@RequestBody QueuesModel cfm) throws SQLException {
 		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		querydelete_alembic_version_config = Connection1.prepareStatement(query_string_delete.query_delete_queues);
 		querydelete_alembic_version_config.setString(1, cfm.name);
@@ -189,4 +186,5 @@ public class QueuesContoller
 		return a;
 	}
 
+	
 }
