@@ -66,19 +66,19 @@ public class UserController
 		Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
 		//Connection connection = ds.getConnection();
 		PreparedStatement query = connection.prepareStatement (
-				"INSERT INTO users (nama, username, password, password_email, extension_user) VALUES (?,?,?,?,?,?);"
+				"INSERT INTO users (nama, username, password, password_email, extension_user) VALUES (?,?,?,?,?);"
 						+ "	INSERT INTO ps_auths (id, password) VALUES (?,?);");
 		String rawPassword = akun.password;
 		// String encodedPassword = bCryptPasswordEncoder.encode(akun.getPassword());
 		akun.password = bCryptPasswordEncoder.encode (akun.password);
-		query.setString (1, akun.nama);
-		query.setString (2, akun.username);
-		query.setString (3, akun.password);
-		query.setString (4, akun.password_email);
-		query.setString (5, akun.extensions_user);
+		query.setString (1, akun.nama);			System.out.println(akun.nama);
+		query.setString (2, akun.username);	System.out.println(akun.username);
+		query.setString (3, akun.password);	System.out.println(akun.password);
+		query.setString (4, akun.password_email);	System.out.println(akun.password_email);
+		query.setString (5, akun.extensions_user);	System.out.println(akun.extensions_user);	
 		
-		query.setString (6, akun.extensions_user);
-		query.setString (7, rawPassword);
+		query.setString (6, akun.extensions_user);	System.out.println(akun.extensions_user);
+		query.setString (7, rawPassword);	System.out.println(rawPassword);
 		int flag = query.executeUpdate ();
 		
 		query.close ();
@@ -219,11 +219,12 @@ public class UserController
 				return new ResponseEntity<String> ("{ " + "\"response\":" + "\"" + "1" + "\" }", HttpStatus.OK);
 			} else
 			{
-				return new ResponseEntity<String> (HttpStatus.INTERNAL_SERVER_ERROR);
+				return new ResponseEntity<String> ("{ " + "\"response\":" + "\"" + "0" + "\" }", HttpStatus.NOT_FOUND);
 			}
 		} catch (SQLException | NullPointerException error_null)
 		{
-			return new ResponseEntity<String> (HttpStatus.INTERNAL_SERVER_ERROR);
+			error_null.printStackTrace();
+			return new ResponseEntity<String> ("{ " + "\"response\":" + "\"" + "0" + "\" }", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
 	}
@@ -275,6 +276,27 @@ public class UserController
 			Cursor1.close ();
 			
 			Connection2.close ();
+			
+			if (Modeluser.status.equals("0") || Modeluser.status.equals("2") || Modeluser.status.equals("3") || Modeluser.status.equals("4"))
+			{
+				Queue_MemberController qmc = new Queue_MemberController();
+				Queue_MemberModel qm = new Queue_MemberModel();
+				
+				qm.extension = Modeluser.extensions_user;
+				qm.paused = 1;
+				
+				qmc.updatePaused(qm);
+			}
+			else
+			{
+				Queue_MemberController qmc = new Queue_MemberController();
+				Queue_MemberModel qm = new Queue_MemberModel();
+				
+				qm.extension = Modeluser.extensions_user;
+				qm.paused = 0;
+				
+				qmc.updatePaused(qm);
+			}
 			
 			return Modeluser;
 		} catch (SQLException error)
