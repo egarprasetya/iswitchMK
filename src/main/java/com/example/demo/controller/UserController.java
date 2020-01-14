@@ -52,7 +52,8 @@ public class UserController
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
-//	DataSource ds = null;
+	@Autowired
+	private DataSource dataSource;
 //	
 //	public UserController(DataSource ds)
 //	{
@@ -63,22 +64,22 @@ public class UserController
 	@PostMapping("/register")
 	public String register (@RequestBody UserModel akun) throws SQLException
 	{
-		Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
-		//Connection connection = ds.getConnection();
+		//Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+		Connection connection = dataSource.getConnection();
 		PreparedStatement query = connection.prepareStatement (
-				"INSERT INTO users (nama, username, password, password_email, extension_user) VALUES (?,?,?,?,?,?);"
+				"INSERT INTO users (nama, username, password, password_email, extension_user) VALUES (?,?,?,?,?);"
 						+ "	INSERT INTO ps_auths (id, password) VALUES (?,?);");
 		String rawPassword = akun.password;
 		// String encodedPassword = bCryptPasswordEncoder.encode(akun.getPassword());
 		akun.password = bCryptPasswordEncoder.encode (akun.password);
-		query.setString (1, akun.nama);
-		query.setString (2, akun.username);
-		query.setString (3, akun.password);
-		query.setString (4, akun.password_email);
-		query.setString (5, akun.extensions_user);
+		query.setString (1, akun.nama);			System.out.println(akun.nama);
+		query.setString (2, akun.username);	System.out.println(akun.username);
+		query.setString (3, akun.password);	System.out.println(akun.password);
+		query.setString (4, akun.password_email);	System.out.println(akun.password_email);
+		query.setString (5, akun.extensions_user);	System.out.println(akun.extensions_user);	
 		
-		query.setString (6, akun.extensions_user);
-		query.setString (7, rawPassword);
+		query.setString (6, akun.extensions_user);	System.out.println(akun.extensions_user);
+		query.setString (7, rawPassword);	System.out.println(rawPassword);
 		int flag = query.executeUpdate ();
 		
 		query.close ();
@@ -140,8 +141,8 @@ public class UserController
 	public UserModel doLogin (UserModel cfm) throws SQLException
 	{
 		boolean hasil = false;
-		Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
-		//Connection Connection1 = ds.getConnection();
+		//Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+		Connection Connection1 = dataSource.getConnection();
 		PreparedStatement a = Connection1.prepareStatement (select_query.query_login);
 		
 		a.setString (1, cfm.username);
@@ -219,11 +220,12 @@ public class UserController
 				return new ResponseEntity<String> ("{ " + "\"response\":" + "\"" + "1" + "\" }", HttpStatus.OK);
 			} else
 			{
-				return new ResponseEntity<String> (HttpStatus.INTERNAL_SERVER_ERROR);
+				return new ResponseEntity<String> ("{ " + "\"response\":" + "\"" + "0" + "\" }", HttpStatus.NOT_FOUND);
 			}
 		} catch (SQLException | NullPointerException error_null)
 		{
-			return new ResponseEntity<String> (HttpStatus.INTERNAL_SERVER_ERROR);
+			error_null.printStackTrace();
+			return new ResponseEntity<String> ("{ " + "\"response\":" + "\"" + "0" + "\" }", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
 	}
@@ -234,8 +236,8 @@ public class UserController
 		UserModel Modeluser = new UserModel ();
 		try
 		{
-			Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
-			//Connection Connection1 = ds.getConnection();
+			//Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+			Connection Connection1 = dataSource.getConnection();
 			PreparedStatement a = Connection1.prepareStatement (select_query3.query_changeStatus);
 			
 			a.setString (1, cfm.status);
@@ -245,8 +247,8 @@ public class UserController
 			a.close ();
 			Connection1.close ();
 			
-			Connection Connection2 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
-			//Connection Connection2 = ds.getConnection();
+			//Connection Connection2 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+			Connection Connection2 = dataSource.getConnection();
 			PreparedStatement b = Connection2.prepareStatement (select_query.query_logout);
 			
 			b.setInt (1, cfm.user_id);
@@ -276,6 +278,27 @@ public class UserController
 			
 			Connection2.close ();
 			
+			if (Modeluser.status.equals("0") || Modeluser.status.equals("2") || Modeluser.status.equals("3") || Modeluser.status.equals("4"))
+			{
+				Queue_MemberController qmc = new Queue_MemberController();
+				Queue_MemberModel qm = new Queue_MemberModel();
+				
+				qm.extension = Modeluser.extensions_user;
+				qm.paused = 1;
+				
+				qmc.updatePaused(qm);
+			}
+			else
+			{
+				Queue_MemberController qmc = new Queue_MemberController();
+				Queue_MemberModel qm = new Queue_MemberModel();
+				
+				qm.extension = Modeluser.extensions_user;
+				qm.paused = 0;
+				
+				qmc.updatePaused(qm);
+			}
+			
 			return Modeluser;
 		} catch (SQLException error)
 		{
@@ -286,8 +309,8 @@ public class UserController
 	
 	public void updateStatus (int id, String status) throws SQLException
 	{
-		Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
-		//Connection Connection1 = ds.getConnection();
+		//Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+		Connection Connection1 = dataSource.getConnection();
 		PreparedStatement a = Connection1.prepareStatement (select_query3.query_login2);
 		
 		a.setString (1, status);
@@ -301,8 +324,8 @@ public class UserController
 	
 	public void updateStatus2 (String username, String status) throws SQLException
 	{
-		Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
-		//Connection Connection1 = ds.getConnection();
+		//Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+		Connection Connection1 = dataSource.getConnection();
 		PreparedStatement a = Connection1.prepareStatement (select_query3.query_login3);
 		
 		a.setString (1, status);
@@ -320,8 +343,8 @@ public class UserController
 		ArrayList<UserModel> ListUser1 = new ArrayList<UserModel> ();
 		try
 		{
-			Connection connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
-			//Connection connection1 = ds.getConnection();
+			//Connection connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+			Connection connection1 = dataSource.getConnection();
 			PreparedStatement query = connection1.prepareStatement (select_query2.query_select_users);
 			ResultSet Cursor1 = query.executeQuery ();
 			while (Cursor1.next ())
@@ -379,11 +402,11 @@ public class UserController
 				return new ResponseEntity<String> ("{ " + "\"response\":" + "\"" + "1" + "\" }", HttpStatus.OK);
 			} else
 			{
-				return new ResponseEntity<String> (HttpStatus.INTERNAL_SERVER_ERROR);
+				return new ResponseEntity<String> ("{ " + "\"response\":" + "\"" + "0" + "\" }",HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		} catch (SQLException | NullPointerException error_null)
 		{
-			return new ResponseEntity<String> (HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<String> ("{ " + "\"response\":" + "\"" + "0" + "\" }",HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
 	}
@@ -393,8 +416,8 @@ public class UserController
 		UserModel Modeluser = new UserModel ();
 		try
 		{
-			Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
-			//Connection connection = ds.getConnection();
+			//Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+			Connection connection = dataSource.getConnection();
 			PreparedStatement a = connection.prepareStatement (select_query.query_logout);
 			
 			a.setInt (1, cfm.user_id);
@@ -495,8 +518,8 @@ public class UserController
 	
 	public ArrayList<UserModel> postProfil (@RequestBody UserModel cfm) throws SQLException
 	{
-		Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
-		//Connection Connection1 = ds.getConnection();
+		//Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+		Connection Connection1 = dataSource.getConnection();
 		PreparedStatement a = Connection1.prepareStatement (select_query.query_profil);
 		
 		a.setInt (1, cfm.user_id);
@@ -518,8 +541,8 @@ public class UserController
 	
 	public ArrayList<UserModel> postUserData (@RequestBody UserModel cfm) throws SQLException
 	{
-		Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
-		//Connection Connection1 = ds.getConnection();
+		//Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+		Connection Connection1 = dataSource.getConnection();
 		PreparedStatement a = Connection1.prepareStatement (select_query.query_profil);
 		
 		a.setInt (1, cfm.user_id);
@@ -580,8 +603,8 @@ public class UserController
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern ("yyyy-MM-dd HH:mm:ss");
 			LocalDateTime now = LocalDateTime.now ();
 			// //System.out.println (dtf.format (now));
-			Connection connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
-			//Connection connection1 = ds.getConnection();
+			//Connection connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+			Connection connection1 = dataSource.getConnection();
 			PreparedStatement query = connection1.prepareStatement (select_query3.query_updateUserById);
 			
 			query.setString (1, cfm.nama);
@@ -640,8 +663,8 @@ public class UserController
 		
 		if (passwordChecker (usr))
 		{
-			Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
-			//Connection Connection1 = ds.getConnection();
+			//Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+			Connection Connection1 = dataSource.getConnection();
 			PreparedStatement query = Connection1.prepareStatement (select_query3.query_updatePassword);
 			
 			userModel.password = bCryptPasswordEncoder.encode (userModel.password);
@@ -667,8 +690,8 @@ public class UserController
 		String encodedPassword = "";
 		try
 		{
-			Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
-			//Connection Connection1 = ds.getConnection();
+			//Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+			Connection Connection1 = dataSource.getConnection();
 			PreparedStatement a = Connection1.prepareStatement (select_query.query_password);
 			
 			a.setInt (1, userModel.user_id);
@@ -759,8 +782,8 @@ public class UserController
 	
 	public List<UserModel> doUserByStatusSkill (Queue_MemberModel cfm) throws SQLException
 	{
-		Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
-		//Connection Connection1 = ds.getConnection();
+		//Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+		Connection Connection1 = dataSource.getConnection();
 		PreparedStatement queryselect_cdr = Connection1.prepareStatement (select_query.query_user_by_status_skill);
 		queryselect_cdr.setString (1, cfm.queue_name);
 		

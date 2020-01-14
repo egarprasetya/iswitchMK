@@ -8,6 +8,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,6 +35,9 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping(produces = "application/json", path = "/ps_auths")
 public class Ps_AuthsController
 {
+	@Autowired
+	private DataSource dataSource;
+	
 	PreparedStatement querydelete_alembic_version_config = null;
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();
 	stringkoneksi sk = new stringkoneksi();
@@ -44,7 +50,8 @@ public class Ps_AuthsController
 	@PutMapping("/putPsAuths")
 	public String putPsAuths(@RequestBody Ps_AuthsModel cfm) throws SQLException
 	{
-		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+		//Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+		Connection Connection1 = dataSource.getConnection();
 		queryinsert_ps_auth = Connection1.prepareStatement(query_string_insert.query_insert_ps_auths);
 		queryinsert_ps_auth.setString(1, cfm.id);
 		queryinsert_ps_auth.setString(2, cfm.auth_type.toString());
@@ -63,7 +70,8 @@ public class Ps_AuthsController
 	@GetMapping("/getPsAuths")
 	public ArrayList<Ps_AuthsModel> getPsAuths() throws SQLException
 	{
-		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+		//Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+		Connection Connection1 = dataSource.getConnection();
 		queryselect_ps_auths = Connection1.prepareStatement(query_string.query_select_ps_auths);
 		ResultSet Cursor1 = queryselect_ps_auths.executeQuery();// Evaluate (Connected_Expression1)
 		ArrayList<Ps_AuthsModel> ListUser1 = new ArrayList<Ps_AuthsModel>();
@@ -87,7 +95,8 @@ public class Ps_AuthsController
 	@PostMapping("/postAuthsId")
 	public ArrayList<Ps_AuthsModel> postAuthsId(@RequestBody Ps_AuthsModel cfm) throws SQLException
 	{
-		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+		//Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+		Connection Connection1 = dataSource.getConnection();
 		PreparedStatement a = Connection1
 				.prepareStatement("select id, auth_type, username from ps_auths where username = ? and password = ?");
 
@@ -113,7 +122,8 @@ public class Ps_AuthsController
 	@DeleteMapping(path = "/deletePsAuths", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public int deletePsAuths(@RequestBody Ps_AuthsModel cfm) throws SQLException
 	{
-		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+		//Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+		Connection Connection1 = dataSource.getConnection();
 		querydelete_alembic_version_config = Connection1.prepareStatement(query_string_delete.query_delete_ps_auths);
 		querydelete_alembic_version_config.setString(1, cfm.id);
 		int Cursor1 = querydelete_alembic_version_config.executeUpdate();// Evaluate (Connected_Expression1)

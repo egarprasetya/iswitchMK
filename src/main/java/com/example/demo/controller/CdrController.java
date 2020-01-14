@@ -16,6 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -40,6 +43,9 @@ public class CdrController {
 	AllQuery query_string = new AllQuery();
 	AllSelectParameterQuery query_string2 = new AllSelectParameterQuery();
 	PreparedStatement queryselect_cdr = null;
+	
+	@Autowired
+	private DataSource dataSource;
 
 	@PutMapping(produces = "application/json", path = "/putCdr")
 	public ResponseEntity<String> putCdr(@RequestBody CdrModel cfm) {
@@ -55,7 +61,8 @@ public class CdrController {
 	}
 
 	public String doPutCdr(CdrModel cfm) throws SQLException {
-		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+		//Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+		Connection Connection1 = dataSource.getConnection();
 		queryinsert_cdr = Connection1.prepareStatement(query_string_insert.query_insert_cdr);
 		queryinsert_cdr.setString(1, cfm.accountcode);
 		queryinsert_cdr.setString(2, cfm.src);
@@ -90,7 +97,8 @@ public class CdrController {
 
 	@GetMapping(produces = "application/json", path = "/getCdr")
 	public ArrayList<CdrModel> getCdr() throws SQLException {
-		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+		//Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+		Connection Connection1 = dataSource.getConnection();
 		queryselect_cdr = Connection1.prepareStatement(query_string.query_select_cdr);
 		ResultSet Cursor1 = queryselect_cdr.executeQuery();// Evaluate (Connected_Expression1)
 		ArrayList<CdrModel> ListUser1 = new ArrayList<CdrModel>();
@@ -132,7 +140,8 @@ public class CdrController {
 
 	@DeleteMapping(path = "/deleteCdr", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public int deleteCdr(@RequestBody CdrModel cfm) throws SQLException {
-		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+		//Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+		Connection Connection1 = dataSource.getConnection();
 		querydelete_cdr = Connection1.prepareStatement(query_string_delete.query_delete_cdr);
 		querydelete_cdr.setString(1, cfm.accountcode);
 		int Cursor1 = querydelete_cdr.executeUpdate();// Evaluate (Connected_Expression1)
@@ -183,8 +192,8 @@ public class CdrController {
 	}
 
 	public List<CdrModel> doPostUserCdr(UserModel cfm) throws SQLException {
-		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
-
+		//Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+		Connection Connection1 = dataSource.getConnection();
 		PreparedStatement queryselect_cdr = Connection1.prepareStatement(query_string2.query_get_user_cdr);
 		queryselect_cdr.setInt(1, cfm.user_id);
 

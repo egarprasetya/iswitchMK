@@ -8,6 +8,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -31,6 +34,9 @@ import com.example.demo.query.AllSelectParameterQuery;
 @RequestMapping(produces = "application/json", path = "/status")
 public class StatusController
 {
+	@Autowired
+	private DataSource dataSource;
+	
 	AllSelectParameterQuery select_query = new AllSelectParameterQuery();
 	AllQuery select_query2 = new AllQuery();
 	stringkoneksi sk = new stringkoneksi();
@@ -52,7 +58,8 @@ public class StatusController
 	
 	public ArrayList<StatusModel> doGetDashboardStatus() throws SQLException
 	{
-		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+		//Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+		Connection Connection1 = dataSource.getConnection();
 		PreparedStatement a = Connection1.prepareStatement(select_query2.query_select_status);
 
 		ResultSet Cursor1 = a.executeQuery();// Evaluate (Connected_Expression1)

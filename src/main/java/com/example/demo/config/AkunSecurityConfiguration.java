@@ -19,14 +19,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class AkunSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-	//@Autowired
-	public DataSource dataSource = null;
+	@Autowired
+	public DataSource dataSource; // = null;
 	
-	public AkunSecurityConfiguration (DataSource dataSource)
-	{
-		// TODO Auto-generated constructor stub
-		this.dataSource = dataSource;
-	} 
+//	public AkunSecurityConfiguration (DataSource dataSource)
+//	{
+//		// TODO Auto-generated constructor stub
+//		this.dataSource = dataSource;
+//	} 
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
