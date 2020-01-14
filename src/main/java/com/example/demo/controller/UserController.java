@@ -111,8 +111,8 @@ public class UserController
 			
 			if (!result.equals (null))
 			{
-				User_HistoryController uhc = new User_HistoryController ();
-				User_ActivityController uac = new User_ActivityController ();
+				User_HistoryController uhc = new User_HistoryController (dataSource);
+				User_ActivityController uac = new User_ActivityController (dataSource);
 				UserModel um = new UserModel ();
 				
 				um = result;
@@ -204,8 +204,8 @@ public class UserController
 			UserModel result = doChangeStatusId (cfm);
 			if (!result.equals (null))
 			{
-				User_HistoryController uhc = new User_HistoryController ();
-				User_ActivityController uac = new User_ActivityController ();
+				User_HistoryController uhc = new User_HistoryController (dataSource);
+				User_ActivityController uac = new User_ActivityController (dataSource);
 				UserModel um = new UserModel ();
 				
 				um = result;
@@ -280,7 +280,7 @@ public class UserController
 			
 			if (Modeluser.status.equals("0") || Modeluser.status.equals("2") || Modeluser.status.equals("3") || Modeluser.status.equals("4"))
 			{
-				Queue_MemberController qmc = new Queue_MemberController();
+				Queue_MemberController qmc = new Queue_MemberController(dataSource);
 				Queue_MemberModel qm = new Queue_MemberModel();
 				
 				qm.extension = Modeluser.extensions_user;
@@ -290,7 +290,7 @@ public class UserController
 			}
 			else
 			{
-				Queue_MemberController qmc = new Queue_MemberController();
+				Queue_MemberController qmc = new Queue_MemberController(dataSource);
 				Queue_MemberModel qm = new Queue_MemberModel();
 				
 				qm.extension = Modeluser.extensions_user;
@@ -385,8 +385,8 @@ public class UserController
 			
 			if (!result.equals (null))
 			{
-				User_HistoryController uhc = new User_HistoryController ();
-				User_ActivityController uac = new User_ActivityController ();
+				User_HistoryController uhc = new User_HistoryController (dataSource);
+				User_ActivityController uac = new User_ActivityController (dataSource);
 				UserModel um = new UserModel ();
 				
 				um = result;

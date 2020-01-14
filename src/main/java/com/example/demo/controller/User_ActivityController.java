@@ -33,6 +33,11 @@ public class User_ActivityController
 	@Autowired
 	private DataSource dataSource;
 	
+	public User_ActivityController (DataSource dataSource)
+	{
+		this.dataSource = dataSource;
+	}
+	
 	stringkoneksi sk = new stringkoneksi ();
 	AllSelectParameterQuery select_query = new AllSelectParameterQuery ();
 	AllQuery select_query2 = new AllQuery ();
@@ -74,8 +79,8 @@ public class User_ActivityController
 		int flag = 0;
 		try
 		{
-			//Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
-			Connection Connection1 = dataSource.getConnection();
+			Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+			//Connection Connection1 = dataSource.getConnection();
 			PreparedStatement a = Connection1.prepareStatement (select_query3.query_update_user_activity);
 			a.setString (1, cfm.extension);
 			a.setString (2, cfm.nama_user);
@@ -104,8 +109,8 @@ public class User_ActivityController
 		int flag = 0;
 		try
 		{
-			//Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
-			Connection Connection1 = dataSource.getConnection();
+			Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+			//Connection Connection1 = dataSource.getConnection();
 			PreparedStatement a = Connection1.prepareStatement (select_query3.query_update_user_activity);
 			
 			a.setString (1, cfm.status);

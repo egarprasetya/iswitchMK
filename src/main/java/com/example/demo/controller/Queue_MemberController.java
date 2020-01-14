@@ -42,6 +42,11 @@ public class Queue_MemberController
 	@Autowired
 	private DataSource dataSource;
 	
+	public Queue_MemberController(DataSource dataSource)
+	{
+		this.dataSource = dataSource;
+	}
+	
 	PreparedStatement querydelete_alembic_version_config = null;
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();
 	stringkoneksi sk = new stringkoneksi();
