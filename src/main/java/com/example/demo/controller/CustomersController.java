@@ -8,6 +8,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -30,6 +33,9 @@ import com.example.demo.query.AllUpdateQuery;
 @RequestMapping(produces = "application/json", path = "/customers")
 public class CustomersController
 {
+	@Autowired
+	private DataSource dataSource;
+	
 	AllSelectParameterQuery select_query = new AllSelectParameterQuery ();
 	AllInsertQuery insert_query = new AllInsertQuery ();
 	AllUpdateQuery update_query = new AllUpdateQuery ();
@@ -39,7 +45,8 @@ public class CustomersController
 	@PostMapping ("/getCustomersByExtension")
 	public List<CustomersModel> getAll (@RequestBody CustomersModel cm) throws SQLException
 	{
-		Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+		//Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+		Connection connection = dataSource.getConnection();
 		PreparedStatement query = connection
 				.prepareStatement (select_query.query_customer);
 
@@ -70,7 +77,8 @@ public class CustomersController
 	{
 		try
 		{
-			Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+			//Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+			Connection connection = dataSource.getConnection();
 			PreparedStatement query = connection
 					.prepareStatement (insert_query.query_insert_customer);
 
@@ -101,7 +109,8 @@ public class CustomersController
 	{
 		try
 		{
-			Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+			//Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+			Connection connection = dataSource.getConnection();
 			PreparedStatement query = connection
 					.prepareStatement (update_query.query_update_customer);
 
@@ -129,7 +138,8 @@ public class CustomersController
 	{
 		try
 		{
-			Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+			//Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+			Connection connection = dataSource.getConnection();
 			PreparedStatement query = connection
 					.prepareStatement (insert_query.query_insert_customer);
 
@@ -156,7 +166,8 @@ public class CustomersController
 	
 	public List<CustomersModel> getCustomersByExtension (CustomersModel cm) throws SQLException
 	{
-		Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+		//Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+		Connection connection = dataSource.getConnection();
 		PreparedStatement query = connection
 				.prepareStatement (select_query.query_customer);
 
@@ -186,7 +197,8 @@ public class CustomersController
 	{
 		try
 		{
-			Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+			//Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+			Connection connection = dataSource.getConnection();
 			PreparedStatement query = connection
 					.prepareStatement (update_query.query_update_customer);
 

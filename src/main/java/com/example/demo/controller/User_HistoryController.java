@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 //import org.springframework.web.bind.annotation.PostMapping;
@@ -34,7 +35,8 @@ public class User_HistoryController
 	AllInsertQuery insert_query = new AllInsertQuery ();
 	AllUpdateQuery update_query = new AllUpdateQuery ();
 	
-//	DataSource ds = null;
+	@Autowired
+	private DataSource dataSource;
 //	
 //	public User_HistoryController(DataSource ds) {
 //		this.ds = ds;
@@ -46,8 +48,8 @@ public class User_HistoryController
 	@GetMapping("/getAllHistory")
 	public List<User_HistoryModel> getAll (@RequestBody User_HistoryModel uh) throws SQLException
 	{
-		Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
-		//Connection connection = ds.getConnection();
+		//Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+		Connection connection = dataSource.getConnection();
 		PreparedStatement query = connection.prepareStatement ("SELECT * FROM user_history");
 		
 		ResultSet Cursor1 = query.executeQuery ();
@@ -77,8 +79,8 @@ public class User_HistoryController
 	//@PostMapping("/addUserHistory")
 	public int addUserHistory (@RequestBody UserModel um) throws SQLException
 	{
-		Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
-		//Connection connection = ds.getConnection();
+		//Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+		Connection connection = dataSource.getConnection();
 		PreparedStatement query = connection.prepareStatement (insert_query.query_insert_user_history);
 		
 		query.setString (1, um.extensions_user);
@@ -100,8 +102,8 @@ public class User_HistoryController
 	//@PostMapping("/updateUserHistory")
 	public int updateUserHistory (@RequestBody UserModel um) throws SQLException
 	{
-		Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
-		//Connection connection = ds.getConnection();
+		//Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+		Connection connection = dataSource.getConnection();
 		PreparedStatement query = connection.prepareStatement (update_query.query_update_user_history);
 		
 		//System.out.print (um.date_end + "jncjndsjc");

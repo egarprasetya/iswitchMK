@@ -8,6 +8,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,6 +30,9 @@ import com.example.demo.query.AllUpdateQuery;
 @RequestMapping("/user_activity")
 public class User_ActivityController
 {
+	@Autowired
+	private DataSource dataSource;
+	
 	stringkoneksi sk = new stringkoneksi ();
 	AllSelectParameterQuery select_query = new AllSelectParameterQuery ();
 	AllQuery select_query2 = new AllQuery ();
@@ -35,7 +41,8 @@ public class User_ActivityController
 	@GetMapping("/getAllActivity")
 	public List<User_ActivityModel> getAll (@RequestBody User_ActivityModel ua) throws SQLException
 	{
-		Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+		//Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+		Connection connection = dataSource.getConnection();
 		PreparedStatement query = connection.prepareStatement ("SELECT * FROM user_activity");
 		
 		ResultSet Cursor1 = query.executeQuery ();
@@ -67,7 +74,8 @@ public class User_ActivityController
 		int flag = 0;
 		try
 		{
-			Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+			//Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+			Connection Connection1 = dataSource.getConnection();
 			PreparedStatement a = Connection1.prepareStatement (select_query3.query_update_user_activity);
 			a.setString (1, cfm.extension);
 			a.setString (2, cfm.nama_user);
@@ -96,7 +104,8 @@ public class User_ActivityController
 		int flag = 0;
 		try
 		{
-			Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+			//Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+			Connection Connection1 = dataSource.getConnection();
 			PreparedStatement a = Connection1.prepareStatement (select_query3.query_update_user_activity);
 			
 			a.setString (1, cfm.status);

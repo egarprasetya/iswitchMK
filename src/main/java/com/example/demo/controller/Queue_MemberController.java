@@ -16,6 +16,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -36,6 +39,9 @@ import org.springframework.web.client.RestTemplate;
 @RequestMapping(produces = "application/json", path = "/queue_member")
 public class Queue_MemberController
 {
+	@Autowired
+	private DataSource dataSource;
+	
 	PreparedStatement querydelete_alembic_version_config = null;
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();
 	stringkoneksi sk = new stringkoneksi();
@@ -48,7 +54,8 @@ public class Queue_MemberController
 	@PostMapping("/addQueueMember")
 	public String addQueueMember(@RequestBody Queue_MemberModel cfm) throws SQLException
 	{
-		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+		//Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+		Connection Connection1 = dataSource.getConnection();
 		query_insert_queue_members = Connection1.prepareStatement(query_string_insert.query_insert_queue_members);
 
 		query_insert_queue_members.setString(1, cfm.queue_name);
@@ -69,7 +76,8 @@ public class Queue_MemberController
 	@PostMapping("/updateQueueName")
 	public int updateQueueName(@RequestBody Queue_MemberModel cfm) throws SQLException
 	{
-		Connection connection = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+		//Connection connection = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+		Connection connection = dataSource.getConnection();
 		PreparedStatement query = connection
 				.prepareStatement("UPDATE queue_members SET queue_name = ? WHERE interface = concat('PJSIP/',?) ; ");
 
@@ -86,7 +94,8 @@ public class Queue_MemberController
 	@PostMapping("/updatePaused")
 	public int updatePaused(@RequestBody Queue_MemberModel cfm) throws SQLException
 	{
-		Connection connection = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+		//Connection connection = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+		Connection connection = dataSource.getConnection();
 		PreparedStatement query = connection
 				.prepareStatement("UPDATE queue_members SET paused = ? WHERE interface = concat('PJSIP/',?) ; ");
 
@@ -103,7 +112,8 @@ public class Queue_MemberController
 	@GetMapping("/getAllQueueMember")
 	public ArrayList<Queue_MemberModel> getQueueMember() throws SQLException
 	{
-		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+		//Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+		Connection Connection1 = dataSource.getConnection();
 		queryselect_queuemember = Connection1.prepareStatement(query_string.query_select_queue_members);
 		ResultSet Cursor1 = queryselect_queuemember.executeQuery();// Evaluate (Connected_Expression1)
 		ArrayList<Queue_MemberModel> ListUser1 = new ArrayList<Queue_MemberModel>();
@@ -129,7 +139,8 @@ public class Queue_MemberController
 	@DeleteMapping(path = "/deleteQueueMember", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public int deleteQueueMember(@RequestBody Queue_MemberModel cfm) throws SQLException
 	{
-		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+		//Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+		Connection Connection1 = dataSource.getConnection();
 		querydelete_alembic_version_config = Connection1.prepareStatement(query_string_delete.query_delete_queue_members);
 		querydelete_alembic_version_config.setString(1, cfm.queue_name);
 		int Cursor1 = querydelete_alembic_version_config.executeUpdate();// Evaluate (Connected_Expression1)
