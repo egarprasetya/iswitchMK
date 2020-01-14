@@ -37,10 +37,10 @@ public class User_HistoryController
 	
 	@Autowired
 	private DataSource dataSource;
-//	
-//	public User_HistoryController(DataSource ds) {
-//		this.ds = ds;
-//	}
+	
+	public User_HistoryController(DataSource dataSource) {
+		this.dataSource = dataSource;
+	}
 	
 //	public User_HistoryController() {
 //	}
