@@ -16,6 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -40,6 +43,9 @@ public class CdrController {
 	AllQuery query_string = new AllQuery();
 	AllSelectParameterQuery query_string2 = new AllSelectParameterQuery();
 	PreparedStatement queryselect_cdr = null;
+	
+	@Autowired
+	private DataSource dataSource;
 
 	@PutMapping(produces = "application/json", path = "/putCdr")
 	public ResponseEntity<String> putCdr(@RequestBody CdrModel cfm) {
@@ -90,7 +96,8 @@ public class CdrController {
 
 	@GetMapping(produces = "application/json", path = "/getCdr")
 	public ArrayList<CdrModel> getCdr() throws SQLException {
-		Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+		//Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+		Connection Connection1 = dataSource.getConnection();
 		queryselect_cdr = Connection1.prepareStatement(query_string.query_select_cdr);
 		ResultSet Cursor1 = queryselect_cdr.executeQuery();// Evaluate (Connected_Expression1)
 		ArrayList<CdrModel> ListUser1 = new ArrayList<CdrModel>();
