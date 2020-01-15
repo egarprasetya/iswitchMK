@@ -91,7 +91,7 @@ public class User_HistoryController
 			query.setString (1, um.extensions_user);
 			query.setString (2, um.nama);
 			query.setString (3, um.status);
-			query.setString (4, um.status);
+			query.setString (4, "null");
 			query.setString (5, um.skill);
 			query.setTimestamp (6, um.date_begin);
 			query.setTimestamp (7, null);
@@ -99,7 +99,7 @@ public class User_HistoryController
 		{
 			query.setString (1, um.extensions_user);
 			query.setString (2, um.nama);
-			query.setString (3, um.status);
+			query.setString (3, "null");
 			query.setString (4, um.status);
 			query.setString (5, um.skill);
 			query.setTimestamp (6, um.date_begin);
