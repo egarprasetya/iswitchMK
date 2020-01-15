@@ -46,8 +46,9 @@ public class User_ActivityController
 	@GetMapping("/getAllActivity")
 	public List<User_ActivityModel> getAll (@RequestBody User_ActivityModel ua) throws SQLException
 	{
-		//Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
-		Connection connection = dataSource.getConnection();
+		// Connection connection = DriverManager.getConnection (sk.Path_expr,
+		// sk.service_user, sk.service_password);
+		Connection connection = dataSource.getConnection ();
 		PreparedStatement query = connection.prepareStatement ("SELECT * FROM user_activity");
 		
 		ResultSet Cursor1 = query.executeQuery ();
@@ -80,15 +81,25 @@ public class User_ActivityController
 		try
 		{
 			Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
-			//Connection Connection1 = dataSource.getConnection();
+			// Connection Connection1 = dataSource.getConnection();
 			PreparedStatement a = Connection1.prepareStatement (select_query3.query_update_user_activity);
-			a.setString (1, cfm.extension);
-			a.setString (2, cfm.nama_user);
-			a.setString (3, cfm.status);
-			a.setString (4, cfm.status);
-			a.setString (5, cfm.skill);
-			a.setTimestamp (6, cfm.last_update);
-			
+			if (Integer.valueOf (cfm.status) > 2)
+			{
+				a.setString (1, cfm.extension);
+				a.setString (2, cfm.nama_user);
+				a.setString (3, cfm.status);
+				a.setString (4, "null");
+				a.setString (5, cfm.skill);
+				a.setTimestamp (6, cfm.last_update);
+			} else
+			{
+				a.setString (1, cfm.extension);
+				a.setString (2, cfm.nama_user);
+				a.setString (3, "null");
+				a.setString (4, cfm.status);
+				a.setString (5, cfm.skill);
+				a.setTimestamp (6, cfm.last_update);
+			}
 			flag = a.executeUpdate ();// Evaluate (Connected_Expression1)
 			
 			a.close ();
@@ -110,15 +121,23 @@ public class User_ActivityController
 		try
 		{
 			Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
-			//Connection Connection1 = dataSource.getConnection();
+			// Connection Connection1 = dataSource.getConnection();
 			PreparedStatement a = Connection1.prepareStatement (select_query3.query_update_user_activity);
-			
-			a.setString (1, cfm.status);
-			a.setString (2, cfm.status);
-			a.setString (3, cfm.skill);
-			a.setTimestamp (4, cfm.date_begin);
-			a.setString (5, cfm.extensions_user);
-			
+			if (Integer.valueOf (cfm.status) > 2)
+			{
+				a.setString (1, cfm.status);
+				a.setString (2, "null");
+				a.setString (3, cfm.skill);
+				a.setTimestamp (4, cfm.date_begin);
+				a.setString (5, cfm.extensions_user);
+			} else
+			{
+				a.setString (1, "null");
+				a.setString (2, cfm.status);
+				a.setString (3, cfm.skill);
+				a.setTimestamp (4, cfm.date_begin);
+				a.setString (5, cfm.extensions_user);
+			}
 			flag = a.executeUpdate ();// Evaluate (Connected_Expression1)
 			
 			a.close ();

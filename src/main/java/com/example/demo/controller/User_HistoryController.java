@@ -38,7 +38,8 @@ public class User_HistoryController
 	@Autowired
 	private DataSource dataSource;
 	
-	public User_HistoryController(DataSource dataSource) {
+	public User_HistoryController (DataSource dataSource)
+	{
 		this.dataSource = dataSource;
 	}
 	
@@ -48,13 +49,14 @@ public class User_HistoryController
 	@GetMapping("/getAllHistory")
 	public List<User_HistoryModel> getAll (@RequestBody User_HistoryModel uh) throws SQLException
 	{
-		//Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
-		Connection connection = dataSource.getConnection();
+		// Connection connection = DriverManager.getConnection (sk.Path_expr,
+		// sk.service_user, sk.service_password);
+		Connection connection = dataSource.getConnection ();
 		PreparedStatement query = connection.prepareStatement ("SELECT * FROM user_history");
 		
 		ResultSet Cursor1 = query.executeQuery ();
-		List<User_HistoryModel> ls = new ArrayList<User_HistoryModel>();
-		while(Cursor1.next ())
+		List<User_HistoryModel> ls = new ArrayList<User_HistoryModel> ();
+		while (Cursor1.next ())
 		{
 			User_HistoryModel uas = new User_HistoryModel ();
 			uas.id_user_history = Cursor1.getString (1);
@@ -76,21 +78,33 @@ public class User_HistoryController
 		return ls;
 	}
 	
-	//@PostMapping("/addUserHistory")
+	// @PostMapping("/addUserHistory")
 	public int addUserHistory (@RequestBody UserModel um) throws SQLException
 	{
-		//Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
-		Connection connection = dataSource.getConnection();
+		// Connection connection = DriverManager.getConnection (sk.Path_expr,
+		// sk.service_user, sk.service_password);
+		Connection connection = dataSource.getConnection ();
 		PreparedStatement query = connection.prepareStatement (insert_query.query_insert_user_history);
 		
-		query.setString (1, um.extensions_user);
-		query.setString (2, um.nama);
-		query.setString (3, um.status);
-		query.setString (4, um.status);
-		query.setString (5, um.skill);
-		query.setTimestamp (6, um.date_begin);
-		query.setTimestamp (7, null);
-		
+		if (Integer.valueOf (um.status) > 2)
+		{
+			query.setString (1, um.extensions_user);
+			query.setString (2, um.nama);
+			query.setString (3, um.status);
+			query.setString (4, um.status);
+			query.setString (5, um.skill);
+			query.setTimestamp (6, um.date_begin);
+			query.setTimestamp (7, null);
+		} else
+		{
+			query.setString (1, um.extensions_user);
+			query.setString (2, um.nama);
+			query.setString (3, um.status);
+			query.setString (4, um.status);
+			query.setString (5, um.skill);
+			query.setTimestamp (6, um.date_begin);
+			query.setTimestamp (7, null);
+		}
 		int result = query.executeUpdate ();
 		
 		query.close ();
@@ -99,14 +113,15 @@ public class User_HistoryController
 		return result;
 	}
 	
-	//@PostMapping("/updateUserHistory")
+	// @PostMapping("/updateUserHistory")
 	public int updateUserHistory (@RequestBody UserModel um) throws SQLException
 	{
-		//Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
-		Connection connection = dataSource.getConnection();
+		// Connection connection = DriverManager.getConnection (sk.Path_expr,
+		// sk.service_user, sk.service_password);
+		Connection connection = dataSource.getConnection ();
 		PreparedStatement query = connection.prepareStatement (update_query.query_update_user_history);
 		
-		//System.out.print (um.date_end + "jncjndsjc");
+		// System.out.print (um.date_end + "jncjndsjc");
 		query.setTimestamp (1, um.date_end);
 		query.setString (2, um.extensions_user);
 		
@@ -117,6 +132,5 @@ public class User_HistoryController
 		
 		return result;
 	}
-
-
+	
 }
