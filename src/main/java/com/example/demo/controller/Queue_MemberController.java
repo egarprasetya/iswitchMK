@@ -147,7 +147,7 @@ public class Queue_MemberController
 		//Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
 		Connection Connection1 = dataSource.getConnection();
 		querydelete_alembic_version_config = Connection1.prepareStatement(query_string_delete.query_delete_queue_members);
-		querydelete_alembic_version_config.setString(1, cfm.queue_name);
+		querydelete_alembic_version_config.setString(1, cfm.extension);
 		int Cursor1 = querydelete_alembic_version_config.executeUpdate();// Evaluate (Connected_Expression1)
 		int a = 0;
 		Connection1.close();
@@ -273,7 +273,7 @@ public class Queue_MemberController
 				queueMember.incall = words[13].replaceAll("' status", "");
 				queueMember.status = words[14].replaceAll("' paused", "");
 				queueMember.paused = words[15].replaceAll("' pausedreason", "");
-				queueMember.pausedreason = words[16].replaceAll("' wraptime", "");
+				queueMember.pausedreason = words[16].replaceAll("' wrapuptime", "");
 				queueMember.wrapuptime = words[17].replaceAll("' /></response>", "");
 
 				listQueue.add(queueMember);

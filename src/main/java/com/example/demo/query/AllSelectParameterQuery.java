@@ -32,9 +32,9 @@ public class AllSelectParameterQuery {
 	public String query_select_parameter_domain_aliases="select*from ps_domain_aliases where id = ?";
 //	public String query_select_parameter_user="select*from users where nama=? where id = ?";
 
-	public String query_login = "select users.* "
-			+ "from users  "
-			+ "where users.username = ? "; 
+	public String query_login = "select users.*, skill.queue " +
+			"from users join skill on users.skill = skill.skill_id " +
+			"where users.username = ?"; 
 	
 	public String query_password = "select users.password "
 			+ "from users  "
