@@ -125,9 +125,11 @@ public class UserController
 				um = result;
 				Queue_MemberModel qm = new Queue_MemberModel();
 				qm._interface = "PJSIP/" + um.extensions_user;
+				qm.extension = "PJSIP/" + um.extensions_user;
 				qm.queue_name = um.queue;
 				qm.state_interface = um.status;
-				
+
+				qmc.deleteQueueMember (qm);
 				qmc.addQueueMember (qm);
 				um.date_end = cfm.date_begin;
 				uhc.updateUserHistory (um);
