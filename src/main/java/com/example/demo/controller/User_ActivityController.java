@@ -80,8 +80,8 @@ public class User_ActivityController
 		int flag = 0;
 		try
 		{
-			Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
-			// Connection Connection1 = dataSource.getConnection();
+			//Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+			Connection Connection1 = dataSource.getConnection();
 			PreparedStatement a = Connection1.prepareStatement (select_query3.query_update_user_activity);
 			if (Integer.valueOf (cfm.status) > 2)
 			{
@@ -120,8 +120,8 @@ public class User_ActivityController
 		int flag = 0;
 		try
 		{
-			Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
-			// Connection Connection1 = dataSource.getConnection();
+			//Connection Connection1 = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
+			Connection Connection1 = dataSource.getConnection();
 			PreparedStatement a = Connection1.prepareStatement (select_query3.query_update_user_activity);
 			if (Integer.valueOf (cfm.status) > 2)
 			{
