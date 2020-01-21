@@ -29,10 +29,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping(produces = "application/json", path = "/queues")
-public class QueuesContoller {
+public class QueuesController {
 	
 	@Autowired
 	private DataSource dataSource;
+	
+	public QueuesController (DataSource dataSource)
+	{
+		this.dataSource = dataSource;
+	}
 	
 	PreparedStatement querydelete_alembic_version_config = null;
 	AllDeleteQuery query_string_delete = new AllDeleteQuery();
@@ -177,6 +182,24 @@ public class QueuesContoller {
 			ModelQueues.timeoutrestart = YesNo_Values.valueOf(Cursor1.getString(53)); // YesNo value / Type.
 			ModelQueues.defaultrule = Cursor1.getString(54);
 			ModelQueues.timeoutpriority = Cursor1.getString(55);
+			ListUser1.add(ModelQueues);
+
+		}
+		Connection1.close();
+		return ListUser1;
+	}
+	
+	public ArrayList<QueuesModel> getQueuesName() throws SQLException {
+		//Connection Connection1 = DriverManager.getConnection(sk.Path_expr, sk.service_user, sk.service_password);
+		Connection Connection1 = dataSource.getConnection();
+		queryselect_queues = Connection1.prepareStatement(query_string.query_select_queues);
+		ResultSet Cursor1 = queryselect_queues.executeQuery();// Evaluate (Connected_Expression1)
+		ArrayList<QueuesModel> ListUser1 = new ArrayList<QueuesModel>();
+		while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
+		{
+			QueuesModel ModelQueues = new QueuesModel();
+
+			ModelQueues.name = Cursor1.getString(1);
 			ListUser1.add(ModelQueues);
 
 		}

@@ -292,9 +292,9 @@ public class Queue_MemberController
 		return listQueue;
 	}
 	
-	@GetMapping("/getQueueMemberBy")
-	public ResponseEntity<ArrayList<Queue_EntryModel>> getQueueEntry (@RequestParam String bla)
-			throws KeyManagementException, NoSuchAlgorithmException, KeyStoreException
+	@GetMapping("/getQueueEntry")
+	public ResponseEntity<String> getQueueEntry ()
+			throws KeyManagementException, NoSuchAlgorithmException, KeyStoreException, SQLException
 	{
 		// RestTempleteConfig.disableSslVerification();
 		RestTemplate restTemplate = new RestTempleteConfig ().getRestTemplate ();
@@ -303,20 +303,36 @@ public class Queue_MemberController
 //		System.out.println(entity.getBody());
 		
 		String[] str_array = entity.getBody ().split ("\n");
-		ArrayList<Queue_EntryModel> result = getQueueEntry (str_array, bla);
-		
-//		for (Queue_MemberModel2 i : result)
-//		{
-//			System.out.println(i.name);
-//		}
-		
-		if (result.size () > 0)
-			return new ResponseEntity<ArrayList<Queue_EntryModel>> (result, HttpStatus.OK);
+		int[] result = getQueueEntry (str_array);
+		ArrayList<QueuesModel> listQueues = new ArrayList<QueuesModel> ();
+		QueuesController qc = new QueuesController (dataSource);
+		listQueues = qc.getQueuesName ();
+		String parsedResult = "[\n\t";
+		for (int i = 0; i < result.length; i++)
+		{
+			
+			ArrayList<String> formatedResultField = new ArrayList<String> ();
+			formatedResultField.add ("queue");
+			formatedResultField.add ("jumlah");
+			
+			ArrayList<String> formatedResultValues = new ArrayList<String> ();
+			formatedResultValues.add (String.valueOf (listQueues.get (i).name));
+			formatedResultValues.add (String.valueOf (result[i]));
+			
+			parsedResult += parseToStringJSON (formatedResultField, formatedResultValues);
+			if (result.length - 1 > i)
+			{
+				parsedResult += ",\n";
+			}
+		}
+		parsedResult += "]";
+		if (result.length > 0)
+			return new ResponseEntity<String> (parsedResult, HttpStatus.OK);
 		else
-			return new ResponseEntity<ArrayList<Queue_EntryModel>> (HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String> (HttpStatus.NOT_FOUND);
 	}
 	
-	static ArrayList<Queue_EntryModel> getQueueEntry (String[] lines, String bla)
+	public int[] getQueueEntry (String[] lines) throws SQLException
 	{
 		// kalimat
 		ArrayList<Queue_EntryModel> listQueue = new ArrayList<Queue_EntryModel> ();
@@ -326,29 +342,64 @@ public class Queue_MemberController
 		for (int i = 0; i < sentence.length; i++)
 		{
 			isFound[i] = lines[i].indexOf ("QueueEntry") != -1 ? true : false;
-			isFound2[i] = lines[i].indexOf (bla) == -1 ? false : true;
 			if (isFound[i])
 			{
-				if (isFound2[i])
+				queueEntry = new Queue_EntryModel ();
+				String[] words = lines[i].split ("='");
+				queueEntry.event = words[3].replaceAll ("' queue", "");
+				queueEntry.queue = words[4].replaceAll ("' position", "");
+				queueEntry.position = words[5].replaceAll ("' channel", "");
+				queueEntry.channel = words[6].replaceAll ("' uniqueid", "");
+				queueEntry.uniqueid = words[7].replaceAll ("' calleridnum", "");
+				queueEntry.calleridnum = words[8].replaceAll ("' calleridname", "");
+				queueEntry.calleridname = words[9].replaceAll ("' connectedlinenum", "");
+				queueEntry.connectedlinenum = words[10].replaceAll ("' connectedlinename", "");
+				queueEntry.connectedlinename = words[11].replaceAll ("' wait", "");
+				queueEntry.wait = words[12].replaceAll ("' priority", "");
+				queueEntry.priority = words[13].replaceAll ("' /></response>", "");
+				
+				listQueue.add (queueEntry);
+				
+			}
+		}
+		ArrayList<QueuesModel> listQueues = new ArrayList<QueuesModel> ();
+		QueuesController qc = new QueuesController (dataSource);
+		listQueues = qc.getQueuesName ();
+		
+		int[] jumlahQueues = new int[listQueues.size ()];
+		
+		for (int i = 0; i < listQueue.size (); i++)
+		{
+			for (int j = 0; j < listQueues.size (); i++)
+			{
+				if (listQueues.get (j).name == listQueue.get (i).queue)
 				{
-					queueEntry = new Queue_EntryModel ();
-					String[] words = lines[i].split ("='");
-					queueEntry.event = words[3].replaceAll ("' queue", "");
-					queueEntry.queue = words[4].replaceAll ("' position", "");
-					queueEntry.position = words[5].replaceAll ("' channel", "");
-					queueEntry.channel = words[6].replaceAll ("' uniqueid", "");
-					queueEntry.uniqueid = words[7].replaceAll ("' calleridnum", "");
-					queueEntry.calleridnum = words[8].replaceAll ("' calleridname", "");
-					queueEntry.calleridname = words[9].replaceAll ("' connectedlinenum", "");
-					queueEntry.connectedlinenum = words[10].replaceAll ("' connectedlinename", "");
-					queueEntry.connectedlinename = words[11].replaceAll ("' wait", "");
-					queueEntry.wait = words[12].replaceAll ("' priority", "");
-					queueEntry.priority = words[13].replaceAll ("' /></response>", "");
-					
-					listQueue.add (queueEntry);
+					jumlahQueues[j]++;
 				}
 			}
 		}
-		return listQueue;
+		return jumlahQueues;
+	}
+	
+	private String parseToStringJSON (ArrayList<String> field, ArrayList<String> values)
+	{
+		String JSONHeader = "{\n\t";
+		String JSONFooter = "\n}";
+		String parsedJSON = "";
+		String endLineJSON = ",\n\t";
+		String quote = "\"";
+		String equal = " : ";
+		
+		for (int i = 0; i < field.size (); i++)
+		{
+			if (i < field.size () - 1)
+				parsedJSON += quote + field.get (i) + quote + equal + quote + values.get (i) + quote + endLineJSON;
+			else
+				parsedJSON += quote + field.get (i) + quote + equal + quote + values.get (i) + quote;
+		}
+		
+		parsedJSON = JSONHeader + parsedJSON + JSONFooter;
+		// System.out.println(parsedJSON);
+		return parsedJSON;
 	}
 }
