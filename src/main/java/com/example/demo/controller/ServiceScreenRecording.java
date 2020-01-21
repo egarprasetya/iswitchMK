@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/ServiceScreenRecorder")
 public class ServiceScreenRecording
 {
@@ -34,7 +35,7 @@ public class ServiceScreenRecording
 	@Autowired
 	private DataSource dataSource;
 	
-	@CrossOrigin(origins = "*")
+	
 	
 	@GetMapping("/GetIP")
 	private String getClientIp (HttpServletRequest request)
