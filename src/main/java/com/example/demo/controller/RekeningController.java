@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -121,6 +122,8 @@ public class RekeningController
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/rekening/getAll", HttpMethod.GET,
 				null, String.class);
+		//ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/rekening/getDataTerbaru", HttpMethod.GET,
+		//		null, String.class);
 		System.out.println(response.getBody());
 
 		return parsingJSONtoModel(response.getBody(), bla);
@@ -369,24 +372,111 @@ public class RekeningController
 			sm.nama_status = result.getString(2);
 			listAppStatus.add(sm);
 		}
+		
+		result.close();
+		query.close();
+		con.close();
+		
 		return listAppStatus;
 	}
 	
-//	
-//	
-//	@PostMapping("/updateDataMobile")
-//	public ResponseEntity<String> updateDataMobile(@RequestBody RekeningModel rm)
-//	{
-//		try
-//		{
-//			
-//		} catch (SQLException error)
-//		{
-//			error.printStackTrace();
-//			return new ResponseEntity<String>("-1", HttpStatus.BAD_REQUEST);
-//		}
-//
-//	}
+	
+	
+	@PostMapping("/updateDataMobile")
+	public ResponseEntity<String> updateDataMobile(@RequestBody RekeningModel rm)
+	{
+		try
+		{
+			if(doUpdateDataMobile(rm) > 0)
+				return new ResponseEntity<String>("1", HttpStatus.OK);
+			else
+				return new ResponseEntity<String>("0", HttpStatus.NOT_FOUND);
+			
+		} catch (SQLException error)
+		{
+			error.printStackTrace();
+			return new ResponseEntity<String>("-1", HttpStatus.BAD_REQUEST);
+		}
+
+	}
+	
+	private int doUpdateDataMobile(RekeningModel rm) throws SQLException
+	{
+		Connection con = dataSource.getConnection();
+		PreparedStatement update_query = con.prepareStatement("UPDATE public.rekening " + 
+				"SET nik=?, nama=?, tempat_lahir=?, tanggal_lahir=?::date, nomor_telepon=?, nama_ibu=?, alamat=?, rt_rw=?, kelurahan=?, kecamatan=?, kota=?, kode_pos=?, no_rekening=? WHERE status=0 AND extension = ?;");
+		
+		update_query.setString(1, rm.nik);
+		update_query.setString(2, rm.nama);
+		update_query.setString(3, rm.tempat_lahir);
+		update_query.setString(4, rm.tanggal_lahir);
+		update_query.setString(5, rm.nomor_telepon);
+		update_query.setString(6, rm.nama_ibu);
+		update_query.setString(7, rm.alamat);
+		update_query.setString(8, rm.rt_rw);
+		update_query.setString(9, rm.kelurahan);
+		update_query.setString(10, rm.kecamatan);
+		update_query.setString(11, rm.kota);
+		update_query.setString(12, rm.kode_pos);
+		update_query.setString(13, doUpdateNorek());
+		update_query.setString(14, rm.extension);
+		
+		int result = update_query.executeUpdate();
+		
+		return result;
+	}
+	
+	private String doUpdateNorek() throws SQLException
+	{
+		// String encodedPassword = bCryptPasswordEncoder.encode(akun.getPassword());
+		String noRek = String.valueOf(Math.random() * 500000000.0 + 200000000.0);
+		System.out.println(noRek);
+		return noRek;
+	}
+	
+	@GetMapping("/getNorek")
+	public ResponseEntity<List<RekeningModel>> getNorek(@RequestBody RekeningModel rms)
+	{
+		try
+		{
+			List<RekeningModel> listResult = doGetNorek(rms);
+			return new ResponseEntity<List<RekeningModel>>(listResult, HttpStatus.OK);
+
+		} catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new ResponseEntity<List<RekeningModel>>(HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	public List<RekeningModel> doGetNorek(RekeningModel rms) throws SQLException
+	{
+		Connection con = dataSource.getConnection();
+		PreparedStatement query = con.prepareStatement("select " + "no_rekening, " + "jenis_tabungan.nama as jenis_tabungan, "
+				+ "kantor_cabang_terdaftar, " + "nomor_kartu "
+				+ "from rekening join application_status on rekening.status = application_status.id join jenis_tabungan on rekening.jenis_tabungan = jenis_tabungan.id "
+				+ "where rekening.status = 1 and rekening.extension = ? order by rekening.insert_at desc limit 1");
+		query.setString(1, rms.extension);
+		ResultSet result = query.executeQuery();
+		List<RekeningModel> listRM = new ArrayList<RekeningModel>();
+		while (result.next())
+		{
+			RekeningModel rm = new RekeningModel();
+			rm.no_rekening = result.getString(1);
+			rm.jenis_tabungan = result.getString(2);
+			rm.kantor_cabang_terdaftar = result.getString(3);
+			rm.nomor_kartu = result.getString(4);
+			
+
+			listRM.add(rm);
+		}
+		result.close();
+		query.close();
+		con.close();
+
+		return listRM;
+	}
 	
 	
 }
