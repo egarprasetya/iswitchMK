@@ -42,13 +42,14 @@ public class CustomersController
 	
 	stringkoneksi sk = new stringkoneksi ();
 	
-	@PostMapping ("/getCustomersByExtension")
-	public List<CustomersModel> getAll (@RequestBody CustomersModel cm) throws SQLException
+	@PostMapping("/getCustomersByExtensionRekening")
+	public List<CustomersModel> getAllRekening (@RequestBody CustomersModel cm) throws SQLException
 	{
-		//Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
-		Connection connection = dataSource.getConnection();
+		// Connection connection = DriverManager.getConnection (sk.Path_expr,
+		// sk.service_user, sk.service_password);
+		Connection connection = dataSource.getConnection ();
 		PreparedStatement query = connection.prepareStatement (select_query.query_customer);
-
+		
 		query.setString (1, cm.extension);
 		
 		List<CustomersModel> listCustomers = new ArrayList<CustomersModel> ();
@@ -58,43 +59,43 @@ public class CustomersController
 			CustomersModel customerModel = new CustomersModel ();
 			
 			customerModel.id = Cursor1.getString (1);
-			customerModel.nik = Cursor1.getString(2);
-			customerModel.nama = Cursor1.getString(3);
-			customerModel.tempat_lahir = Cursor1.getString(4);
-			customerModel.tanggal_lahir = Cursor1.getString(5);
-			customerModel.nomor_telepon = Cursor1.getString(6);
-			customerModel.nama_ibu = Cursor1.getString(7);
-			customerModel.alamat = Cursor1.getString(8);
-			customerModel.rt_rw = Cursor1.getString(9);
-			customerModel.kelurahan = Cursor1.getString(10);
-			customerModel.kecamatan = Cursor1.getString(11);
-			customerModel.kota = Cursor1.getString(12);
-			customerModel.kode_pos = Cursor1.getString(13);
-			customerModel.foto = Cursor1.getString(14);
-			customerModel.foto_ktp = Cursor1.getString(15);
-			customerModel.foto_ttd = Cursor1.getString(16);
-			customerModel.extension = Cursor1.getString(17);
-			customerModel.email = Cursor1.getString(18);
+			customerModel.nik = Cursor1.getString (2);
+			customerModel.nama = Cursor1.getString (3);
+			customerModel.tempat_lahir = Cursor1.getString (4);
+			customerModel.tanggal_lahir = Cursor1.getString (5);
+			customerModel.nomor_telepon = Cursor1.getString (6);
+			customerModel.nama_ibu = Cursor1.getString (7);
+			customerModel.alamat = Cursor1.getString (8);
+			customerModel.rt_rw = Cursor1.getString (9);
+			customerModel.kelurahan = Cursor1.getString (10);
+			customerModel.kecamatan = Cursor1.getString (11);
+			customerModel.kota = Cursor1.getString (12);
+			customerModel.kode_pos = Cursor1.getString (13);
+			customerModel.foto = Cursor1.getString (14);
+			customerModel.foto_ktp = Cursor1.getString (15);
+			customerModel.foto_ttd = Cursor1.getString (16);
+			customerModel.extension = Cursor1.getString (17);
+			customerModel.email = Cursor1.getString (18);
 			
 			listCustomers.add (customerModel);
 		}
 		query.close ();
 		Cursor1.close ();
 		connection.close ();
-
+		
 		return listCustomers;
 	}
 	
-	@PostMapping ("/addCustomer")
-	public String addCustomer (@RequestBody CustomersModel cm) throws SQLException
+	@PostMapping("/addCustomerRekening")
+	public String addCustomerRekening (@RequestBody CustomersModel cm) throws SQLException
 	{
 		try
 		{
-			//Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
-			Connection connection = dataSource.getConnection();
-			PreparedStatement query = connection
-					.prepareStatement (insert_query.query_insert_customer);
-
+			// Connection connection = DriverManager.getConnection (sk.Path_expr,
+			// sk.service_user, sk.service_password);
+			Connection connection = dataSource.getConnection ();
+			PreparedStatement query = connection.prepareStatement (insert_query.query_insert_customer);
+			
 			query.setString (1, cm.nik);
 			query.setString (2, cm.nama);
 			query.setString (3, cm.tempat_lahir);
@@ -117,10 +118,9 @@ public class CustomersController
 			
 			query.close ();
 			connection.close ();
-
+			
 			return "{ " + "\"response\":" + "\"" + flag + "\" }";
-		}
-		catch (SQLException error_sql)
+		} catch (SQLException error_sql)
 		{
 			error_sql.printStackTrace ();
 			return "{ " + "\"response\":" + "\"" + "0" + "\" }";
@@ -128,17 +128,16 @@ public class CustomersController
 		
 	}
 	
-	
-	@PostMapping ("/updateCustomer")
-	public String updateCustomer (@RequestBody CustomersModel cm) throws SQLException
+	@PostMapping("/updateCustomerRekening")
+	public String updateCustomerRekening (@RequestBody CustomersModel cm) throws SQLException
 	{
 		try
 		{
-			//Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
-			Connection connection = dataSource.getConnection();
-			PreparedStatement query = connection
-					.prepareStatement (update_query.query_update_customer);
-
+			// Connection connection = DriverManager.getConnection (sk.Path_expr,
+			// sk.service_user, sk.service_password);
+			Connection connection = dataSource.getConnection ();
+			PreparedStatement query = connection.prepareStatement (update_query.query_update_customer);
+			
 			query.setString (1, cm.nik);
 			query.setString (2, cm.nama);
 			query.setString (3, cm.tempat_lahir);
@@ -164,8 +163,7 @@ public class CustomersController
 			connection.close ();
 			
 			return "{ " + "\"response\":" + "\"" + flag + "\" }";
-		}
-		catch (SQLException error_sql)
+		} catch (SQLException error_sql)
 		{
 			error_sql.printStackTrace ();
 			return "{ " + "\"response\":" + "\"" + "0" + "\" }";
@@ -173,15 +171,15 @@ public class CustomersController
 		
 	}
 	
-	public int addSingleCustomer (CustomersModel cm) throws SQLException
+	public int addSingleCustomerRekening (CustomersModel cm) throws SQLException
 	{
 		try
 		{
-			//Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
-			Connection connection = dataSource.getConnection();
-			PreparedStatement query = connection
-					.prepareStatement (insert_query.query_insert_customer);
-
+			// Connection connection = DriverManager.getConnection (sk.Path_expr,
+			// sk.service_user, sk.service_password);
+			Connection connection = dataSource.getConnection ();
+			PreparedStatement query = connection.prepareStatement (insert_query.query_insert_customer);
+			
 			query.setString (1, cm.nik);
 			query.setString (2, cm.nama);
 			query.setString (3, cm.tempat_lahir);
@@ -206,8 +204,7 @@ public class CustomersController
 			connection.close ();
 			
 			return flag;
-		}
-		catch (SQLException error_sql)
+		} catch (SQLException error_sql)
 		{
 			error_sql.printStackTrace ();
 			return 0;
@@ -215,13 +212,13 @@ public class CustomersController
 		
 	}
 	
-	public List<CustomersModel> getCustomersByExtension (CustomersModel cm) throws SQLException
+	public List<CustomersModel> getCustomersByExtensionRekening (CustomersModel cm) throws SQLException
 	{
-		//Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
-		Connection connection = dataSource.getConnection();
-		PreparedStatement query = connection
-				.prepareStatement (select_query.query_customer);
-
+		// Connection connection = DriverManager.getConnection (sk.Path_expr,
+		// sk.service_user, sk.service_password);
+		Connection connection = dataSource.getConnection ();
+		PreparedStatement query = connection.prepareStatement (select_query.query_customer);
+		
 		query.setString (1, cm.extension);
 		List<CustomersModel> listCustomers = new ArrayList<CustomersModel> ();
 		ResultSet Cursor1 = query.executeQuery ();
@@ -229,23 +226,23 @@ public class CustomersController
 		{
 			CustomersModel customerModel = new CustomersModel ();
 			customerModel.id = Cursor1.getString (1);
-			customerModel.nik = Cursor1.getString(2);
-			customerModel.nama = Cursor1.getString(3);
-			customerModel.tempat_lahir = Cursor1.getString(4);
-			customerModel.tanggal_lahir = Cursor1.getString(5);
-			customerModel.nomor_telepon = Cursor1.getString(6);
-			customerModel.nama_ibu = Cursor1.getString(7);
-			customerModel.alamat = Cursor1.getString(8);
-			customerModel.rt_rw = Cursor1.getString(9);
-			customerModel.kelurahan = Cursor1.getString(10);
-			customerModel.kecamatan = Cursor1.getString(11);
-			customerModel.kota = Cursor1.getString(12);
-			customerModel.kode_pos = Cursor1.getString(13);
-			customerModel.foto = Cursor1.getString(14);
-			customerModel.foto_ktp = Cursor1.getString(15);
-			customerModel.foto_ttd = Cursor1.getString(16);
-			customerModel.extension = Cursor1.getString(17);
-			customerModel.email = Cursor1.getString(18);
+			customerModel.nik = Cursor1.getString (2);
+			customerModel.nama = Cursor1.getString (3);
+			customerModel.tempat_lahir = Cursor1.getString (4);
+			customerModel.tanggal_lahir = Cursor1.getString (5);
+			customerModel.nomor_telepon = Cursor1.getString (6);
+			customerModel.nama_ibu = Cursor1.getString (7);
+			customerModel.alamat = Cursor1.getString (8);
+			customerModel.rt_rw = Cursor1.getString (9);
+			customerModel.kelurahan = Cursor1.getString (10);
+			customerModel.kecamatan = Cursor1.getString (11);
+			customerModel.kota = Cursor1.getString (12);
+			customerModel.kode_pos = Cursor1.getString (13);
+			customerModel.foto = Cursor1.getString (14);
+			customerModel.foto_ktp = Cursor1.getString (15);
+			customerModel.foto_ttd = Cursor1.getString (16);
+			customerModel.extension = Cursor1.getString (17);
+			customerModel.email = Cursor1.getString (18);
 			listCustomers.add (customerModel);
 			
 		}
@@ -253,19 +250,19 @@ public class CustomersController
 		query.close ();
 		Cursor1.close ();
 		connection.close ();
-
+		
 		return listCustomers;
 	}
 	
-	public int updateCustomerByExtension (CustomersModel cm) throws SQLException
+	public int updateCustomerByExtensionRekening (CustomersModel cm) throws SQLException
 	{
 		try
 		{
-			//Connection connection = DriverManager.getConnection (sk.Path_expr, sk.service_user, sk.service_password);
-			Connection connection = dataSource.getConnection();
-			PreparedStatement query = connection
-					.prepareStatement (update_query.query_update_customer);
-
+			// Connection connection = DriverManager.getConnection (sk.Path_expr,
+			// sk.service_user, sk.service_password);
+			Connection connection = dataSource.getConnection ();
+			PreparedStatement query = connection.prepareStatement (update_query.query_update_customer);
+			
 			query.setString (1, cm.nik);
 			query.setString (2, cm.nama);
 			query.setString (3, cm.tempat_lahir);
@@ -288,9 +285,211 @@ public class CustomersController
 			query.close ();
 			connection.close ();
 			
-			return flag ;
+			return flag;
+		} catch (SQLException error_sql)
+		{
+			error_sql.printStackTrace ();
+			return 0;
 		}
-		catch (SQLException error_sql)
+		
+	}
+	
+	@PostMapping("/saveCustomerRekening")
+	public ResponseEntity<String> saveCustomerRekening (@RequestBody CustomersModel cm)
+	{
+		try
+		{
+			List<CustomersModel> resultList = getCustomersByExtensionRekening (cm);
+			
+			if (resultList.size () <= 0)
+			{
+				if (addSingleCustomerRekening (cm) == 1)
+					return new ResponseEntity<String> ("{ " + "\"response\":" + "\"" + "1" + "\" }", HttpStatus.OK);
+				else
+					return new ResponseEntity<String> ("{ " + "\"response\":" + "\"" + "0" + "\" }", HttpStatus.BAD_REQUEST);
+			} else
+			{
+				if (updateCustomerByExtensionRekening (cm) == 1)
+					return new ResponseEntity<String> ("{ " + "\"response\":" + "\"" + "1" + "\" }", HttpStatus.OK);
+				else
+					return new ResponseEntity<String> ("{ " + "\"response\":" + "\"" + "0" + "\" }", HttpStatus.BAD_REQUEST);
+			}
+		} catch (Exception e)
+		{
+			e.printStackTrace ();
+			return new ResponseEntity<String> (HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+	}
+	
+	@PostMapping("/getCustomersByExtension")
+	public List<CustomersModel> getAll (@RequestBody CustomersModel cm) throws SQLException
+	{
+		// Connection connection = DriverManager.getConnection (sk.Path_expr,
+		// sk.service_user, sk.service_password);
+		Connection connection = dataSource.getConnection ();
+		PreparedStatement query = connection.prepareStatement (select_query.query_customer);
+		
+		query.setString (1, cm.extension);
+		List<CustomersModel> listCustomers = new ArrayList<CustomersModel> ();
+		ResultSet Cursor1 = query.executeQuery ();
+		while (Cursor1.next ())
+		{
+			CustomersModel customerModel = new CustomersModel ();
+			customerModel.id = Cursor1.getString (1);
+			customerModel.nama = Cursor1.getString (2);
+			customerModel.nomor_telepon = Cursor1.getString (3);
+			customerModel.alamat = Cursor1.getString (4);
+			customerModel.extension = Cursor1.getString (5);
+			listCustomers.add (customerModel);
+			
+		}
+		
+		query.close ();
+		Cursor1.close ();
+		connection.close ();
+		
+		return listCustomers;
+	}
+	
+	@PostMapping("/addCustomer")
+	public String addCustomer (@RequestBody CustomersModel cm) throws SQLException
+	{
+		try
+		{
+			// Connection connection = DriverManager.getConnection (sk.Path_expr,
+			// sk.service_user, sk.service_password);
+			Connection connection = dataSource.getConnection ();
+			PreparedStatement query = connection.prepareStatement (insert_query.query_insert_customer);
+			
+			query.setString (1, cm.id);
+			query.setString (2, cm.nama);
+			query.setString (3, cm.nomor_telepon);
+			query.setString (4, cm.alamat);
+			query.setString (5, cm.extension);
+			
+			int flag = query.executeUpdate ();
+			
+			query.close ();
+			connection.close ();
+			
+			return "{ " + "\"response\":" + "\"" + flag + "\" }";
+		} catch (SQLException error_sql)
+		{
+			error_sql.printStackTrace ();
+			return "{ " + "\"response\":" + "\"" + "0" + "\" }";
+		}
+		
+	}
+	
+	@PostMapping("/updateCustomer")
+	public String updateCustomer (@RequestBody CustomersModel cm) throws SQLException
+	{
+		try
+		{
+			// Connection connection = DriverManager.getConnection (sk.Path_expr,
+			// sk.service_user, sk.service_password);
+			Connection connection = dataSource.getConnection ();
+			PreparedStatement query = connection.prepareStatement (update_query.query_update_customer);
+			
+			query.setString (1, cm.nama);
+			query.setString (2, cm.nomor_telepon);
+			query.setString (3, cm.alamat);
+			query.setString (4, cm.extension);
+			
+			int flag = query.executeUpdate ();
+			
+			query.close ();
+			connection.close ();
+			
+			return "{ " + "\"response\":" + "\"" + flag + "\" }";
+		} catch (SQLException error_sql)
+		{
+			error_sql.printStackTrace ();
+			return "{ " + "\"response\":" + "\"" + "0" + "\" }";
+		}
+		
+	}
+	
+	public int addSingleCustomer (CustomersModel cm) throws SQLException
+	{
+		try
+		{
+			// Connection connection = DriverManager.getConnection (sk.Path_expr,
+			// sk.service_user, sk.service_password);
+			Connection connection = dataSource.getConnection ();
+			PreparedStatement query = connection.prepareStatement (insert_query.query_insert_customer);
+			
+			query.setString (1, cm.id);
+			query.setString (2, cm.nama);
+			query.setString (3, cm.nomor_telepon);
+			query.setString (4, cm.alamat);
+			query.setString (5, cm.extension);
+			
+			int flag = query.executeUpdate ();
+			
+			query.close ();
+			connection.close ();
+			
+			return flag;
+		} catch (SQLException error_sql)
+		{
+			error_sql.printStackTrace ();
+			return 0;
+		}
+		
+	}
+	
+	public List<CustomersModel> getCustomersByExtension (CustomersModel cm) throws SQLException
+	{
+		// Connection connection = DriverManager.getConnection (sk.Path_expr,
+		// sk.service_user, sk.service_password);
+		Connection connection = dataSource.getConnection ();
+		PreparedStatement query = connection.prepareStatement (select_query.query_customer);
+		
+		query.setString (1, cm.extension);
+		List<CustomersModel> listCustomers = new ArrayList<CustomersModel> ();
+		ResultSet Cursor1 = query.executeQuery ();
+		while (Cursor1.next ())
+		{
+			CustomersModel customerModel = new CustomersModel ();
+			customerModel.id = Cursor1.getString (1);
+			customerModel.nama = Cursor1.getString (2);
+			customerModel.nomor_telepon = Cursor1.getString (3);
+			customerModel.alamat = Cursor1.getString (4);
+			customerModel.extension = Cursor1.getString (5);
+			listCustomers.add (customerModel);
+			
+		}
+		
+		query.close ();
+		Cursor1.close ();
+		connection.close ();
+		
+		return listCustomers;
+	}
+	
+	public int updateCustomerByExtension (CustomersModel cm) throws SQLException
+	{
+		try
+		{
+			// Connection connection = DriverManager.getConnection (sk.Path_expr,
+			// sk.service_user, sk.service_password);
+			Connection connection = dataSource.getConnection ();
+			PreparedStatement query = connection.prepareStatement (update_query.query_update_customer);
+			
+			query.setString (1, cm.nama);
+			query.setString (2, cm.nomor_telepon);
+			query.setString (3, cm.alamat);
+			query.setString (4, cm.extension);
+			
+			int flag = query.executeUpdate ();
+			
+			query.close ();
+			connection.close ();
+			
+			return flag;
+		} catch (SQLException error_sql)
 		{
 			error_sql.printStackTrace ();
 			return 0;
@@ -301,30 +500,29 @@ public class CustomersController
 	@PostMapping("/saveCustomer")
 	public ResponseEntity<String> saveCustomer (@RequestBody CustomersModel cm)
 	{
-		try 
+		try
 		{
 			List<CustomersModel> resultList = getCustomersByExtension (cm);
 			
-			if(resultList.size () <= 0)
+			if (resultList.size () <= 0)
 			{
-				if(addSingleCustomer (cm) == 1)
+				if (addSingleCustomer (cm) == 1)
+					return new ResponseEntity<String> ("{ " + "\"response\":" + "\"" + "1" + "\" }", HttpStatus.OK);
+				else
+					return new ResponseEntity<String> ("{ " + "\"response\":" + "\"" + "0" + "\" }", HttpStatus.BAD_REQUEST);
+			} else
+			{
+				if (updateCustomerByExtension (cm) == 1)
 					return new ResponseEntity<String> ("{ " + "\"response\":" + "\"" + "1" + "\" }", HttpStatus.OK);
 				else
 					return new ResponseEntity<String> ("{ " + "\"response\":" + "\"" + "0" + "\" }", HttpStatus.BAD_REQUEST);
 			}
-			else
-			{
-				if(updateCustomerByExtension (cm) == 1)
-					return new ResponseEntity<String> ("{ " + "\"response\":" + "\"" + "1" + "\" }", HttpStatus.OK);
-				else
-					return new ResponseEntity<String> ("{ " + "\"response\":" + "\"" + "0" + "\" }", HttpStatus.BAD_REQUEST);
-			}
-		}
-		catch (Exception e)
+		} catch (Exception e)
 		{
 			e.printStackTrace ();
 			return new ResponseEntity<String> (HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
 	}
+	
 }
