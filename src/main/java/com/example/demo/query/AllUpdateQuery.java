@@ -143,8 +143,25 @@ public class AllUpdateQuery {
 			+ "SET status=?"
 			+ " WHERE user_id=?";			// user_id
 	public String query_update_customer = "UPDATE public.customers " + 
-			"SET nama=?, nomor_telepon=?, alamat=? "
-			+ "where \"extension\"=?; ";
+			"SET " + 
+			"nik=?, " + 
+			"nama=?, " + 
+			"tempat_lahir=?, " + 
+			"tanggal_lahir=?, " + 
+			"nomor_telepon=?, " + 
+			"nama_ibu=?, " + 
+			"alamat=?, " + 
+			"rt_rw=?, " + 
+			"kelurahan=?, " + 
+			"kecamatan=?, " + 
+			"kota=?, " + 
+			"kode_pos=?, " + 
+			"foto=?, " + 
+			"foto_ktp=?, " + 
+			"foto_ttd=?, " + 
+			"email=? " + 
+			"WHERE extension = ?;";
+	
 	public String query_update_user_activity="UPDATE public.user_activity " + 
 			"SET reason=?, status=?, skill=?, last_update=? " + 
 			"WHERE \"extension\" = ?;";

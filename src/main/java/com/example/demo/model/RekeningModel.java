@@ -31,4 +31,5 @@ public class RekeningModel
 	public String nomor_kartu;
 	public String application_status;
 	public String extension;
+	public String email;
 }

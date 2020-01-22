@@ -123,8 +123,8 @@ public class AllInsertQuery {
 			+ "?, ?, ?)";
 	
 	public String query_insert_customer = "INSERT INTO public.customers " + 
-			"(id, nama, nomor_telepon, alamat, \"extension\") " + 
-			"VALUES(?, ?, ?, ?, ?);";
+			"(nik, nama, tempat_lahir, tanggal_lahir, nomor_telepon, nama_ibu, alamat, rt_rw, kelurahan, kecamatan, kota, kode_pos, foto, foto_ktp, foto_ttd, \"extension\", email) " + 
+			"VALUES(?, ?, ?, ?::date, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 	
 	public String query_insert_user_history = "INSERT INTO public.user_history" + 
 			"(\"extension\", nama_user, reason, status, skill, date_begin, date_end)" + 
