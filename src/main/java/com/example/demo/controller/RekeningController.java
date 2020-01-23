@@ -118,8 +118,8 @@ public class RekeningController
 		Connection con = dataSource.getConnection();
 		PreparedStatement update_query = con.prepareStatement("INSERT INTO public.rekening " +
 				" (insert_at, status, \"extension\") " +
-				" VALUES(?::date, ?::int, ?) ");
-		update_query.setString(1, rm.insert_at);
+				" VALUES(?, ?::int, ?) ");
+		update_query.setTimestamp (1, rm.insert_at);
 		update_query.setString(2, rm.application_status);
 		update_query.setString(3, rm.extension);
 		
