@@ -166,7 +166,7 @@ public class RekeningController
 	{
 		try
 		{
-			if (doChangeRekeningStatus (rm, status) != 0)
+			if (doChangeRekeningStatus (rm) != 0)
 				return new ResponseEntity<String> ("{ " + "\"response\":" + "\"" + "1" + "\" }", HttpStatus.OK);
 			else
 				return new ResponseEntity<String> ("{ " + "\"response\":" + "\"" + "0" + "\" }", HttpStatus.NOT_FOUND);
@@ -178,13 +178,13 @@ public class RekeningController
 		
 	}
 	
-	private int doChangeRekeningStatus (RekeningModel rm, int status) throws SQLException
+	private int doChangeRekeningStatus (RekeningModel rm) throws SQLException
 	{
 		Connection con = dataSource.getConnection ();
 		PreparedStatement query = con
 				.prepareStatement ("UPDATE rekening SET status = ? WHERE status = 0 AND extension = ?");
 		
-		query.setInt (1, status);
+		query.setString (1, rm.status);
 		query.setString (2, rm.extension);
 		
 		int result = query.executeUpdate ();
@@ -197,5 +197,26 @@ public class RekeningController
 		
 		return result;
 	}
-	
+	@GetMapping("/getAppStatus")
+	public List<StatusModel> getAppStatus () throws SQLException
+	{
+		Connection con = dataSource.getConnection ();
+		PreparedStatement query = con.prepareStatement ("SELECT * FROM application_status");
+		
+		ResultSet result = query.executeQuery ();
+		List<StatusModel> listAppStatus = new ArrayList<StatusModel> ();
+		while (result.next ())
+		{
+			StatusModel sm = new StatusModel ();
+			sm.status_id = result.getString (1);
+			sm.nama_status = result.getString (2);
+			listAppStatus.add (sm);
+		}
+		
+		result.close ();
+		query.close ();
+		con.close ();
+		
+		return listAppStatus;
+	}
 }
