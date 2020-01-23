@@ -147,7 +147,7 @@ public class AllUpdateQuery {
 			"nik=?, " + 
 			"nama=?, " + 
 			"tempat_lahir=?, " + 
-			"tanggal_lahir=?, " + 
+			"tanggal_lahir=?::date, " + 
 			"nomor_telepon=?, " + 
 			"nama_ibu=?, " + 
 			"alamat=?, " + 

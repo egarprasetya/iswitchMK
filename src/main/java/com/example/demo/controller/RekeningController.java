@@ -101,14 +101,14 @@ public class RekeningController
 		try
 		{
 			if(doInsertRekening(rm) > 0)
-				return new ResponseEntity<String>("1", HttpStatus.OK);
+				return new ResponseEntity<String>("{ " + "\"response\":" + "\"" + "1" + "\" }", HttpStatus.OK);
 			else
-				return new ResponseEntity<String>("0", HttpStatus.NOT_FOUND);
+				return new ResponseEntity<String>("{ " + "\"response\":" + "\"" + "0" + "\" }", HttpStatus.NOT_FOUND);
 			
 		} catch (SQLException error)
 		{
 			error.printStackTrace();
-			return new ResponseEntity<String>("-1", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>("{ " + "\"response\":" + "\"" + "-1" + "\" }", HttpStatus.BAD_REQUEST);
 		}
 
 	}
@@ -116,9 +116,9 @@ public class RekeningController
 	private int doInsertRekening(RekeningModel rm) throws SQLException
 	{
 		Connection con = dataSource.getConnection();
-		PreparedStatement update_query = con.prepareStatement("INSERT INTO public.rekening" +
-				"insert_at, status, \"extension\" " +
-				"VALUES(?, ?, ?) ");
+		PreparedStatement update_query = con.prepareStatement("INSERT INTO public.rekening " +
+				" (insert_at, status, \"extension\") " +
+				" VALUES(?::date, ?::int, ?) ");
 		update_query.setString(1, rm.insert_at);
 		update_query.setString(2, rm.application_status);
 		update_query.setString(3, rm.extension);
@@ -134,14 +134,14 @@ public class RekeningController
 		try
 		{
 			if(doUpdateRekening(rm) > 0)
-				return new ResponseEntity<String>("1", HttpStatus.OK);
+				return new ResponseEntity<String>("{ " + "\"response\":" + "\"" + "1" + "\" }", HttpStatus.OK);
 			else
-				return new ResponseEntity<String>("0", HttpStatus.NOT_FOUND);
+				return new ResponseEntity<String>("{ " + "\"response\":" + "\"" + "0" + "\" }", HttpStatus.NOT_FOUND);
 			
 		} catch (SQLException error)
 		{
 			error.printStackTrace();
-			return new ResponseEntity<String>("-1", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>("{ " + "\"response\":" + "\"" + "-1" + "\" }", HttpStatus.BAD_REQUEST);
 		}
 
 	}
@@ -154,7 +154,7 @@ public class RekeningController
 		update_query.setString(1, rm.no_rekening);
 		update_query.setString(2, rm.jenis_tabungan);
 		update_query.setString(3, rm.kantor_cabang_terdaftar);
-		update_query.setString(4, rm.nomor_kartu);
+		update_query.setString(4, String.valueOf(Math.random() * 640000000 + 65000000));//rm.nomor_kartu);
 		update_query.setString(5, rm.extension);
 		
 		int result = update_query.executeUpdate();
