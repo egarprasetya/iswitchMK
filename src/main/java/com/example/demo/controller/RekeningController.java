@@ -149,8 +149,8 @@ public class RekeningController
 	private int doUpdateRekening(RekeningModel rm) throws SQLException
 	{
 		Connection con = dataSource.getConnection();
-		PreparedStatement update_query = con.prepareStatement("UPDATE public.rekening" + 
-				"SET no_rekening=?, jenis_tabungan=?, kantor_cabang_terdaftar=?, nomor_kartu=? WHERE status=1, \"extension\"=?;");
+		PreparedStatement update_query = con.prepareStatement("UPDATE public.rekening " + 
+				"SET no_rekening=?, jenis_tabungan=?::int, kantor_cabang_terdaftar=?, nomor_kartu=? WHERE status=1 AND \"extension\"=?;");
 		update_query.setString(1, rm.no_rekening);
 		update_query.setString(2, rm.jenis_tabungan);
 		update_query.setString(3, rm.kantor_cabang_terdaftar);
@@ -162,7 +162,7 @@ public class RekeningController
 		return result;
 	}
 	@PostMapping("/changeRekeningStatus")
-	public ResponseEntity<String> changeRekeningStatus (@RequestBody RekeningModel rm, @RequestParam int status)
+	public ResponseEntity<String> changeRekeningStatus (@RequestBody RekeningModel rm)
 	{
 		try
 		{
@@ -182,7 +182,7 @@ public class RekeningController
 	{
 		Connection con = dataSource.getConnection ();
 		PreparedStatement query = con
-				.prepareStatement ("UPDATE rekening SET status = ? WHERE status = 0 AND extension = ?");
+				.prepareStatement ("UPDATE rekening SET status = ?::int WHERE status = 0 AND extension = ?");
 		
 		query.setString (1, rm.status);
 		query.setString (2, rm.extension);
