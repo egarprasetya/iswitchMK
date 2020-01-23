@@ -161,5 +161,41 @@ public class RekeningController
 		
 		return result;
 	}
+	@PostMapping("/changeRekeningStatus")
+	public ResponseEntity<String> changeRekeningStatus (@RequestBody RekeningModel rm, @RequestParam int status)
+	{
+		try
+		{
+			if (doChangeRekeningStatus (rm, status) != 0)
+				return new ResponseEntity<String> ("{ " + "\"response\":" + "\"" + "1" + "\" }", HttpStatus.OK);
+			else
+				return new ResponseEntity<String> ("{ " + "\"response\":" + "\"" + "0" + "\" }", HttpStatus.NOT_FOUND);
+		} catch (SQLException error)
+		{
+			error.printStackTrace ();
+			return new ResponseEntity<String> ("{ " + "\"response\":" + "\"" + "-1" + "\" }", HttpStatus.BAD_REQUEST);
+		}
+		
+	}
+	
+	private int doChangeRekeningStatus (RekeningModel rm, int status) throws SQLException
+	{
+		Connection con = dataSource.getConnection ();
+		PreparedStatement query = con
+				.prepareStatement ("UPDATE rekening SET status = ? WHERE status = 0 AND extension = ?");
+		
+		query.setInt (1, status);
+		query.setString (2, rm.extension);
+		
+		int result = query.executeUpdate ();
+		
+		query.close ();
+		con.close ();
+		
+		System.out.println (result);
+		// ResultSet result = query.executeQuery();
+		
+		return result;
+	}
 	
 }
