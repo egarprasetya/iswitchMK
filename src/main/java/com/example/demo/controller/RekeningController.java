@@ -71,9 +71,9 @@ public class RekeningController
 	{
 		Connection con = dataSource.getConnection();
 		PreparedStatement query = con.prepareStatement("select " + "no_rekening, " + "jenis_tabungan.nama as jenis_tabungan, "
-				+ "kantor_cabang_terdaftar, " + "nomor_kartu, " + "application_status.nama "
-				+ "from rekening join application_status on rekening.status = application_status.id join jenis_tabungan on rekening.jenis_tabungan = jenis_tabungan.id;"
-				+ "where extension = ? and status = '1' ORDER BY insert_at DESC LIMIT 1");
+				+ " kantor_cabang_terdaftar, " + "nomor_kartu, " + "application_status.nama "
+				+ " from rekening join application_status on rekening.status = application_status.id join jenis_tabungan on rekening.jenis_tabungan = jenis_tabungan.id"
+				+ " where \"extension\" = ? and status = '1' ORDER BY insert_at DESC LIMIT 1");
 		query.setString(1, rms.extension);
 		ResultSet result = query.executeQuery();
 		List<RekeningModel> listRM = new ArrayList<RekeningModel>();
