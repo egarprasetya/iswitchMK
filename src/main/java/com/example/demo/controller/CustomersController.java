@@ -86,6 +86,70 @@ public class CustomersController
 		return listCustomers;
 	}
 	
+	@PostMapping("/getCustomersByExtensionRekeningVerified")
+	public List<CustomersModel> getRekeningByExtensionVerified (@RequestBody CustomersModel cm) throws SQLException
+	{
+		// Connection connection = DriverManager.getConnection (sk.Path_expr,
+		// sk.service_user, sk.service_password);
+		Connection connection = dataSource.getConnection ();
+		PreparedStatement query = connection.prepareStatement ("SELECT \r\n" + 
+				"customers.id, \r\n" + 
+				"customers.nik, \r\n" + 
+				"customers.nama, \r\n" + 
+				"customers.tempat_lahir, \r\n" + 
+				"customers.tanggal_lahir, \r\n" + 
+				"customers.nomor_telepon, \r\n" + 
+				"customers.nama_ibu, \r\n" + 
+				"customers.alamat, \r\n" + 
+				"customers.rt_rw, kelurahan, \r\n" + 
+				"customers.kecamatan, \r\n" + 
+				"customers.kota, \r\n" + 
+				"customers.kode_pos, \r\n" + 
+				"customers.foto, \r\n" + 
+				"customers.foto_ktp, \r\n" + 
+				"customers.foto_ttd, \r\n" + 
+				"customers.\"extension\", \r\n" + 
+				"customers.email \r\n" + 
+
+				"FROM public.customers JOIN public.rekening ON customers.extension = rekening.extension JOIN public.jenis_tabungan ON rekening.jenis_tabungan = jenis_tabungan.id JOIN public.application_status ON application_status.id = rekening.status \r\n" + 
+				"where rekening.status = 1 and customers.\"extension\" = ?;");
+		
+		query.setString (1, cm.extension);
+		
+		List<CustomersModel> listCustomers = new ArrayList<CustomersModel> ();
+		ResultSet Cursor1 = query.executeQuery ();
+		while (Cursor1.next ())
+		{
+			CustomersModel customerModel = new CustomersModel ();
+			
+			customerModel.id = Cursor1.getString (1);
+			customerModel.nik = Cursor1.getString (2);
+			customerModel.nama = Cursor1.getString (3);
+			customerModel.tempat_lahir = Cursor1.getString (4);
+			customerModel.tanggal_lahir = Cursor1.getString (5);
+			customerModel.nomor_telepon = Cursor1.getString (6);
+			customerModel.nama_ibu = Cursor1.getString (7);
+			customerModel.alamat = Cursor1.getString (8);
+			customerModel.rt_rw = Cursor1.getString (9);
+			customerModel.kelurahan = Cursor1.getString (10);
+			customerModel.kecamatan = Cursor1.getString (11);
+			customerModel.kota = Cursor1.getString (12);
+			customerModel.kode_pos = Cursor1.getString (13);
+			customerModel.foto = Cursor1.getString (14);
+			customerModel.foto_ktp = Cursor1.getString (15);
+			customerModel.foto_ttd = Cursor1.getString (16);
+			customerModel.extension = Cursor1.getString (17);
+			customerModel.email = Cursor1.getString (18);
+			
+			listCustomers.add (customerModel);
+		}
+		query.close ();
+		Cursor1.close ();
+		connection.close ();
+		
+		return listCustomers;
+	}
+	
 	@PostMapping("/addCustomerRekening")
 	public String addCustomerRekening (@RequestBody CustomersModel cm) throws SQLException
 	{
