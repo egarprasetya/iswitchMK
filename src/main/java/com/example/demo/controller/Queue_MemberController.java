@@ -66,11 +66,6 @@ public class Queue_MemberController
 		
 		query_insert_queue_members.setString (1, cfm.queue_name);
 		query_insert_queue_members.setString (2, cfm._interface);
-		query_insert_queue_members.setString (3, cfm.membername);
-		query_insert_queue_members.setString (4, cfm.state_interface);
-		query_insert_queue_members.setInt (5, cfm.penalty);
-		query_insert_queue_members.setInt (6, cfm.paused);
-		query_insert_queue_members.setInt (7, cfm.wrapuptime);
 		
 		int Cursor1 = query_insert_queue_members.executeUpdate ();// Evaluate (Connected_Expression1)
 		String a = "1";
@@ -368,14 +363,22 @@ public class Queue_MemberController
 		
 		int[] jumlahQueues = new int[listQueues.size ()];
 		
+		for (int j = 0; j < listQueues.size (); j++)
+		{
+			jumlahQueues[j] = 0;
+		}
+		
 		for (int i = 0; i < listQueue.size (); i++)
 		{
-			for (int j = 0; j < listQueues.size (); i++)
+			for (int j = 0; j < listQueues.size (); j++)
 			{
-				if (listQueues.get (j).name == listQueue.get (i).queue)
+				System.out.println ("aaaaaaa" + listQueues.get (j).name + "aaaa" + listQueue.get (i).queue);
+				if (listQueues.get (j).name.equalsIgnoreCase (listQueue.get (i).queue))
 				{
-					jumlahQueues[j]++;
+					jumlahQueues[j] = jumlahQueues[j] + 1;
+					System.out.println ("aaaaaaa" + jumlahQueues[j]);
 				}
+				
 			}
 		}
 		return jumlahQueues;
