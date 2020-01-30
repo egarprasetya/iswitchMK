@@ -180,7 +180,7 @@ public class Queue_MemberController
 	}
 	
 	@GetMapping("/getAllQueueMembers")
-	public ArrayList<Queue_MemberModel2> getAllData ()
+	public ResponseEntity<String> getAllData ()
 			throws KeyManagementException, NoSuchAlgorithmException, KeyStoreException
 	{
 		// RestTempleteConfig.disableSslVerification();
@@ -191,12 +191,34 @@ public class Queue_MemberController
 		
 		String[] str_array = entity.getBody ().split ("\n");
 		ArrayList<Queue_MemberModel2> result = getAllQueue (str_array);
+		String parsedResult = "[\n\t";
+		for (int i = 0; i < result.size (); i++)
+		{
+			
+			ArrayList<String> formatedResultField = new ArrayList<String> ();
+			formatedResultField.add ("queue");
+			formatedResultField.add ("name");
+			
+			ArrayList<String> formatedResultValues = new ArrayList<String> ();
+			formatedResultValues.add (String.valueOf (result.get (i).queue));
+			formatedResultValues.add (String.valueOf (result.get (i).name));
+			
+			parsedResult += parseToStringJSON (formatedResultField, formatedResultValues);
+			if (result.size() - 1 > i)
+			{
+				parsedResult += ",\n";
+			}
+		}
+		parsedResult += "]";
+		if (result.size() > 0)
+			return new ResponseEntity<String> (parsedResult, HttpStatus.OK);
+		else
+			return new ResponseEntity<String> (HttpStatus.NOT_FOUND);
 		
 //		for (Queue_MemberModel2 i : result) {
 //			System.out.println(i.name);
 //		}
 		
-		return result;
 	}
 	
 	public static Queue_MemberModel2 queueMember = new Queue_MemberModel2 ();
@@ -253,31 +275,24 @@ public class Queue_MemberController
 		// kalimat
 		ArrayList<Queue_MemberModel2> listQueue = new ArrayList<Queue_MemberModel2> ();
 		boolean[] isFound = new boolean[lines.length];
+		boolean[] isFound2 = new boolean[lines.length];
 		String[] sentence = lines;
 		for (int i = 0; i < sentence.length; i++)
 		{
 			isFound[i] = lines[i].indexOf ("QueueMember") != -1 ? true : false;
+			
+			isFound2[i] = lines[i].indexOf ("status='1'") != -1 ? true : false;
 			if (isFound[i])
 			{
-				queueMember = new Queue_MemberModel2 ();
-				String[] words = lines[i].split ("='");
-				queueMember.event = words[3].replaceAll ("' queue", "");
-				queueMember.queue = words[4].replaceAll ("' name", "");
-				queueMember.name = words[5].replaceAll ("' location", "");
-				queueMember.location = words[6].replaceAll ("' stateinterface", "");
-				queueMember.stateinterface = words[7].replaceAll ("' membership", "");
-				queueMember.membership = words[8].replaceAll ("' penalty", "");
-				queueMember.penalty = words[9].replaceAll ("' callstaken", "");
-				queueMember.callstaken = words[10].replaceAll ("' lastcall", "");
-				queueMember.lastcall = words[11].replaceAll ("' lastpause", "");
-				queueMember.lastpause = words[12].replaceAll ("' incall", "");
-				queueMember.incall = words[13].replaceAll ("' status", "");
-				queueMember.status = words[14].replaceAll ("' paused", "");
-				queueMember.paused = words[15].replaceAll ("' pausedreason", "");
-				queueMember.pausedreason = words[16].replaceAll ("' wrapuptime", "");
-				queueMember.wrapuptime = words[17].replaceAll ("' /></response>", "");
-				
-				listQueue.add (queueMember);
+				if (isFound2[i])
+				{
+					queueMember = new Queue_MemberModel2 ();
+					String[] words = lines[i].split ("='");
+					queueMember.queue = words[4].replaceAll ("' name", "");
+					queueMember.name = words[5].replaceAll ("' location", "");
+					
+					listQueue.add (queueMember);
+				}
 			}
 //			if (i > sentence.length)
 //			{
