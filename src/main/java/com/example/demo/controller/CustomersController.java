@@ -392,7 +392,7 @@ public class CustomersController
 		// Connection connection = DriverManager.getConnection (sk.Path_expr,
 		// sk.service_user, sk.service_password);
 		Connection connection = dataSource.getConnection ();
-		PreparedStatement query = connection.prepareStatement (select_query.query_customer);
+		PreparedStatement query = connection.prepareStatement (select_query.query_customer2);
 		
 		query.setString (1, cm.extension);
 		List<CustomersModel> listCustomers = new ArrayList<CustomersModel> ();
