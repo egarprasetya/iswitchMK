@@ -60,33 +60,79 @@ public class UserController
 //		this.ds = ds;
 //	}
 	
-	@PostMapping("/register")
+	@PostMapping("/registerAgent")
 	public String register (@RequestBody UserModel akun) throws SQLException
 	{
 		// Connection connection = DriverManager.getConnection (sk.Path_expr,
 		// sk.service_user, sk.service_password);
 		Connection connection = dataSource.getConnection ();
 		PreparedStatement query = connection.prepareStatement (
-				"INSERT INTO users (nama, username, password, password_email, extension_user) VALUES (?,?,?,?,?);"
-						+ "	INSERT INTO ps_auths (id, password) VALUES (?,?);");
+				"INSERT INTO users (nama, username, password, password_email, \"skill\", status, extension_user) VALUES (?,?,?,?,?,?,?); "
+						+ "INSERT INTO public.ps_aors " + 
+						"(id, max_contacts, remove_existing) " + 
+						"VALUES(?, '1', 'yes'); "
+						+ "INSERT INTO public.ps_endpoints " + 
+						"(id, transport, aors, auth, context, disallow, allow, direct_media, dtmf_mode, ice_support, use_avpf, media_encryption,  dtls_verify, dtls_cert_file, dtls_ca_file, dtls_setup, message_context, media_use_received_transport, rtcp_mux) " + 
+						"VALUES(?, 'tls', ?, ?, 'testing', 'all', 'g722,H264,opus,ulaw,vp8', 'no', 'auto', 'yes', 'yes', 'dtls', 'fingerprint', '/etc/asterisk/keys/asterisk.pem', '/etc/asterisk/keys/ca.crt', 'actpass', 'messaging', 'yes', 'yes'); " + 
+						"INSERT INTO public.ps_auths " + 
+						"(id, auth_type, \"password\", username) " + 
+						"VALUES(?, 'userpass', 'mk1234', ?);"
+						);
 		String rawPassword = akun.password;
 		// String encodedPassword = bCryptPasswordEncoder.encode(akun.getPassword());
 		akun.password = bCryptPasswordEncoder.encode (akun.password);
 		query.setString (1, akun.nama);
-		System.out.println (akun.nama);
 		query.setString (2, akun.username);
-		System.out.println (akun.username);
 		query.setString (3, akun.password);
-		System.out.println (akun.password);
 		query.setString (4, akun.password_email);
-		System.out.println (akun.password_email);
-		query.setString (5, akun.extensions_user);
-		System.out.println (akun.extensions_user);
+		query.setInt(5, akun.skill);
+		query.setString (6, akun.status);
+		query.setString (7, akun.extensions_user);
+
+		query.setString (8, akun.extensions_user);
+		query.setString (9, akun.extensions_user);
+		query.setString (10, akun.extensions_user);
+		query.setString (11, akun.extensions_user);
+		query.setString (12, akun.extensions_user);
+		query.setString (13, akun.extensions_user);
+		int flag = query.executeUpdate ();
 		
+		query.close ();
+		connection.close ();
+		
+		return String.valueOf (String.valueOf (flag) + " - Data pengguna ditambahkan!.");
+	}
+	
+	@PostMapping("/registerCustomer")
+	public String registerCustomer (@RequestBody UserModel akun) throws SQLException
+	{
+		// Connection connection = DriverManager.getConnection (sk.Path_expr,
+		// sk.service_user, sk.service_password);
+		Connection connection = dataSource.getConnection ();
+		PreparedStatement query = connection.prepareStatement (
+				"INSERT INTO customers (nama, extension) VALUES (?,?); "
+						+ "INSERT INTO public.ps_aors " + 
+						"(id, max_contacts, remove_existing) " + 
+						"VALUES(?, '1', 'yes'); "
+						+ "INSERT INTO public.ps_endpoints " + 
+						"(id, aors, auth, context, disallow, allow, direct_media, dtmf_mode, ice_support, message_context, webrtc, dtls_auto_generate_cert) " + 
+						"VALUES(?, ?, ?, 'testing', 'all', 'opus,ulaw,vp8', 'no', 'auto', 'yes', 'messaging', 'yes', 'yes'); " + 
+						"INSERT INTO public.ps_auths " + 
+						"(id, auth_type, \"password\", username) " + 
+						"VALUES(?, 'userpass', 'mk1234', ?);"
+						);
+		String rawPassword = akun.password;
+		// String encodedPassword = bCryptPasswordEncoder.encode(akun.getPassword());
+		akun.password = bCryptPasswordEncoder.encode (akun.password);
+		query.setString (1, akun.nama);
+		query.setString (2, akun.extensions_user);
+
+		query.setString (3, akun.extensions_user);
+		query.setString (4, akun.extensions_user);
+		query.setString (5, akun.extensions_user);
 		query.setString (6, akun.extensions_user);
-		System.out.println (akun.extensions_user);
-		query.setString (7, rawPassword);
-		System.out.println (rawPassword);
+		query.setString (7, akun.extensions_user);
+		query.setString (8, akun.extensions_user);
 		int flag = query.executeUpdate ();
 		
 		query.close ();
@@ -184,7 +230,7 @@ public class UserController
 				Modeluser.password_email = Cursor1.getString (8);
 				Modeluser.phone_number = Cursor1.getString (9);
 				Modeluser.extensions_user = Cursor1.getString (10);
-				Modeluser.skill = Cursor1.getString (11);
+				Modeluser.skill = Cursor1.getInt (11);
 				Modeluser.status = Cursor1.getString (12);
 				Modeluser.avatar = Cursor1.getString (13);
 				Modeluser.websocket = Cursor1.getString (14);
@@ -286,7 +332,7 @@ public class UserController
 				Modeluser.password_email = Cursor1.getString (8);
 				Modeluser.phone_number = Cursor1.getString (9);
 				Modeluser.extensions_user = Cursor1.getString (10);
-				Modeluser.skill = Cursor1.getString (11);
+				Modeluser.skill = Cursor1.getInt (11);
 				Modeluser.status = Cursor1.getString (12);
 				Modeluser.avatar = Cursor1.getString (13);
 				Modeluser.websocket = Cursor1.getString (14);
@@ -382,7 +428,7 @@ public class UserController
 				Modeluser.password_email = Cursor1.getString (7);
 				Modeluser.phone_number = Cursor1.getString (8);
 				Modeluser.extensions_user = Cursor1.getString (9);
-				Modeluser.skill = Cursor1.getString (10);
+				Modeluser.skill = Cursor1.getInt (10);
 				Modeluser.status = Cursor1.getString (11);
 				Modeluser.avatar = Cursor1.getString (12);
 				ListUser1.add (Modeluser);
@@ -469,7 +515,7 @@ public class UserController
 				Modeluser.password_email = Cursor1.getString (8);
 				Modeluser.phone_number = Cursor1.getString (9);
 				Modeluser.extensions_user = Cursor1.getString (10);
-				Modeluser.skill = Cursor1.getString (11);
+				Modeluser.skill = Cursor1.getInt (11);
 				Modeluser.status = Cursor1.getString (12);
 				Modeluser.avatar = Cursor1.getString (13);
 				Modeluser.websocket = Cursor1.getString (14);
@@ -595,7 +641,7 @@ public class UserController
 		Modeluser.password_email = Cursor1.getString (8);
 		Modeluser.phone_number = Cursor1.getString (9);
 		Modeluser.extensions_user = Cursor1.getString (10);
-		Modeluser.skill = Cursor1.getString (11);
+		Modeluser.skill = Cursor1.getInt (11);
 		Modeluser.status = Cursor1.getString (12);
 		Modeluser.avatar = Cursor1.getString (13);
 		ListUser1.add (Modeluser);
@@ -650,7 +696,7 @@ public class UserController
 			query.setString (5, dtf.format (now).toString ());
 			query.setString (6, cfm.password_email);
 			query.setString (7, cfm.phone_number);
-			query.setString (8, cfm.skill);
+			query.setInt (8, cfm.skill);
 			query.setString (9, cfm.status);
 			query.setString (10, cfm.avatar);
 			query.setInt (11, cfm.user_id);
@@ -795,7 +841,7 @@ public class UserController
 				formatedResultValues.add (result.get (i).password_email);
 				formatedResultValues.add (result.get (i).phone_number);
 				formatedResultValues.add (result.get (i).extensions_user);
-				formatedResultValues.add (result.get (i).skill);
+				formatedResultValues.add (String.valueOf (result.get (i).skill));
 				formatedResultValues.add (result.get (i).status);
 				formatedResultValues.add (result.get (i).avatar);
 				
@@ -841,7 +887,7 @@ public class UserController
 			Modeluser.password_email = Cursor1.getString (8);
 			Modeluser.phone_number = Cursor1.getString (9);
 			Modeluser.extensions_user = Cursor1.getString (10);
-			Modeluser.skill = Cursor1.getString (11);
+			Modeluser.skill = Cursor1.getInt (11);
 			Modeluser.status = Cursor1.getString (12);
 			Modeluser.avatar = Cursor1.getString (13);
 			ListUser1.add (Modeluser);
