@@ -3,6 +3,8 @@ package com.example.demo.model;
 import java.sql.Date;
 import java.sql.Timestamp;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class CdrModel
 {
 	public String accountcode;
@@ -14,9 +16,11 @@ public class CdrModel
 	public String dstchannel;
 	public String lastapp;
 	public String lastdata;
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	public Timestamp start;
 	public Date answer;
-	public Date end;
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	public Timestamp end;
 	public int duration;
 	public int billsec;
 	public String disposition;
@@ -26,4 +30,7 @@ public class CdrModel
 	public String linkedid;
 	public String peeraccount;
 	public int sequence;
+	
+	//Dummy
+	public String extensions_user;
 }

@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ import java.util.Locale;
 
 import javax.sql.DataSource;
 
+import org.hibernate.criterion.NullExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -75,7 +77,7 @@ public class CdrController {
 		queryinsert_cdr.setString(9, cfm.lastdata);
 		queryinsert_cdr.setTimestamp(10, cfm.start);
 		queryinsert_cdr.setDate(11, cfm.answer);
-		queryinsert_cdr.setDate(12, cfm.end);
+		queryinsert_cdr.setTimestamp(12, cfm.end);
 		queryinsert_cdr.setInt(13, cfm.duration);
 		queryinsert_cdr.setInt(14, cfm.billsec);
 		queryinsert_cdr.setString(15, cfm.disposition);
@@ -116,7 +118,7 @@ public class CdrController {
 			ModelCdr.lastdata = Cursor1.getString(9); // pjsip_connected_line_method value/type.
 			ModelCdr.start = Cursor1.getTimestamp(10); // pjsip_connected_line_method value/type.
 			ModelCdr.answer = Cursor1.getDate(11); // pjsip_direct_media_glare_mitigation value/Type.
-			ModelCdr.end = Cursor1.getDate(12);
+			ModelCdr.end = Cursor1.getTimestamp(12);
 			ModelCdr.duration = Cursor1.getInt(13); // pjsip_dtmf_mode value/Type.
 			ModelCdr.billsec = Cursor1.getInt(14);
 			ModelCdr.disposition = Cursor1.getString(15);
@@ -212,6 +214,69 @@ public class CdrController {
 		queryselect_cdr.close();
 		Cursor1.close();
 		Connection1.close();
+		return ListUser1;
+	}
+	
+	@PostMapping("/getCdrBetweenStart")
+	public List<CdrModel> doGetCdrBetweenStart (@RequestBody CdrModel cm) throws SQLException
+	{
+		Connection con = dataSource.getConnection();
+		PreparedStatement statement = con.prepareStatement("select * from cdr where (src = ? or dst = ?) and (\"start\" between ? and ?) order by \"start\" asc ");
+		
+		statement.setString(1, cm.extensions_user);
+		statement.setString(2, cm.extensions_user);
+		statement.setTimestamp(3, cm.start);
+		
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
+		try
+		{
+			if(cm.end.equals(null))
+			{
+				statement.setTimestamp(4, timestamp);
+			}
+			else
+				statement.setTimestamp(4, cm.end);
+		}
+		catch(NullPointerException ex)
+		{
+			statement.setTimestamp(4, timestamp);
+			System.out.println(timestamp);
+		}
+		
+		ResultSet Cursor1 = statement.executeQuery();
+		ArrayList<CdrModel> ListUser1 = new ArrayList<CdrModel>();
+		while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
+		{
+			CdrModel ModelCdr = new CdrModel();
+			ModelCdr.accountcode = Cursor1.getString(1);
+			ModelCdr.src = Cursor1.getString(2);
+			ModelCdr.dst = Cursor1.getString(3);
+			ModelCdr.dcontext = Cursor1.getString(4);
+			ModelCdr.clid = Cursor1.getString(5);
+			ModelCdr.channel = Cursor1.getString(6);
+			ModelCdr.dstchannel = Cursor1.getString(7);
+			ModelCdr.lastapp = Cursor1.getString(8); // YesNo value / Type.
+			ModelCdr.lastdata = Cursor1.getString(9); // pjsip_connected_line_method value/type.
+			ModelCdr.start = Cursor1.getTimestamp(10); // pjsip_connected_line_method value/type.
+			ModelCdr.answer = Cursor1.getDate(11); // pjsip_direct_media_glare_mitigation value/Type.
+			ModelCdr.end = Cursor1.getTimestamp(12);
+			ModelCdr.duration = Cursor1.getInt(13); // pjsip_dtmf_mode value/Type.
+			ModelCdr.billsec = Cursor1.getInt(14);
+			ModelCdr.disposition = Cursor1.getString(15);
+			ModelCdr.amaflags = Cursor1.getString(16);
+			ModelCdr.userfield = Cursor1.getString(17);
+			ModelCdr.uniqueid = Cursor1.getString(18);
+			ModelCdr.linkedid = Cursor1.getString(19);
+			ModelCdr.peeraccount = Cursor1.getString(20);
+			ModelCdr.sequence = Cursor1.getInt(21);
+			ListUser1.add(ModelCdr);
+		}
+
+		statement.close();
+		Cursor1.close();
+		con.close();
+
 		return ListUser1;
 	}
 
