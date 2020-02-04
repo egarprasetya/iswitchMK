@@ -201,7 +201,7 @@ public class Queue_MemberController
 			
 			ArrayList<String> formatedResultValues = new ArrayList<String> ();
 			formatedResultValues.add (String.valueOf (result.get (i).queue));
-			formatedResultValues.add (String.valueOf (result.get (i).name));
+			formatedResultValues.add (String.valueOf (result.get (i).name).replace ("PJSIP/", ""));
 			
 			parsedResult += parseToStringJSON (formatedResultField, formatedResultValues);
 			if (result.size() - 1 > i)
