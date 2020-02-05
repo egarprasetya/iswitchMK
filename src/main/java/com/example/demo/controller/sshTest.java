@@ -19,11 +19,9 @@ import com.jcraft.jsch.Session;
 @RequestMapping(produces = "application/json", path = "/ssh")
 public class sshTest
 {
-	public String sshExec ()
+	public String sshExec (String host, String user, String password)
 	{
-		String host = "10.30.1.17";
-		String user = "root";
-		String password = "c1d3ngb4r4t";
+		
 
 		String command1 = "mkdir baru";
 //		String command1 = "asterisk -rvvvvvv";

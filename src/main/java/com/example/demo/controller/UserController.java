@@ -96,7 +96,7 @@ public class UserController
 		query.close ();
 		connection.close ();
 		sshTest sh = new sshTest ();
-		sh.sshExec ();
+		sh.sshExec (akun.ipSSH,akun.userSSH,akun.userSSH);
 		
 		return String.valueOf (String.valueOf (flag) + " - Data pengguna ditambahkan!.");
 	}
@@ -128,7 +128,8 @@ public class UserController
 		query.close ();
 		connection.close ();
 		sshTest sh = new sshTest();
-		sh.sshExec ();
+
+		sh.sshExec (akun.ipSSH,akun.userSSH,akun.userSSH);
 		
 		return String.valueOf (String.valueOf (flag) + " - Data pengguna delete!.");
 	}
@@ -173,7 +174,8 @@ public class UserController
 		query.close ();
 		connection.close ();
 		sshTest sh = new sshTest();
-		sh.sshExec ();
+
+		sh.sshExec (akun.ipSSH,akun.userSSH,akun.userSSH);
 		
 		return String.valueOf (String.valueOf (flag) + " - Data pengguna extension update!.");
 	}
@@ -209,7 +211,8 @@ public class UserController
 		query.close ();
 		connection.close ();
 		sshTest sh = new sshTest ();
-		sh.sshExec ();
+
+		sh.sshExec (akun.ipSSH,akun.userSSH,akun.userSSH);
 		
 		return String.valueOf (String.valueOf (flag) + " - Data pengguna ditambahkan!.");
 	}

@@ -32,4 +32,7 @@ public class UserModel
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	public Timestamp date_end;
 	public String queue;
+	public String ipSSH;
+	public String userSSH;
+	public String passwordSSH;
 }
