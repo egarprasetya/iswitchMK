@@ -25,6 +25,7 @@ public class UserModel
 	public String url_websocket;
 	
 	// Dummy
+	public String extensions_user_baru;
 	public String old_password;
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	public Timestamp date_begin;

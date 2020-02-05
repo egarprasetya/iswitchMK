@@ -68,16 +68,12 @@ public class UserController
 		Connection connection = dataSource.getConnection ();
 		PreparedStatement query = connection.prepareStatement (
 				"INSERT INTO users (nama, username, password, password_email, \"skill\", status, extension_user) VALUES (?,?,?,?,?,?,?); "
-						+ "INSERT INTO public.ps_aors " + 
-						"(id, max_contacts, remove_existing) " + 
-						"VALUES(?, '1', 'yes'); "
-						+ "INSERT INTO public.ps_endpoints " + 
-						"(id, transport, aors, auth, context, disallow, allow, direct_media, dtmf_mode, ice_support, use_avpf, media_encryption,  dtls_verify, dtls_cert_file, dtls_ca_file, dtls_setup, message_context, media_use_received_transport, rtcp_mux) " + 
-						"VALUES(?, 'tls', ?, ?, 'testing', 'all', 'g722,H264,opus,ulaw,vp8', 'no', 'auto', 'yes', 'yes', 'dtls', 'fingerprint', '/etc/asterisk/keys/asterisk.pem', '/etc/asterisk/keys/ca.crt', 'actpass', 'messaging', 'yes', 'yes'); " + 
-						"INSERT INTO public.ps_auths " + 
-						"(id, auth_type, \"password\", username) " + 
-						"VALUES(?, 'userpass', 'mk1234', ?);"
-						);
+						+ "INSERT INTO public.ps_aors " + "(id, max_contacts, remove_existing) " + "VALUES(?, '1', 'yes'); "
+						+ "INSERT INTO public.ps_endpoints "
+						+ "(id, transport, aors, auth, context, disallow, allow, direct_media, dtmf_mode, ice_support, use_avpf, media_encryption,  dtls_verify, dtls_cert_file, dtls_ca_file, dtls_setup, message_context, media_use_received_transport, rtcp_mux) "
+						+ "VALUES(?, 'tls', ?, ?, 'testing', 'all', 'g722,H264,opus,ulaw,vp8', 'no', 'auto', 'yes', 'yes', 'dtls', 'fingerprint', '/etc/asterisk/keys/asterisk.pem', '/etc/asterisk/keys/ca.crt', 'actpass', 'messaging', 'yes', 'yes'); "
+						+ "INSERT INTO public.ps_auths " + "(id, auth_type, \"password\", username) "
+						+ "VALUES(?, 'userpass', 'mk1234', ?);");
 		String rawPassword = akun.password;
 		// String encodedPassword = bCryptPasswordEncoder.encode(akun.getPassword());
 		akun.password = bCryptPasswordEncoder.encode (akun.password);
@@ -85,10 +81,10 @@ public class UserController
 		query.setString (2, akun.username);
 		query.setString (3, akun.password);
 		query.setString (4, akun.password_email);
-		query.setInt(5, akun.skill);
+		query.setInt (5, akun.skill);
 		query.setString (6, akun.status);
 		query.setString (7, akun.extensions_user);
-
+		
 		query.setString (8, akun.extensions_user);
 		query.setString (9, akun.extensions_user);
 		query.setString (10, akun.extensions_user);
@@ -99,9 +95,89 @@ public class UserController
 		
 		query.close ();
 		connection.close ();
+		sshTest sh = new sshTest ();
+		sh.sshExec ();
 		
 		return String.valueOf (String.valueOf (flag) + " - Data pengguna ditambahkan!.");
 	}
+	@PostMapping("/deleteAgent")
+	public String deleteAgent (@RequestBody UserModel akun) throws SQLException
+	{
+		// Connection connection = DriverManager.getConnection (sk.Path_expr,
+		// sk.service_user, sk.service_password);
+		Connection connection = dataSource.getConnection ();
+		PreparedStatement query = connection.prepareStatement (
+				"DELETE FROM public.users " + 
+				"WHERE extension_user=?; " + 
+				"DELETE FROM public.ps_aors " + 
+				"WHERE id=?; " + 
+				"DELETE FROM  public.ps_auths " + 
+				"WHERE id=?; " + 
+				"DELETE FROM public.ps_endpoints " + 
+				"WHERE id=?; " 
+			
+						);
+		
+		query.setString (1, akun.extensions_user);
+
+		query.setString (2, akun.extensions_user);
+		query.setString (3, akun.extensions_user);
+		query.setString (4, akun.extensions_user);
+		int flag = query.executeUpdate ();
+		
+		query.close ();
+		connection.close ();
+		sshTest sh = new sshTest();
+		sh.sshExec ();
+		
+		return String.valueOf (String.valueOf (flag) + " - Data pengguna delete!.");
+	}
+	@PostMapping("/updateAgent")
+	public String updateAgent (@RequestBody UserModel akun) throws SQLException
+	{
+		// Connection connection = DriverManager.getConnection (sk.Path_expr,
+		// sk.service_user, sk.service_password);
+		Connection connection = dataSource.getConnection ();
+		PreparedStatement query = connection.prepareStatement (
+				"UPDATE public.users " + 
+				"SET extension_user=? " + 
+				"WHERE extension_user=?; " + 
+				 
+				"UPDATE public.ps_aors " + 
+				"SET id=? " + 
+				"WHERE id=?; " + 
+				 
+				"UPDATE public.ps_auths " + 
+				"SET id=?, username=?" + 
+				"WHERE id=?;" + 
+				
+				"UPDATE public.ps_endpoints " + 
+				"SET id=?, aors=?, auth=? " + 
+				"WHERE id=?; " 
+						);
+		
+		query.setString (1, akun.extensions_user_baru);
+
+		query.setString (2, akun.extensions_user);
+		query.setString (3, akun.extensions_user_baru);
+		query.setString (4, akun.extensions_user);
+		query.setString (5, akun.extensions_user_baru);
+		query.setString (6, akun.extensions_user_baru);
+		query.setString (7, akun.extensions_user);
+		query.setString (8, akun.extensions_user_baru);
+		query.setString (9, akun.extensions_user_baru);
+		query.setString (10, akun.extensions_user_baru);
+		query.setString (11, akun.extensions_user);
+		int flag = query.executeUpdate ();
+		
+		query.close ();
+		connection.close ();
+		sshTest sh = new sshTest();
+		sh.sshExec ();
+		
+		return String.valueOf (String.valueOf (flag) + " - Data pengguna extension update!.");
+	}
+	
 	
 	@PostMapping("/registerCustomer")
 	public String registerCustomer (@RequestBody UserModel akun) throws SQLException
@@ -109,24 +185,19 @@ public class UserController
 		// Connection connection = DriverManager.getConnection (sk.Path_expr,
 		// sk.service_user, sk.service_password);
 		Connection connection = dataSource.getConnection ();
-		PreparedStatement query = connection.prepareStatement (
-				"INSERT INTO customers (nama, extension) VALUES (?,?); "
-						+ "INSERT INTO public.ps_aors " + 
-						"(id, max_contacts, remove_existing) " + 
-						"VALUES(?, '1', 'yes'); "
-						+ "INSERT INTO public.ps_endpoints " + 
-						"(id, aors, auth, context, disallow, allow, direct_media, dtmf_mode, ice_support, message_context, webrtc, dtls_auto_generate_cert) " + 
-						"VALUES(?, ?, ?, 'testing', 'all', 'opus,ulaw,vp8', 'no', 'auto', 'yes', 'messaging', 'yes', 'yes'); " + 
-						"INSERT INTO public.ps_auths " + 
-						"(id, auth_type, \"password\", username) " + 
-						"VALUES(?, 'userpass', 'mk1234', ?);"
-						);
+		PreparedStatement query = connection.prepareStatement ("INSERT INTO customers (nama, extension) VALUES (?,?); "
+				+ "INSERT INTO public.ps_aors " + "(id, max_contacts, remove_existing) " + "VALUES(?, '1', 'yes'); "
+				+ "INSERT INTO public.ps_endpoints "
+				+ "(id, aors, auth, context, disallow, allow, direct_media, dtmf_mode, ice_support, message_context, webrtc, dtls_auto_generate_cert) "
+				+ "VALUES(?, ?, ?, 'testing', 'all', 'opus,ulaw,vp8', 'no', 'auto', 'yes', 'messaging', 'yes', 'yes'); "
+				+ "INSERT INTO public.ps_auths " + "(id, auth_type, \"password\", username) "
+				+ "VALUES(?, 'userpass', 'mk1234', ?);");
 		String rawPassword = akun.password;
 		// String encodedPassword = bCryptPasswordEncoder.encode(akun.getPassword());
 		akun.password = bCryptPasswordEncoder.encode (akun.password);
 		query.setString (1, akun.nama);
 		query.setString (2, akun.extensions_user);
-
+		
 		query.setString (3, akun.extensions_user);
 		query.setString (4, akun.extensions_user);
 		query.setString (5, akun.extensions_user);
@@ -137,6 +208,8 @@ public class UserController
 		
 		query.close ();
 		connection.close ();
+		sshTest sh = new sshTest ();
+		sh.sshExec ();
 		
 		return String.valueOf (String.valueOf (flag) + " - Data pengguna ditambahkan!.");
 	}
@@ -155,7 +228,7 @@ public class UserController
 			formatedResultField.add ("url_websocket");
 			
 			ArrayList<String> formatedResultValues = new ArrayList<String> ();
-			formatedResultValues.add (String.valueOf(result.user_id));
+			formatedResultValues.add (String.valueOf (result.user_id));
 			formatedResultValues.add (result.extensions_user);
 			formatedResultValues.add (result.websocket);
 			formatedResultValues.add (result.url_websocket);
@@ -169,12 +242,12 @@ public class UserController
 				User_ActivityController uac = new User_ActivityController (dataSource);
 				UserModel um = new UserModel ();
 				um = result;
-				Queue_MemberModel qm = new Queue_MemberModel();
+				Queue_MemberModel qm = new Queue_MemberModel ();
 				qm._interface = "PJSIP/" + um.extensions_user;
 				qm.extension = "PJSIP/" + um.extensions_user;
 				qm.queue_name = um.queue;
 				qm.state_interface = um.status;
-
+				
 				qmc.deleteQueueMember (qm);
 				qmc.addQueueMember (qm);
 				um.date_end = cfm.date_begin;
@@ -419,18 +492,19 @@ public class UserController
 			while (Cursor1.next ())
 			{
 				UserModel Modeluser = new UserModel ();
-				Modeluser.nama = Cursor1.getString (1);
-				Modeluser.username = Cursor1.getString (2);
-				Modeluser.password = Cursor1.getString (3);
-				Modeluser.created = Cursor1.getTimestamp (4);
-				Modeluser.modified = Cursor1.getTimestamp (5);
-				Modeluser.email = Cursor1.getString (6);
-				Modeluser.password_email = Cursor1.getString (7);
-				Modeluser.phone_number = Cursor1.getString (8);
-				Modeluser.extensions_user = Cursor1.getString (9);
-				Modeluser.skill = Cursor1.getInt (10);
-				Modeluser.status = Cursor1.getString (11);
-				Modeluser.avatar = Cursor1.getString (12);
+				Modeluser.user_id = Cursor1.getInt (1);
+				Modeluser.nama = Cursor1.getString (2);
+				Modeluser.username = Cursor1.getString (3);
+				Modeluser.password = Cursor1.getString (4);
+				Modeluser.created = Cursor1.getTimestamp (5);
+				Modeluser.modified = Cursor1.getTimestamp (6);
+				Modeluser.email = Cursor1.getString (7);
+				Modeluser.password_email = Cursor1.getString (8);
+				Modeluser.phone_number = Cursor1.getString (9);
+				Modeluser.extensions_user = Cursor1.getString (10);
+				Modeluser.skill = Cursor1.getInt (11);
+				Modeluser.status = Cursor1.getString (12);
+				Modeluser.avatar = Cursor1.getString (13);
 				ListUser1.add (Modeluser);
 			}
 			
@@ -444,6 +518,89 @@ public class UserController
 		return ListUser1;
 	}
 	
+	@GetMapping("/getUserById")
+	public ArrayList<UserModel> getUserById (@RequestBody UserModel cfm)
+	{
+		ArrayList<UserModel> ListUser1 = new ArrayList<UserModel> ();
+		try
+		{
+			// Connection connection1 = DriverManager.getConnection (sk.Path_expr,
+			// sk.service_user, sk.service_password);
+			Connection connection1 = dataSource.getConnection ();
+			PreparedStatement query = connection1.prepareStatement ("select * from users where user_id=?");
+			query.setInt (1, cfm.user_id);
+			
+			ResultSet Cursor1 = query.executeQuery ();
+			while (Cursor1.next ())
+			{
+				UserModel Modeluser = new UserModel ();
+				Modeluser.user_id = Cursor1.getInt (1);
+				Modeluser.nama = Cursor1.getString (2);
+				Modeluser.username = Cursor1.getString (3);
+				Modeluser.password = Cursor1.getString (4);
+				Modeluser.created = Cursor1.getTimestamp (5);
+				Modeluser.modified = Cursor1.getTimestamp (6);
+				Modeluser.email = Cursor1.getString (7);
+				Modeluser.password_email = Cursor1.getString (8);
+				Modeluser.phone_number = Cursor1.getString (9);
+				Modeluser.extensions_user = Cursor1.getString (10);
+				Modeluser.skill = Cursor1.getInt (11);
+				Modeluser.status = Cursor1.getString (12);
+				Modeluser.avatar = Cursor1.getString (13);
+				ListUser1.add (Modeluser);
+			}
+			
+			query.close ();
+			Cursor1.close ();
+			connection1.close ();
+		} catch (SQLException error)
+		{
+			error.printStackTrace ();
+		}
+		return ListUser1;
+	}
+	
+	@GetMapping("/getUserByExtension")
+	public ArrayList<UserModel> getUserByExtension (@RequestBody UserModel cfm)
+	{
+		ArrayList<UserModel> ListUser1 = new ArrayList<UserModel> ();
+		try
+		{
+			// Connection connection1 = DriverManager.getConnection (sk.Path_expr,
+			// sk.service_user, sk.service_password);
+			Connection connection1 = dataSource.getConnection ();
+			PreparedStatement query = connection1.prepareStatement ("select * from users where extension_user=?");
+			query.setString (1, cfm.extensions_user);
+			
+			ResultSet Cursor1 = query.executeQuery ();
+			while (Cursor1.next ())
+			{
+				UserModel Modeluser = new UserModel ();
+				Modeluser.user_id = Cursor1.getInt (1);
+				Modeluser.nama = Cursor1.getString (2);
+				Modeluser.username = Cursor1.getString (3);
+				Modeluser.password = Cursor1.getString (4);
+				Modeluser.created = Cursor1.getTimestamp (5);
+				Modeluser.modified = Cursor1.getTimestamp (6);
+				Modeluser.email = Cursor1.getString (7);
+				Modeluser.password_email = Cursor1.getString (8);
+				Modeluser.phone_number = Cursor1.getString (9);
+				Modeluser.extensions_user = Cursor1.getString (10);
+				Modeluser.skill = Cursor1.getInt (11);
+				Modeluser.status = Cursor1.getString (12);
+				Modeluser.avatar = Cursor1.getString (13);
+				ListUser1.add (Modeluser);
+			}
+			
+			query.close ();
+			Cursor1.close ();
+			connection1.close ();
+		} catch (SQLException error)
+		{
+			error.printStackTrace ();
+		}
+		return ListUser1;
+	}
 	@PostMapping("/logout")
 	public ResponseEntity<String> logoutRespon (@RequestBody UserModel cfm)
 	{
@@ -460,12 +617,12 @@ public class UserController
 				
 				um = result;
 				
-				Queue_MemberModel qm = new Queue_MemberModel();
+				Queue_MemberModel qm = new Queue_MemberModel ();
 				qm.extension = "PJSIP/" + um.extensions_user;
 				qm.queue_name = um.queue;
 				qm.state_interface = um.status;
 				
-				qmc.deleteQueueMember(qm);
+				qmc.deleteQueueMember (qm);
 				// System.out.print (cfm.extensions_user + "sslalalal");
 				um.date_end = cfm.date_begin;
 				uhc.updateUserHistory (um);
