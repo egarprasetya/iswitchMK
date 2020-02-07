@@ -76,7 +76,7 @@ public class MessageController
 		}
 		
 		@PostMapping("/insertMessageBySrcDst")
-		public ArrayList<MessageModel> insertMessage (MessageModel cfm) throws SQLException
+		public String insertMessage (MessageModel cfm) throws SQLException
 		{
 			// Connection Connection1 = DriverManager.getConnection(sk.Path_expr,
 			// sk.service_user, sk.service_password);
@@ -87,24 +87,11 @@ public class MessageController
 			queryselect_queuemember.setString (3, cfm.src);
 			queryselect_queuemember.setString (4, cfm.dst);
 			queryselect_queuemember.setTimestamp (5, cfm.datetime);
-			ResultSet Cursor1 = queryselect_queuemember.executeQuery ();// Evaluate (Connected_Expression1)
-			ArrayList<MessageModel> ListUser1 = new ArrayList<MessageModel> ();
-			while (Cursor1.next ()) // while there_is_next_record_in (Cursor1)
-			{
-				MessageModel ModelQueue_member = new MessageModel ();
-				ModelQueue_member.id = Cursor1.getInt (1);
-				ModelQueue_member.status = Cursor1.getString (2);
-				ModelQueue_member.pesan = Cursor1.getString (3);
-				ModelQueue_member.src = Cursor1.getString (4);
-				ModelQueue_member.dst = Cursor1.getString (5);
-				ModelQueue_member.datetime = Cursor1.getTimestamp (6);
-				
-				ListUser1.add (ModelQueue_member);
-				
-			}
+			queryselect_queuemember.executeQuery ();// Evaluate (Connected_Expression1)
+			
 			Connection1.close ();
 			queryselect_queuemember.close ();
-			return ListUser1;
+			return "1";
 		}
 	}
 }
