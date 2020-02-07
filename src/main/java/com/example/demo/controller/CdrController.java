@@ -217,7 +217,7 @@ public class CdrController {
 		return ListUser1;
 	}
 	
-	@PostMapping("/getCdrBetween")
+	@PostMapping("/getCallLog")
 	public ResponseEntity<List<InOutBoundModel>> getCdrBetween (@RequestBody CdrModel cm)
 	{
 		try
