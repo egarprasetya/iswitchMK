@@ -76,5 +76,6 @@ public class AllSelectParameterQuery {
 			"from users join queue_members on users.skill = queue_members.interface " + 
 			"where " + 
 			"queue_members.queue_name = '?' and users.status = '1' and queue_members.paused = 0;";
+	public String query_select_message_src = "select*from messages where src =? and dst=?";
 	
 }
