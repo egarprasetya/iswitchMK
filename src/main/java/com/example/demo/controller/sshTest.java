@@ -19,7 +19,7 @@ import com.jcraft.jsch.Session;
 @RequestMapping(produces = "application/json", path = "/ssh")
 public class sshTest
 {
-	public String sshExec (String host, String user, String password)
+	public String sshExec (String host, String user, String password, String comand)
 	{
 		
 
@@ -40,7 +40,7 @@ public class sshTest
 			System.out.println ("Connected");
 			
 			ChannelExec channelExec = (ChannelExec) session.openChannel("exec");
-			channelExec.setCommand("rasterisk -x reload");
+			channelExec.setCommand(comand);
       channelExec.connect();
 //        
 			channelExec.disconnect ();

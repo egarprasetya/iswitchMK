@@ -97,7 +97,7 @@ public class UserController
 		query.close ();
 		connection.close ();
 		sshTest sh = new sshTest ();
-		sh.sshExec (akun.ipSSH,akun.userSSH,akun.userSSH);
+		sh.sshExec (akun.ipSSH,akun.userSSH,akun.passwordSSH,akun.comandSSH);
 		
 		return String.valueOf (String.valueOf (flag) + " - Data pengguna ditambahkan!.");
 	}
@@ -130,7 +130,7 @@ public class UserController
 		connection.close ();
 		sshTest sh = new sshTest();
 
-		sh.sshExec (akun.ipSSH,akun.userSSH,akun.userSSH);
+		sh.sshExec (akun.ipSSH,akun.userSSH,akun.passwordSSH,akun.comandSSH);
 		
 		return String.valueOf (String.valueOf (flag) + " - Data pengguna delete!.");
 	}
@@ -176,7 +176,7 @@ public class UserController
 		connection.close ();
 		sshTest sh = new sshTest();
 
-		sh.sshExec (akun.ipSSH,akun.userSSH,akun.userSSH);
+		sh.sshExec (akun.ipSSH,akun.userSSH,akun.passwordSSH,akun.comandSSH);
 		
 		return String.valueOf (String.valueOf (flag) + " - Data pengguna extension update!.");
 	}
@@ -213,9 +213,89 @@ public class UserController
 		connection.close ();
 		sshTest sh = new sshTest ();
 
-		sh.sshExec (akun.ipSSH,akun.userSSH,akun.userSSH);
+		sh.sshExec (akun.ipSSH,akun.userSSH,akun.passwordSSH,akun.comandSSH);
 		
 		return String.valueOf (String.valueOf (flag) + " - Data pengguna ditambahkan!.");
+	}
+	
+	@PostMapping("/deleteCustomer")
+	public String deleteCustomer (@RequestBody UserModel akun) throws SQLException
+	{
+		// Connection connection = DriverManager.getConnection (sk.Path_expr,
+		// sk.service_user, sk.service_password);
+		Connection connection = dataSource.getConnection ();
+		PreparedStatement query = connection.prepareStatement (
+				"DELETE FROM public.customers " + 
+				"WHERE extension=?; " + 
+				"DELETE FROM public.ps_aors " + 
+				"WHERE id=?; " + 
+				"DELETE FROM  public.ps_auths " + 
+				"WHERE id=?; " + 
+				"DELETE FROM public.ps_endpoints " + 
+				"WHERE id=?; " 
+			
+						);
+		
+		query.setString (1, akun.extensions_user);
+
+		query.setString (2, akun.extensions_user);
+		query.setString (3, akun.extensions_user);
+		query.setString (4, akun.extensions_user);
+		int flag = query.executeUpdate ();
+		
+		query.close ();
+		connection.close ();
+		sshTest sh = new sshTest();
+
+		sh.sshExec (akun.ipSSH,akun.userSSH,akun.passwordSSH,akun.comandSSH);
+		
+		return String.valueOf (String.valueOf (flag) + " - Data pengguna delete!.");
+	}
+	@PostMapping("/updateCustomer")
+	public String updateCustomer (@RequestBody UserModel akun) throws SQLException
+	{
+		// Connection connection = DriverManager.getConnection (sk.Path_expr,
+		// sk.service_user, sk.service_password);
+		Connection connection = dataSource.getConnection ();
+		PreparedStatement query = connection.prepareStatement (
+				"UPDATE public.customers " + 
+				"SET extension=? " + 
+				"WHERE extension=?; " + 
+				 
+				"UPDATE public.ps_aors " + 
+				"SET id=? " + 
+				"WHERE id=?; " + 
+				 
+				"UPDATE public.ps_auths " + 
+				"SET id=?, username=?" + 
+				"WHERE id=?;" + 
+				
+				"UPDATE public.ps_endpoints " + 
+				"SET id=?, aors=?, auth=? " + 
+				"WHERE id=?; " 
+						);
+		
+		query.setString (1, akun.extensions_user_baru);
+
+		query.setString (2, akun.extensions_user);
+		query.setString (3, akun.extensions_user_baru);
+		query.setString (4, akun.extensions_user);
+		query.setString (5, akun.extensions_user_baru);
+		query.setString (6, akun.extensions_user_baru);
+		query.setString (7, akun.extensions_user);
+		query.setString (8, akun.extensions_user_baru);
+		query.setString (9, akun.extensions_user_baru);
+		query.setString (10, akun.extensions_user_baru);
+		query.setString (11, akun.extensions_user);
+		int flag = query.executeUpdate ();
+		
+		query.close ();
+		connection.close ();
+		sshTest sh = new sshTest();
+
+		sh.sshExec (akun.ipSSH,akun.userSSH,akun.passwordSSH,akun.comandSSH);
+		
+		return String.valueOf (String.valueOf (flag) + " - Data pengguna extension update!.");
 	}
 	
 	@PostMapping("/login")

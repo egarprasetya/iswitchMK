@@ -35,4 +35,5 @@ public class UserModel
 	public String ipSSH;
 	public String userSSH;
 	public String passwordSSH;
+	public String comandSSH;
 }
