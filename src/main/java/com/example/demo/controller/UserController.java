@@ -213,7 +213,7 @@ public class UserController
 			// Connection connection = DriverManager.getConnection (sk.Path_expr,
 			// sk.service_user, sk.service_password);
 			Connection connection = dataSource.getConnection ();
-			PreparedStatement a = connection.prepareStatement (select_query.query_logout);
+			PreparedStatement a = connection.prepareStatement (select_query.query_agent);
 			
 			a.setString (1, cfm.extensions_user);
 			ResultSet Cursor1 = a.executeQuery ();// Evaluate (Connected_Expression1)
