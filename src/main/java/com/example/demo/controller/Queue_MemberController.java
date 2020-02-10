@@ -161,7 +161,7 @@ public class Queue_MemberController
 	{
 		// RestTempleteConfig.disableSslVerification();
 		RestTemplate restTemplate = new RestTempleteConfig ().getRestTemplate ();
-		String uri = "https://10.30.1.17:8089/amxml?action=queuestatus";
+		String uri = "https://127.0.0.1:8089/amxml?action=queuestatus";
 		ResponseEntity<String> entity = restTemplate.exchange (uri, HttpMethod.GET, null, String.class);
 //		System.out.println(entity.getBody());
 		

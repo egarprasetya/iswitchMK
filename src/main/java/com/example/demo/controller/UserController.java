@@ -1,5 +1,8 @@
 package com.example.demo.controller;
 
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.time.format.DateTimeFormatter;
@@ -16,6 +19,7 @@ import java.util.Locale;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -26,11 +30,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import com.example.demo.Enum.pjsip_auth_type_values;
+import com.example.demo.config.RestTempleteConfig;
 import com.example.demo.connection.stringkoneksi;
 import com.example.demo.model.CdrModel;
 import com.example.demo.model.Queue_MemberModel;
+import com.example.demo.model.Queue_MemberModel2;
 import com.example.demo.model.UserModel;
 import com.example.demo.model.User_HistoryModel;
 import com.example.demo.query.AllQuery;
@@ -1138,6 +1145,28 @@ public class UserController
 		Cursor1.close ();
 		Connection1.close ();
 		return ListUser1;
+	}
+	
+	@GetMapping("/pjsipReload")
+	public ResponseEntity<String>getData ()
+			throws KeyManagementException, NoSuchAlgorithmException, KeyStoreException
+	{
+		// RestTempleteConfig.disableSslVerification();
+		RestTemplate restTemplate = new RestTempleteConfig ().getRestTemplate ();
+		String uri = "https://127.0.0.1:8089/amxml?action=command&Command=pjsip reload";
+		ResponseEntity<String> entity = restTemplate.exchange (uri, HttpMethod.GET, null, String.class);
+		
+		String str_result = entity.getBody ();
+		
+		if (str_result.contains("Success"))
+			return new ResponseEntity<String> (HttpStatus.OK);
+		else if (str_result.contains("Error"))
+			return new ResponseEntity<String> (HttpStatus.EXPECTATION_FAILED);
+		else
+		{
+			System.out.println(str_result);
+			return new ResponseEntity<String> (HttpStatus.GONE);
+		}
 	}
 	
 	private String parseToStringJSON (ArrayList<String> field, ArrayList<String> values)

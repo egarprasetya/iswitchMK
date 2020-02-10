@@ -103,7 +103,7 @@ public class RestTempleteConfig
 	private CredentialsProvider provider()
 	{
 		CredentialsProvider provider = new BasicCredentialsProvider();
-		UsernamePasswordCredentials credentials = new UsernamePasswordCredentials("mitra", "mitrak");
+		UsernamePasswordCredentials credentials = new UsernamePasswordCredentials("client", "cleint123");
 		provider.setCredentials(AuthScope.ANY, credentials);
 		return provider;
 	}

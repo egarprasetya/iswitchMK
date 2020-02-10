@@ -38,7 +38,7 @@ public class MessageController
 			this.dataSource = dataSource;
 		}
 		
-		AllInsertQuery query_string_insert = new AllInsertQuery ();
+//		AllInsertQuery query_string_insert = new AllInsertQuery ();
 		
 		PreparedStatement querydelete_alembic_version_config = null;
 		PreparedStatement queryselect_queuemember = null;
@@ -81,7 +81,7 @@ public class MessageController
 			// Connection Connection1 = DriverManager.getConnection(sk.Path_expr,
 			// sk.service_user, sk.service_password);
 			Connection Connection1 = dataSource.getConnection ();
-			queryselect_queuemember = Connection1.prepareStatement (query_string_insert.query_insert_message);
+//			queryselect_queuemember = Connection1.prepareStatement (query_string_insert.query_insert_message);
 			queryselect_queuemember.setString (1, cfm.pesan);
 			queryselect_queuemember.setString (2, cfm.status);
 			queryselect_queuemember.setString (3, cfm.src);
