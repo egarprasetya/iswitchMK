@@ -318,8 +318,8 @@ public class UserController
 		PreparedStatement query = connection.prepareStatement ("INSERT INTO customers (nama, extension) VALUES (?,?); "
 				+ "INSERT INTO public.ps_aors " + "(id, max_contacts, remove_existing) " + "VALUES(?, '1', 'yes'); "
 				+ "INSERT INTO public.ps_endpoints "
-				+ "(id, aors, auth, context, disallow, allow, direct_media, dtmf_mode, ice_support, message_context, webrtc, dtls_auto_generate_cert) "
-				+ "VALUES(?, ?, ?, 'testing', 'all', 'opus,ulaw,vp8', 'no', 'auto', 'yes', 'messaging', 'yes', 'yes'); "
+				+ "(id, aors, auth, context, disallow, allow, direct_media, dtmf_mode, ice_support, tos_video,cos_video,force_rport,rewrite_contact,rtp_symmetric) "
+				+ "VALUES(?, ?, ?, 'testing', 'all', 'opus,ulaw,vp8', 'no', 'rfc4733', 'yes','af41',4,'no','no','no'); "
 				+ "INSERT INTO public.ps_auths " + "(id, auth_type, \"password\", username) "
 				+ "VALUES(?, 'userpass', 'mk1234', ?);");
 		String rawPassword = akun.password;
