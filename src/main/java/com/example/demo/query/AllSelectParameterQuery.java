@@ -36,6 +36,10 @@ public class AllSelectParameterQuery {
 			"from users join skill on users.skill = skill.skill_id " +
 			"where users.username = ?"; 
 	
+	public String query_agent = "select users.*, skill.queue " +
+			"from users join skill on users.skill = skill.skill_id " +
+			"where users.extension_user = ?"; 
+	
 	public String query_password = "select users.password "
 			+ "from users  "
 			+ "where user_id = ? "; 			// where user_id

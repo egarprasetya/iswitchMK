@@ -68,7 +68,8 @@ public class UserController
 //	}
 	
 	@PostMapping("/registerAgent")
-	public String register (@RequestBody UserModel akun) throws SQLException
+	public String register (@RequestBody UserModel akun)
+			throws SQLException, KeyManagementException, NoSuchAlgorithmException, KeyStoreException
 	{
 		// Connection connection = DriverManager.getConnection (sk.Path_expr,
 		// sk.service_user, sk.service_password);
@@ -103,31 +104,37 @@ public class UserController
 		
 		query.close ();
 		connection.close ();
-		sshTest sh = new sshTest ();
-		sh.sshExec (akun.ipSSH,akun.userSSH,akun.passwordSSH,akun.comandSSH);
+		Queue_MemberController qmc = new Queue_MemberController (dataSource);
+		Queue_MemberModel qm = new Queue_MemberModel ();
+		UserModel agent = new UserModel ();
+		
+		agent = getUserData (akun);
+		qm._interface = "PJSIP/" + agent.extensions_user;
+		qm.extension = "PJSIP/" + agent.extensions_user;
+		qm.queue_name = agent.queue;
+		qm.state_interface = agent.status;
+		qmc.deleteQueueMember (qm);
+		qmc.addQueueMember (qm);
+		getPjsipReload ();
 		
 		return String.valueOf (String.valueOf (flag) + " - Data pengguna ditambahkan!.");
 	}
+	
 	@PostMapping("/deleteAgent")
-	public String deleteAgent (@RequestBody UserModel akun) throws SQLException
+	public String deleteAgent (@RequestBody UserModel akun)
+			throws SQLException, KeyManagementException, NoSuchAlgorithmException, KeyStoreException
 	{
 		// Connection connection = DriverManager.getConnection (sk.Path_expr,
 		// sk.service_user, sk.service_password);
 		Connection connection = dataSource.getConnection ();
 		PreparedStatement query = connection.prepareStatement (
-				"DELETE FROM public.users " + 
-				"WHERE extension_user=?; " + 
-				"DELETE FROM public.ps_aors " + 
-				"WHERE id=?; " + 
-				"DELETE FROM  public.ps_auths " + 
-				"WHERE id=?; " + 
-				"DELETE FROM public.ps_endpoints " + 
-				"WHERE id=?; " 
-			
-						);
+				"DELETE FROM public.users " + "WHERE extension_user=?; " + "DELETE FROM public.ps_aors " + "WHERE id=?; "
+						+ "DELETE FROM  public.ps_auths " + "WHERE id=?; " + "DELETE FROM public.ps_endpoints " + "WHERE id=?; "
+		
+		);
 		
 		query.setString (1, akun.extensions_user);
-
+		
 		query.setString (2, akun.extensions_user);
 		query.setString (3, akun.extensions_user);
 		query.setString (4, akun.extensions_user);
@@ -135,38 +142,40 @@ public class UserController
 		
 		query.close ();
 		connection.close ();
-		sshTest sh = new sshTest();
 
-		sh.sshExec (akun.ipSSH,akun.userSSH,akun.passwordSSH,akun.comandSSH);
+		Queue_MemberController qmc = new Queue_MemberController (dataSource);
+		Queue_MemberModel qm = new Queue_MemberModel ();
+		UserModel agent = new UserModel ();
+		
+		agent = getUserData (akun);
+		qm._interface = "PJSIP/" + agent.extensions_user;
+		qm.extension = "PJSIP/" + agent.extensions_user;
+		qm.queue_name = agent.queue;
+		qm.state_interface = agent.status;
+		qmc.deleteQueueMember (qm);
+		qmc.addQueueMember (qm);
+		getPjsipReload ();
 		
 		return String.valueOf (String.valueOf (flag) + " - Data pengguna delete!.");
 	}
+	
 	@PostMapping("/updateAgent")
-	public String updateAgent (@RequestBody UserModel akun) throws SQLException
+	public String updateAgent (@RequestBody UserModel akun) throws SQLException, KeyManagementException, NoSuchAlgorithmException, KeyStoreException
 	{
 		// Connection connection = DriverManager.getConnection (sk.Path_expr,
 		// sk.service_user, sk.service_password);
 		Connection connection = dataSource.getConnection ();
-		PreparedStatement query = connection.prepareStatement (
-				"UPDATE public.users " + 
-				"SET extension_user=? " + 
-				"WHERE extension_user=?; " + 
-				 
-				"UPDATE public.ps_aors " + 
-				"SET id=? " + 
-				"WHERE id=?; " + 
-				 
-				"UPDATE public.ps_auths " + 
-				"SET id=?, username=?" + 
-				"WHERE id=?;" + 
-				
-				"UPDATE public.ps_endpoints " + 
-				"SET id=?, aors=?, auth=? " + 
-				"WHERE id=?; " 
-						);
+		PreparedStatement query = connection
+				.prepareStatement ("UPDATE public.users " + "SET extension_user=? " + "WHERE extension_user=?; " +
+						
+						"UPDATE public.ps_aors " + "SET id=? " + "WHERE id=?; " +
+						
+						"UPDATE public.ps_auths " + "SET id=?, username=?" + "WHERE id=?;" +
+						
+						"UPDATE public.ps_endpoints " + "SET id=?, aors=?, auth=? " + "WHERE id=?; ");
 		
 		query.setString (1, akun.extensions_user_baru);
-
+		
 		query.setString (2, akun.extensions_user);
 		query.setString (3, akun.extensions_user_baru);
 		query.setString (4, akun.extensions_user);
@@ -181,16 +190,83 @@ public class UserController
 		
 		query.close ();
 		connection.close ();
-		sshTest sh = new sshTest();
-
-		sh.sshExec (akun.ipSSH,akun.userSSH,akun.passwordSSH,akun.comandSSH);
+		Queue_MemberController qmc = new Queue_MemberController (dataSource);
+		Queue_MemberModel qm = new Queue_MemberModel ();
+		UserModel agent = new UserModel ();
 		
+		agent = getUserData (akun);
+		qm._interface = "PJSIP/" + agent.extensions_user;
+		qm.extension = "PJSIP/" + agent.extensions_user;
+		qm.queue_name = agent.queue;
+		qm.state_interface = agent.status;
+		qmc.deleteQueueMember (qm);
+		qmc.addQueueMember (qm);
+		getPjsipReload ();
 		return String.valueOf (String.valueOf (flag) + " - Data pengguna extension update!.");
 	}
 	
+	public UserModel getUserData (@RequestBody UserModel cfm) throws SQLException
+	{
+		UserModel Modeluser = new UserModel ();
+		try
+		{
+			// Connection connection = DriverManager.getConnection (sk.Path_expr,
+			// sk.service_user, sk.service_password);
+			Connection connection = dataSource.getConnection ();
+			PreparedStatement a = connection.prepareStatement (select_query.query_logout);
+			
+			a.setString (1, cfm.extensions_user);
+			ResultSet Cursor1 = a.executeQuery ();// Evaluate (Connected_Expression1)
+			
+			while (Cursor1.next ())
+			{
+				// System.out.println (Cursor1.getString (1));
+				Modeluser.user_id = Cursor1.getInt (1);
+				Modeluser.nama = Cursor1.getString (2);
+				Modeluser.username = Cursor1.getString (3);
+				Modeluser.password = Cursor1.getString (4);
+				Modeluser.created = Cursor1.getTimestamp (5);
+				Modeluser.modified = Cursor1.getTimestamp (6);
+				Modeluser.email = Cursor1.getString (7);
+				Modeluser.password_email = Cursor1.getString (8);
+				Modeluser.phone_number = Cursor1.getString (9);
+				Modeluser.extensions_user = Cursor1.getString (10);
+				Modeluser.skill = Cursor1.getInt (11);
+				Modeluser.status = Cursor1.getString (12);
+				Modeluser.avatar = Cursor1.getString (13);
+				Modeluser.websocket = Cursor1.getString (14);
+				Modeluser.url_websocket = Cursor1.getString (15);
+				Modeluser.queue = Cursor1.getString (16);
+				
+			}
+			
+			if (Modeluser.user_id != 0)
+			{
+				// System.out.println (Modeluser.user_id + "ssddas");
+				updateStatus (cfm.user_id, "0");
+				a.close ();
+				Cursor1.close ();
+				connection.close ();
+				return Modeluser;
+			} else
+			{
+				// System.out.println (Modeluser.extensions_user);
+				a.close ();
+				Cursor1.close ();
+				connection.close ();
+				return null;
+			}
+		} catch (SQLException error)
+		{
+			error.printStackTrace ();
+			return Modeluser;
+		}
+		
+	}
 	
 	@PostMapping("/registerCustomer")
-	public String registerCustomer (@RequestBody UserModel akun) throws SQLException
+	public String registerCustomer (@RequestBody UserModel akun)
+			throws SQLException, KeyManagementException, NoSuchAlgorithmException, KeyStoreException
 	{
 		// Connection connection = DriverManager.getConnection (sk.Path_expr,
 		// sk.service_user, sk.service_password);
@@ -218,33 +294,26 @@ public class UserController
 		
 		query.close ();
 		connection.close ();
-		sshTest sh = new sshTest ();
-
-		sh.sshExec (akun.ipSSH,akun.userSSH,akun.passwordSSH,akun.comandSSH);
+		getPjsipReload ();
 		
 		return String.valueOf (String.valueOf (flag) + " - Data pengguna ditambahkan!.");
 	}
 	
 	@PostMapping("/deleteCustomer")
-	public String deleteCustomer (@RequestBody UserModel akun) throws SQLException
+	public String deleteCustomer (@RequestBody UserModel akun)
+			throws SQLException, KeyManagementException, NoSuchAlgorithmException, KeyStoreException
 	{
 		// Connection connection = DriverManager.getConnection (sk.Path_expr,
 		// sk.service_user, sk.service_password);
 		Connection connection = dataSource.getConnection ();
 		PreparedStatement query = connection.prepareStatement (
-				"DELETE FROM public.customers " + 
-				"WHERE extension=?; " + 
-				"DELETE FROM public.ps_aors " + 
-				"WHERE id=?; " + 
-				"DELETE FROM  public.ps_auths " + 
-				"WHERE id=?; " + 
-				"DELETE FROM public.ps_endpoints " + 
-				"WHERE id=?; " 
-			
-						);
+				"DELETE FROM public.customers " + "WHERE extension=?; " + "DELETE FROM public.ps_aors " + "WHERE id=?; "
+						+ "DELETE FROM  public.ps_auths " + "WHERE id=?; " + "DELETE FROM public.ps_endpoints " + "WHERE id=?; "
+		
+		);
 		
 		query.setString (1, akun.extensions_user);
-
+		
 		query.setString (2, akun.extensions_user);
 		query.setString (3, akun.extensions_user);
 		query.setString (4, akun.extensions_user);
@@ -252,38 +321,29 @@ public class UserController
 		
 		query.close ();
 		connection.close ();
-		sshTest sh = new sshTest();
-
-		sh.sshExec (akun.ipSSH,akun.userSSH,akun.passwordSSH,akun.comandSSH);
+		getPjsipReload ();
 		
 		return String.valueOf (String.valueOf (flag) + " - Data pengguna delete!.");
 	}
+	
 	@PostMapping("/updateCustomer")
-	public String updateCustomer (@RequestBody UserModel akun) throws SQLException
+	public String updateCustomer (@RequestBody UserModel akun)
+			throws SQLException, KeyManagementException, NoSuchAlgorithmException, KeyStoreException
 	{
 		// Connection connection = DriverManager.getConnection (sk.Path_expr,
 		// sk.service_user, sk.service_password);
 		Connection connection = dataSource.getConnection ();
-		PreparedStatement query = connection.prepareStatement (
-				"UPDATE public.customers " + 
-				"SET extension=? " + 
-				"WHERE extension=?; " + 
-				 
-				"UPDATE public.ps_aors " + 
-				"SET id=? " + 
-				"WHERE id=?; " + 
-				 
-				"UPDATE public.ps_auths " + 
-				"SET id=?, username=?" + 
-				"WHERE id=?;" + 
-				
-				"UPDATE public.ps_endpoints " + 
-				"SET id=?, aors=?, auth=? " + 
-				"WHERE id=?; " 
-						);
+		PreparedStatement query = connection
+				.prepareStatement ("UPDATE public.customers " + "SET extension=? " + "WHERE extension=?; " +
+						
+						"UPDATE public.ps_aors " + "SET id=? " + "WHERE id=?; " +
+						
+						"UPDATE public.ps_auths " + "SET id=?, username=?" + "WHERE id=?;" +
+						
+						"UPDATE public.ps_endpoints " + "SET id=?, aors=?, auth=? " + "WHERE id=?; ");
 		
 		query.setString (1, akun.extensions_user_baru);
-
+		
 		query.setString (2, akun.extensions_user);
 		query.setString (3, akun.extensions_user_baru);
 		query.setString (4, akun.extensions_user);
@@ -298,9 +358,7 @@ public class UserController
 		
 		query.close ();
 		connection.close ();
-		sshTest sh = new sshTest();
-
-		sh.sshExec (akun.ipSSH,akun.userSSH,akun.passwordSSH,akun.comandSSH);
+		getPjsipReload ();
 		
 		return String.valueOf (String.valueOf (flag) + " - Data pengguna extension update!.");
 	}
@@ -692,6 +750,7 @@ public class UserController
 		}
 		return ListUser1;
 	}
+	
 	@PostMapping("/logout")
 	public ResponseEntity<String> logoutRespon (@RequestBody UserModel cfm)
 	{
@@ -1148,7 +1207,7 @@ public class UserController
 	}
 	
 	@GetMapping("/pjsipReload")
-	public ResponseEntity<String>getData ()
+	public ResponseEntity<String> getPjsipReload ()
 			throws KeyManagementException, NoSuchAlgorithmException, KeyStoreException
 	{
 		// RestTempleteConfig.disableSslVerification();
@@ -1158,13 +1217,13 @@ public class UserController
 		
 		String str_result = entity.getBody ();
 		
-		if (str_result.contains("Success"))
+		if (str_result.contains ("Success"))
 			return new ResponseEntity<String> (HttpStatus.OK);
-		else if (str_result.contains("Error"))
+		else if (str_result.contains ("Error"))
 			return new ResponseEntity<String> (HttpStatus.EXPECTATION_FAILED);
 		else
 		{
-			System.out.println(str_result);
+			System.out.println (str_result);
 			return new ResponseEntity<String> (HttpStatus.GONE);
 		}
 	}
