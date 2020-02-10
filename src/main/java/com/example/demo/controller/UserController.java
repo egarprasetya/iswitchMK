@@ -80,7 +80,7 @@ public class UserController
 						+ "INSERT INTO public.ps_aors " + "(id, max_contacts, remove_existing) " + "VALUES(?, '1', 'yes'); "
 						+ "INSERT INTO public.ps_endpoints "
 						+ "(id, transport, aors, auth, context, disallow, allow, direct_media, dtmf_mode, ice_support, use_avpf, media_encryption,  dtls_verify, dtls_cert_file, dtls_ca_file, dtls_setup, message_context, media_use_received_transport, rtcp_mux,max_audio_streams,max_video_streams,rewrite_contact,rtp_symmetric,force_rport) "
-						+ "VALUES(?, 'transport-wss-lokal', ?, ?, 'testing', 'all', 'ulaw', 'no', 'auto', 'yes', 'yes', 'dtls', 'fingerprint', '/etc/asterisk/keys/asterisk.pem', '/etc/asterisk/keys/ca.crt', 'actpass', 'messaging', 'yes', 'yes',10,10,'no', 'no','no'); "
+						+ "VALUES(?, 'tls', ?, ?, 'testing', 'all', 'ulaw,opus,vp8', 'no', 'auto', 'yes', 'yes', 'dtls', 'fingerprint', '/etc/asterisk/keys/asterisk.pem', '/etc/asterisk/keys/ca.crt', 'actpass', 'messaging', 'yes', 'yes',10,10,'no', 'no','no'); "
 						+ "INSERT INTO public.ps_auths " + "(id, auth_type, \"password\", username) "
 						+ "VALUES(?, 'userpass', 'mk1234', ?);");
 		String rawPassword = akun.password;
@@ -132,7 +132,7 @@ public class UserController
 						+ "INSERT INTO public.ps_aors " + "(id, max_contacts, remove_existing) " + "VALUES(?, '1', 'yes'); "
 						+ "INSERT INTO public.ps_endpoints "
 						+ "(id, transport, aors, auth, context, disallow, allow, direct_media, dtmf_mode, ice_support, use_avpf, media_encryption,  dtls_verify, dtls_cert_file, dtls_ca_file, dtls_setup, message_context, media_use_received_transport, rtcp_mux,max_audio_streams,max_video_streams,rewrite_contact,rtp_symmetric,force_rport) "
-						+ "VALUES(?, 'transport-wss-lokal', ?, ?, 'testing', 'all', 'ulaw', 'no', 'auto', 'yes', 'yes', 'dtls', 'fingerprint', '/etc/asterisk/keys/asterisk.pem', '/etc/asterisk/keys/ca.crt', 'actpass', 'messaging', 'yes', 'yes',10,10,'no', 'no','no'); "
+						+ "VALUES(?, 'tls', ?, ?, 'testing', 'all', 'ulaw,opus,vp8', 'no', 'auto', 'yes', 'yes', 'dtls', 'fingerprint', '/etc/asterisk/keys/asterisk.pem', '/etc/asterisk/keys/ca.crt', 'actpass', 'messaging', 'yes', 'yes',10,10,'no', 'no','no'); "
 						+ "INSERT INTO public.ps_auths " + "(id, auth_type, \"password\", username) "
 						+ "VALUES(?, 'userpass', 'mk1234', ?);");
 
@@ -318,13 +318,10 @@ public class UserController
 		PreparedStatement query = connection.prepareStatement ("INSERT INTO customers (extension) VALUES (?); "
 				+ "INSERT INTO public.ps_aors " + "(id, max_contacts, remove_existing) " + "VALUES(?, '1', 'yes'); "
 				+ "INSERT INTO public.ps_endpoints "
-				+ "(id, aors, auth, context, disallow, allow, direct_media, dtmf_mode, ice_support, tos_video,cos_video,force_rport,rewrite_contact,rtp_symmetric) "
-				+ "VALUES(?, ?, ?, 'testing', 'all', 'opus,ulaw,vp8', 'no', 'rfc4733', 'yes','af41',4,'no','no','no'); "
+				+ "(id, aors, transport, auth, context, disallow, allow, direct_media, dtmf_mode, ice_support, tos_video,cos_video,force_rport,rewrite_contact,rtp_symmetric) "
+				+ "VALUES(?, ?,'tls', ?, 'testing', 'all', 'opus,ulaw,vp8', 'no', 'rfc4733', 'yes','af41',4,'no','no','no'); "
 				+ "INSERT INTO public.ps_auths " + "(id, auth_type, \"password\", username) "
 				+ "VALUES(?, 'userpass', 'mk1234', ?);");
-		String rawPassword = akun.password;
-		// String encodedPassword = bCryptPasswordEncoder.encode(akun.getPassword());
-		akun.password = bCryptPasswordEncoder.encode (akun.password);
 		query.setString (1, akun.extensions_user);
 		
 		query.setString (2, akun.extensions_user);
