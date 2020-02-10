@@ -315,7 +315,7 @@ public class UserController
 		// Connection connection = DriverManager.getConnection (sk.Path_expr,
 		// sk.service_user, sk.service_password);
 		Connection connection = dataSource.getConnection ();
-		PreparedStatement query = connection.prepareStatement ("INSERT INTO customers (nama, extension) VALUES (?,?); "
+		PreparedStatement query = connection.prepareStatement ("INSERT INTO customers (extension) VALUES (?); "
 				+ "INSERT INTO public.ps_aors " + "(id, max_contacts, remove_existing) " + "VALUES(?, '1', 'yes'); "
 				+ "INSERT INTO public.ps_endpoints "
 				+ "(id, aors, auth, context, disallow, allow, direct_media, dtmf_mode, ice_support, tos_video,cos_video,force_rport,rewrite_contact,rtp_symmetric) "
@@ -325,15 +325,14 @@ public class UserController
 		String rawPassword = akun.password;
 		// String encodedPassword = bCryptPasswordEncoder.encode(akun.getPassword());
 		akun.password = bCryptPasswordEncoder.encode (akun.password);
-		query.setString (1, akun.nama);
-		query.setString (2, akun.extensions_user);
+		query.setString (1, akun.extensions_user);
 		
+		query.setString (2, akun.extensions_user);
 		query.setString (3, akun.extensions_user);
 		query.setString (4, akun.extensions_user);
 		query.setString (5, akun.extensions_user);
 		query.setString (6, akun.extensions_user);
 		query.setString (7, akun.extensions_user);
-		query.setString (8, akun.extensions_user);
 		int flag = query.executeUpdate ();
 		
 		query.close ();
