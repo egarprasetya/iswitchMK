@@ -119,6 +119,50 @@ public class UserController
 		
 		return String.valueOf (String.valueOf (flag) + " - Data pengguna ditambahkan!.");
 	}
+	@PostMapping("/registerAgent2")
+	public String registerAgent2 (@RequestBody UserModel akun)
+			throws SQLException, KeyManagementException, NoSuchAlgorithmException, KeyStoreException
+	{
+		// Connection connection = DriverManager.getConnection (sk.Path_expr,
+		// sk.service_user, sk.service_password);
+		Connection connection = dataSource.getConnection ();
+		PreparedStatement query = connection.prepareStatement (
+				
+				"INSERT INTO users (\"skill\",extension_user) VALUES (?,?); "
+						+ "INSERT INTO public.ps_aors " + "(id, max_contacts, remove_existing) " + "VALUES(?, '1', 'yes'); "
+						+ "INSERT INTO public.ps_endpoints "
+						+ "(id, transport, aors, auth, context, disallow, allow, direct_media, dtmf_mode, ice_support, use_avpf, media_encryption,  dtls_verify, dtls_cert_file, dtls_ca_file, dtls_setup, message_context, media_use_received_transport, rtcp_mux,max_audio_streams,max_video_streams,rewrite_contact,rtp_symmetric,force_rport) "
+						+ "VALUES(?, 'transport-wss-lokal', ?, ?, 'testing', 'all', 'ulaw', 'no', 'auto', 'yes', 'yes', 'dtls', 'fingerprint', '/etc/asterisk/keys/asterisk.pem', '/etc/asterisk/keys/ca.crt', 'actpass', 'messaging', 'yes', 'yes',10,10,'no', 'no','no'); "
+						+ "INSERT INTO public.ps_auths " + "(id, auth_type, \"password\", username) "
+						+ "VALUES(?, 'userpass', 'mk1234', ?);");
+
+		query.setInt (1, akun.skill);
+		query.setString (2, akun.extensions_user);
+		
+		query.setString (3, akun.extensions_user);
+		query.setString (4, akun.extensions_user);
+		query.setString (5, akun.extensions_user);
+		query.setString (6, akun.extensions_user);
+		query.setString (7, akun.extensions_user);
+		query.setString (8, akun.extensions_user);
+		int flag = query.executeUpdate ();
+		
+		query.close ();
+		connection.close ();
+		Queue_MemberController qmc = new Queue_MemberController (dataSource);
+		Queue_MemberModel qm = new Queue_MemberModel ();
+		UserModel agent = new UserModel ();
+		
+		agent = getUserData (akun);
+		qm._interface = "PJSIP/" + agent.extensions_user;
+		qm.extension = "PJSIP/" + agent.extensions_user;
+		qm.queue_name = agent.queue;
+		qmc.deleteQueueMember (qm);
+		qmc.addQueueMember (qm);
+		getPjsipReload ();
+		
+		return String.valueOf (String.valueOf (flag) + " - Data pengguna ditambahkan!.");
+	}
 	
 	@PostMapping("/deleteAgent")
 	public String deleteAgent (@RequestBody UserModel akun)
