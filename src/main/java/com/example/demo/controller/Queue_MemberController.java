@@ -369,7 +369,6 @@ public class Queue_MemberController
 				queueEntry.priority = words[13].replaceAll ("' /></response>", "");
 				
 				listQueue.add (queueEntry);
-				
 			}
 		}
 		ArrayList<QueuesModel> listQueues = new ArrayList<QueuesModel> ();
