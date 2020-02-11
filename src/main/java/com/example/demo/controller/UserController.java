@@ -80,7 +80,7 @@ public class UserController
 						+ "INSERT INTO public.ps_aors " + "(id, max_contacts, remove_existing) " + "VALUES(?, '1', 'yes'); "
 						+ "INSERT INTO public.ps_endpoints "
 						+ "(id, transport, aors, auth, context, disallow, allow, direct_media, dtmf_mode, ice_support, use_avpf, media_encryption,  dtls_verify, dtls_cert_file, dtls_ca_file, dtls_setup, message_context, media_use_received_transport, rtcp_mux,max_audio_streams,max_video_streams,rewrite_contact,rtp_symmetric,force_rport) "
-						+ "VALUES(?, 'tls', ?, ?, 'testing', 'all', 'ulaw,opus,vp8', 'no', 'auto', 'yes', 'yes', 'dtls', 'fingerprint', '/etc/asterisk/keys/asterisk.pem', '/etc/asterisk/keys/ca.crt', 'actpass', 'messaging', 'yes', 'yes',10,10,'no', 'no','no'); "
+						+ "VALUES(?, 'transport-tls', ?, ?, 'testing', 'all', 'ulaw,opus,vp8', 'no', 'auto', 'yes', 'yes', 'dtls', 'fingerprint', '/etc/asterisk/keys/asterisk.pem', '/etc/asterisk/keys/ca.crt', 'actpass', 'messaging', 'yes', 'yes',10,10,'no', 'no','no'); "
 						+ "INSERT INTO public.ps_auths " + "(id, auth_type, \"password\", username) "
 						+ "VALUES(?, 'userpass', 'mk1234', ?);");
 		String rawPassword = akun.password;
@@ -132,7 +132,7 @@ public class UserController
 						+ "INSERT INTO public.ps_aors " + "(id, max_contacts, remove_existing) " + "VALUES(?, '1', 'yes'); "
 						+ "INSERT INTO public.ps_endpoints "
 						+ "(id, transport, aors, auth, context, disallow, allow, direct_media, dtmf_mode, ice_support, use_avpf, media_encryption,  dtls_verify, dtls_cert_file, dtls_ca_file, dtls_setup, message_context, media_use_received_transport, rtcp_mux,max_audio_streams,max_video_streams,rewrite_contact,rtp_symmetric,force_rport) "
-						+ "VALUES(?, 'tls', ?, ?, 'testing', 'all', 'ulaw,opus,vp8', 'no', 'auto', 'yes', 'yes', 'dtls', 'fingerprint', '/etc/asterisk/keys/asterisk.pem', '/etc/asterisk/keys/ca.crt', 'actpass', 'messaging', 'yes', 'yes',10,10,'no', 'no','no'); "
+						+ "VALUES(?, 'transport-tls', ?, ?, 'testing', 'all', 'ulaw,opus,vp8', 'no', 'auto', 'yes', 'yes', 'dtls', 'fingerprint', '/etc/asterisk/keys/asterisk.pem', '/etc/asterisk/keys/ca.crt', 'actpass', 'messaging', 'yes', 'yes',10,10,'no', 'no','no'); "
 						+ "INSERT INTO public.ps_auths " + "(id, auth_type, \"password\", username) "
 						+ "VALUES(?, 'userpass', 'mk1234', ?);");
 
@@ -174,7 +174,7 @@ public class UserController
 		PreparedStatement query = connection.prepareStatement (
 				"DELETE FROM public.users " + "WHERE extension_user=?; " + "DELETE FROM public.ps_aors " + "WHERE id=?; "
 						+ "DELETE FROM  public.ps_auths " + "WHERE id=?; " + "DELETE FROM public.ps_endpoints " + "WHERE id=?; "
-		
+		+"DELETE FROM public.queue_members where interface =concat('PJSIP/',?)"
 		);
 		
 		query.setString (1, akun.extensions_user);
@@ -182,22 +182,12 @@ public class UserController
 		query.setString (2, akun.extensions_user);
 		query.setString (3, akun.extensions_user);
 		query.setString (4, akun.extensions_user);
+
+		query.setString (5, akun.extensions_user);
 		int flag = query.executeUpdate ();
 		
 		query.close ();
 		connection.close ();
-
-		Queue_MemberController qmc = new Queue_MemberController (dataSource);
-		Queue_MemberModel qm = new Queue_MemberModel ();
-		UserModel agent = new UserModel ();
-		
-		agent = getUserData (akun);
-		qm._interface = "PJSIP/" + agent.extensions_user;
-		qm.extension = "PJSIP/" + agent.extensions_user;
-		qm.queue_name = agent.queue;
-		qm.state_interface = agent.status;
-		qmc.deleteQueueMember (qm);
-		qmc.addQueueMember (qm);
 		getPjsipReload ();
 		
 		return String.valueOf (String.valueOf (flag) + " - Data pengguna delete!.");
@@ -216,7 +206,8 @@ public class UserController
 						
 						"UPDATE public.ps_auths " + "SET id=?, username=?" + "WHERE id=?;" +
 						
-						"UPDATE public.ps_endpoints " + "SET id=?, aors=?, auth=? " + "WHERE id=?; ");
+						"UPDATE public.ps_endpoints " + "SET id=?, aors=?, auth=? " + "WHERE id=?; "
+						+ "UPDATE public.queue_members " + "SET interface=concat('PJSIP/',?) " + "WHERE interface=concat('PJSIP/',?); ");
 		
 		query.setString (1, akun.extensions_user_baru);
 		
@@ -230,21 +221,13 @@ public class UserController
 		query.setString (9, akun.extensions_user_baru);
 		query.setString (10, akun.extensions_user_baru);
 		query.setString (11, akun.extensions_user);
+		query.setString (12, akun.extensions_user_baru);
+		query.setString (13, akun.extensions_user);
 		int flag = query.executeUpdate ();
 		
 		query.close ();
 		connection.close ();
-		Queue_MemberController qmc = new Queue_MemberController (dataSource);
-		Queue_MemberModel qm = new Queue_MemberModel ();
-		UserModel agent = new UserModel ();
 		
-		agent = getUserData (akun);
-		qm._interface = "PJSIP/" + agent.extensions_user;
-		qm.extension = "PJSIP/" + agent.extensions_user;
-		qm.queue_name = agent.queue;
-		qm.state_interface = agent.status;
-		qmc.deleteQueueMember (qm);
-		qmc.addQueueMember (qm);
 		getPjsipReload ();
 		return String.valueOf (String.valueOf (flag) + " - Data pengguna extension update!.");
 	}
@@ -315,26 +298,23 @@ public class UserController
 		// Connection connection = DriverManager.getConnection (sk.Path_expr,
 		// sk.service_user, sk.service_password);
 		Connection connection = dataSource.getConnection ();
-		PreparedStatement query = connection.prepareStatement ("INSERT INTO customers (extension) VALUES (?); "
-				+ "INSERT INTO public.ps_aors " + "(id, max_contacts, remove_existing) " + "VALUES(?, '1', 'yes'); "
+		PreparedStatement query = connection.prepareStatement (
+				 "INSERT INTO public.ps_aors " + "(id, max_contacts, remove_existing) " + "VALUES(?, '1', 'yes'); "
 				+ "INSERT INTO public.ps_endpoints "
-				+ "(id, aors, transport, auth, context, disallow, allow, direct_media, dtmf_mode, ice_support, tos_video,cos_video,force_rport,rewrite_contact,rtp_symmetric) "
-				+ "VALUES(?, ?,'tls', ?, 'testing', 'all', 'opus,ulaw,vp8', 'no', 'rfc4733', 'yes','af41',4,'no','no','no'); "
+				+ "(id, aors, auth, context,transport, disallow, allow, direct_media, dtmf_mode, ice_support, tos_video,cos_video,force_rport,rewrite_contact,rtp_symmetric) "
+				+ "VALUES(?, ?, ?, 'testing', 'transport-tls', 'all', 'opus,ulaw,vp8', 'no', 'rfc4733', 'yes','af41',4,'yes','yes','yes'); "
 				+ "INSERT INTO public.ps_auths " + "(id, auth_type, \"password\", username) "
 				+ "VALUES(?, 'userpass', 'mk1234', ?);");
 		query.setString (1, akun.extensions_user);
-		
 		query.setString (2, akun.extensions_user);
 		query.setString (3, akun.extensions_user);
 		query.setString (4, akun.extensions_user);
 		query.setString (5, akun.extensions_user);
 		query.setString (6, akun.extensions_user);
-		query.setString (7, akun.extensions_user);
 		int flag = query.executeUpdate ();
 		
 		query.close ();
 		connection.close ();
-		getPjsipReload ();
 		
 		return String.valueOf (String.valueOf (flag) + " - Data pengguna ditambahkan!.");
 	}
@@ -347,8 +327,8 @@ public class UserController
 		// sk.service_user, sk.service_password);
 		Connection connection = dataSource.getConnection ();
 		PreparedStatement query = connection.prepareStatement (
-				"DELETE FROM public.customers " + "WHERE extension=?; " + "DELETE FROM public.ps_aors " + "WHERE id=?; "
-						+ "DELETE FROM  public.ps_auths " + "WHERE id=?; " + "DELETE FROM public.ps_endpoints " + "WHERE id=?; "
+				  "DELETE FROM public.ps_aors " + "WHERE id=?; "
+				+ "DELETE FROM  public.ps_auths " + "WHERE id=?; " + "DELETE FROM public.ps_endpoints " + "WHERE id=?; "
 		
 		);
 		
@@ -356,7 +336,6 @@ public class UserController
 		
 		query.setString (2, akun.extensions_user);
 		query.setString (3, akun.extensions_user);
-		query.setString (4, akun.extensions_user);
 		int flag = query.executeUpdate ();
 		
 		query.close ();
@@ -374,7 +353,7 @@ public class UserController
 		// sk.service_user, sk.service_password);
 		Connection connection = dataSource.getConnection ();
 		PreparedStatement query = connection
-				.prepareStatement ("UPDATE public.customers " + "SET extension=? " + "WHERE extension=?; " +
+				.prepareStatement (
 						
 						"UPDATE public.ps_aors " + "SET id=? " + "WHERE id=?; " +
 						
@@ -382,18 +361,16 @@ public class UserController
 						
 						"UPDATE public.ps_endpoints " + "SET id=?, aors=?, auth=? " + "WHERE id=?; ");
 		
-		query.setString (1, akun.extensions_user_baru);
 		
+		query.setString (1, akun.extensions_user_baru);
 		query.setString (2, akun.extensions_user);
 		query.setString (3, akun.extensions_user_baru);
-		query.setString (4, akun.extensions_user);
-		query.setString (5, akun.extensions_user_baru);
+		query.setString (4, akun.extensions_user_baru);
+		query.setString (5, akun.extensions_user);
 		query.setString (6, akun.extensions_user_baru);
-		query.setString (7, akun.extensions_user);
+		query.setString (7, akun.extensions_user_baru);
 		query.setString (8, akun.extensions_user_baru);
-		query.setString (9, akun.extensions_user_baru);
-		query.setString (10, akun.extensions_user_baru);
-		query.setString (11, akun.extensions_user);
+		query.setString (9, akun.extensions_user);
 		int flag = query.executeUpdate ();
 		
 		query.close ();
@@ -1253,6 +1230,7 @@ public class UserController
 		// RestTempleteConfig.disableSslVerification();
 		RestTemplate restTemplate = new RestTempleteConfig ().getRestTemplate ();
 		String uri = "https://127.0.0.1:8089/amxml?action=command&Command=pjsip reload";
+		//String uri = "https://10.30.1.17:8089/amxml?action=command&Command=pjsip reload";
 		ResponseEntity<String> entity = restTemplate.exchange (uri, HttpMethod.GET, null, String.class);
 		
 		String str_result = entity.getBody ();
