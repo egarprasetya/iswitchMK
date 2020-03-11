@@ -22,6 +22,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,6 +45,14 @@ public class Ps_EndpointsController
 	PreparedStatement queryselect_psendpoint = null;
 	AllInsertQuery query_string_insert = new AllInsertQuery();
 	PreparedStatement query_insert_ps_endpoints = null;
+	
+	@Autowired
+	private DataSource dataSource;
+	
+	public Ps_EndpointsController (DataSource dataSource)
+	{
+		this.dataSource = dataSource;
+	}
 
 	@PutMapping("/putPsEndpoints")
 	public String putPsEndpoints(@RequestBody Ps_EndpointsModel cfm) throws SQLException
@@ -329,6 +340,25 @@ public class Ps_EndpointsController
 		int a = 0;
 		Connection1.close();
 		return a;
+	}
+	
+	@PostMapping("/updateEndpoint")
+	public int updateEndpointMessage (String message,String extension) throws SQLException
+	{
+		// Connection connection = DriverManager.getConnection(sk.Path_expr,
+		// sk.service_user, sk.service_password);
+		Connection connection = dataSource.getConnection ();
+		PreparedStatement query = connection
+				.prepareStatement ("UPDATE ps_endpoints SET message_context = ? WHERE id = concat('PJSIP/',?) ; ");
+		
+		query.setString (1, message);
+		query.setString (2, extension);
+		
+		int Cursor1 = query.executeUpdate ();
+		query.close ();
+		connection.close ();
+		
+		return Cursor1;
 	}
 
 }

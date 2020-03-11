@@ -18,7 +18,7 @@ public class UserModel
 	public String password_email;
 	public String phone_number;
 	public String extensions_user;
-	public int skill;
+	public String skill;
 	public String status;
 	public String avatar;
 	public String websocket;

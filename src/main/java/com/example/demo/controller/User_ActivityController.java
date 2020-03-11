@@ -127,14 +127,14 @@ public class User_ActivityController
 			{
 				a.setString (1, cfm.status);
 				a.setString (2, "null");
-				a.setInt (3, cfm.skill);
+				a.setString (3, cfm.skill);
 				a.setTimestamp (4, cfm.date_begin);
 				a.setString (5, cfm.extensions_user);
 			} else
 			{
 				a.setString (1, "null");
 				a.setString (2, cfm.status);
-				a.setInt (3, cfm.skill);
+				a.setString (3, cfm.skill);
 				a.setTimestamp (4, cfm.date_begin);
 				a.setString (5, cfm.extensions_user);
 			}
