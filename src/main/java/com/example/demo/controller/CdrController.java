@@ -3,6 +3,10 @@ package com.example.demo.controller;
 import com.example.demo.connection.stringkoneksi;
 import com.example.demo.model.*;
 import com.example.demo.query.*;
+
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -153,6 +157,30 @@ public class CdrController {
 		Connection1.close();
 
 		return a;
+	}
+	
+	@PostMapping("/afterCallCase")
+	public String updateCustomer(@RequestBody CdrModel akun)
+			throws SQLException, KeyManagementException, NoSuchAlgorithmException, KeyStoreException
+	{
+		// Connection connection = DriverManager.getConnection (sk.Path_expr,
+		// sk.service_user, sk.service_password);
+		Connection connection = dataSource.getConnection();
+		PreparedStatement query = connection.prepareStatement(
+
+				"UPDATE public.cdr " + "SET case=? , detail=?" + "WHERE src=? and dst=?; ");
+
+		query.setString(1, akun.cdrCase);
+		query.setString(2, akun.detail);
+		query.setString(3, akun.src);
+		query.setString(4, akun.dst);
+		
+		int flag = query.executeUpdate();
+
+		query.close();
+		connection.close();
+
+		return "{ " + "\"response\":" + "\"" + "sukses" + "\" }";
 	}
 
 	@PostMapping(produces = "application/json", path = "/postUserCdr")

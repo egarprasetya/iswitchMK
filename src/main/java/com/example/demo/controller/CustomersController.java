@@ -446,7 +446,7 @@ public class CustomersController
 		
 	}
 	
-	@PostMapping("/updateCustomer")
+	@PostMapping("/update2Customer")
 	public String updateCustomer (@RequestBody CustomersModel cm) throws SQLException
 	{
 		try

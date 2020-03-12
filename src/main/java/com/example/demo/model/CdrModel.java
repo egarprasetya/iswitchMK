@@ -30,7 +30,11 @@ public class CdrModel
 	public String linkedid;
 	public String peeraccount;
 	public int sequence;
+
+	public String cdrCase;
+	public String detail;
 	
 	//Dummy
 	public String extensions_user;
+
 }

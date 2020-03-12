@@ -36,4 +36,5 @@ public class UserModel
 	public String userSSH;
 	public String passwordSSH;
 	public String comandSSH;
+	public String count;
 }

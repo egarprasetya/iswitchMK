@@ -98,261 +98,9 @@ public class UserController
 	}
 
 	@PostMapping("/createAgent")
-	public String createAgent(@RequestBody UserModel akun)
-			throws SQLException, KeyManagementException, NoSuchAlgorithmException, KeyStoreException {
-		// Connection connection = DriverManager.getConnection (sk.Path_expr,
-		// sk.service_user, sk.service_password);
-		try {
-			Connection connection = dataSource.getConnection();
-			PreparedStatement query = connection.prepareStatement(
-
-					"INSERT INTO users (\"skill\",extension_user) VALUES (?,?); " + "INSERT INTO public.ps_aors "
-							+ "(id, max_contacts, remove_existing) " + "VALUES(?, '1', 'yes'); "
-							+ "INSERT INTO public.ps_endpoints "
-							+ "(id, aors, auth, context, disallow, allow, direct_media, dtmf_mode, ice_support, use_avpf, media_encryption,  dtls_verify, dtls_cert_file, dtls_ca_file, dtls_setup, message_context, media_use_received_transport, rtcp_mux,max_audio_streams,max_video_streams,rewrite_contact,rtp_symmetric,force_rport) "
-							+ "VALUES(?, ?, ?, 'testing', 'all', 'ulaw,opus,vp8', 'no', 'auto', 'yes', 'yes', 'dtls', 'fingerprint', '/etc/asterisk/keys/asterisk.pem', '/etc/asterisk/keys/ca.crt', 'actpass', 'messaging', 'yes', 'yes',10,10,'no', 'no','no'); "
-							+ "INSERT INTO public.ps_auths " + "(id, auth_type, \"password\", username) "
-							+ "VALUES(?, 'userpass', ?, ?);");
-
-			query.setString(1, akun.skill);
-			query.setString(2, akun.extensions_user);
-			String pass = generateRandomString(LENGTH);
-			query.setString(3, akun.extensions_user);
-			query.setString(4, akun.extensions_user);
-			query.setString(5, akun.extensions_user);
-			query.setString(6, akun.extensions_user);
-			query.setString(7, akun.extensions_user);
-			query.setString(8, "mk1234");
-			query.setString(9, akun.extensions_user);
-			int flag = query.executeUpdate();
-
-			query.close();
-			connection.close();
-			Queue_MemberController qmc = new Queue_MemberController(dataSource);
-			Queue_MemberModel qm = new Queue_MemberModel();
-			qm._interface = "PJSIP/" + akun.extensions_user;
-			qm.extension = "PJSIP/" + akun.extensions_user;
-			qm.queue_name = akun.skill;
-			qmc.deleteQueueMember(qm);
-			qmc.addQueueMember(qm);
-			getPjsipReload();
-
-			return "{\r\n" + "	\"Success\" : true,\r\n" + "	\"Ext\" : \"" + akun.extensions_user + "\",\r\n"
-					+ "	\"Pwd\" : \"" + "mk1234" + "\",\r\n" + "	\"ErrMsg\" : \"\"\r\n" + "}";
-		} catch (SQLException error_sql) {
-			error_sql.printStackTrace();
-			return "{\r\n" + "	\"Success\" : false,\r\n" + "	\"Ext\" : \"\",\r\n" + "	\"Pwd\" : \"\",\r\n"
-					+ "	\"ErrMsg\" : \"error SQLException\"\r\n" + "}";
-		} catch (KeyManagementException error_key) {
-			error_key.printStackTrace();
-			return "{\r\n" + "	\"Success\" : false,\r\n" + "	\"Ext\" : \"\",\r\n" + "	\"Pwd\" : \"\",\r\n"
-					+ "	\"ErrMsg\" : \"error KeyManagementException\"\r\n" + "}";
-		} catch (NoSuchAlgorithmException error_algorithm) {
-			error_algorithm.printStackTrace();
-			return "{\r\n" + "	\"Success\" : false,\r\n" + "	\"Ext\" : \"\",\r\n" + "	\"Pwd\" : \"\",\r\n"
-					+ "	\"ErrMsg\" : \"error NoSuchAlgorithmException\"\r\n" + "}";
-		}
-	}
-
-	
-
-	@PostMapping("/updateAgent")
-	public String updateAgent(@RequestBody UserModel akun)
-			throws SQLException, KeyManagementException, NoSuchAlgorithmException, KeyStoreException {
-		// Connection connection = DriverManager.getConnection (sk.Path_expr,
-		// sk.service_user, sk.service_password);
-		try {
-			Connection connection = dataSource.getConnection();
-			PreparedStatement query = connection
-					.prepareStatement("UPDATE public.users " + "SET extension_user=? " + "WHERE extension_user=?; " +
-
-							"UPDATE public.ps_aors " + "SET id=? " + "WHERE id=?; " +
-
-							"UPDATE public.ps_auths " + "SET id=?, username=?" + "WHERE id=?;" +
-
-							"UPDATE public.ps_endpoints " + "SET id=?, aors=?, auth=? " + "WHERE id=?; "
-							+ "UPDATE public.queue_members " + "SET interface=concat('PJSIP/',?) "
-							+ "WHERE interface=concat('PJSIP/',?); ");
-
-			query.setString(1, akun.extensions_user_baru);
-
-			query.setString(2, akun.extensions_user);
-			query.setString(3, akun.extensions_user_baru);
-			query.setString(4, akun.extensions_user);
-			query.setString(5, akun.extensions_user_baru);
-			query.setString(6, akun.extensions_user_baru);
-			query.setString(7, akun.extensions_user);
-			query.setString(8, akun.extensions_user_baru);
-			query.setString(9, akun.extensions_user_baru);
-			query.setString(10, akun.extensions_user_baru);
-			query.setString(11, akun.extensions_user);
-			query.setString(12, akun.extensions_user_baru);
-			query.setString(13, akun.extensions_user);
-			int flag = query.executeUpdate();
-
-			query.close();
-			connection.close();
-
-			getPjsipReload();
-			return "{\r\n" + "	\"Success\" : true,\r\n" + "	\"Ext\" : \"" + akun.extensions_user + "\",\r\n"
-					+ "	\"Pwd\" : \"\",\r\n" + "	\"ErrMsg\" : \"\"\r\n" + "}";
-		} catch (SQLException error_sql) {
-			error_sql.printStackTrace();
-			return "{\r\n" + "	\"Success\" : false,\r\n" + "	\"Ext\" : \"\",\r\n" + "	\"Pwd\" : \"\",\r\n"
-					+ "	\"ErrMsg\" : \"error SQLException\"\r\n" + "}";
-		} catch (KeyManagementException error_key) {
-			error_key.printStackTrace();
-			return "{\r\n" + "	\"Success\" : false,\r\n" + "	\"Ext\" : \"\",\r\n" + "	\"Pwd\" : \"\",\r\n"
-					+ "	\"ErrMsg\" : \"error KeyManagementException\"\r\n" + "}";
-		} catch (NoSuchAlgorithmException error_algorithm) {
-			error_algorithm.printStackTrace();
-			return "{\r\n" + "	\"Success\" : false,\r\n" + "	\"Ext\" : \"\",\r\n" + "	\"Pwd\" : \"\",\r\n"
-					+ "	\"ErrMsg\" : \"error NoSuchAlgorithmException\"\r\n" + "}";
-		}
-	}
-
-	public UserModel getUserData(@RequestBody UserModel cfm) throws SQLException {
-		UserModel Modeluser = new UserModel();
-		try {
-			// Connection connection = DriverManager.getConnection (sk.Path_expr,
-			// sk.service_user, sk.service_password);
-			Connection connection = dataSource.getConnection();
-			PreparedStatement a = connection.prepareStatement(select_query.query_agent);
-
-			a.setString(1, cfm.extensions_user);
-			ResultSet Cursor1 = a.executeQuery();// Evaluate (Connected_Expression1)
-
-			while (Cursor1.next()) {
-				// System.out.println (Cursor1.getString (1));
-				Modeluser.user_id = Cursor1.getInt(1);
-				Modeluser.nama = Cursor1.getString(2);
-				Modeluser.username = Cursor1.getString(3);
-				Modeluser.password = Cursor1.getString(4);
-				Modeluser.created = Cursor1.getTimestamp(5);
-				Modeluser.modified = Cursor1.getTimestamp(6);
-				Modeluser.email = Cursor1.getString(7);
-				Modeluser.password_email = Cursor1.getString(8);
-				Modeluser.phone_number = Cursor1.getString(9);
-				Modeluser.extensions_user = Cursor1.getString(10);
-				Modeluser.skill = Cursor1.getString(11);
-				Modeluser.status = Cursor1.getString(12);
-				Modeluser.avatar = Cursor1.getString(13);
-				Modeluser.websocket = Cursor1.getString(14);
-				Modeluser.url_websocket = Cursor1.getString(15);
-				Modeluser.queue = Cursor1.getString(16);
-
-			}
-
-			if (Modeluser.user_id != 0) {
-				// System.out.println (Modeluser.user_id + "ssddas");
-				a.close();
-				Cursor1.close();
-				connection.close();
-				return Modeluser;
-			} else {
-				// System.out.println (Modeluser.extensions_user);
-				a.close();
-				Cursor1.close();
-				connection.close();
-				return null;
-			}
-		} catch (SQLException error) {
-			error.printStackTrace();
-			return Modeluser;
-		}
-
-	}
-
-	@PostMapping("/createCustomer")
-	public String createCustomer(@RequestBody UserModel akun)
-			throws SQLException, KeyManagementException, NoSuchAlgorithmException, KeyStoreException {
-		// Connection connection = DriverManager.getConnection (sk.Path_expr,
-		// sk.service_user, sk.service_password);
-		try {
-			Connection connection = dataSource.getConnection();
-			PreparedStatement query = connection.prepareStatement("INSERT INTO public.ps_aors "
-					+ "(id, max_contacts, remove_existing) " + "VALUES(?, '1', 'yes'); "
-					+ "INSERT INTO public.ps_endpoints "
-					+ "(id, aors, auth, context,transport, disallow, allow, direct_media, dtmf_mode, ice_support, tos_video,cos_video,force_rport,rewrite_contact,rtp_symmetric) "
-					+ "VALUES(?, ?, ?, 'testing', 'transport-tls', 'all', 'opus,ulaw,vp8', 'no', 'rfc4733', 'yes','af41',4,'yes','yes','yes'); "
-					+ "INSERT INTO public.ps_auths " + "(id, auth_type, \"password\", username) "
-					+ "VALUES(?, 'userpass', ?, ?);");
-			String pass = generateRandomString(LENGTH);
-			query.setString(1, akun.extensions_user);
-			query.setString(2, akun.extensions_user);
-			query.setString(3, akun.extensions_user);
-			query.setString(4, akun.extensions_user);
-			query.setString(5, akun.extensions_user);
-			query.setString(6, "mk1234");
-			query.setString(7, akun.extensions_user);
-			int flag = query.executeUpdate();
-
-			query.close();
-			connection.close();
-
-			return "{\r\n" + "	\"Success\" : true,\r\n" + "	\"Ext\" : \"" + akun.extensions_user + "\",\r\n"
-					+ "	\"Pwd\" : \"" + "mk1234" + "\",\r\n" + "	\"ErrMsg\" : \"\"\r\n" + "}";
-		} catch (SQLException error_sql) {
-			error_sql.printStackTrace();
-			return "{\r\n" + "	\"Success\" : false,\r\n" + "	\"Ext\" : \"\",\r\n" + "	\"Pwd\" : \"\",\r\n"
-					+ "	\"ErrMsg\" : \"error SQLException\"\r\n" + "}";
-		}
-	}
-
-	@PostMapping("/deleteCustomer")
-	public String deleteCustomer(@RequestBody UserModel akun)
-			throws SQLException, KeyManagementException, NoSuchAlgorithmException, KeyStoreException {
-		// Connection connection = DriverManager.getConnection (sk.Path_expr,
-		// sk.service_user, sk.service_password);
-
-		try {
-			Connection connection = dataSource.getConnection();
-			PreparedStatement query = connection
-					.prepareStatement("DELETE FROM public.ps_aors " + "WHERE id=?; " + "DELETE FROM  public.ps_auths "
-							+ "WHERE id=?; " + "DELETE FROM public.ps_endpoints " + "WHERE id=?; "
-
-					);
-
-			query.setString(1, akun.extensions_user);
-
-			query.setString(2, akun.extensions_user);
-			query.setString(3, akun.extensions_user);
-			int flag = query.executeUpdate();
-
-			query.close();
-			connection.close();
-			getPjsipReload();
-
-			return "{\r\n" + "	\"Success\" : true,\r\n" + "	\"Ext\" : \"" + akun.extensions_user + "\",\r\n"
-					+ "	\"Pwd\" : \"\",\r\n" + "	\"ErrMsg\" : \"\"\r\n" + "}";
-		} catch (
-
-		SQLException error_sql) {
-			error_sql.printStackTrace();
-			return "{\r\n" + "	\"Success\" : false,\r\n" + "	\"Ext\" : \"\",\r\n" + "	\"Pwd\" : \"\",\r\n"
-					+ "	\"ErrMsg\" : \"error SQLException\"\r\n" + "}";
-		} catch (KeyManagementException error_key) {
-			error_key.printStackTrace();
-			return "{\r\n" + "	\"Success\" : false,\r\n" + "	\"Ext\" : \"\",\r\n" + "	\"Pwd\" : \"\",\r\n"
-					+ "	\"ErrMsg\" : \"error KeyManagementException\"\r\n" + "}";
-		} catch (NoSuchAlgorithmException error_algorithm) {
-			error_algorithm.printStackTrace();
-			return "{\r\n" + "	\"Success\" : false,\r\n" + "	\"Ext\" : \"\",\r\n" + "	\"Pwd\" : \"\",\r\n"
-					+ "	\"ErrMsg\" : \"error NoSuchAlgorithmException\"\r\n" + "}";
-		}
-	}
-
-	
-
-	
-
-	
-	@PostMapping("/registerAgent")
 	public String register(@RequestBody UserModel akun)
 			throws SQLException, KeyManagementException, NoSuchAlgorithmException, KeyStoreException
 	{
-		// Connection connection = DriverManager.getConnection (sk.Path_expr,
-		// sk.service_user, sk.service_password);
 		Connection connection = dataSource.getConnection();
 		PreparedStatement query = connection.prepareStatement(
 
@@ -400,10 +148,8 @@ public class UserController
 		qmc.addQueueMember(qm);
 		getPjsipReload();
 
-		return String.valueOf(String.valueOf(flag) + " - Data pengguna ditambahkan!.");
+		return "{ " + "\"response\":" + "\"" + "sukses" + "\" }";
 	}
-
-	
 
 	@PostMapping("/deleteAgent")
 	public String deleteAgent(@RequestBody UserModel akun)
@@ -430,7 +176,7 @@ public class UserController
 		connection.close();
 		getPjsipReload();
 
-		return String.valueOf(String.valueOf(flag) + " - Data pengguna delete!.");
+		return "{ " + "\"response\":" + "\"" + "sukses" + "\" }";
 	}
 
 	@PostMapping("/updateAgent")
@@ -442,8 +188,8 @@ public class UserController
 		Connection connection = dataSource.getConnection();
 		PreparedStatement query = connection
 				.prepareStatement(
-						"UPDATE public.users\r\n" + 
-						"SET nama='', username='', \"password\"='', created='', modified='', email='', password_email='', phone_number='', extension_user='', skill='', status='', avatar='', websocket='', url_websocket=''\r\n" + 
+						"UPDATE public.users" + 
+						"SET nama=?, username=?, modified=?, email=?, password_email=?, phone_number=?, extension_user=?, skill=?, status=?, avatar=?" + 
 						"WHERE extension_user=?;" + 
 
 						"UPDATE public.ps_aors " + "SET id=? " + "WHERE id=?; " +
@@ -454,27 +200,40 @@ public class UserController
 						+ "UPDATE public.queue_members " + "SET interface=concat('PJSIP/',?) "
 						+ "WHERE interface=concat('PJSIP/',?); ");
 
-		query.setString(1, akun.extensions_user_baru);
-
-		query.setString(2, akun.extensions_user);
-		query.setString(3, akun.extensions_user_baru);
-		query.setString(4, akun.extensions_user);
-		query.setString(5, akun.extensions_user_baru);
-		query.setString(6, akun.extensions_user_baru);
-		query.setString(7, akun.extensions_user);
-		query.setString(8, akun.extensions_user_baru);
-		query.setString(9, akun.extensions_user_baru);
-		query.setString(10, akun.extensions_user_baru);
+		query.setString(1, akun.nama);
+		query.setString(2, akun.username);
+		query.setTimestamp(3, akun.modified);
+		query.setString(4, akun.email);
+		query.setString(5, akun.password_email);
+		query.setString(6, akun.phone_number);
+		query.setString(7, akun.extensions_user_baru);
+		query.setString(8, akun.skill);
+		query.setString(9, akun.status);
+		query.setString(10, akun.avatar);
 		query.setString(11, akun.extensions_user);
+		
 		query.setString(12, akun.extensions_user_baru);
 		query.setString(13, akun.extensions_user);
+		
+		query.setString(14, akun.extensions_user_baru);
+		query.setString(15, akun.extensions_user_baru);
+		query.setString(16, akun.extensions_user);
+		
+		query.setString(17, akun.extensions_user_baru);
+		query.setString(18, akun.extensions_user_baru);
+		query.setString(19, akun.extensions_user_baru);
+		query.setString(20, akun.extensions_user);
+		
+		query.setString(21, akun.extensions_user_baru);
+		query.setString(22, akun.extensions_user);
 		int flag = query.executeUpdate();
 
 		query.close();
 		connection.close();
 
 		getPjsipReload();
-		return String.valueOf(String.valueOf(flag) + " - Data pengguna extension update!.");
+
+		return "{ " + "\"response\":" + "\"" + "sukses" + "\" }";
 	}
 
 	public UserModel getUserData(@RequestBody UserModel cfm) throws SQLException
@@ -528,10 +287,50 @@ public class UserController
 			error.printStackTrace();
 			return Modeluser;
 		}
+	}
+	@GetMapping("/getAllUser")
+	public ArrayList<UserModel> getAllUser(@RequestBody UserModel cfm) throws SQLException
+	{
+		ArrayList<UserModel> ListUser1 = new ArrayList<UserModel>();
+		UserModel Modeluser = new UserModel();
+		try {
+			// Connection connection = DriverManager.getConnection (sk.Path_expr,
+			// sk.service_user, sk.service_password);
+			Connection connection = dataSource.getConnection();
+			PreparedStatement a = connection.prepareStatement("select users.*, skill.queue, status.nama_status " +
+					"from users join skill on users.skill = skill.skill_id join status on users.status= status.status_id"
+					);
+			
+			ResultSet Cursor1 = a.executeQuery();// Evaluate (Connected_Expression1)
 
+			while (Cursor1.next()) {
+				// System.out.println (Cursor1.getString (1));
+				Modeluser.user_id = Cursor1.getInt(1);
+				Modeluser.nama = Cursor1.getString(2);
+				Modeluser.username = Cursor1.getString(3);
+				Modeluser.password = Cursor1.getString(4);
+				Modeluser.created = Cursor1.getTimestamp(5);
+				Modeluser.modified = Cursor1.getTimestamp(6);
+				Modeluser.email = Cursor1.getString(7);
+				Modeluser.password_email = Cursor1.getString(8);
+				Modeluser.phone_number = Cursor1.getString(9);
+				Modeluser.extensions_user = Cursor1.getString(10);
+				Modeluser.avatar = Cursor1.getString(13);
+				Modeluser.websocket = Cursor1.getString(14);
+				Modeluser.url_websocket = Cursor1.getString(15);
+				Modeluser.skill = Cursor1.getString(16);
+				Modeluser.status = Cursor1.getString(17);
+				ListUser1.add(Modeluser);
+			}
+
+			return ListUser1;
+		} catch (SQLException error) {
+			error.printStackTrace();
+			return ListUser1;
+		}
 	}
 
-	@PostMapping("/registerCustomer")
+	@PostMapping("/createCustomer")
 	public String registerCustomer(@RequestBody UserModel akun)
 			throws SQLException, KeyManagementException, NoSuchAlgorithmException, KeyStoreException
 	{
@@ -541,8 +340,8 @@ public class UserController
 		PreparedStatement query = connection.prepareStatement("INSERT INTO public.ps_aors "
 				+ "(id, max_contacts, remove_existing) " + "VALUES(?, '1', 'yes'); "
 				+ "INSERT INTO public.ps_endpoints "
-				+ "(id, aors, auth, context,transport, disallow, allow, direct_media, dtmf_mode, ice_support, tos_video,cos_video,force_rport,rewrite_contact,rtp_symmetric) "
-				+ "VALUES(?, ?, ?, 'testing', 'transport-tls', 'all', 'opus,ulaw,vp8', 'no', 'rfc4733', 'yes','af41',4,'yes','yes','yes'); "
+				+ "(id, aors, auth, context, disallow, allow, direct_media, dtmf_mode, ice_support, webrtc, dtls_auto_generate_cert,message_context) "
+				+ "VALUES(?, ?, ?, 'testing', 'all', 'opus,ulaw,vp8', 'no', 'auto', 'yes','yes','yes', 'messaging'); "
 				+ "INSERT INTO public.ps_auths " + "(id, auth_type, \"password\", username) "
 				+ "VALUES(?, 'userpass', 'mk1234', ?);");
 		query.setString(1, akun.extensions_user);
@@ -555,8 +354,9 @@ public class UserController
 
 		query.close();
 		connection.close();
+		getPjsipReload();
 
-		return String.valueOf(String.valueOf(flag) + " - Data pengguna ditambahkan!.");
+		return "{ " + "\"response\":" + "\"" + "sukses" + "\" }";
 	}
 
 	@PostMapping("/deleteCustomer")
@@ -581,7 +381,8 @@ public class UserController
 		connection.close();
 		getPjsipReload();
 
-		return String.valueOf(String.valueOf(flag) + " - Data pengguna delete!.");
+
+		return "{ " + "\"response\":" + "\"" + "sukses" + "\" }";
 	}
 
 	@PostMapping("/updateCustomer")
@@ -614,8 +415,51 @@ public class UserController
 		connection.close();
 		getPjsipReload();
 
-		return String.valueOf(String.valueOf(flag) + " - Data pengguna extension update!.");
+		return "{ " + "\"response\":" + "\"" + "sukses" + "\" }";
 	}
+	
+	@GetMapping("/miniWallBoard")
+	public String miniWallBoard() throws SQLException
+	{
+		int online=Integer.valueOf(doMiniWallBoard("2","1"))+Integer.valueOf(doMiniWallBoard("3","1")+Integer.valueOf(doMiniWallBoard("4","1")));
+		String result = "[{ \"Support Offline\" : \"" + doMiniWallBoard("0","1") + "\",";
+		result += "\"Support Online\" : \"" + online + "\",";
+		result += "\"Support Availabel\" : \"" + doMiniWallBoard("1","1") + "\"}";
+		
+		online=Integer.valueOf(doMiniWallBoard("2","2"))+Integer.valueOf(doMiniWallBoard("3","2")+Integer.valueOf(doMiniWallBoard("4","2")));
+		result += "{ \"Sales Offline\" : \"" + doMiniWallBoard("0","2") + "\",";
+		result += "\"Sales Online\" : \"" + online + "\",";
+		result += "\"Sales Availabel\" : \"" + doMiniWallBoard("1","2") + "\"}]";
+		
+		return result;
+			
+	}
+	
+	public String doMiniWallBoard(String status, String skill) throws SQLException
+	{
+		String count = null;
+		try {
+			// Connection connection = DriverManager.getConnection (sk.Path_expr,
+			// sk.service_user, sk.service_password);
+			Connection connection = dataSource.getConnection();
+			PreparedStatement a = connection.prepareStatement("select count(*) from users where status = ? and skill = ?");
+			a.setString(1, status);
+			a.setString(2, skill);
+			ResultSet Cursor1 = a.executeQuery();// Evaluate (Connected_Expression1)
+			
+			while (Cursor1.next()) {
+				// System.out.println (Cursor1.getString (1));
+				count  = Cursor1.getString(1);
+			}
+			return count;
+			
+		} catch (SQLException error) {
+			error.printStackTrace();
+			return "";
+		}
+			
+	}
+	
 
 	@PostMapping("/login")
 	public ResponseEntity<String> login(@RequestBody UserModel cfm)
