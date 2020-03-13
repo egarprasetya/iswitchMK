@@ -75,7 +75,8 @@ public class UserController
 //		this.ds = ds;
 //	}
 
-	public static String generateRandomString(int length) {
+	public static String generateRandomString(int length)
+	{
 		if (length < 1)
 			throw new IllegalArgumentException();
 
@@ -186,19 +187,17 @@ public class UserController
 		// Connection connection = DriverManager.getConnection (sk.Path_expr,
 		// sk.service_user, sk.service_password);
 		Connection connection = dataSource.getConnection();
-		PreparedStatement query = connection
-				.prepareStatement(
-						"UPDATE public.users" + 
-						"SET nama=?, username=?, modified=?, email=?, password_email=?, phone_number=?, extension_user=?, skill=?, status=?, avatar=?" + 
-						"WHERE extension_user=?;" + 
+		PreparedStatement query = connection.prepareStatement("UPDATE public.users"
+				+ "SET nama=?, username=?, modified=?, email=?, password_email=?, phone_number=?, extension_user=?, skill=?, status=?, avatar=?"
+				+ "WHERE extension_user=?;" +
 
-						"UPDATE public.ps_aors " + "SET id=? " + "WHERE id=?; " +
+				"UPDATE public.ps_aors " + "SET id=? " + "WHERE id=?; " +
 
-						"UPDATE public.ps_auths " + "SET id=?, username=?" + "WHERE id=?;" +
+				"UPDATE public.ps_auths " + "SET id=?, username=?" + "WHERE id=?;" +
 
-						"UPDATE public.ps_endpoints " + "SET id=?, aors=?, auth=? " + "WHERE id=?; "
-						+ "UPDATE public.queue_members " + "SET interface=concat('PJSIP/',?) "
-						+ "WHERE interface=concat('PJSIP/',?); ");
+				"UPDATE public.ps_endpoints " + "SET id=?, aors=?, auth=? " + "WHERE id=?; "
+				+ "UPDATE public.queue_members " + "SET interface=concat('PJSIP/',?) "
+				+ "WHERE interface=concat('PJSIP/',?); ");
 
 		query.setString(1, akun.nama);
 		query.setString(2, akun.username);
@@ -211,19 +210,19 @@ public class UserController
 		query.setString(9, akun.status);
 		query.setString(10, akun.avatar);
 		query.setString(11, akun.extensions_user);
-		
+
 		query.setString(12, akun.extensions_user_baru);
 		query.setString(13, akun.extensions_user);
-		
+
 		query.setString(14, akun.extensions_user_baru);
 		query.setString(15, akun.extensions_user_baru);
 		query.setString(16, akun.extensions_user);
-		
+
 		query.setString(17, akun.extensions_user_baru);
 		query.setString(18, akun.extensions_user_baru);
 		query.setString(19, akun.extensions_user_baru);
 		query.setString(20, akun.extensions_user);
-		
+
 		query.setString(21, akun.extensions_user_baru);
 		query.setString(22, akun.extensions_user);
 		int flag = query.executeUpdate();
@@ -288,46 +287,42 @@ public class UserController
 			return Modeluser;
 		}
 	}
+
 	@GetMapping("/getAllUser")
-	public ArrayList<UserModel> getAllUser(@RequestBody UserModel cfm) throws SQLException
+	public ArrayList<UserModel> getAllUser() throws SQLException
 	{
 		ArrayList<UserModel> ListUser1 = new ArrayList<UserModel>();
-		UserModel Modeluser = new UserModel();
-		try {
-			// Connection connection = DriverManager.getConnection (sk.Path_expr,
-			// sk.service_user, sk.service_password);
-			Connection connection = dataSource.getConnection();
-			PreparedStatement a = connection.prepareStatement("select users.*, skill.queue, status.nama_status " +
-					"from users join skill on users.skill = skill.skill_id join status on users.status= status.status_id"
-					);
-			
-			ResultSet Cursor1 = a.executeQuery();// Evaluate (Connected_Expression1)
+		
 
-			while (Cursor1.next()) {
-				// System.out.println (Cursor1.getString (1));
-				Modeluser.user_id = Cursor1.getInt(1);
-				Modeluser.nama = Cursor1.getString(2);
-				Modeluser.username = Cursor1.getString(3);
-				Modeluser.password = Cursor1.getString(4);
-				Modeluser.created = Cursor1.getTimestamp(5);
-				Modeluser.modified = Cursor1.getTimestamp(6);
-				Modeluser.email = Cursor1.getString(7);
-				Modeluser.password_email = Cursor1.getString(8);
-				Modeluser.phone_number = Cursor1.getString(9);
-				Modeluser.extensions_user = Cursor1.getString(10);
-				Modeluser.avatar = Cursor1.getString(13);
-				Modeluser.websocket = Cursor1.getString(14);
-				Modeluser.url_websocket = Cursor1.getString(15);
-				Modeluser.skill = Cursor1.getString(16);
-				Modeluser.status = Cursor1.getString(17);
-				ListUser1.add(Modeluser);
-			}
+		// Connection connection = DriverManager.getConnection (sk.Path_expr,
+		// sk.service_user, sk.service_password);
+		Connection connection = dataSource.getConnection();
+		PreparedStatement a = connection.prepareStatement("select users.*, skill.queue, status.nama_status "
+				+ "from users join skill on users.skill = skill.skill_id join status on users.status= status.status_id");
 
-			return ListUser1;
-		} catch (SQLException error) {
-			error.printStackTrace();
-			return ListUser1;
+		ResultSet Cursor1 = a.executeQuery();// Evaluate (Connected_Expression1)
+
+		while (Cursor1.next()) {
+			// System.out.println (Cursor1.getString (1));
+			UserModel Modeluser = new UserModel();
+			Modeluser.user_id = Cursor1.getInt(1);
+			Modeluser.nama = Cursor1.getString(2);
+			Modeluser.username = Cursor1.getString(3);
+			Modeluser.password = Cursor1.getString(4);
+			Modeluser.created = Cursor1.getTimestamp(5);
+			Modeluser.modified = Cursor1.getTimestamp(6);
+			Modeluser.email = Cursor1.getString(7);
+			Modeluser.password_email = Cursor1.getString(8);
+			Modeluser.phone_number = Cursor1.getString(9);
+			Modeluser.extensions_user = Cursor1.getString(10);
+			Modeluser.avatar = Cursor1.getString(13);
+			Modeluser.websocket = Cursor1.getString(14);
+			Modeluser.url_websocket = Cursor1.getString(15);
+			Modeluser.skill = Cursor1.getString(16);
+			Modeluser.status = Cursor1.getString(17);
+			ListUser1.add(Modeluser);
 		}
+		return ListUser1;
 	}
 
 	@PostMapping("/createCustomer")
@@ -381,7 +376,6 @@ public class UserController
 		connection.close();
 		getPjsipReload();
 
-
 		return "{ " + "\"response\":" + "\"" + "sukses" + "\" }";
 	}
 
@@ -417,24 +411,26 @@ public class UserController
 
 		return "{ " + "\"response\":" + "\"" + "sukses" + "\" }";
 	}
-	
+
 	@GetMapping("/miniWallBoard")
 	public String miniWallBoard() throws SQLException
 	{
-		int online=Integer.valueOf(doMiniWallBoard("2","1"))+Integer.valueOf(doMiniWallBoard("3","1")+Integer.valueOf(doMiniWallBoard("4","1")));
-		String result = "[{ \"Support Offline\" : \"" + doMiniWallBoard("0","1") + "\",";
+		int online = Integer.valueOf(doMiniWallBoard("2", "1"))
+				+ Integer.valueOf(doMiniWallBoard("3", "1") + Integer.valueOf(doMiniWallBoard("4", "1")));
+		String result = "[{ \"Support Offline\" : \"" + doMiniWallBoard("0", "1") + "\",";
 		result += "\"Support Online\" : \"" + online + "\",";
-		result += "\"Support Availabel\" : \"" + doMiniWallBoard("1","1") + "\"}";
-		
-		online=Integer.valueOf(doMiniWallBoard("2","2"))+Integer.valueOf(doMiniWallBoard("3","2")+Integer.valueOf(doMiniWallBoard("4","2")));
-		result += "{ \"Sales Offline\" : \"" + doMiniWallBoard("0","2") + "\",";
+		result += "\"Support Availabel\" : \"" + doMiniWallBoard("1", "1") + "\"}";
+
+		online = Integer.valueOf(doMiniWallBoard("2", "2"))
+				+ Integer.valueOf(doMiniWallBoard("3", "2") + Integer.valueOf(doMiniWallBoard("4", "2")));
+		result += "{ \"Sales Offline\" : \"" + doMiniWallBoard("0", "2") + "\",";
 		result += "\"Sales Online\" : \"" + online + "\",";
-		result += "\"Sales Availabel\" : \"" + doMiniWallBoard("1","2") + "\"}]";
-		
+		result += "\"Sales Availabel\" : \"" + doMiniWallBoard("1", "2") + "\"}]";
+
 		return result;
-			
+
 	}
-	
+
 	public String doMiniWallBoard(String status, String skill) throws SQLException
 	{
 		String count = null;
@@ -442,32 +438,30 @@ public class UserController
 			// Connection connection = DriverManager.getConnection (sk.Path_expr,
 			// sk.service_user, sk.service_password);
 			Connection connection = dataSource.getConnection();
-			PreparedStatement a = connection.prepareStatement("select count(*) from users where status = ? and skill = ?");
+			PreparedStatement a = connection
+					.prepareStatement("select count(*) from users where status = ? and skill = ?");
 			a.setString(1, status);
 			a.setString(2, skill);
 			ResultSet Cursor1 = a.executeQuery();// Evaluate (Connected_Expression1)
-			
+
 			while (Cursor1.next()) {
 				// System.out.println (Cursor1.getString (1));
-				count  = Cursor1.getString(1);
+				count = Cursor1.getString(1);
 			}
 			return count;
-			
+
 		} catch (SQLException error) {
 			error.printStackTrace();
 			return "";
 		}
-			
+
 	}
-	
 
 	@PostMapping("/login")
 	public ResponseEntity<String> login(@RequestBody UserModel cfm)
 	{
-		try
-		{
-			if (cekUsername(cfm))
-			{
+		try {
+			if (cekUsername(cfm)) {
 				UserModel result = doLogin(cfm);
 
 				ArrayList<String> formatedResultField = new ArrayList<String>();
@@ -484,8 +478,7 @@ public class UserController
 
 				String parsedResult = parseToStringJSON(formatedResultField, formatedResultValues);
 
-				if (!result.equals(null))
-				{
+				if (!result.equals(null)) {
 					Queue_MemberController qmc = new Queue_MemberController(dataSource);
 					User_HistoryController uhc = new User_HistoryController(dataSource);
 					User_ActivityController uac = new User_ActivityController(dataSource);
@@ -514,12 +507,11 @@ public class UserController
 					String a = "{ " + "\"response\":" + "\"" + "wrong password" + "\" }";
 					return new ResponseEntity<String>(a, HttpStatus.OK);
 				}
-			}
-			else {
+			} else {
 				String result = "{ " + "\"response\":" + "\"" + "wrong username" + "\" }";
 				return new ResponseEntity<String>(result, HttpStatus.OK);
 			}
-			
+
 		} catch (SQLException | NullPointerException error_null) {
 			error_null.printStackTrace();
 			return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
@@ -615,6 +607,7 @@ public class UserController
 				UserModel um = new UserModel();
 
 				um = result;
+				um.status = cfm.status;
 				um.date_end = cfm.date_begin;
 				uhc.updateUserHistory(um);
 
@@ -643,9 +636,9 @@ public class UserController
 			// Connection Connection1 = DriverManager.getConnection (sk.Path_expr,
 			// sk.service_user, sk.service_password);
 			Connection Connection2 = dataSource.getConnection();
-			PreparedStatement b = Connection2.prepareStatement(select_query.query_logout);
+			PreparedStatement b = Connection2.prepareStatement("SELECT * FROM users WHERE extension_user = ?");
 
-			b.setInt(1, cfm.user_id);
+			b.setString(1, cfm.extensions_user);
 			ResultSet Cursor1 = b.executeQuery();// Evaluate (Connected_Expression1)
 
 			while (Cursor1.next()) {
@@ -670,9 +663,7 @@ public class UserController
 			Cursor1.close();
 
 			Connection2.close();
-
-			if (Modeluser.status.equals("0") || Modeluser.status.equals("3")
-					|| Modeluser.status.equals("4")) {
+			if (cfm.status.equals("0") || cfm.status.equals("3") || cfm.status.equals("4")) {
 				Queue_MemberController qmc = new Queue_MemberController(dataSource);
 				Queue_MemberModel qm = new Queue_MemberModel();
 
@@ -694,12 +685,11 @@ public class UserController
 			PreparedStatement a = Connection1.prepareStatement(select_query3.query_changeStatus);
 
 			a.setString(1, cfm.status);
-			a.setInt(2, cfm.user_id);
+			a.setString(2, cfm.extensions_user);
 			flag = a.executeUpdate();
 			UserModel result = getUserData(cfm);
-			if(cfm.status=="1")
-			{
-				Queue_MemberModel qmm=new Queue_MemberModel();
+			if (cfm.status.equals("1") ) {
+				Queue_MemberModel qmm = new Queue_MemberModel();
 				Queue_MemberController qm = new Queue_MemberController(dataSource);
 				Ps_EndpointsController ps = new Ps_EndpointsController(dataSource);
 				qmm._interface = "PJSIP/" + result.extensions_user;
@@ -710,9 +700,8 @@ public class UserController
 				qm.addQueueMember(qmm);
 				ps.updateEndpointMessage("null", result.extensions_user);
 			}
-			if(cfm.status=="2")
-			{
-				Queue_MemberModel qmm=new Queue_MemberModel();
+			if (cfm.status.equals("2") ) {
+				Queue_MemberModel qmm = new Queue_MemberModel();
 				Queue_MemberController qm = new Queue_MemberController(dataSource);
 				Ps_EndpointsController ps = new Ps_EndpointsController(dataSource);
 				qmm._interface = "PJSIP/" + result.extensions_user;
@@ -721,7 +710,7 @@ public class UserController
 				qmm.state_interface = result.status;
 				qm.deleteQueueMember(qmm);
 				ps.updateEndpointMessage("messaging", result.extensions_user);
-				
+
 			}
 
 			a.close();
@@ -729,7 +718,7 @@ public class UserController
 
 			// Connection Connection2 = DriverManager.getConnection (sk.Path_expr,
 			// sk.service_user, sk.service_password);
-			
+
 			return Modeluser;
 		} catch (SQLException error) {
 			error.printStackTrace();
@@ -1307,7 +1296,8 @@ public class UserController
 
 	@GetMapping("/pjsipReload")
 	public ResponseEntity<String> getPjsipReload()
-			throws KeyManagementException, NoSuchAlgorithmException, KeyStoreException {
+			throws KeyManagementException, NoSuchAlgorithmException, KeyStoreException
+	{
 		// RestTempleteConfig.disableSslVerification();
 		RestTemplate restTemplate = new RestTempleteConfig().getRestTemplate();
 		String uri = "https://127.0.0.1:8089/amxml?action=command&Command=pjsip reload";

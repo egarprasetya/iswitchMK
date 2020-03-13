@@ -141,7 +141,7 @@ public class AllUpdateQuery {
 	
 	public String query_changeStatus = "UPDATE users "
 			+ "SET status=?"
-			+ " WHERE user_id=?";			// user_id
+			+ " WHERE extension_user=?";			// user_id
 	public String query_update_customer = "UPDATE public.customers " + 
 			"SET " + 
 			"nik=?, " + 
