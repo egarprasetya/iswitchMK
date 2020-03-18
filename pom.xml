@@ -17,6 +17,8 @@
 	<packaging>war</packaging>
 	<properties>
 		<java.version>1.8</java.version>
+	
+		<start-class>com.example.demo.Servicespring1Application</start-class>
 	</properties>
 
 

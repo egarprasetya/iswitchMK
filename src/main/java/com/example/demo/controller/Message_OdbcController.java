@@ -11,8 +11,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -87,7 +89,7 @@ public class Message_OdbcController
 		// sk.service_user, sk.service_password);
 		Connection connection = dataSource.getConnection();
 		PreparedStatement query = connection.prepareStatement("select * from message_odbc where (src = ? or dst = ?) "
-				+ "and calldate between (now() - interval '12 hour') and now() order by calldate");
+				+ "and calldate between (now() - interval '1000 hour') and now() order by calldate");
 		query.setString(1, message.src);
 		query.setString(2, message.src);
 
@@ -112,7 +114,7 @@ public class Message_OdbcController
 		Connection connection2 = dataSource.getConnection();
 		PreparedStatement query2 = connection2
 				.prepareStatement("select src from message_odbc where (src = ? or dst = ?) "
-						+ "and calldate between (now() - interval '12 hour') and now() group by src");
+						+ "and calldate between (now() - interval '1000 hour') and now() group by src");
 		query2.setString(1, message.src);
 		query2.setString(2, message.src);
 
@@ -124,94 +126,100 @@ public class Message_OdbcController
 		query2.close();
 		connection2.close();
 
-//		Connection connection3 = dataSource.getConnection();
-//		PreparedStatement query3 = connection3
-//				.prepareStatement("select src from message_odbc where (src = ? or dst = ?) "
-//						+ "and calldate between (now() - interval '12 hour') and now() group by src");
-//		query3.setString(1, message.src);
-//		query3.setString(2, message.src);
-//		
-//		ResultSet Cursor13 = query3.executeQuery();// Evaluate (Connected_Expression1)
-//
-//		
+		Connection connection3 = dataSource.getConnection();
+		PreparedStatement query3 = connection3
+				.prepareStatement("select src from message_odbc where (src = ? or dst = ?) "
+						+ "and calldate between (now() - interval '1000 hour') and now() group by src");
+		query3.setString(1, message.src);
+		query3.setString(2, message.src);
+
+		ResultSet Cursor13 = query3.executeQuery();// Evaluate (Connected_Expression1)
+
 		int count = 0;
 		String[] customer = new String[size - 1];
-//		while (Cursor13.next()) // while there_is_next_record_in (Cursor1)
-//		{
-//			if (!Cursor13.getString(1).equalsIgnoreCase(message.src)) {
-//				customer[count] = Cursor13.getString(1);
-//				count++;
-//			}
-//		}
-//		query3.close();
-//		connection3.close();
-
-		Connection connection4 = dataSource.getConnection();
-		PreparedStatement query4 = connection4
-				.prepareStatement("select src from message_odbc where (src = ? or dst = ?) "
-						+ "and calldate between (now() - interval '12 hour') and now() order by calldate desc");
-		query4.setString(1, message.src);
-		query4.setString(2, message.src);
-
-		ResultSet Cursor14 = query.executeQuery();// Evaluate (Connected_Expression1)
-		ArrayList<Message_OdbcModel> ListUser14 = new ArrayList<Message_OdbcModel>();
-		while (Cursor14.next()) // while there_is_next_record_in (Cursor1)
+		while (Cursor13.next()) // while there_is_next_record_in (Cursor1)
 		{
-			Message_OdbcModel ModelCdr = new Message_OdbcModel();
-
-			ModelCdr.src = Cursor1.getString(1);
-			if (!ModelCdr.src.equalsIgnoreCase(message.src)) {
-				for (int i = 0; i < customer.length; i++) {
-					if (!ModelCdr.src.equalsIgnoreCase(customer[i])) {
-						customer[count] = ModelCdr.src;
-
-						count++;
-					}
-				}
-
+			if (!Cursor13.getString(1).equalsIgnoreCase(message.src)) {
+				customer[count] = Cursor13.getString(1);
+				count++;
 			}
-
 		}
-
-		query.close();
-		connection.close();
+		Timestamp[] tanggal = new Timestamp[customer.length];
+		Timestamp[] tanggal2 = new Timestamp[customer.length];
+		String [] result2 = new String[customer.length];
+		for (int i = 0; i < customer.length; i++) {
+			result2[i]="";
+		}
+		query3.close();
+		connection3.close();
 		String result = "{\n\t";
 		for (int j = 0; j < customer.length; j++) {
-			result += "\"" + customer[j] + "\": [\n\t\t";
+			result2[j] += "\"" + customer[j] + "\": [\n\t\t";
 			for (int i = 1; i < ListUser1.size(); i++) {
 				Message_OdbcModel ModelCdr = new Message_OdbcModel();
 				ModelCdr = ListUser1.get(i);
-				System.out.println(ListUser1.size());
-
+//				System.out.println(ListUser1.size());
+//
 				System.out.println(ModelCdr.src);
 				System.out.println(customer[j]);
-				System.out.println(customer.length);
+//				System.out.println(customer.length);
+//				System.out.println(j);
 
 				if (customer[j].equalsIgnoreCase(ModelCdr.src)) {
-					result += "{\n\t\t\t\"targetId\" : \"" + customer[j] + "\",";
-					result += "\n\t\t\t\"message\" : \"" + ModelCdr.msg_context + "\",";
-					result += "\n\t\t\t\"timeString\" : \"" + ModelCdr.calldate + "\",";
-					result += "\n\t\t\t\"type\" : \"" + "RECEIVED" + "\"\n\t\t},";
+					result2[j] += "{\n\t\t\t\"targetId\" : \"" + customer[j] + "\",";
+					result2[j] += "\n\t\t\t\"message\" : \"" + ModelCdr.msg_context + "\",";
+					result2[j] += "\n\t\t\t\"timeString\" : \"" + ModelCdr.calldate + "\",";
+					result2[j] += "\n\t\t\t\"type\" : \"" + "RECEIVED" + "\"\n\t\t},";
+					tanggal[j] = Timestamp.valueOf(ModelCdr.calldate);
+					tanggal2[j] = Timestamp.valueOf(ModelCdr.calldate);
 
 				}
 				if (customer[j].equalsIgnoreCase(ModelCdr.dst)) {
-					result += "{\n\t\t\t\"targetId\" : \"" + customer[j] + "\",";
-					result += "\n\t\t\t\"message\" : \"" + ModelCdr.msg_context + "\",";
-					result += "\n\t\t\t\"timeString\" : \"" + ModelCdr.calldate + "\",";
-					result += "\n\t\t\t\"type\" : \"" + "SENT" + "\"\n\t\t},";
+					result2[j] += "{\n\t\t\t\"targetId\" : \"" + customer[j] + "\",";
+					result2[j] += "\n\t\t\t\"message\" : \"" + ModelCdr.msg_context + "\",";
+					result2[j] += "\n\t\t\t\"timeString\" : \"" + ModelCdr.calldate + "\",";
+					result2[j] += "\n\t\t\t\"type\" : \"" + "SENT" + "\"\n\t\t},";
+					tanggal[j] = Timestamp.valueOf(ModelCdr.calldate);
+					tanggal2[j] = Timestamp.valueOf(ModelCdr.calldate);
 
 				}
 				if (ListUser1.size() - 1 == i) {
-					result = result.substring(0, result.length() - 1);
+					result2[j] = result2[j].substring(0, result2[j].length() - 1);
 				}
 
 			}
-			if (customer.length - 1 == j) {
-				result += "\n\t]\n\t";
-			} else {
+			
+			
+			
+		}
+		
+		
+		Arrays.sort(tanggal);
+		for (int i = 0; i < customer.length; i++) {
+			System.out.println(tanggal[i]);
+//			System.out.println(result2[i]);
+		}
+		System.out.println(Arrays.asList(tanggal));
+		
+		for (int i=customer.length-1; -1<i;i--)
+		{
+			for (int j=0; j<customer.length;j++)
+			{
+				System.out.println(i);
+				if (tanggal[i].equals(tanggal2[j]))
+				{
+					result+=result2[j];
+					if (0 == i) {
+						result += "\n\t]\n\t";
+					} else {
 
-				result += "\n\t],\n\t";
+						result += "\n\t],\n\t";
+					}
+					
+				}
+				
 			}
+			
 		}
 		result += "}";
 		return result;
