@@ -105,7 +105,7 @@ public class UserController
 		Connection connection = dataSource.getConnection();
 		PreparedStatement query = connection.prepareStatement(
 
-				"INSERT INTO users (nama, username, created, phone_number, password, avatar, password_email, \"skill\", status, extension_user) VALUES (?,?,?,?,?,?,?,?,?,?); "
+				"INSERT INTO users (nama, username, password, created, phone_number,avatar, password_email, \"skill\", status, extension_user) VALUES (?,?,?,?,?,?,?,?,?,?); "
 						+ "INSERT INTO public.ps_aors " + "(id, max_contacts, remove_existing) "
 						+ "VALUES(?, '1', 'yes'); " + "INSERT INTO public.ps_endpoints "
 						+ "(id, transport, aors, auth, context, disallow, allow, direct_media, dtmf_mode, ice_support, use_avpf, media_encryption,  dtls_verify, dtls_cert_file, dtls_ca_file, dtls_setup, message_context, media_use_received_transport, rtcp_mux) "
@@ -297,8 +297,8 @@ public class UserController
 		// Connection connection = DriverManager.getConnection (sk.Path_expr,
 		// sk.service_user, sk.service_password);
 		Connection connection = dataSource.getConnection();
-		PreparedStatement a = connection.prepareStatement("select users.*, skill.queue, status.nama_status "
-				+ "from users join skill on users.skill = skill.skill_id join status on users.status= status.status_id");
+		PreparedStatement a = connection.prepareStatement("select users.*, skill.queue, status.nama_status "+
+				"from users join skill on users.skill = skill.skill_id join status on users.status= status.status_id group by users.user_id,skill.queue, status.nama_status ");
 
 		ResultSet Cursor1 = a.executeQuery();// Evaluate (Connected_Expression1)
 
