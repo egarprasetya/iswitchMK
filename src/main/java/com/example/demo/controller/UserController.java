@@ -14,14 +14,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -628,6 +633,15 @@ public class UserController
 		}
 
 	}
+	
+	@Autowired
+	RestTemplate restTemplate;
+	
+	@Value("${endpoint.addqueue.url}")
+	String endpoint_addqueue_url;
+	
+	@Value("${endpoint.removequeue.url}")
+	String endpoint_removequeue_url;
 
 	public UserModel doChangeStatusId(@RequestBody UserModel cfm) throws SQLException
 	{
@@ -701,7 +715,7 @@ public class UserController
 				qm.addQueueMember(qmm);
 				ps.updateEndpointMessage("null", result.extensions_user);
 			}
-			if (cfm.status.equals("2") ) {
+			else if (cfm.status.equals("2") ) {
 				Queue_MemberModel qmm = new Queue_MemberModel();
 				Queue_MemberController qm = new Queue_MemberController(dataSource);
 				Ps_EndpointsController ps = new Ps_EndpointsController(dataSource);
@@ -712,6 +726,23 @@ public class UserController
 				qm.deleteQueueMember(qmm);
 				ps.updateEndpointMessage("messaging", result.extensions_user);
 
+			}
+			else if (cfm.status.equals("5") ) {
+				Queue_MemberModel qmm = new Queue_MemberModel();
+				Queue_MemberController qm = new Queue_MemberController(dataSource);
+				Ps_EndpointsController ps = new Ps_EndpointsController(dataSource);
+				qmm._interface = "PJSIP/" + result.extensions_user;
+				qmm.extension = "PJSIP/" + result.extensions_user;
+				qmm.queue_name = result.queue;
+				qmm.state_interface = result.status;
+				qm.deleteQueueMember(qmm);
+				ps.updateEndpointMessage("null", result.extensions_user);
+				
+				HttpHeaders headers = new HttpHeaders();
+				headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+				HttpEntity<UserModel> entity = new HttpEntity<UserModel>(headers);
+
+				restTemplate.exchange(endpoint_addqueue_url + result.extensions_user, HttpMethod.GET, entity, String.class).getBody();
 			}
 			
 
@@ -896,6 +927,13 @@ public class UserController
 
 				qmc.deleteQueueMember(qm);
 				// System.out.print (cfm.extensions_user + "sslalalal");
+				
+				HttpHeaders headers = new HttpHeaders();
+				headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+				HttpEntity<UserModel> entity = new HttpEntity<UserModel>(headers);
+
+				restTemplate.exchange(endpoint_removequeue_url + um.extensions_user, HttpMethod.DELETE, entity, String.class).getBody();
+				
 				um.date_end = cfm.date_begin;
 				uhc.updateUserHistory(um);
 
