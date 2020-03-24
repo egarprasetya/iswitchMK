@@ -52,6 +52,7 @@ import com.example.demo.controller.User_HistoryController;
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping(produces = "application/json", path = "/message")
+
 public class Message_OdbcController
 {
 	AllSelectParameterQuery select_query = new AllSelectParameterQuery();
@@ -175,7 +176,7 @@ public class Message_OdbcController
 					result2[j] += "{\n\t\t\t\"targetId\" : \"" + customer[j] + "\",";
 					result2[j] += "\n\t\t\t\"message\" : \"" + ModelCdr.msg_context + "\",";
 					tanggal3 = "\n\t\t\t\"timeString\" : \"" + ModelCdr.calldate;
-					tanggal3 = tanggal3.substring(0, tanggal3.length() - 7)+ "\",";
+					tanggal3 = tanggal3.substring(0, tanggal3.length() - 10)+ "\",";
 					result2[j] += tanggal3;
 					result2[j] += "\n\t\t\t\"type\" : \"" + "RECEIVED" + "\"\n\t\t},";
 					tanggal[j] = Timestamp.valueOf(ModelCdr.calldate);
@@ -186,7 +187,7 @@ public class Message_OdbcController
 					result2[j] += "{\n\t\t\t\"targetId\" : \"" + customer[j] + "\",";
 					result2[j] += "\n\t\t\t\"message\" : \"" + ModelCdr.msg_context + "\",";
 					tanggal3 = "\n\t\t\t\"timeString\" : \"" + ModelCdr.calldate;
-					tanggal3 = tanggal3.substring(0, tanggal3.length() - 7)+ "\",";
+					tanggal3 = tanggal3.substring(0, tanggal3.length() - 10)+ "\",";
 					result2[j] += tanggal3;
 					result2[j] += "\n\t\t\t\"type\" : \"" + "SENT" + "\"\n\t\t},";
 					tanggal[j] = Timestamp.valueOf(ModelCdr.calldate);
@@ -327,7 +328,7 @@ public class Message_OdbcController
 					result2[j] += "{\n\t\t\t\"targetId\" : \"" + customer[j] + "\",";
 					result2[j] += "\n\t\t\t\"message\" : \"" + ModelCdr.msg_context + "\",";
 					tanggal3 = "\n\t\t\t\"timeString\" : \"" + ModelCdr.calldate;
-					tanggal3 = tanggal3.substring(0, tanggal3.length() - 7)+ "\",";
+					tanggal3 = tanggal3.substring(0, tanggal3.length() - 10)+ "\",";
 					result2[j] += tanggal3;
 					result2[j] += "\n\t\t\t\"type\" : \"" + "RECEIVED" + "\"\n\t\t},";
 					tanggal[j] = Timestamp.valueOf(ModelCdr.calldate);
@@ -338,7 +339,7 @@ public class Message_OdbcController
 					result2[j] += "{\n\t\t\t\"targetId\" : \"" + customer[j] + "\",";
 					result2[j] += "\n\t\t\t\"message\" : \"" + ModelCdr.msg_context + "\",";
 					tanggal3 = "\n\t\t\t\"timeString\" : \"" + ModelCdr.calldate;
-					tanggal3 = tanggal3.substring(0, tanggal3.length() - 7)+ "\",";
+					tanggal3 = tanggal3.substring(0, tanggal3.length() - 10)+ "\",";
 					result2[j] += tanggal3;
 					result2[j] += "\n\t\t\t\"type\" : \"" + "SENT" + "\"\n\t\t},";
 					tanggal[j] = Timestamp.valueOf(ModelCdr.calldate);
@@ -477,7 +478,7 @@ public class Message_OdbcController
 					result2[j] += "{\n\t\t\t\"targetId\" : \"" + customer[j] + "\",";
 					result2[j] += "\n\t\t\t\"message\" : \"" + ModelCdr.msg_context + "\",";
 					tanggal3 = "\n\t\t\t\"timeString\" : \"" + ModelCdr.calldate;
-					tanggal3 = tanggal3.substring(0, tanggal3.length() - 7)+ "\",";
+					tanggal3 = tanggal3.substring(0, tanggal3.length() - 10)+ "\",";
 					result2[j] += tanggal3;
 					result2[j] += "\n\t\t\t\"type\" : \"" + "RECEIVED" + "\"\n\t\t},";
 					tanggal[j] = Timestamp.valueOf(ModelCdr.calldate);
@@ -488,7 +489,7 @@ public class Message_OdbcController
 					result2[j] += "{\n\t\t\t\"targetId\" : \"" + customer[j] + "\",";
 					result2[j] += "\n\t\t\t\"message\" : \"" + ModelCdr.msg_context + "\",";
 					tanggal3 = "\n\t\t\t\"timeString\" : \"" + ModelCdr.calldate;
-					tanggal3 = tanggal3.substring(0, tanggal3.length() - 7)+ "\",";
+					tanggal3 = tanggal3.substring(0, tanggal3.length() - 10)+ "\",";
 					result2[j] += tanggal3;
 					result2[j] += "\n\t\t\t\"type\" : \"" + "SENT" + "\"\n\t\t},";
 					tanggal[j] = Timestamp.valueOf(ModelCdr.calldate);

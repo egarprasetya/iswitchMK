@@ -597,7 +597,7 @@ public class UserController
 	}
 
 	@PostMapping("/changeStatusId")
-	public ResponseEntity<String> postChangeStatusId(@RequestBody UserModel cfm)
+	public ResponseEntity<String> postChangeStatusId(@RequestBody UserModel cfm) throws KeyManagementException, NoSuchAlgorithmException, KeyStoreException
 	{
 		try {
 			UserModel result = doChangeStatusId(cfm);
@@ -615,6 +615,7 @@ public class UserController
 				uhc.addUserHistory(um);
 
 				uac.postUpdateUserActivity(um);
+				getPjsipReload();
 
 				return new ResponseEntity<String>("{ " + "\"response\":" + "\"" + "1" + "\" }", HttpStatus.OK);
 			} else {
@@ -712,6 +713,7 @@ public class UserController
 				ps.updateEndpointMessage("messaging", result.extensions_user);
 
 			}
+			
 
 			a.close();
 			Connection1.close();

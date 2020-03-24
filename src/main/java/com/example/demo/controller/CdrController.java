@@ -168,7 +168,7 @@ public class CdrController {
 		Connection connection = dataSource.getConnection();
 		PreparedStatement query = connection.prepareStatement(
 
-				"UPDATE public.cdr SET \"case\"=? , detail=? WHERE (src=? and dst=?) and \"case\" is null and detail is null; ");
+				"UPDATE public.cdr SET \"case\"=? , detail=? WHERE (src=? and dst=?) and \"case\" is null and detail is null and disposition = 'ANSWERED'; ");
 
 		query.setString(1, akun.cdrCase);
 		query.setString(2, akun.detail);
