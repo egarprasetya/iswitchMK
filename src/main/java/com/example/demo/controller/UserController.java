@@ -714,6 +714,7 @@ public class UserController
 				qm.deleteQueueMember(qmm);
 				qm.addQueueMember(qmm);
 				ps.updateEndpointMessage("null", result.extensions_user);
+				restTemplate.exchange(endpoint_removequeue_url + result.extensions_user, HttpMethod.DELETE, entity, String.class).getBody();
 			}
 			else if (cfm.status.equals("2") ) {
 				Queue_MemberModel qmm = new Queue_MemberModel();
@@ -725,6 +726,7 @@ public class UserController
 				qmm.state_interface = result.status;
 				qm.deleteQueueMember(qmm);
 				ps.updateEndpointMessage("messaging", result.extensions_user);
+				restTemplate.exchange(endpoint_removequeue_url + result.extensions_user, HttpMethod.DELETE, entity, String.class).getBody();
 
 			}
 			else if (cfm.status.equals("5") ) {
