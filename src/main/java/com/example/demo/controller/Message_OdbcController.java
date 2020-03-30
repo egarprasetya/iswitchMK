@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -55,6 +56,9 @@ import com.example.demo.controller.User_HistoryController;
 
 public class Message_OdbcController
 {
+
+//	SimpleDateFormat tanggalFormat = new SimpleDateFormat("MM/dd/yyyy' 'HH:mm'");
+
 	AllSelectParameterQuery select_query = new AllSelectParameterQuery();
 	AllQuery select_query2 = new AllQuery();
 	AllUpdateQuery select_query3 = new AllUpdateQuery();
@@ -86,6 +90,9 @@ public class Message_OdbcController
 	@PostMapping("/historyChat")
 	public String historyChat(@RequestBody Message_OdbcModel message) throws SQLException
 	{
+
+
+		SimpleDateFormat tanggalFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		// Connection connection = DriverManager.getConnection (sk.Path_expr,
 		// sk.service_user, sk.service_password);
 		Connection connection = dataSource.getConnection();
@@ -101,7 +108,7 @@ public class Message_OdbcController
 			Message_OdbcModel ModelCdr = new Message_OdbcModel();
 			ModelCdr.serial_id = Cursor1.getString(1);
 			ModelCdr.uniqueid = Cursor1.getString(2);
-			ModelCdr.calldate = Cursor1.getString(3);
+			ModelCdr.calldate = Cursor1.getTimestamp(3);
 			ModelCdr.src = Cursor1.getString(4);
 			ModelCdr.dst = Cursor1.getString(5);
 			ModelCdr.msg_context = Cursor1.getString(6);
@@ -137,61 +144,74 @@ public class Message_OdbcController
 		ResultSet Cursor13 = query3.executeQuery();// Evaluate (Connected_Expression1)
 		String result = "{\n\t";
 		int count = 0;
-		if(size==0)
-		{
-			size=1;
-			result +="\"response\":\"tidak ada pesan\"";
+		if (size == 0) {
+			size = 1;
+			result += "\"response\":\"tidak ada pesan\"\n}";
+			return result;
 		}
-		String[] customer = new String[size - 1];
+		String[] customer;
+		if(size==1) {
+			customer = new String[size];
+		}
+		else{
+			customer = new String[size - 1];
+		}
+		System.out.println(size);
 		while (Cursor13.next()) // while there_is_next_record_in (Cursor1)
 		{
 			if (!Cursor13.getString(1).equalsIgnoreCase(message.src)) {
+				System.out.println(Cursor13.getString(1));
 				customer[count] = Cursor13.getString(1);
 				count++;
 			}
 		}
 		Timestamp[] tanggal = new Timestamp[customer.length];
 		Timestamp[] tanggal2 = new Timestamp[customer.length];
-		String tanggal3="";
-		String [] result2 = new String[customer.length];
+		String tanggal3 = "";
+		String[] result2 = new String[customer.length];
 		for (int i = 0; i < customer.length; i++) {
-			result2[i]="";
+			result2[i] = "";
 		}
 		query3.close();
 		connection3.close();
-		
+
 		for (int j = 0; j < customer.length; j++) {
 			result2[j] += "\"" + customer[j] + "\": [\n\t\t";
-			for (int i = 1; i < ListUser1.size(); i++) {
+			for (int i = 0; i < ListUser1.size(); i++) {
 				Message_OdbcModel ModelCdr = new Message_OdbcModel();
 				ModelCdr = ListUser1.get(i);
 //				System.out.println(ListUser1.size());
 //
 				System.out.println(ModelCdr.src);
-				System.out.println(customer[j]);
+				System.out.println(ModelCdr.msg_context);
 //				System.out.println(customer.length);
 //				System.out.println(j);
 
 				if (customer[j].equalsIgnoreCase(ModelCdr.src)) {
-					result2[j] += "{\n\t\t\t\"targetId\" : \"" + customer[j] + "\",";
+					result2[j] += "{\n\t\t\t\"sourceId\" : \"" + customer[j] + "\",";
 					result2[j] += "\n\t\t\t\"message\" : \"" + ModelCdr.msg_context + "\",";
-					tanggal3 = "\n\t\t\t\"timeString\" : \"" + ModelCdr.calldate;
-					tanggal3 = tanggal3.substring(0, tanggal3.length() - 10)+ "\",";
+//					tanggal3 = "\n\t\t\t\"timeString\" : \"" + ModelCdr.calldate;
+//					tanggal3 = tanggal3.substring(0, tanggal3.length() - 10) + "\",";
+//					result2[j] += tanggal3;
+					tanggal3 = "\n\t\t\t\"timeString\" : \"" + tanggalFormat.format(ModelCdr.calldate)+ "\",";
 					result2[j] += tanggal3;
+					
 					result2[j] += "\n\t\t\t\"type\" : \"" + "RECEIVED" + "\"\n\t\t},";
-					tanggal[j] = Timestamp.valueOf(ModelCdr.calldate);
-					tanggal2[j] = Timestamp.valueOf(ModelCdr.calldate);
+					tanggal[j] = ModelCdr.calldate;
+					tanggal2[j] = ModelCdr.calldate;
 
 				}
 				if (customer[j].equalsIgnoreCase(ModelCdr.dst)) {
-					result2[j] += "{\n\t\t\t\"targetId\" : \"" + customer[j] + "\",";
+					result2[j] += "{\n\t\t\t\"sourceId\" : \"" + message.src + "\",";
 					result2[j] += "\n\t\t\t\"message\" : \"" + ModelCdr.msg_context + "\",";
-					tanggal3 = "\n\t\t\t\"timeString\" : \"" + ModelCdr.calldate;
-					tanggal3 = tanggal3.substring(0, tanggal3.length() - 10)+ "\",";
+//					tanggal3 = "\n\t\t\t\"timeString\" : \"" + ModelCdr.calldate;
+//					tanggal3 = tanggal3.substring(0, tanggal3.length() - 10) + "\",";
+//					result2[j] += tanggal3;
+					tanggal3 = "\n\t\t\t\"timeString\" : \"" + tanggalFormat.format(ModelCdr.calldate)+ "\",";
 					result2[j] += tanggal3;
 					result2[j] += "\n\t\t\t\"type\" : \"" + "SENT" + "\"\n\t\t},";
-					tanggal[j] = Timestamp.valueOf(ModelCdr.calldate);
-					tanggal2[j] = Timestamp.valueOf(ModelCdr.calldate);
+					tanggal[j] = ModelCdr.calldate;
+					tanggal2[j] = ModelCdr.calldate;
 
 				}
 				if (ListUser1.size() - 1 == i) {
@@ -199,46 +219,43 @@ public class Message_OdbcController
 				}
 
 			}
-			
-			
-			
+
 		}
-		
-		
+
 		Arrays.sort(tanggal);
 		for (int i = 0; i < customer.length; i++) {
 			System.out.println(tanggal[i]);
 //			System.out.println(result2[i]);
 		}
 		System.out.println(Arrays.asList(tanggal));
-		
-		for (int i=customer.length-1; -1<i;i--)
-		{
-			for (int j=0; j<customer.length;j++)
-			{
+
+		for (int i = customer.length - 1; -1 < i; i--) {
+			for (int j = 0; j < customer.length; j++) {
 				System.out.println(i);
-				if (tanggal[i].equals(tanggal2[j]))
-				{
-					result+=result2[j];
+				if (tanggal[i].equals(tanggal2[j])) {
+					result += result2[j];
 					if (0 == i) {
 						result += "\n\t]\n\t";
 					} else {
 
 						result += "\n\t],\n\t";
 					}
-					
+
 				}
-				
+
 			}
-			
+
 		}
 		result += "}";
 		return result;
 	}
-	
+
 	@PostMapping("/historyChatCustomer")
 	public String historyChatCustomer(@RequestBody Message_OdbcModel message) throws SQLException
 	{
+
+
+		SimpleDateFormat tanggalFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		// Connection connection = DriverManager.getConnection (sk.Path_expr,
 		// sk.service_user, sk.service_password);
 		Connection connection = dataSource.getConnection();
@@ -254,7 +271,7 @@ public class Message_OdbcController
 			Message_OdbcModel ModelCdr = new Message_OdbcModel();
 			ModelCdr.serial_id = Cursor1.getString(1);
 			ModelCdr.uniqueid = Cursor1.getString(2);
-			ModelCdr.calldate = Cursor1.getString(3);
+			ModelCdr.calldate = Cursor1.getTimestamp(3);
 			ModelCdr.src = Cursor1.getString(4);
 			ModelCdr.dst = Cursor1.getString(5);
 			ModelCdr.msg_context = Cursor1.getString(6);
@@ -290,12 +307,18 @@ public class Message_OdbcController
 		ResultSet Cursor13 = query3.executeQuery();// Evaluate (Connected_Expression1)
 		String result = "{\n\t";
 		int count = 0;
-		if(size==0)
-		{
-			size=1;
-			result +="\"response\":\"tidak ada pesan\"";
+		if (size == 0) {
+			size = 1;
+			result += "\"response\":\"tidak ada pesan\"\n}";
+			return result;
 		}
-		String[] customer = new String[size - 1];
+		String[] customer;
+		if(size==1) {
+			customer = new String[size];
+		}
+		else{
+			customer = new String[size - 1];
+		}
 		while (Cursor13.next()) // while there_is_next_record_in (Cursor1)
 		{
 			if (!Cursor13.getString(1).equalsIgnoreCase(message.src)) {
@@ -305,16 +328,16 @@ public class Message_OdbcController
 		}
 		Timestamp[] tanggal = new Timestamp[customer.length];
 		Timestamp[] tanggal2 = new Timestamp[customer.length];
-		String [] result2 = new String[customer.length];
+		String[] result2 = new String[customer.length];
 		for (int i = 0; i < customer.length; i++) {
-			result2[i]="";
+			result2[i] = "";
 		}
 		query3.close();
 		connection3.close();
-		String tanggal3="";
+		String tanggal3 = "";
 		for (int j = 0; j < customer.length; j++) {
 			result2[j] += "\"" + message.src + "\": [\n\t\t";
-			for (int i = 1; i < ListUser1.size(); i++) {
+			for (int i = 0; i < ListUser1.size(); i++) {
 				Message_OdbcModel ModelCdr = new Message_OdbcModel();
 				ModelCdr = ListUser1.get(i);
 //				System.out.println(ListUser1.size());
@@ -325,25 +348,32 @@ public class Message_OdbcController
 //				System.out.println(j);
 
 				if (customer[j].equalsIgnoreCase(ModelCdr.src)) {
-					result2[j] += "{\n\t\t\t\"targetId\" : \"" + customer[j] + "\",";
+					result2[j] += "{\n\t\t\t\"sourceId\" : \"" + message.src + "\",";
 					result2[j] += "\n\t\t\t\"message\" : \"" + ModelCdr.msg_context + "\",";
-					tanggal3 = "\n\t\t\t\"timeString\" : \"" + ModelCdr.calldate;
-					tanggal3 = tanggal3.substring(0, tanggal3.length() - 10)+ "\",";
+//					tanggal3 = "\n\t\t\t\"timeString\" : \"" + ModelCdr.calldate;
+//					tanggal3 = tanggal3.substring(0, tanggal3.length() - 10) + "\",";
+//					result2[j] += tanggal3;
+					tanggal3 = "\n\t\t\t\"timeString\" : \"" + tanggalFormat.format(ModelCdr.calldate)+ "\",";
 					result2[j] += tanggal3;
 					result2[j] += "\n\t\t\t\"type\" : \"" + "RECEIVED" + "\"\n\t\t},";
-					tanggal[j] = Timestamp.valueOf(ModelCdr.calldate);
-					tanggal2[j] = Timestamp.valueOf(ModelCdr.calldate);
+					tanggal[j] = ModelCdr.calldate;
+					tanggal2[j] = ModelCdr.calldate;
+					System.out.println(ModelCdr.calldate);
 
 				}
 				if (customer[j].equalsIgnoreCase(ModelCdr.dst)) {
-					result2[j] += "{\n\t\t\t\"targetId\" : \"" + customer[j] + "\",";
+					result2[j] += "{\n\t\t\t\"sourceId\" : \"" + customer[j] + "\",";
 					result2[j] += "\n\t\t\t\"message\" : \"" + ModelCdr.msg_context + "\",";
-					tanggal3 = "\n\t\t\t\"timeString\" : \"" + ModelCdr.calldate;
-					tanggal3 = tanggal3.substring(0, tanggal3.length() - 10)+ "\",";
+//					tanggal3 = "\n\t\t\t\"timeString\" : \"" + ModelCdr.calldate;
+//					tanggal3 = tanggal3.substring(0, tanggal3.length() - 10) + "\",";
+//					result2[j] += tanggal3;
+					tanggal3 = "\n\t\t\t\"timeString\" : \"" + tanggalFormat.format(ModelCdr.calldate)+ "\",";
 					result2[j] += tanggal3;
 					result2[j] += "\n\t\t\t\"type\" : \"" + "SENT" + "\"\n\t\t},";
-					tanggal[j] = Timestamp.valueOf(ModelCdr.calldate);
-					tanggal2[j] = Timestamp.valueOf(ModelCdr.calldate);
+					tanggal[j] = ModelCdr.calldate;
+					tanggal2[j] = ModelCdr.calldate;
+
+					System.out.println(ModelCdr.calldate);
 
 				}
 				if (ListUser1.size() - 1 == i) {
@@ -352,42 +382,39 @@ public class Message_OdbcController
 
 			}
 		}
-		
-		
+
 		Arrays.sort(tanggal);
-		for (int i = 0; i < customer.length; i++) {
-			System.out.println(tanggal[i]);
-//			System.out.println(result2[i]);
-		}
+//		for (int i = 0; i < customer.length; i++) {
+//			System.out.println(tanggal[i]);
+////			System.out.println(result2[i]);
+//		}
 		System.out.println(Arrays.asList(tanggal));
-		
-		for (int i=customer.length-1; -1<i;i--)
-		{
-			for (int j=0; j<customer.length;j++)
-			{
+
+		for (int i = customer.length - 1; -1 < i; i--) {
+			for (int j = 0; j < customer.length; j++) {
 				System.out.println(i);
-				if (tanggal[i].equals(tanggal2[j]))
-				{
-					result+=result2[j];
+				if (tanggal[i].equals(tanggal2[j])) {
+					result += result2[j];
 					if (0 == i) {
 						result += "\n\t]\n\t";
 					} else {
 
 						result += "\n\t],\n\t";
 					}
-					
+
 				}
-				
+
 			}
-			
+
 		}
 		result += "}";
 		return result;
 	}
-	
+
 	@PostMapping("/historyChatCoba")
 	public String historyChatCoba(@RequestBody Message_OdbcModel message) throws SQLException
 	{
+		SimpleDateFormat tanggalFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		// Connection connection = DriverManager.getConnection (sk.Path_expr,
 		// sk.service_user, sk.service_password);
 		Connection connection = dataSource.getConnection();
@@ -403,7 +430,7 @@ public class Message_OdbcController
 			Message_OdbcModel ModelCdr = new Message_OdbcModel();
 			ModelCdr.serial_id = Cursor1.getString(1);
 			ModelCdr.uniqueid = Cursor1.getString(2);
-			ModelCdr.calldate = Cursor1.getString(3);
+			ModelCdr.calldate = Cursor1.getTimestamp(3);
 			ModelCdr.src = Cursor1.getString(4);
 			ModelCdr.dst = Cursor1.getString(5);
 			ModelCdr.msg_context = Cursor1.getString(6);
@@ -439,12 +466,18 @@ public class Message_OdbcController
 		ResultSet Cursor13 = query3.executeQuery();// Evaluate (Connected_Expression1)
 		String result = "{\n\t";
 		int count = 0;
-		if(size==0)
-		{
-			size=1;
-			result +="\"response\":\"tidak ada pesan\"";
+		if (size == 0) {
+			size = 1;
+			result += "\"response\":\"tidak ada pesan\"\n}";
+			return result;
 		}
-		String[] customer = new String[size - 1];
+		String[] customer;
+		if(size==1) {
+			customer = new String[size];
+		}
+		else{
+			customer = new String[size - 1];
+		}
 		while (Cursor13.next()) // while there_is_next_record_in (Cursor1)
 		{
 			if (!Cursor13.getString(1).equalsIgnoreCase(message.src)) {
@@ -454,46 +487,50 @@ public class Message_OdbcController
 		}
 		Timestamp[] tanggal = new Timestamp[customer.length];
 		Timestamp[] tanggal2 = new Timestamp[customer.length];
-		String tanggal3="";
-		String [] result2 = new String[customer.length];
+		String tanggal3 = "";
+		String[] result2 = new String[customer.length];
 		for (int i = 0; i < customer.length; i++) {
-			result2[i]="";
+			result2[i] = "";
 		}
 		query3.close();
 		connection3.close();
-		
+
 		for (int j = 0; j < customer.length; j++) {
 			result2[j] += "\"" + customer[j] + "\": [\n\t\t";
-			for (int i = 1; i < ListUser1.size(); i++) {
+			for (int i = 0; i < ListUser1.size(); i++) {
 				Message_OdbcModel ModelCdr = new Message_OdbcModel();
 				ModelCdr = ListUser1.get(i);
 //				System.out.println(ListUser1.size());
 //
-				System.out.println(ModelCdr.src);
+				System.out.println(ModelCdr.calldate);
 				System.out.println(customer[j]);
 //				System.out.println(customer.length);
 //				System.out.println(j);
 
 				if (customer[j].equalsIgnoreCase(ModelCdr.src)) {
-					result2[j] += "{\n\t\t\t\"targetId\" : \"" + customer[j] + "\",";
+					result2[j] += "{\n\t\t\t\"sourceId\" : \"" + customer[j] + "\",";
 					result2[j] += "\n\t\t\t\"message\" : \"" + ModelCdr.msg_context + "\",";
-					tanggal3 = "\n\t\t\t\"timeString\" : \"" + ModelCdr.calldate;
-					tanggal3 = tanggal3.substring(0, tanggal3.length() - 10)+ "\",";
+//					tanggal3 = "\n\t\t\t\"timeString\" : \"" + ModelCdr.calldate;
+//					tanggal3 = tanggal3.substring(0, tanggal3.length() - 10) + "\",";
+//					result2[j] += tanggal3;
+					tanggal3 = "\n\t\t\t\"timeString\" : \"" + tanggalFormat.format(ModelCdr.calldate)+ "\",";
 					result2[j] += tanggal3;
 					result2[j] += "\n\t\t\t\"type\" : \"" + "RECEIVED" + "\"\n\t\t},";
-					tanggal[j] = Timestamp.valueOf(ModelCdr.calldate);
-					tanggal2[j] = Timestamp.valueOf(ModelCdr.calldate);
+					tanggal[j] = ModelCdr.calldate;
+					tanggal2[j] = ModelCdr.calldate;
 
 				}
 				if (customer[j].equalsIgnoreCase(ModelCdr.dst)) {
-					result2[j] += "{\n\t\t\t\"targetId\" : \"" + customer[j] + "\",";
+					result2[j] += "{\n\t\t\t\"sourceId\" : \"" + message.src + "\",";
 					result2[j] += "\n\t\t\t\"message\" : \"" + ModelCdr.msg_context + "\",";
-					tanggal3 = "\n\t\t\t\"timeString\" : \"" + ModelCdr.calldate;
-					tanggal3 = tanggal3.substring(0, tanggal3.length() - 10)+ "\",";
+//					tanggal3 = "\n\t\t\t\"timeString\" : \"" + ModelCdr.calldate;
+//					tanggal3 = tanggal3.substring(0, tanggal3.length() - 10) + "\",";
+//					result2[j] += tanggal3;
+					tanggal3 = "\n\t\t\t\"timeString\" : \"" + tanggalFormat.format(ModelCdr.calldate)+ "\",";
 					result2[j] += tanggal3;
 					result2[j] += "\n\t\t\t\"type\" : \"" + "SENT" + "\"\n\t\t},";
-					tanggal[j] = Timestamp.valueOf(ModelCdr.calldate);
-					tanggal2[j] = Timestamp.valueOf(ModelCdr.calldate);
+					tanggal[j] = ModelCdr.calldate;
+					tanggal2[j] = ModelCdr.calldate;
 
 				}
 				if (ListUser1.size() - 1 == i) {
@@ -501,41 +538,35 @@ public class Message_OdbcController
 				}
 
 			}
-			
-			
-			
+
 		}
-		
-		
+
 		Arrays.sort(tanggal);
 		for (int i = 0; i < customer.length; i++) {
 			System.out.println(tanggal[i]);
 //			System.out.println(result2[i]);
 		}
 		System.out.println(Arrays.asList(tanggal));
-		
-		for (int i=customer.length-1; -1<i;i--)
-		{
-			for (int j=0; j<customer.length;j++)
-			{
+
+		for (int i = customer.length - 1; -1 < i; i--) {
+			for (int j = 0; j < customer.length; j++) {
 				System.out.println(i);
-				if (tanggal[i].equals(tanggal2[j]))
-				{
-					result+=result2[j];
+				if (tanggal[i].equals(tanggal2[j])) {
+					result += result2[j];
 					if (0 == i) {
 						result += "\n\t]\n\t";
 					} else {
 
 						result += "\n\t],\n\t";
 					}
-					
+
 				}
-				
+
 			}
-			
+
 		}
 		result += "}";
 		return result;
 	}
-	
+
 }
