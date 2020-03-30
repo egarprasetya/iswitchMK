@@ -714,6 +714,11 @@ public class UserController
 				qm.deleteQueueMember(qmm);
 				qm.addQueueMember(qmm);
 				ps.updateEndpointMessage("null", result.extensions_user);
+				
+				HttpHeaders headers = new HttpHeaders();
+				headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+				HttpEntity<UserModel> entity = new HttpEntity<UserModel>(headers);
+				
 				restTemplate.exchange(endpoint_removequeue_url + result.extensions_user, HttpMethod.DELETE, entity, String.class).getBody();
 			}
 			else if (cfm.status.equals("2") ) {
@@ -726,6 +731,11 @@ public class UserController
 				qmm.state_interface = result.status;
 				qm.deleteQueueMember(qmm);
 				ps.updateEndpointMessage("messaging", result.extensions_user);
+				
+				HttpHeaders headers = new HttpHeaders();
+				headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+				HttpEntity<UserModel> entity = new HttpEntity<UserModel>(headers);
+				
 				restTemplate.exchange(endpoint_removequeue_url + result.extensions_user, HttpMethod.DELETE, entity, String.class).getBody();
 
 			}
