@@ -678,7 +678,7 @@ public class UserController
 			Cursor1.close();
 
 			Connection2.close();
-			if (cfm.status.equals("0") || cfm.status.equals("3") || cfm.status.equals("4")) {
+			if (cfm.status.equals("0") || cfm.status.equals("3") || cfm.status.equals("4")|| cfm.status.equals("5")) {
 				Queue_MemberController qmc = new Queue_MemberController(dataSource);
 				Queue_MemberModel qm = new Queue_MemberModel();
 
