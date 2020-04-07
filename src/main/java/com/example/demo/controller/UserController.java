@@ -678,7 +678,7 @@ public class UserController
 			Cursor1.close();
 
 			Connection2.close();
-			if (cfm.status.equals("0") || cfm.status.equals("3") || cfm.status.equals("4")|| cfm.status.equals("5")) {
+			if (cfm.status.equals("0") || cfm.status.equals("3") || cfm.status.equals("4")) {
 				Queue_MemberController qmc = new Queue_MemberController(dataSource);
 				Queue_MemberModel qm = new Queue_MemberModel();
 
@@ -686,6 +686,13 @@ public class UserController
 				qm.paused = 1;
 
 				qmc.updatePaused(qm);
+				
+				HttpHeaders headers = new HttpHeaders();
+				headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+				HttpEntity<UserModel> entity = new HttpEntity<UserModel>(headers);
+				
+				restTemplate.exchange(endpoint_removequeue_url + qm.extension, HttpMethod.DELETE, entity, String.class).getBody();
+				
 			} else {
 				Queue_MemberController qmc = new Queue_MemberController(dataSource);
 				Queue_MemberModel qm = new Queue_MemberModel();
@@ -743,6 +750,13 @@ public class UserController
 				Queue_MemberModel qmm = new Queue_MemberModel();
 				Queue_MemberController qm = new Queue_MemberController(dataSource);
 				Ps_EndpointsController ps = new Ps_EndpointsController(dataSource);
+				
+				qmm.extension = Modeluser.extensions_user;
+				qmm.paused = 1;
+
+				qm.updatePaused(qmm);
+				
+				
 				qmm._interface = "PJSIP/" + result.extensions_user;
 				qmm.extension = "PJSIP/" + result.extensions_user;
 				qmm.queue_name = result.queue;
