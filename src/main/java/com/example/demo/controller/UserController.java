@@ -103,6 +103,248 @@ public class UserController
 
 	}
 
+	//thoriq
+	@GetMapping("/getAgent")
+	public ArrayList<UserModel> getAgent() throws SQLException
+	{
+		ArrayList<UserModel> ListUser1 = new ArrayList<UserModel>();
+		
+
+		// Connection connection = DriverManager.getConnection (sk.Path_expr,
+		// sk.service_user, sk.service_password);
+		Connection connection = dataSource.getConnection();
+		PreparedStatement a = connection.prepareStatement("SELECT * from users WHERE status IS NOT NULL");
+
+		ResultSet Cursor1 = a.executeQuery();// Evaluate (Connected_Expression1)
+
+		while (Cursor1.next()) {
+			// System.out.println (Cursor1.getString (1));
+			UserModel Modeluser = new UserModel();
+			Modeluser.user_id = Cursor1.getInt(1);
+			Modeluser.nama = Cursor1.getString(2);
+			Modeluser.username = Cursor1.getString(3);
+			Modeluser.password = Cursor1.getString(4);
+			Modeluser.created = Cursor1.getTimestamp(5);
+			Modeluser.modified = Cursor1.getTimestamp(6);
+			Modeluser.email = Cursor1.getString(7);
+			Modeluser.password_email = Cursor1.getString(8);
+			Modeluser.phone_number = Cursor1.getString(9);
+			Modeluser.extensions_user = Cursor1.getString(10);
+			Modeluser.skill = Cursor1.getString(11);
+			Modeluser.status = Cursor1.getString(12);
+			Modeluser.avatar = Cursor1.getString(13);
+			Modeluser.websocket = Cursor1.getString(14);
+			Modeluser.url_websocket = Cursor1.getString(15);
+			ListUser1.add(Modeluser);
+		}
+		return ListUser1;
+	}
+	
+	@GetMapping("/getAgentSupport")
+	public ArrayList<UserModel> getAgentSupport() throws SQLException
+	{
+		ArrayList<UserModel> ListUser1 = new ArrayList<UserModel>();
+		
+
+		// Connection connection = DriverManager.getConnection (sk.Path_expr,
+		// sk.service_user, sk.service_password);
+		Connection connection = dataSource.getConnection();
+		PreparedStatement a = connection.prepareStatement("SELECT * from users WHERE status IS NOT NULL and skill='1'");
+
+		ResultSet Cursor1 = a.executeQuery();// Evaluate (Connected_Expression1)
+
+		while (Cursor1.next()) {
+			// System.out.println (Cursor1.getString (1));
+			UserModel Modeluser = new UserModel();
+			Modeluser.user_id = Cursor1.getInt(1);
+			Modeluser.nama = Cursor1.getString(2);
+			Modeluser.username = Cursor1.getString(3);
+			Modeluser.password = Cursor1.getString(4);
+			Modeluser.created = Cursor1.getTimestamp(5);
+			Modeluser.modified = Cursor1.getTimestamp(6);
+			Modeluser.email = Cursor1.getString(7);
+			Modeluser.password_email = Cursor1.getString(8);
+			Modeluser.phone_number = Cursor1.getString(9);
+			Modeluser.extensions_user = Cursor1.getString(10);
+			Modeluser.skill = Cursor1.getString(11);
+			Modeluser.status = Cursor1.getString(12);
+			Modeluser.avatar = Cursor1.getString(13);
+			Modeluser.websocket = Cursor1.getString(14);
+			Modeluser.url_websocket = Cursor1.getString(15);
+			ListUser1.add(Modeluser);
+		}
+		return ListUser1;
+	}
+	
+	@GetMapping("/getAgentSales")
+	public ArrayList<UserModel> getAgentSales() throws SQLException
+	{
+		ArrayList<UserModel> ListUser1 = new ArrayList<UserModel>();
+		
+
+		// Connection connection = DriverManager.getConnection (sk.Path_expr,
+		// sk.service_user, sk.service_password);
+		Connection connection = dataSource.getConnection();
+		PreparedStatement a = connection.prepareStatement("SELECT * from users WHERE status IS NOT NULL and skill='2'");
+
+		ResultSet Cursor1 = a.executeQuery();// Evaluate (Connected_Expression1)
+
+		while (Cursor1.next()) {
+			// System.out.println (Cursor1.getString (1));
+			UserModel Modeluser = new UserModel();
+			Modeluser.user_id = Cursor1.getInt(1);
+			Modeluser.nama = Cursor1.getString(2);
+			Modeluser.username = Cursor1.getString(3);
+			Modeluser.password = Cursor1.getString(4);
+			Modeluser.created = Cursor1.getTimestamp(5);
+			Modeluser.modified = Cursor1.getTimestamp(6);
+			Modeluser.email = Cursor1.getString(7);
+			Modeluser.password_email = Cursor1.getString(8);
+			Modeluser.phone_number = Cursor1.getString(9);
+			Modeluser.extensions_user = Cursor1.getString(10);
+			Modeluser.skill = Cursor1.getString(11);
+			Modeluser.status = Cursor1.getString(12);
+			Modeluser.avatar = Cursor1.getString(13);
+			Modeluser.websocket = Cursor1.getString(14);
+			Modeluser.url_websocket = Cursor1.getString(15);
+			ListUser1.add(Modeluser);
+		}
+		return ListUser1;
+	}
+	
+	@GetMapping("/getAgentCount")
+	public String getAgentCount() throws SQLException
+	{
+		// Connection connection = DriverManager.getConnection (sk.Path_expr,
+		// sk.service_user, sk.service_password);
+		Connection connection = dataSource.getConnection();
+		PreparedStatement a = connection.prepareStatement("SELECT count(*) as agents from users WHERE status IS NOT NULL");
+
+		ResultSet Cursor1 = a.executeQuery();// Evaluate (Connected_Expression1)
+		String result="";
+		while (Cursor1.next()) {
+			// System.out.println (Cursor1.getString (1));
+
+			result = Cursor1.getString(1);
+			
+		}
+		return "{\"agents\":\""+result+"\"}";
+	}
+	
+	@GetMapping("/getAgentCountSales")
+	public String getAgentCountSales() throws SQLException
+	{
+		// Connection connection = DriverManager.getConnection (sk.Path_expr,
+		// sk.service_user, sk.service_password);
+		Connection connection = dataSource.getConnection();
+		PreparedStatement a = connection.prepareStatement("SELECT count(*) as agents from users WHERE skill='2' and status IS NOT NULL");
+
+		ResultSet Cursor1 = a.executeQuery();// Evaluate (Connected_Expression1)
+		String result="";
+		while (Cursor1.next()) {
+			// System.out.println (Cursor1.getString (1));
+
+			result = Cursor1.getString(1);
+			
+		}
+		return "{\"agents\":\""+result+"\"}";
+	}
+	
+	@GetMapping("/getAgentCountSupport")
+	public String getAgentCountSupport() throws SQLException
+	{
+		// Connection connection = DriverManager.getConnection (sk.Path_expr,
+		// sk.service_user, sk.service_password);
+		Connection connection = dataSource.getConnection();
+		PreparedStatement a = connection.prepareStatement("SELECT count(*) as agents from users WHERE skill='1' and status IS NOT NULL");
+
+		ResultSet Cursor1 = a.executeQuery();// Evaluate (Connected_Expression1)
+		String result="";
+		while (Cursor1.next()) {
+			// System.out.println (Cursor1.getString (1));
+
+			result = Cursor1.getString(1);
+			
+		}
+		return "{\"agents\":\""+result+"\"}";
+	}
+	
+	@GetMapping("/getAgentCountAvailabel")
+	public String getAgentCountAvailabel() throws SQLException
+	{
+		// Connection connection = DriverManager.getConnection (sk.Path_expr,
+		// sk.service_user, sk.service_password);
+		Connection connection = dataSource.getConnection();
+		PreparedStatement a = connection.prepareStatement("SELECT count(*) as agents from users WHERE status<>'0'");
+
+		ResultSet Cursor1 = a.executeQuery();// Evaluate (Connected_Expression1)
+		String result="";
+		while (Cursor1.next()) {
+			// System.out.println (Cursor1.getString (1));
+
+			result = Cursor1.getString(1);
+			
+		}
+		return "{\"agents\":\""+result+"\"}";
+	}
+	
+	@GetMapping("/getAgentCountCall")
+	public String getAgentCountCall() throws SQLException
+	{
+		// Connection connection = DriverManager.getConnection (sk.Path_expr,
+		// sk.service_user, sk.service_password);
+		Connection connection = dataSource.getConnection();
+		PreparedStatement a = connection.prepareStatement("SELECT count(*) as agents from users WHERE status='1'");
+
+		ResultSet Cursor1 = a.executeQuery();// Evaluate (Connected_Expression1)
+		String result="";
+		while (Cursor1.next()) {
+			// System.out.println (Cursor1.getString (1));
+
+			result = Cursor1.getString(1);
+			
+		}
+		return "{\"agents\":\""+result+"\"}";
+	}
+	
+	@GetMapping("/getAgentCountChat")
+	public String getAgentCountChat() throws SQLException
+	{
+		// Connection connection = DriverManager.getConnection (sk.Path_expr,
+		// sk.service_user, sk.service_password);
+		Connection connection = dataSource.getConnection();
+		PreparedStatement a = connection.prepareStatement("SELECT count(*) as agents from users WHERE status='2'");
+
+		ResultSet Cursor1 = a.executeQuery();// Evaluate (Connected_Expression1)
+		String result="";
+		while (Cursor1.next()) {
+			// System.out.println (Cursor1.getString (1));
+
+			result = Cursor1.getString(1);
+			
+		}
+		return "{\"agents\":\""+result+"\"}";
+	}
+	
+	@GetMapping("/getAgentCountEmail")
+	public String getAgentCountEmail() throws SQLException
+	{
+		// Connection connection = DriverManager.getConnection (sk.Path_expr,
+		// sk.service_user, sk.service_password);
+		Connection connection = dataSource.getConnection();
+		PreparedStatement a = connection.prepareStatement("SELECT count(*) as agents from users WHERE status='5'");
+
+		ResultSet Cursor1 = a.executeQuery();// Evaluate (Connected_Expression1)
+		String result="";
+		while (Cursor1.next()) {
+			// System.out.println (Cursor1.getString (1));
+
+			result = Cursor1.getString(1);
+			
+		}
+		return "{\"agents\":\""+result+"\"}";
+	}
+	
 	@PostMapping("/createAgent")
 	public String register(@RequestBody UserModel akun)
 			throws SQLException, KeyManagementException, NoSuchAlgorithmException, KeyStoreException
@@ -1050,11 +1292,15 @@ public class UserController
 				formatedResultField.add("nama");
 				formatedResultField.add("status");
 				formatedResultField.add("avatar");
+				formatedResultField.add("email");
+//				formatedResultField.add("password_email");
 
 				ArrayList<String> formatedResultValues = new ArrayList<String>();
 				formatedResultValues.add(result.get(i).nama);
 				formatedResultValues.add(result.get(i).status);
 				formatedResultValues.add(result.get(i).avatar);
+				formatedResultValues.add(result.get(i).email);
+//				formatedResultValues.add(result.get(i).password_email);
 				parsedResult += parseToStringJSON(formatedResultField, formatedResultValues);
 				if (result.size() - 1 > i) {
 					parsedResult += ",\n ";
@@ -1091,6 +1337,8 @@ public class UserController
 		Modeluser.nama = Cursor1.getString(1);
 		Modeluser.status = Cursor1.getString(2);
 		Modeluser.avatar = Cursor1.getString(3);
+		Modeluser.email = Cursor1.getString(4);
+//		Modeluser.password_email = Cursor1.getString(5);
 		ListUser1.add(Modeluser);
 
 		a.close();

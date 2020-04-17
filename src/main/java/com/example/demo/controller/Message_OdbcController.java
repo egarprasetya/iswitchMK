@@ -74,7 +74,7 @@ public class Message_OdbcController
 		// sk.service_user, sk.service_password);
 		Connection connection = dataSource.getConnection();
 		PreparedStatement query = connection.prepareStatement("UPDATE message_odbc " + "SET flag_status='end' "
-				+ "WHERE src=? or dst=?;" + "UPDATE users " + "SET status='2' " + "WHERE extension_user=?;");
+				+ "WHERE src=? or dst=?;" + "UPDATE user_activity " + "SET reason='0' " + "WHERE \"extension\" = ?;");
 		query.setString(1, message.src);
 		query.setString(2, message.src);
 		query.setString(3, message.src);
