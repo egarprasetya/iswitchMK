@@ -30,5 +30,6 @@ public class Servicespring1Application extends SpringBootServletInitializer
 	{
 		return new RestTemplate();
 	}
+	
 
 }

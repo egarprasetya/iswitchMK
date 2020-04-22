@@ -1614,7 +1614,7 @@ public class UserController
 	{
 		// RestTempleteConfig.disableSslVerification();
 		RestTemplate restTemplate = new RestTempleteConfig().getRestTemplate();
-		String uri = "https://127.0.0.1:8089/amxml?action=command&Command=pjsip reload";
+		String uri = "https://147.139.164.106:8089/amxml?action=command&Command=pjsip reload";
 		// String uri = "https://10.30.1.17:8089/amxml?action=command&Command=pjsip
 		// reload";
 		ResponseEntity<String> entity = restTemplate.exchange(uri, HttpMethod.GET, null, String.class);
