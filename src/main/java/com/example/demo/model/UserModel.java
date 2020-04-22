@@ -37,4 +37,12 @@ public class UserModel
 	public String passwordSSH;
 	public String comandSSH;
 	public String count;
+	
+	// Email
+	public String host_imap;
+	public String port_host_imap;
+	public String ssl_imap;
+	public String host_smtp;
+	public String port_host_smtp;
+	public String ssl_smtp;
 }

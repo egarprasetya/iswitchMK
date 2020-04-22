@@ -54,7 +54,8 @@ public class AllSelectParameterQuery {
 	
 	public String query_logout = "SELECT * FROM users WHERE user_id = ?"; // where user_id;
 	
-	public String query_profil = "select nama, status, avatar, email "
+
+	public String query_profil = "select nama, status, avatar, email, password_email, host_imap, port_host_imap, ssl_imap, host_smtp, port_host_smtp, ssl_smtp "
 			+ "from users "
 			+ "where user_id = ?";				// where user_id;
 	

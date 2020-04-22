@@ -135,6 +135,12 @@ public class UserController
 			Modeluser.avatar = Cursor1.getString(13);
 			Modeluser.websocket = Cursor1.getString(14);
 			Modeluser.url_websocket = Cursor1.getString(15);
+			Modeluser.host_imap = Cursor1.getString(16);
+			Modeluser.port_host_imap = Cursor1.getString(17);
+			Modeluser.ssl_imap = Cursor1.getString(18);
+			Modeluser.host_smtp = Cursor1.getString(19);
+			Modeluser.port_host_smtp = Cursor1.getString(20);
+			Modeluser.ssl_smtp = Cursor1.getString(21);
 			ListUser1.add(Modeluser);
 		}
 		return ListUser1;
@@ -171,6 +177,12 @@ public class UserController
 			Modeluser.avatar = Cursor1.getString(13);
 			Modeluser.websocket = Cursor1.getString(14);
 			Modeluser.url_websocket = Cursor1.getString(15);
+			Modeluser.host_imap = Cursor1.getString(16);
+			Modeluser.port_host_imap = Cursor1.getString(17);
+			Modeluser.ssl_imap = Cursor1.getString(18);
+			Modeluser.host_smtp = Cursor1.getString(19);
+			Modeluser.port_host_smtp = Cursor1.getString(20);
+			Modeluser.ssl_smtp = Cursor1.getString(21);
 			ListUser1.add(Modeluser);
 		}
 		return ListUser1;
@@ -207,6 +219,12 @@ public class UserController
 			Modeluser.avatar = Cursor1.getString(13);
 			Modeluser.websocket = Cursor1.getString(14);
 			Modeluser.url_websocket = Cursor1.getString(15);
+			Modeluser.host_imap = Cursor1.getString(16);
+			Modeluser.port_host_imap = Cursor1.getString(17);
+			Modeluser.ssl_imap = Cursor1.getString(18);
+			Modeluser.host_smtp = Cursor1.getString(19);
+			Modeluser.port_host_smtp = Cursor1.getString(20);
+			Modeluser.ssl_smtp = Cursor1.getString(21);
 			ListUser1.add(Modeluser);
 		}
 		return ListUser1;
@@ -508,10 +526,16 @@ public class UserController
 				Modeluser.extensions_user = Cursor1.getString(10);
 				Modeluser.skill = Cursor1.getString(11);
 				Modeluser.status = Cursor1.getString(12);
-				Modeluser.avatar = Cursor1.getString(13);
+				Modeluser.avatar = Cursor1.getString(13);				
 				Modeluser.websocket = Cursor1.getString(14);
 				Modeluser.url_websocket = Cursor1.getString(15);
-				Modeluser.queue = Cursor1.getString(16);
+				Modeluser.host_imap = Cursor1.getString(16);
+				Modeluser.port_host_imap = Cursor1.getString(17);
+				Modeluser.ssl_imap = Cursor1.getString(18);
+				Modeluser.host_smtp = Cursor1.getString(19);
+				Modeluser.port_host_smtp = Cursor1.getString(20);
+				Modeluser.ssl_smtp = Cursor1.getString(21);
+				Modeluser.queue = Cursor1.getString(22);
 
 			}
 
@@ -799,7 +823,13 @@ public class UserController
 				Modeluser.avatar = Cursor1.getString(13);
 				Modeluser.websocket = Cursor1.getString(14);
 				Modeluser.url_websocket = Cursor1.getString(15);
-				Modeluser.queue = Cursor1.getString(16);
+				Modeluser.host_imap = Cursor1.getString(16);
+				Modeluser.port_host_imap = Cursor1.getString(17);
+				Modeluser.ssl_imap = Cursor1.getString(18);
+				Modeluser.host_smtp = Cursor1.getString(19);
+				Modeluser.port_host_smtp = Cursor1.getString(20);
+				Modeluser.ssl_smtp = Cursor1.getString(21);
+				Modeluser.queue = Cursor1.getString(22);
 
 				a.close();
 				Cursor1.close();
@@ -911,9 +941,15 @@ public class UserController
 				Modeluser.extensions_user = Cursor1.getString(10);
 				Modeluser.skill = Cursor1.getString(11);
 				Modeluser.status = Cursor1.getString(12);
-				Modeluser.avatar = Cursor1.getString(13);
+				Modeluser.avatar = Cursor1.getString(13);				
 				Modeluser.websocket = Cursor1.getString(14);
 				Modeluser.url_websocket = Cursor1.getString(15);
+				Modeluser.host_imap = Cursor1.getString(16);
+				Modeluser.port_host_imap = Cursor1.getString(17);
+				Modeluser.ssl_imap = Cursor1.getString(18);
+				Modeluser.host_smtp = Cursor1.getString(19);
+				Modeluser.port_host_smtp = Cursor1.getString(20);
+				Modeluser.ssl_smtp = Cursor1.getString(21);
 
 			}
 			b.close();
@@ -1084,6 +1120,14 @@ public class UserController
 				Modeluser.skill = Cursor1.getString(11);
 				Modeluser.status = Cursor1.getString(12);
 				Modeluser.avatar = Cursor1.getString(13);
+				Modeluser.websocket = Cursor1.getString(14);
+				Modeluser.url_websocket = Cursor1.getString(15);
+				Modeluser.host_imap = Cursor1.getString(16);
+				Modeluser.port_host_imap = Cursor1.getString(17);
+				Modeluser.ssl_imap = Cursor1.getString(18);
+				Modeluser.host_smtp = Cursor1.getString(19);
+				Modeluser.port_host_smtp = Cursor1.getString(20);
+				Modeluser.ssl_smtp = Cursor1.getString(21);
 				ListUser1.add(Modeluser);
 			}
 
@@ -1123,6 +1167,14 @@ public class UserController
 				Modeluser.skill = Cursor1.getString(11);
 				Modeluser.status = Cursor1.getString(12);
 				Modeluser.avatar = Cursor1.getString(13);
+				Modeluser.websocket = Cursor1.getString(14);
+				Modeluser.url_websocket = Cursor1.getString(15);
+				Modeluser.host_imap = Cursor1.getString(16);
+				Modeluser.port_host_imap = Cursor1.getString(17);
+				Modeluser.ssl_imap = Cursor1.getString(18);
+				Modeluser.host_smtp = Cursor1.getString(19);
+				Modeluser.port_host_smtp = Cursor1.getString(20);
+				Modeluser.ssl_smtp = Cursor1.getString(21);
 				ListUser1.add(Modeluser);
 			}
 
@@ -1162,6 +1214,14 @@ public class UserController
 				Modeluser.skill = Cursor1.getString(11);
 				Modeluser.status = Cursor1.getString(12);
 				Modeluser.avatar = Cursor1.getString(13);
+				Modeluser.websocket = Cursor1.getString(14);
+				Modeluser.url_websocket = Cursor1.getString(15);
+				Modeluser.host_imap = Cursor1.getString(16);
+				Modeluser.port_host_imap = Cursor1.getString(17);
+				Modeluser.ssl_imap = Cursor1.getString(18);
+				Modeluser.host_smtp = Cursor1.getString(19);
+				Modeluser.port_host_smtp = Cursor1.getString(20);
+				Modeluser.ssl_smtp = Cursor1.getString(21);
 				ListUser1.add(Modeluser);
 			}
 
@@ -1251,7 +1311,12 @@ public class UserController
 				Modeluser.avatar = Cursor1.getString(13);
 				Modeluser.websocket = Cursor1.getString(14);
 				Modeluser.url_websocket = Cursor1.getString(15);
-
+				Modeluser.host_imap = Cursor1.getString(16);
+				Modeluser.port_host_imap = Cursor1.getString(17);
+				Modeluser.ssl_imap = Cursor1.getString(18);
+				Modeluser.host_smtp = Cursor1.getString(19);
+				Modeluser.port_host_smtp = Cursor1.getString(20);
+				Modeluser.ssl_smtp = Cursor1.getString(21);
 			}
 
 			if (Modeluser.user_id != 0) {
@@ -1292,15 +1357,30 @@ public class UserController
 				formatedResultField.add("nama");
 				formatedResultField.add("status");
 				formatedResultField.add("avatar");
+				
 				formatedResultField.add("email");
-//				formatedResultField.add("password_email");
+				formatedResultField.add("password_email");
+				formatedResultField.add("host_imap");
+				formatedResultField.add("port_host_imap");
+				formatedResultField.add("ssl_imap");
+				formatedResultField.add("host_smtp");
+				formatedResultField.add("port_host_smtp");
+				formatedResultField.add("ssl_smtp");
 
 				ArrayList<String> formatedResultValues = new ArrayList<String>();
 				formatedResultValues.add(result.get(i).nama);
 				formatedResultValues.add(result.get(i).status);
 				formatedResultValues.add(result.get(i).avatar);
+				
 				formatedResultValues.add(result.get(i).email);
-//				formatedResultValues.add(result.get(i).password_email);
+				formatedResultValues.add(result.get(i).password_email);
+				formatedResultValues.add(result.get(i).host_imap);
+				formatedResultValues.add(result.get(i).port_host_imap);
+				formatedResultValues.add(result.get(i).ssl_imap);
+				formatedResultValues.add(result.get(i).host_smtp);
+				formatedResultValues.add(result.get(i).port_host_smtp);
+				formatedResultValues.add(result.get(i).ssl_smtp);
+				
 				parsedResult += parseToStringJSON(formatedResultField, formatedResultValues);
 				if (result.size() - 1 > i) {
 					parsedResult += ",\n ";
@@ -1338,7 +1418,15 @@ public class UserController
 		Modeluser.status = Cursor1.getString(2);
 		Modeluser.avatar = Cursor1.getString(3);
 		Modeluser.email = Cursor1.getString(4);
-//		Modeluser.password_email = Cursor1.getString(5);
+		Modeluser.password_email = Cursor1.getString(5);
+		
+		Modeluser.host_imap = Cursor1.getString(6);
+		Modeluser.port_host_imap = Cursor1.getString(7);
+		Modeluser.ssl_imap = Cursor1.getString(8);
+		Modeluser.host_smtp = Cursor1.getString(9);
+		Modeluser.port_host_smtp = Cursor1.getString(10);
+		Modeluser.ssl_smtp = Cursor1.getString(11);
+		
 		ListUser1.add(Modeluser);
 
 		a.close();
@@ -1348,39 +1436,47 @@ public class UserController
 		return ListUser1;
 	}
 
-	public ArrayList<UserModel> postUserData(@RequestBody UserModel cfm) throws SQLException
-	{
-		// Connection Connection1 = DriverManager.getConnection (sk.Path_expr,
-		// sk.service_user, sk.service_password);
-		Connection Connection1 = dataSource.getConnection();
-		PreparedStatement a = Connection1.prepareStatement(select_query.query_profil);
-
-		a.setInt(1, cfm.user_id);
-		ResultSet Cursor1 = a.executeQuery();// Evaluate (Connected_Expression1)
-		ArrayList<UserModel> ListUser1 = new ArrayList<UserModel>();
-		Cursor1.next();
-		UserModel Modeluser = new UserModel();
-		Modeluser.user_id = Cursor1.getInt(1);
-		Modeluser.nama = Cursor1.getString(2);
-		Modeluser.username = Cursor1.getString(3);
-		Modeluser.password = Cursor1.getString(4);
-		Modeluser.created = Cursor1.getTimestamp(5);
-		Modeluser.modified = Cursor1.getTimestamp(6);
-		Modeluser.email = Cursor1.getString(7);
-		Modeluser.password_email = Cursor1.getString(8);
-		Modeluser.phone_number = Cursor1.getString(9);
-		Modeluser.extensions_user = Cursor1.getString(10);
-		Modeluser.skill = Cursor1.getString(11);
-		Modeluser.status = Cursor1.getString(12);
-		Modeluser.avatar = Cursor1.getString(13);
-		ListUser1.add(Modeluser);
-
-		a.close();
-		Cursor1.close();
-		Connection1.close();
-
-		return ListUser1;
-	}
+//	public ArrayList<UserModel> postUserData(@RequestBody UserModel cfm) throws SQLException
+//	{
+//		// Connection Connection1 = DriverManager.getConnection (sk.Path_expr,
+//		// sk.service_user, sk.service_password);
+//		Connection Connection1 = dataSource.getConnection();
+//		PreparedStatement a = Connection1.prepareStatement(select_query.query_profil);
+//
+//		a.setInt(1, cfm.user_id);
+//		ResultSet Cursor1 = a.executeQuery();// Evaluate (Connected_Expression1)
+//		ArrayList<UserModel> ListUser1 = new ArrayList<UserModel>();
+//		Cursor1.next();
+//		UserModel Modeluser = new UserModel();
+//		Modeluser.user_id = Cursor1.getInt(1);
+//		Modeluser.nama = Cursor1.getString(2);
+//		Modeluser.username = Cursor1.getString(3);
+//		Modeluser.password = Cursor1.getString(4);
+//		Modeluser.created = Cursor1.getTimestamp(5);
+//		Modeluser.modified = Cursor1.getTimestamp(6);
+//		Modeluser.email = Cursor1.getString(7);
+//		Modeluser.password_email = Cursor1.getString(8);
+//		Modeluser.phone_number = Cursor1.getString(9);
+//		Modeluser.extensions_user = Cursor1.getString(10);
+//		Modeluser.skill = Cursor1.getString(11);
+//		Modeluser.status = Cursor1.getString(12);
+//		Modeluser.avatar = Cursor1.getString(13);
+//		
+//		Modeluser.host_imap = Cursor1.getString(6);
+//		Modeluser.port_host_imap = Cursor1.getString(7);
+//		Modeluser.ssl_imap = Cursor1.getString(8);
+//		Modeluser.host_smtp = Cursor1.getString(9);
+//		Modeluser.port_host_smtp = Cursor1.getString(10);
+//		Modeluser.ssl_smtp = Cursor1.getString(11);
+//		
+//		ListUser1.add(Modeluser);
+//
+//		a.close();
+//		Cursor1.close();
+//		Connection1.close();
+//
+//		return ListUser1;
+//	}
 
 	@PostMapping("/editUserId")
 	public ResponseEntity<String> editUserId(@RequestBody UserModel cfm)
@@ -1423,7 +1519,15 @@ public class UserController
 			query.setString(8, cfm.skill);
 			query.setString(9, cfm.status);
 			query.setString(10, cfm.avatar);
-			query.setInt(11, cfm.user_id);
+			
+			query.setString(11, cfm.host_imap);
+			query.setString(12, cfm.port_host_imap);
+			query.setString(13, cfm.ssl_imap);
+			query.setString(14, cfm.host_smtp);
+			query.setString(15, cfm.port_host_smtp);
+			query.setString(16, cfm.ssl_smtp);
+			
+			query.setInt(17, cfm.user_id);
 
 			flag = query.executeUpdate();
 
