@@ -392,11 +392,26 @@ public class CustomersController
 		// Connection connection = DriverManager.getConnection (sk.Path_expr,
 		// sk.service_user, sk.service_password);
 		Connection connection = dataSource.getConnection ();
+		String case1="";
+		String detail="";
+		PreparedStatement query2 = connection.prepareStatement ("select \"case\", detail from cdr  where src like ? and disposition = 'ANSWERED' and \"case\" is not null and \"end\" between (now() - interval '100 hour') and now() order by \"end\" asc limit 1");
+		
+		query2.setString (1, cm.extension+"%");
+		ResultSet Cursor2 = query2.executeQuery ();
+		while (Cursor2.next ())
+		{
+			case1 = Cursor2.getString (1);
+			detail = Cursor2.getString (2);
+		}
+		query2.close ();
+		Cursor2.close ();
+		
 		PreparedStatement query = connection.prepareStatement (select_query.query_customer2);
 		
 		query.setString (1, cm.extension);
 		List<CustomersModel> listCustomers = new ArrayList<CustomersModel> ();
 		ResultSet Cursor1 = query.executeQuery ();
+		
 		while (Cursor1.next ())
 		{
 			CustomersModel customerModel = new CustomersModel ();
@@ -405,6 +420,8 @@ public class CustomersController
 			customerModel.nomor_telepon = Cursor1.getString (3);
 			customerModel.alamat = Cursor1.getString (4);
 			customerModel.extension = Cursor1.getString (5);
+			customerModel.case1 = case1;
+			customerModel.detail = detail;
 			listCustomers.add (customerModel);
 			
 		}

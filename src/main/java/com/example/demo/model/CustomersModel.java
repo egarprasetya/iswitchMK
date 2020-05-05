@@ -22,4 +22,6 @@ public class CustomersModel
 	public String foto_ktp;
 	public String foto_ttd;
 	public String email;
+	public String case1;
+	public String detail;
 }

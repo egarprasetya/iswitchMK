@@ -168,11 +168,11 @@ public class CdrController {
 		Connection connection = dataSource.getConnection();
 		PreparedStatement query = connection.prepareStatement(
 
-				"UPDATE public.cdr SET \"case\"=? , detail=? WHERE (src=? and dst=?) and \"case\" is null and detail is null and disposition = 'ANSWERED'; ");
+				"UPDATE public.cdr SET \"case\"=? , detail=? WHERE (src like ? and dst=?) and \"case\" is null and detail is null and disposition = 'ANSWERED'; ");
 
 		query.setString(1, akun.cdrCase);
 		query.setString(2, akun.detail);
-		query.setString(3, akun.src);
+		query.setString(3, akun.src+"%");
 		query.setString(4, akun.dst);
 		
 		int flag = query.executeUpdate();

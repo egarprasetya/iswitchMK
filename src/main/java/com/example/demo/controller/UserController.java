@@ -15,8 +15,10 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.sql.DataSource;
 
@@ -28,6 +30,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,7 +45,9 @@ import org.springframework.web.client.RestTemplate;
 import com.example.demo.Enum.pjsip_auth_type_values;
 import com.example.demo.config.RestTempleteConfig;
 import com.example.demo.connection.stringkoneksi;
+import com.example.demo.model.Account;
 import com.example.demo.model.CdrModel;
+import com.example.demo.model.Contact;
 import com.example.demo.model.Queue_MemberModel;
 import com.example.demo.model.Queue_MemberModel2;
 import com.example.demo.model.UserModel;
@@ -102,6 +108,91 @@ public class UserController
 		return sb.toString();
 
 	}
+	
+	
+	//pak ardi
+	@PostMapping("/userByExtension")
+	public Map<String, List<Account>> findUserByExtension(String ext, String pass) 
+	{		
+		String query2 = "SELECT * FROM public.\"getUser\" WHERE id = ?;";
+		JdbcTemplate jdbcTemplate2 = new JdbcTemplate(dataSource);
+		List<Account> accountList2 = jdbcTemplate2.query(query2, new Object[] {ext}, new BeanPropertyRowMapper<>(Account.class));
+		
+		if (accountList2.size()==0)
+		{
+			Map<String, List<Account>> mapb = new HashMap<>();
+			Account account = new Account();
+			account.id="incorrect id";
+			accountList2.add(0,account);
+			mapb.put("content", accountList2);
+			return mapb;
+		}
+		
+		String query = "SELECT * FROM public.\"getUser\" WHERE id = ? AND secret = ?;";
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		List<Account> accountList = jdbcTemplate.query(query, new Object[] {ext, pass}, new BeanPropertyRowMapper<>(Account.class));
+		System.out.print(accountList.size());
+		if (accountList.size()==0)
+		{
+			Map<String, List<Account>> mapb = new HashMap<>();
+			Account account = new Account();
+			account.id="incorrect password";
+			accountList.add(0,account);
+			mapb.put("content", accountList);
+			return mapb;
+		}
+		Map<String, List<Account>> mapb = new HashMap<>();
+		mapb.put("content", accountList);
+		return mapb;
+	}
+
+	@PostMapping("/userByEmail")
+	public Map<String, List<Account>> findUserByEmail(String email, String pass) 
+	{		
+		String query2 = "SELECT * FROM public.\"getUser\" WHERE email = ?;";
+		JdbcTemplate jdbcTemplate2 = new JdbcTemplate(dataSource);
+		List<Account> accountList2 = jdbcTemplate2.query(query2, new Object[] {email}, new BeanPropertyRowMapper<>(Account.class));
+		
+		if (accountList2.size()==0)
+		{
+			Map<String, List<Account>> mapb = new HashMap<>();
+			Account account = new Account();
+			account.id="incorrect email";
+			accountList2.add(0,account);
+			mapb.put("content", accountList2);
+			return mapb;
+		}
+		String query = "SELECT * FROM public.\"getUser\" WHERE email = ? AND secret = ?;";
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		List<Account> accountList = jdbcTemplate.query(query, new Object[] {email, pass}, new BeanPropertyRowMapper<>(Account.class));
+		
+		if (accountList.size()==0)
+		{
+			Map<String, List<Account>> mapb = new HashMap<>();
+			Account account = new Account();
+			account.id="incorrect password";
+			accountList.add(0,account);
+			mapb.put("content", accountList);
+			return mapb;
+		}
+		
+		Map<String, List<Account>> mapb = new HashMap<>();
+		mapb.put("content", accountList);
+		return mapb;
+	}
+
+	@PostMapping("/find")
+	public Map<String, List<Contact>> find(String id) 
+	{		
+		String query = "SELECT * FROM public.\"getContacts\" WHERE extension != ?;";
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		List<Contact> contactList = jdbcTemplate.query(query, new Object[] {id}, new BeanPropertyRowMapper<>(Contact.class));
+		
+		Map<String, List<Contact>> mapb = new HashMap<>();
+		mapb.put("content", contactList);
+		return mapb;
+	}
+	
 
 	//thoriq
 	@GetMapping("/getAgent")
@@ -589,8 +680,8 @@ public class UserController
 			Modeluser.avatar = Cursor1.getString(13);
 			Modeluser.websocket = Cursor1.getString(14);
 			Modeluser.url_websocket = Cursor1.getString(15);
-			Modeluser.skill = Cursor1.getString(16);
-			Modeluser.status = Cursor1.getString(17);
+			Modeluser.skill = Cursor1.getString(22);
+			Modeluser.status = Cursor1.getString(23);
 			ListUser1.add(Modeluser);
 		}
 		return ListUser1;
@@ -1718,7 +1809,7 @@ public class UserController
 	{
 		// RestTempleteConfig.disableSslVerification();
 		RestTemplate restTemplate = new RestTempleteConfig().getRestTemplate();
-		String uri = "https://147.139.164.106:8089/amxml?action=command&Command=pjsip reload";
+		String uri = "https://127.0.0.1:8089/amxml?action=command&Command=pjsip reload";
 		// String uri = "https://10.30.1.17:8089/amxml?action=command&Command=pjsip
 		// reload";
 		ResponseEntity<String> entity = restTemplate.exchange(uri, HttpMethod.GET, null, String.class);
