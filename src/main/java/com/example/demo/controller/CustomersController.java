@@ -392,16 +392,29 @@ public class CustomersController
 		// Connection connection = DriverManager.getConnection (sk.Path_expr,
 		// sk.service_user, sk.service_password);
 		Connection connection = dataSource.getConnection ();
+		String case2[]= new String [2];
+		String detail2[]= new String [2];
 		String case1="";
 		String detail="";
-		PreparedStatement query2 = connection.prepareStatement ("select \"case\", detail from cdr  where src like ? and disposition = 'ANSWERED' and \"case\" is not null and \"end\" between (now() - interval '100 hour') and now() order by \"end\" asc limit 1");
-		
+
+		String uniqueid[]= new String [2];
+//		PreparedStatement query2 = connection.prepareStatement ("select \"case\", detail from cdr  where src like ? and disposition = 'ANSWERED' and \"case\" is not null order by \"end\" desc limit 1");
+		PreparedStatement query2 = connection.prepareStatement ("select uniqueid, \"case\", detail  from cdr  where src like ? and disposition = 'ANSWERED' order by \"end\" desc limit 2");
+		int i=0;
 		query2.setString (1, cm.extension+"%");
 		ResultSet Cursor2 = query2.executeQuery ();
 		while (Cursor2.next ())
 		{
-			case1 = Cursor2.getString (1);
-			detail = Cursor2.getString (2);
+			uniqueid[i] = Cursor2.getString (1);
+			case2[i] = Cursor2.getString (2);
+			detail2[i] = Cursor2.getString (3);
+			i++;
+		}
+		if (uniqueid[0].equalsIgnoreCase(uniqueid[1]))
+		{
+			case1=case2[1];
+
+			detail=detail2[1];
 		}
 		query2.close ();
 		Cursor2.close ();

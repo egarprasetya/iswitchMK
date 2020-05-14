@@ -33,6 +33,9 @@ public class CdrModel
 
 	public String cdrCase;
 	public String detail;
+	public Date tanggal1;
+	public Date tanggal2;
+	
 	
 	//Dummy
 	public String extensions_user;
