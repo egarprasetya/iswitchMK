@@ -7,9 +7,9 @@ import javax.persistence.Table;
 
 import lombok.Data;
 
-public class CaseType{
+public class CaseTypeModel{
 
-	public String code;
-	public String label;
+	public String typecode;
+	public String case1;
 	
 }
