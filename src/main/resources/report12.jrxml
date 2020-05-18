@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4f16bc08-56f8-400d-8dc4-07ff1a48644e">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="extension" class="java.lang.String"/>
+	<field name="agent name" class="java.lang.String"/>
+	<field name="start" class="java.lang.String"/>
+	<field name="end" class="java.lang.String"/>
+	<field name="duration" class="java.lang.String"/>
+	<field name="dispositiuon" class="java.lang.String"/>
+	<field name="case1" class="java.lang.String"/>
+	<field name="detail" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<textField>
+				<reportElement x="-12" y="53" width="70" height="20" uuid="c51678f3-ba6f-4b37-a26f-e918b95d0755"/>
+				<textFieldExpression><![CDATA[$F{extension}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="58" y="53" width="90" height="20" uuid="be137b0c-195b-48ee-a41b-cd022a63865b"/>
+				<textFieldExpression><![CDATA[$F{agent_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="148" y="53" width="82" height="20" uuid="c4d0687b-ffa5-4317-8460-fe7367579c0a"/>
+				<textFieldExpression><![CDATA[$F{start}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="-12" y="45" width="581" height="1" uuid="0c709fa2-0a78-4314-b4d7-31a5ed8a4fba"/>
+			</line>
+			<textField>
+				<reportElement x="230" y="53" width="80" height="20" uuid="a02872bc-0b97-41b8-befe-9d3196a0ca9d"/>
+				<textFieldExpression><![CDATA[$F{end}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="310" y="53" width="69" height="20" uuid="64fd0708-2199-43dd-bb66-477bc4be61a4"/>
+				<textFieldExpression><![CDATA[$F{duration}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="379" y="53" width="76" height="20" uuid="7275af54-90cf-460d-928e-dd1a3af8242f"/>
+				<textFieldExpression><![CDATA[$F{dispositiuon}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="455" y="53" width="59" height="20" uuid="31c8878b-db92-475c-96e3-da3c23733948"/>
+				<textFieldExpression><![CDATA[$F{case}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="514" y="53" width="55" height="20" uuid="58db67b6-0ef0-433b-913f-187829a6b867"/>
+				<textFieldExpression><![CDATA[$F{detail}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="-12" y="25" width="70" height="20" backcolor="#99FFFF" uuid="c5787ab0-ee92-4a7d-9c0c-001560208b64"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[EXTENSION]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="58" y="25" width="90" height="20" backcolor="#99FFFF" uuid="4401421e-9f0b-44de-9b3a-fd949996b754"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[AGENT NAME]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="148" y="25" width="82" height="20" backcolor="#99FFFF" uuid="18f5e6bf-0dc3-4438-9532-88f84a66d3b8"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[START]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="230" y="25" width="80" height="20" backcolor="#99FFFF" uuid="052a8551-2659-4132-938e-ad5fe9267635"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[END]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="310" y="25" width="70" height="20" backcolor="#99FFFF" uuid="684b9e98-0526-4380-9a80-a5791ffb3bb5"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[DURATION]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="380" y="25" width="75" height="20" backcolor="#99FFFF" uuid="f7942d6e-28bb-4c0e-9062-c36b1e89a161"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[DISPOSITION]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="455" y="25" width="59" height="20" backcolor="#99FFFF" uuid="c274e157-1d53-4108-99cb-8debdea334ea"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[CASE]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="514" y="25" width="55" height="20" backcolor="#99FFFF" uuid="73b748cf-46d1-4574-b57c-79753bc8cbfc"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[DETAIL]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="-12" y="-9" width="581" height="34" forecolor="#FF3300" uuid="6fd8b175-ff98-444a-b2fb-3a346ae6b3b1"/>
+				<textElement textAlignment="Center">
+					<font size="24"/>
+				</textElement>
+				<textFieldExpression><![CDATA[DETAIL LAPORAN]]></textFieldExpression>
+			</textField>
+			<frame>
+				<reportElement x="61" y="7" width="100" height="20" uuid="37ca5ace-b11d-4727-96d2-e21ffaa82104"/>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<frame>
+				<reportElement x="319" y="15" width="100" height="20" uuid="6d479eb4-23f9-4748-a22b-f229973b84c5"/>
+			</frame>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

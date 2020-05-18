@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -11,8 +13,10 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.sql.DataSource;
 
@@ -20,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +34,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.Enum.ACWJasperRepository;
 import com.example.demo.connection.stringkoneksi;
+import com.example.demo.model.ACWJasper;
 import com.example.demo.model.After_Call_WorkModel;
 import com.example.demo.model.CaseTypeModel;
 import com.example.demo.model.CdrModel;
@@ -37,6 +44,16 @@ import com.example.demo.query.AllDeleteQuery;
 import com.example.demo.query.AllInsertQuery;
 import com.example.demo.query.AllQuery;
 import com.example.demo.query.AllSelectParameterQuery;
+
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRResultSetDataSource;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/after_call_work")
@@ -158,8 +175,45 @@ public class After_Call_WorkController
 		return ListUser1;
 	}
 
+	//
+	@Autowired
+	private ACWJasperRepository repository;
 	
+	
+	public String exportReport( CdrModel cfm) throws FileNotFoundException, JRException, SQLException
+	{
+		CdrController cdr = new CdrController(dataSource);
+		List<ACWJasper> acw = new ArrayList<>();
+		acw = cdr.doLaporanCdr1(cfm);
+		System.out.print(acw.get(0).case1);
+		File file = ResourceUtils.getFile("classpath:report1.jrxml");
+		JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
+		JRDataSource datasource1 = new JRBeanCollectionDataSource(acw);
+		Map parameters= new HashMap();
+		parameters.put("datasource1",datasource1);
+		JasperPrint jasperPrint =  JasperFillManager.fillReport(jasperReport, parameters,datasource1);
+		if(cfm.accountcode.equalsIgnoreCase("html"))
+		{
+			JasperExportManager.exportReportToHtmlFile(jasperPrint,"D:\\egar.html");
+		}
+		if(cfm.accountcode.equalsIgnoreCase("pdf"))
+		{
+			JasperExportManager.exportReportToPdfFile(jasperPrint,"D:\\egar.html");
+		}
+		return"";
+	}
 
+	@GetMapping("/getACW")
+	public List<ACWJasper> getACW()
+	{
+		return repository.findAll();
+	}
+	
+	@GetMapping(path="/report")
+	public String generateReport( @RequestBody CdrModel cfm) throws FileNotFoundException,JRException, JRException, SQLException
+	{
+		return exportReport(cfm);
+	}
 	
 	private String parseToStringJSON(ArrayList<String> field, ArrayList<String> values)
 	{

@@ -53,6 +53,11 @@ public class CdrController
 
 	@Autowired
 	private DataSource dataSource;
+	
+	public CdrController (DataSource dataSource)
+	{
+		this.dataSource = dataSource;
+	}
 
 	@PutMapping(produces = "application/json", path = "/putCdr")
 	public ResponseEntity<String> putCdr(@RequestBody CdrModel cfm)
@@ -385,6 +390,92 @@ public class CdrController
 
 		}
 	}
+	
+	public List<ACWJasper> doLaporanCdr1(CdrModel cfm) throws SQLException
+	{
+		// Connection Connection1 = DriverManager.getConnection(sk.Path_expr,
+		// sk.service_user, sk.service_password);
+		
+		if (cfm.tanggal1 == null) {
+			
+			Connection Connection1 = dataSource.getConnection();
+			PreparedStatement queryselect_cdr = Connection1.prepareStatement(
+					"SELECT users.extension_user as extensions, " + "users.nama, " + "cdr.\"start\" AS Start_Call, "
+							+ "cdr.\"end\" AS End_Call, " + "cdr.duration AS Duration, "
+							+ "cdr.disposition AS Answered, " + "cdr.\"case\", " + "detail "
+							+ "FROM cdr join users on cdr.dstchannel like concat('%',users.extension_user,'%')"
+							+ "where users.extension_user = ? "
+							+ "order by cdr.\"start\" desc;");
+			queryselect_cdr.setString(1, cfm.extensions_user);
+			ResultSet Cursor1 = queryselect_cdr.executeQuery();// Evaluate (Connected_Expression1)
+			List<ACWJasper> ListUser1 = new ArrayList<ACWJasper>();
+			while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
+			{
+				ACWJasper ModelCdr = new ACWJasper();
+				ModelCdr.extension = Cursor1.getString(1);
+				ModelCdr.agent_name = Cursor1.getString(2);
+				ModelCdr.start = String.valueOf(Cursor1.getTimestamp(3));
+				ModelCdr.end = String.valueOf(Cursor1.getTimestamp(4));
+				ModelCdr.duration = String.valueOf(Cursor1.getInt(5));
+				if (Cursor1.getString(6).equalsIgnoreCase("ANSWERED")) {
+					ModelCdr.disposition = "yes";
+				} else {
+					ModelCdr.disposition = "no";
+				}
+				ModelCdr.case1 = Cursor1.getString(7);
+				ModelCdr.detail = Cursor1.getString(8);
+				
+				ListUser1.add(ModelCdr);
+			}
+
+			queryselect_cdr.close();
+			Cursor1.close();
+			Connection1.close();
+			return ListUser1;
+
+		} else {
+			
+			Connection Connection1 = dataSource.getConnection();
+			PreparedStatement queryselect_cdr = Connection1.prepareStatement(
+					"SELECT users.extension_user as extensions, " + "users.nama, " + "cdr.\"start\" AS Start_Call, "
+							+ "cdr.\"end\" AS End_Call, " + "cdr.duration AS Duration, "
+							+ "cdr.disposition AS Answered, " + "cdr.\"case\", " + "detail "
+							+ "FROM cdr join users on cdr.dstchannel like concat('%',users.extension_user,'%') "
+							+ "where users.extension_user = ? and cdr.\"start\" between ? and ?" + "order by cdr.\"start\" desc;");
+			queryselect_cdr.setString(1, cfm.extensions_user);
+			queryselect_cdr.setDate(2, cfm.tanggal1);
+			queryselect_cdr.setDate(3, cfm.tanggal2);
+	
+			System.out.print("bbbbb");
+			ResultSet Cursor1 = queryselect_cdr.executeQuery();// Evaluate (Connected_Expression1)
+			List<ACWJasper> ListUser1 = new ArrayList<ACWJasper>();
+			while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
+			{
+				ACWJasper ModelCdr = new ACWJasper();
+				ModelCdr.extension = Cursor1.getString(1);
+				ModelCdr.agent_name = Cursor1.getString(2);
+				ModelCdr.start = String.valueOf(Cursor1.getTimestamp(3));
+				ModelCdr.end = String.valueOf(Cursor1.getTimestamp(4));
+				ModelCdr.duration = String.valueOf(Cursor1.getInt(5));
+				if (Cursor1.getString(6).equalsIgnoreCase("ANSWERED")) {
+					ModelCdr.disposition = "yes";
+				} else {
+					ModelCdr.disposition = "no";
+				}
+				ModelCdr.case1 = Cursor1.getString(7);
+				ModelCdr.detail = Cursor1.getString(8);
+				
+				ListUser1.add(ModelCdr);
+			}
+
+			queryselect_cdr.close();
+			Cursor1.close();
+			Connection1.close();
+			return ListUser1;
+
+		}
+	}
+	
 	
 	@PostMapping(produces = "application/json", path = "/rekapLaporanCdr")
 	public ResponseEntity<String> laporanRekapCdr(@RequestBody CdrModel cfm)

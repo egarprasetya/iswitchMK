@@ -17,7 +17,7 @@
 	<packaging>war</packaging>
 	<properties>
 		<java.version>1.8</java.version>
-	
+
 		<start-class>com.example.demo.Servicespring1Application</start-class>
 	</properties>
 
@@ -120,6 +120,13 @@
 			<groupId>org.asteriskjava</groupId>
 			<artifactId>asterisk-java</artifactId>
 			<version>1.0.0-final</version>
+		</dependency>
+
+		
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
+			<version>6.12.2</version>
 		</dependency>
 	</dependencies>
 
