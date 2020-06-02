@@ -35,6 +35,7 @@ public class CdrModel
 	public String detail;
 	public Date tanggal1;
 	public Date tanggal2;
+	public String format;
 	
 	
 	//Dummy

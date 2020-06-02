@@ -18,6 +18,7 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -53,8 +54,8 @@ public class CdrController
 
 	@Autowired
 	private DataSource dataSource;
-	
-	public CdrController (DataSource dataSource)
+
+	public CdrController(DataSource dataSource)
 	{
 		this.dataSource = dataSource;
 	}
@@ -271,7 +272,7 @@ public class CdrController
 
 				ArrayList<String> formatedResultField = new ArrayList<String>();
 				formatedResultField.add("extension");
-				formatedResultField.add("agent name");
+				formatedResultField.add("agentName");
 				formatedResultField.add("start");
 				formatedResultField.add("end");
 				formatedResultField.add("duration");
@@ -310,17 +311,28 @@ public class CdrController
 	{
 		// Connection Connection1 = DriverManager.getConnection(sk.Path_expr,
 		// sk.service_user, sk.service_password);
-		
+
 		if (cfm.tanggal1 == null) {
-			
+
 			Connection Connection1 = dataSource.getConnection();
 			PreparedStatement queryselect_cdr = Connection1.prepareStatement(
-					"SELECT users.extension_user as extensions, " + "users.nama, " + "cdr.\"start\" AS Start_Call, "
-							+ "cdr.\"end\" AS End_Call, " + "cdr.duration AS Duration, "
-							+ "cdr.disposition AS Answered, " + "cdr.\"case\", " + "detail "
-							+ "FROM cdr join users on cdr.dstchannel like concat('%',users.extension_user,'%')"
-							+ "where users.extension_user = ? "
+					
+					"SELECT users.extension_user as extensions, users.nama, cdr.\"start\" AS Start_Call, "
+							+ "cdr.\"end\" AS End_Call, cdr.duration AS Duration, "
+							+ "cdr.disposition AS Answered, case_type.\"case\", after_call_work.detail "
+							+ "FROM cdr left join users on cdr.dstchannel like concat('%',users.extension_user,'%') "
+							+ "left join after_call_work on cdr.uniqueid = after_call_work.uniqueid and cdr.dstchannel like concat('%',after_call_work.dst,'%') "
+							+ "left join case_type on case_type.typecode = after_call_work.\"case\" "
+							+ "where cdr.dstchannel like concat('%',?,'%') "
 							+ "order by cdr.\"start\" desc;");
+//					"SELECT users.extension_user as extensions, " + "users.nama, " + "cdr.\"start\" AS Start_Call, "
+//							+ "cdr.\"end\" AS End_Call, " + "cdr.duration AS Duration, "
+//							+ "cdr.disposition AS Answered, case_type.\"case\", after_call_work.detail "
+////							+ "cdr.disposition AS Answered, " + "cdr.\"case\", " + "detail "
+//							+ "FROM cdr join users on cdr.dstchannel like concat('%',users.extension_user,'%')"
+//							+ "join after_call_work on cdr.uniqueid = after_call_work.uniqueid "
+//							+ "join case_type on case_type.typecode = after_call_work.\"case\""
+//							+ "where users.extension_user = ? " + "order by cdr.\"start\" desc;");
 			queryselect_cdr.setString(1, cfm.extensions_user);
 			ResultSet Cursor1 = queryselect_cdr.executeQuery();// Evaluate (Connected_Expression1)
 			List<CdrModel> ListUser1 = new ArrayList<CdrModel>();
@@ -339,7 +351,7 @@ public class CdrController
 				}
 				ModelCdr.cdrCase = Cursor1.getString(7);
 				ModelCdr.detail = Cursor1.getString(8);
-				
+
 				ListUser1.add(ModelCdr);
 			}
 
@@ -349,18 +361,39 @@ public class CdrController
 			return ListUser1;
 
 		} else {
-			
+			Calendar c = Calendar.getInstance();
+			java.sql.Date sqlStartDate = new java.sql.Date(cfm.tanggal2.getTime());
+			c.setTime(sqlStartDate);
+			c.add(Calendar.DATE, 1);
+
+			cfm.tanggal2 = new java.sql.Date(c.getTimeInMillis());
+			System.out.print(cfm.tanggal1 + "------" + cfm.tanggal2);
+
 			Connection Connection1 = dataSource.getConnection();
 			PreparedStatement queryselect_cdr = Connection1.prepareStatement(
-					"SELECT users.extension_user as extensions, " + "users.nama, " + "cdr.\"start\" AS Start_Call, "
-							+ "cdr.\"end\" AS End_Call, " + "cdr.duration AS Duration, "
-							+ "cdr.disposition AS Answered, " + "cdr.\"case\", " + "detail "
-							+ "FROM cdr join users on cdr.dstchannel like concat('%',users.extension_user,'%') "
-							+ "where users.extension_user = ? and cdr.\"start\" between ? and ?" + "order by cdr.\"start\" desc;");
+					"SELECT users.extension_user as extensions, users.nama, cdr.\"start\" AS Start_Call, "
+							+ "cdr.\"end\" AS End_Call, cdr.duration AS Duration, "
+							+ "cdr.disposition AS Answered, case_type.\"case\", after_call_work.detail "
+							+ "FROM cdr left join users on cdr.dstchannel like concat('%',users.extension_user,'%') "
+							+ "left join after_call_work on cdr.uniqueid = after_call_work.uniqueid and cdr.dstchannel like concat('%',after_call_work.dst,'%') "
+							+ "left join case_type on case_type.typecode = after_call_work.\"case\" "
+							+ "where cdr.dstchannel like concat('%',?,'%') and cdr.\"start\" between ? and ? "
+							+ "order by cdr.\"start\" desc;");
+
+			// "SELECT users.extension_user as extensions, " + "users.nama, " +
+			// "cdr.\"start\" AS Start_Call, "
+//							+ "cdr.\"end\" AS End_Call, " + "cdr.duration AS Duration, "
+//							+ 
+//							"cdr.disposition AS Answered, case_type.\"case\", after_call_work.detail "
+////							+ "cdr.disposition AS Answered, " + "cdr.\"case\", " + "detail "
+//							+ "FROM cdr join users on cdr.dstchannel like concat('%',users.extension_user,'%') "
+//							+ "join after_call_work on cdr.uniqueid = after_call_work.uniqueid " + 
+//							"join case_type on case_type.typecode = after_call_work.\"case\""
+//							+ "where users.extension_user = ? and cdr.\"start\" between ? and ?" + "order by cdr.\"start\" desc;");
 			queryselect_cdr.setString(1, cfm.extensions_user);
 			queryselect_cdr.setDate(2, cfm.tanggal1);
 			queryselect_cdr.setDate(3, cfm.tanggal2);
-	
+
 			System.out.print("bbbbb");
 			ResultSet Cursor1 = queryselect_cdr.executeQuery();// Evaluate (Connected_Expression1)
 			List<CdrModel> ListUser1 = new ArrayList<CdrModel>();
@@ -379,7 +412,7 @@ public class CdrController
 				}
 				ModelCdr.cdrCase = Cursor1.getString(7);
 				ModelCdr.detail = Cursor1.getString(8);
-				
+
 				ListUser1.add(ModelCdr);
 			}
 
@@ -390,22 +423,33 @@ public class CdrController
 
 		}
 	}
-	
+
 	public List<ACWJasper> doLaporanCdr1(CdrModel cfm) throws SQLException
 	{
 		// Connection Connection1 = DriverManager.getConnection(sk.Path_expr,
 		// sk.service_user, sk.service_password);
-		
+
 		if (cfm.tanggal1 == null) {
-			
+
 			Connection Connection1 = dataSource.getConnection();
 			PreparedStatement queryselect_cdr = Connection1.prepareStatement(
-					"SELECT users.extension_user as extensions, " + "users.nama, " + "cdr.\"start\" AS Start_Call, "
-							+ "cdr.\"end\" AS End_Call, " + "cdr.duration AS Duration, "
-							+ "cdr.disposition AS Answered, " + "cdr.\"case\", " + "detail "
-							+ "FROM cdr join users on cdr.dstchannel like concat('%',users.extension_user,'%')"
-							+ "where users.extension_user = ? "
-							+ "order by cdr.\"start\" desc;");
+//					
+					"SELECT users.extension_user as extensions, users.nama, cdr.\"start\" AS Start_Call, "
+					+ "cdr.\"end\" AS End_Call, cdr.duration AS Duration, "
+					+ "cdr.disposition AS Answered, case_type.\"case\", after_call_work.detail "
+					+ "FROM cdr left join users on cdr.dstchannel like concat('%',users.extension_user,'%') "
+					+ "left join after_call_work on cdr.uniqueid = after_call_work.uniqueid and cdr.dstchannel like concat('%',after_call_work.dst,'%') "
+					+ "left join case_type on case_type.typecode = after_call_work.\"case\" "
+					+ "where cdr.dstchannel like concat('%',?,'%') "
+					+ "order by cdr.\"start\" desc;");
+//					"SELECT users.extension_user as extensions, " + "users.nama, " + "cdr.\"start\" AS Start_Call, "
+//							+ "cdr.\"end\" AS End_Call, " + "cdr.duration AS Duration, "
+//							+ "cdr.disposition AS Answered, case_type.\"case\", after_call_work.detail "
+////							+ "cdr.disposition AS Answered, " + "cdr.\"case\", " + "detail "
+//							+ "FROM cdr join users on cdr.dstchannel like concat('%',users.extension_user,'%')"
+//							+ "join after_call_work on cdr.uniqueid = after_call_work.uniqueid "
+//							+ "join case_type on case_type.typecode = after_call_work.\"case\""
+//							+ "where users.extension_user = ? " + "order by cdr.\"start\" desc;");
 			queryselect_cdr.setString(1, cfm.extensions_user);
 			ResultSet Cursor1 = queryselect_cdr.executeQuery();// Evaluate (Connected_Expression1)
 			List<ACWJasper> ListUser1 = new ArrayList<ACWJasper>();
@@ -424,7 +468,7 @@ public class CdrController
 				}
 				ModelCdr.case1 = Cursor1.getString(7);
 				ModelCdr.detail = Cursor1.getString(8);
-				
+
 				ListUser1.add(ModelCdr);
 			}
 
@@ -434,18 +478,37 @@ public class CdrController
 			return ListUser1;
 
 		} else {
-			
+
+			Calendar c = Calendar.getInstance();
+			java.sql.Date sqlStartDate = new java.sql.Date(cfm.tanggal2.getTime());
+			c.setTime(sqlStartDate);
+			c.add(Calendar.DATE, 1);
+
+			cfm.tanggal2 = new java.sql.Date(c.getTimeInMillis());
 			Connection Connection1 = dataSource.getConnection();
 			PreparedStatement queryselect_cdr = Connection1.prepareStatement(
-					"SELECT users.extension_user as extensions, " + "users.nama, " + "cdr.\"start\" AS Start_Call, "
-							+ "cdr.\"end\" AS End_Call, " + "cdr.duration AS Duration, "
-							+ "cdr.disposition AS Answered, " + "cdr.\"case\", " + "detail "
-							+ "FROM cdr join users on cdr.dstchannel like concat('%',users.extension_user,'%') "
-							+ "where users.extension_user = ? and cdr.\"start\" between ? and ?" + "order by cdr.\"start\" desc;");
+					
+					"SELECT users.extension_user as extensions, users.nama, cdr.\"start\" AS Start_Call, "
+							+ "cdr.\"end\" AS End_Call, cdr.duration AS Duration, "
+							+ "cdr.disposition AS Answered, case_type.\"case\", after_call_work.detail "
+							+ "FROM cdr left join users on cdr.dstchannel like concat('%',users.extension_user,'%') "
+							+ "left join after_call_work on cdr.uniqueid = after_call_work.uniqueid and cdr.dstchannel like concat('%',after_call_work.dst,'%') "
+							+ "left join case_type on case_type.typecode = after_call_work.\"case\" "
+							+ "where cdr.dstchannel like concat('%',?,'%') and cdr.\"start\" between ? and ? "
+							+ "order by cdr.\"start\" desc;");
+//					"SELECT users.extension_user as extensions, " + "users.nama, " + "cdr.\"start\" AS Start_Call, "
+//							+ "cdr.\"end\" AS End_Call, " + "cdr.duration AS Duration, "
+//							+ "cdr.disposition AS Answered, case_type.\"case\", after_call_work.detail "
+////							+ "cdr.disposition AS Answered, " + "cdr.\"case\", " + "detail "
+//							+ "FROM cdr join users on cdr.dstchannel like concat('%',users.extension_user,'%') "
+//							+ "join after_call_work on cdr.uniqueid = after_call_work.uniqueid "
+//							+ "join case_type on case_type.typecode = after_call_work.\"case\""
+//							+ "where users.extension_user = ? and cdr.\"start\" between ? and ?"
+//							+ "order by cdr.\"start\" desc;");
 			queryselect_cdr.setString(1, cfm.extensions_user);
 			queryselect_cdr.setDate(2, cfm.tanggal1);
 			queryselect_cdr.setDate(3, cfm.tanggal2);
-	
+
 			System.out.print("bbbbb");
 			ResultSet Cursor1 = queryselect_cdr.executeQuery();// Evaluate (Connected_Expression1)
 			List<ACWJasper> ListUser1 = new ArrayList<ACWJasper>();
@@ -464,7 +527,7 @@ public class CdrController
 				}
 				ModelCdr.case1 = Cursor1.getString(7);
 				ModelCdr.detail = Cursor1.getString(8);
-				
+
 				ListUser1.add(ModelCdr);
 			}
 
@@ -475,8 +538,123 @@ public class CdrController
 
 		}
 	}
-	
-	
+
+	@PostMapping(produces = "application/json", path = "/detailLaporanCdr2")
+	public List<ACWJasper> doLaporanCdr2(@RequestBody CdrModel cfm) throws SQLException
+	{
+		// Connection Connection1 = DriverManager.getConnection(sk.Path_expr,
+		// sk.service_user, sk.service_password);
+
+		if (cfm.tanggal1 == null) {
+
+			Connection Connection1 = dataSource.getConnection();
+			PreparedStatement queryselect_cdr = Connection1.prepareStatement(
+					
+					"SELECT users.extension_user as extensions, users.nama, cdr.\"start\" AS Start_Call, "
+							+ "cdr.\"end\" AS End_Call, cdr.duration AS Duration, "
+							+ "cdr.disposition AS Answered, case_type.\"case\", after_call_work.detail "
+							+ "FROM cdr left join users on cdr.dstchannel like concat('%',users.extension_user,'%') "
+							+ "left join after_call_work on cdr.uniqueid = after_call_work.uniqueid and cdr.dstchannel like concat('%',after_call_work.dst,'%') "
+							+ "left join case_type on case_type.typecode = after_call_work.\"case\" "
+							+ "where cdr.dstchannel like concat('%',?,'%') "
+							+ "order by cdr.\"start\" desc;");
+//					"SELECT users.extension_user as extensions, " + "users.nama, " + "cdr.\"start\" AS Start_Call, "
+//							+ "cdr.\"end\" AS End_Call, " + "cdr.duration AS Duration, "
+//							+ "cdr.disposition AS Answered, case_type.\"case\", after_call_work.detail "
+////							+ "cdr.disposition AS Answered, " + "cdr.\"case\", " + "detail "
+//							+ "FROM cdr join users on cdr.dstchannel like concat('%',users.extension_user,'%')"
+//							+ "join after_call_work on cdr.uniqueid = after_call_work.uniqueid "
+//							+ "join case_type on case_type.typecode = after_call_work.\"case\""
+//							+ "where users.extension_user = ? " + "order by cdr.\"start\" desc;");
+			queryselect_cdr.setString(1, cfm.extensions_user);
+			ResultSet Cursor1 = queryselect_cdr.executeQuery();// Evaluate (Connected_Expression1)
+			List<ACWJasper> ListUser1 = new ArrayList<ACWJasper>();
+			while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
+			{
+				ACWJasper ModelCdr = new ACWJasper();
+				ModelCdr.extension = Cursor1.getString(1);
+				ModelCdr.agent_name = Cursor1.getString(2);
+				ModelCdr.start = String.valueOf(Cursor1.getTimestamp(3));
+				ModelCdr.end = String.valueOf(Cursor1.getTimestamp(4));
+				ModelCdr.duration = String.valueOf(Cursor1.getInt(5));
+				if (Cursor1.getString(6).equalsIgnoreCase("ANSWERED")) {
+					ModelCdr.disposition = "yes";
+				} else {
+					ModelCdr.disposition = "no";
+				}
+				ModelCdr.case1 = Cursor1.getString(7);
+				ModelCdr.detail = Cursor1.getString(8);
+
+				ListUser1.add(ModelCdr);
+			}
+
+			queryselect_cdr.close();
+			Cursor1.close();
+			Connection1.close();
+			return ListUser1;
+
+		} else {
+			Calendar c = Calendar.getInstance();
+			java.sql.Date sqlStartDate = new java.sql.Date(cfm.tanggal2.getTime());
+			c.setTime(sqlStartDate);
+			c.add(Calendar.DATE, 1);
+
+			cfm.tanggal2 = new java.sql.Date(c.getTimeInMillis());
+
+			Connection Connection1 = dataSource.getConnection();
+			PreparedStatement queryselect_cdr = Connection1.prepareStatement(
+					
+					"SELECT users.extension_user as extensions, users.nama, cdr.\"start\" AS Start_Call, "
+							+ "cdr.\"end\" AS End_Call, cdr.duration AS Duration, "
+							+ "cdr.disposition AS Answered, case_type.\"case\", after_call_work.detail "
+							+ "FROM cdr left join users on cdr.dstchannel like concat('%',users.extension_user,'%') "
+							+ "left join after_call_work on cdr.uniqueid = after_call_work.uniqueid and cdr.dstchannel like concat('%',after_call_work.dst,'%') "
+							+ "left join case_type on case_type.typecode = after_call_work.\"case\" "
+							+ "where cdr.dstchannel like concat('%',?,'%') and cdr.\"start\" between ? and ? "
+							+ "order by cdr.\"start\" desc;");
+//					"SELECT users.extension_user as extensions, " + "users.nama, " + "cdr.\"start\" AS Start_Call, "
+//							+ "cdr.\"end\" AS End_Call, " + "cdr.duration AS Duration, "
+//							+ "cdr.disposition AS Answered, case_type.\"case\", after_call_work.detail "
+////							+ "cdr.disposition AS Answered, " + "cdr.\"case\", " + "detail "
+//							+ "FROM cdr join users on cdr.dstchannel like concat('%',users.extension_user,'%') "
+//							+ "join after_call_work on cdr.uniqueid = after_call_work.uniqueid "
+//							+ "join case_type on case_type.typecode = after_call_work.\"case\""
+//							+ "where users.extension_user = ? and cdr.\"start\" between ? and ?"
+//							+ "order by cdr.\"start\" desc;");
+			queryselect_cdr.setString(1, cfm.extensions_user);
+			queryselect_cdr.setDate(2, cfm.tanggal1);
+			queryselect_cdr.setDate(3, cfm.tanggal2);
+
+			System.out.print("bbbbb");
+			ResultSet Cursor1 = queryselect_cdr.executeQuery();// Evaluate (Connected_Expression1)
+			List<ACWJasper> ListUser1 = new ArrayList<ACWJasper>();
+			while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
+			{
+				ACWJasper ModelCdr = new ACWJasper();
+				ModelCdr.extension = Cursor1.getString(1);
+				ModelCdr.agent_name = Cursor1.getString(2);
+				ModelCdr.start = String.valueOf(Cursor1.getTimestamp(3));
+				ModelCdr.end = String.valueOf(Cursor1.getTimestamp(4));
+				ModelCdr.duration = String.valueOf(Cursor1.getInt(5));
+				if (Cursor1.getString(6).equalsIgnoreCase("ANSWERED")) {
+					ModelCdr.disposition = "yes";
+				} else {
+					ModelCdr.disposition = "no";
+				}
+				ModelCdr.case1 = Cursor1.getString(7);
+				ModelCdr.detail = Cursor1.getString(8);
+
+				ListUser1.add(ModelCdr);
+			}
+
+			queryselect_cdr.close();
+			Cursor1.close();
+			Connection1.close();
+			return ListUser1;
+
+		}
+	}
+
 	@PostMapping(produces = "application/json", path = "/rekapLaporanCdr")
 	public ResponseEntity<String> laporanRekapCdr(@RequestBody CdrModel cfm)
 	{
@@ -489,13 +667,13 @@ public class CdrController
 
 				ArrayList<String> formatedResultField = new ArrayList<String>();
 				formatedResultField.add("extension");
-				formatedResultField.add("agent name");
+				formatedResultField.add("agentName");
 				formatedResultField.add("start");
 				formatedResultField.add("end");
 				formatedResultField.add("duration");
-				formatedResultField.add("total call");
-				formatedResultField.add("total answer");
-				formatedResultField.add("total unanswer");
+				formatedResultField.add("totalCall");
+				formatedResultField.add("totalAnswer");
+				formatedResultField.add("totalUnanswer");
 
 				ArrayList<String> formatedResultValues = new ArrayList<String>();
 				formatedResultValues.add(result.get(i).dst);
@@ -528,7 +706,7 @@ public class CdrController
 	{
 		// Connection Connection1 = DriverManager.getConnection(sk.Path_expr,
 		// sk.service_user, sk.service_password);
-		
+
 		if (cfm.tanggal1 == null) {
 			Connection Connection2 = dataSource.getConnection();
 			PreparedStatement queryselect_cdr2 = Connection2
@@ -539,7 +717,7 @@ public class CdrController
 							+ "GROUP BY users.extension_user, users.nama;");
 
 			ResultSet Cursor2 = queryselect_cdr2.executeQuery();// Evaluate (Connected_Expression1)
-			
+
 			int size = 0;
 			List<String> ListUser3 = new ArrayList<String>();
 			while (Cursor2.next()) // while there_is_next_record_in (Cursor1)
@@ -547,46 +725,43 @@ public class CdrController
 				ListUser3.add(Cursor2.getString(1));
 				size++;
 			}
-			
+
 			String agent[][] = new String[size][3];
-			int []duration=new int[size];
+			int[] duration = new int[size];
 
 			queryselect_cdr2.close();
 			Cursor2.close();
 			Connection2.close();
-			int data=0;
-			for(int i =0;i<size;i++)
-			{
+			int data = 0;
+			for (int i = 0; i < size; i++) {
 				Connection Connection1 = dataSource.getConnection();
 				PreparedStatement queryselect_cdr = Connection1.prepareStatement(
 						"SELECT users.extension_user as extensions, " + "users.nama, " + "cdr.\"start\" AS Start_Call, "
 								+ "cdr.\"end\" AS End_Call, " + "cdr.duration AS Duration "
 								+ "FROM cdr join users on cdr.dstchannel like concat('%',users.extension_user,'%') "
-								+ "where users.extension_user = ? "
-								+ "order by cdr.\"start\" asc;");
+								+ "where users.extension_user = ? " + "order by cdr.\"start\" asc;");
 				queryselect_cdr.setString(1, ListUser3.get(i));
 				ResultSet Cursor1 = queryselect_cdr.executeQuery();// Evaluate (Connected_Expression1)
-				
-				
+
 				while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 				{
-					agent[i][0]=Cursor1.getString(1);
-					if(agent[i][1]==null) {
-						agent[i][1]=String.valueOf(Cursor1.getTimestamp(3));
+					agent[i][0] = Cursor1.getString(1);
+					if (agent[i][1] == null) {
+						agent[i][1] = String.valueOf(Cursor1.getTimestamp(3));
 					}
 					agent[i][2] = String.valueOf(Cursor1.getTimestamp(4));
 					duration[i] += Cursor1.getInt(5);
-					
+
 				}
 
 				queryselect_cdr.close();
 				Cursor1.close();
 				Connection1.close();
 			}
-			
+
 			Connection Connection3 = dataSource.getConnection();
-			PreparedStatement queryselect_cdr3 = Connection3
-					.prepareStatement("SELECT users.extension_user as extensions, users.nama, " + "count(*) AS total_call, "
+			PreparedStatement queryselect_cdr3 = Connection3.prepareStatement(
+					"SELECT users.extension_user as extensions, users.nama, " + "count(*) AS total_call, "
 							+ "    sum(case when disposition = 'ANSWERED' then 1 else 0 end) AS tol_answer, "
 							+ "    sum(case when disposition = 'NO ANSWER' then 1 else 0 end) AS tot_noanswer "
 							+ "FROM cdr join users on cdr.dstchannel like concat('%',users.extension_user,'%') "
@@ -595,7 +770,7 @@ public class CdrController
 			ResultSet Cursor3 = queryselect_cdr3.executeQuery();// Evaluate (Connected_Expression1)
 			System.out.print("aaaaa");
 			List<CdrModel> ListUser1 = new ArrayList<CdrModel>();
-		
+
 			while (Cursor3.next()) // while there_is_next_record_in (Cursor1)
 			{
 				CdrModel ModelCdr = new CdrModel();
@@ -614,24 +789,30 @@ public class CdrController
 			queryselect_cdr3.close();
 			Cursor3.close();
 			Connection3.close();
-			
+
 			return ListUser1;
 
 		} else {
-			
+
+			Calendar c = Calendar.getInstance();
+			java.sql.Date sqlStartDate = new java.sql.Date(cfm.tanggal2.getTime());
+			c.setTime(sqlStartDate);
+			c.add(Calendar.DATE, 1);
+
+			cfm.tanggal2 = new java.sql.Date(c.getTimeInMillis());
+
 			Connection Connection2 = dataSource.getConnection();
 			PreparedStatement queryselect_cdr2 = Connection2
 					.prepareStatement("SELECT users.extension_user as extensions, " + "count(*) AS total_call, "
 							+ "    sum(case when disposition = 'ANSWERED' then 1 else 0 end) AS tol_answer, "
 							+ "    sum(case when disposition = 'NO ANSWER' then 1 else 0 end) AS tot_noanswer "
 							+ "FROM cdr join users on cdr.dstchannel like concat('%',users.extension_user,'%') "
-							+ "where cdr.\"start\" between ? and ? "
-							+ "GROUP BY users.extension_user, users.nama;");
+							+ "where cdr.\"start\" between ? and ? " + "GROUP BY users.extension_user, users.nama;");
 			queryselect_cdr2.setDate(1, cfm.tanggal1);
 			queryselect_cdr2.setDate(2, cfm.tanggal2);
 
 			ResultSet Cursor2 = queryselect_cdr2.executeQuery();// Evaluate (Connected_Expression1)
-			
+
 			int size = 0;
 			List<String> ListUser3 = new ArrayList<String>();
 			while (Cursor2.next()) // while there_is_next_record_in (Cursor1)
@@ -639,16 +820,15 @@ public class CdrController
 				ListUser3.add(Cursor2.getString(1));
 				size++;
 			}
-			
+
 			String agent[][] = new String[size][3];
-			int []duration=new int[size];
+			int[] duration = new int[size];
 
 			queryselect_cdr2.close();
 			Cursor2.close();
 			Connection2.close();
-			int data=0;
-			for(int i =0;i<size;i++)
-			{
+			int data = 0;
+			for (int i = 0; i < size; i++) {
 				Connection Connection1 = dataSource.getConnection();
 				PreparedStatement queryselect_cdr = Connection1.prepareStatement(
 						"SELECT users.extension_user as extensions, " + "users.nama, " + "cdr.\"start\" AS Start_Call, "
@@ -660,38 +840,35 @@ public class CdrController
 				queryselect_cdr.setDate(2, cfm.tanggal1);
 				queryselect_cdr.setDate(3, cfm.tanggal2);
 				ResultSet Cursor1 = queryselect_cdr.executeQuery();// Evaluate (Connected_Expression1)
-				
-				
+
 				while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 				{
-					agent[i][0]=Cursor1.getString(1);
-					if(agent[i][1]==null) {
-						agent[i][1]=String.valueOf(Cursor1.getTimestamp(3));
+					agent[i][0] = Cursor1.getString(1);
+					if (agent[i][1] == null) {
+						agent[i][1] = String.valueOf(Cursor1.getTimestamp(3));
 					}
 					agent[i][2] = String.valueOf(Cursor1.getTimestamp(4));
 					duration[i] += Cursor1.getInt(5);
 				}
-				
 
 				queryselect_cdr.close();
 				Cursor1.close();
 				Connection1.close();
 			}
-			
+
 			Connection Connection3 = dataSource.getConnection();
-			PreparedStatement queryselect_cdr3 = Connection3
-					.prepareStatement("SELECT users.extension_user as extensions, users.nama, " + "count(*) AS total_call, "
+			PreparedStatement queryselect_cdr3 = Connection3.prepareStatement(
+					"SELECT users.extension_user as extensions, users.nama, " + "count(*) AS total_call, "
 							+ "    sum(case when disposition = 'ANSWERED' then 1 else 0 end) AS tol_answer, "
 							+ "    sum(case when disposition = 'NO ANSWER' then 1 else 0 end) AS tot_noanswer "
 							+ "FROM cdr join users on cdr.dstchannel like concat('%',users.extension_user,'%')"
-							+ "where cdr.\"start\" between ? and ?   "
-							+ "GROUP BY users.extension_user, users.nama;");
+							+ "where cdr.\"start\" between ? and ?   " + "GROUP BY users.extension_user, users.nama;");
 			queryselect_cdr3.setDate(1, cfm.tanggal1);
 			queryselect_cdr3.setDate(2, cfm.tanggal2);
 			ResultSet Cursor3 = queryselect_cdr3.executeQuery();// Evaluate (Connected_Expression1)
 			System.out.print("aaaaa");
 			List<CdrModel> ListUser1 = new ArrayList<CdrModel>();
-		
+
 			while (Cursor3.next()) // while there_is_next_record_in (Cursor1)
 			{
 				CdrModel ModelCdr = new CdrModel();
@@ -710,7 +887,200 @@ public class CdrController
 			queryselect_cdr3.close();
 			Cursor3.close();
 			Connection3.close();
-			
+
+			return ListUser1;
+
+		}
+	}
+
+	public List<ACWJasper> doRekapCdr1(CdrModel cfm) throws SQLException
+	{
+		// Connection Connection1 = DriverManager.getConnection(sk.Path_expr,
+		// sk.service_user, sk.service_password);
+
+		if (cfm.tanggal1 == null) {
+			Connection Connection2 = dataSource.getConnection();
+			PreparedStatement queryselect_cdr2 = Connection2
+					.prepareStatement("SELECT users.extension_user as extensions, " + "count(*) AS total_call, "
+							+ "    sum(case when disposition = 'ANSWERED' then 1 else 0 end) AS tol_answer, "
+							+ "    sum(case when disposition = 'NO ANSWER' then 1 else 0 end) AS tot_noanswer "
+							+ "FROM cdr join users on cdr.dstchannel like concat('%',users.extension_user,'%') "
+							+ "GROUP BY users.extension_user, users.nama;");
+
+			ResultSet Cursor2 = queryselect_cdr2.executeQuery();// Evaluate (Connected_Expression1)
+
+			int size = 0;
+			List<String> ListUser3 = new ArrayList<String>();
+			while (Cursor2.next()) // while there_is_next_record_in (Cursor1)
+			{
+				ListUser3.add(Cursor2.getString(1));
+				size++;
+			}
+
+			String agent[][] = new String[size][3];
+			int[] duration = new int[size];
+
+			queryselect_cdr2.close();
+			Cursor2.close();
+			Connection2.close();
+			int data = 0;
+			for (int i = 0; i < size; i++) {
+				Connection Connection1 = dataSource.getConnection();
+				PreparedStatement queryselect_cdr = Connection1.prepareStatement(
+						"SELECT users.extension_user as extensions, " + "users.nama, " + "cdr.\"start\" AS Start_Call, "
+								+ "cdr.\"end\" AS End_Call, " + "cdr.duration AS Duration "
+								+ "FROM cdr join users on cdr.dstchannel like concat('%',users.extension_user,'%') "
+								+ "where users.extension_user = ? " + "order by cdr.\"start\" asc;");
+				queryselect_cdr.setString(1, ListUser3.get(i));
+				ResultSet Cursor1 = queryselect_cdr.executeQuery();// Evaluate (Connected_Expression1)
+
+				while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
+				{
+					agent[i][0] = Cursor1.getString(1);
+					if (agent[i][1] == null) {
+						agent[i][1] = String.valueOf(Cursor1.getTimestamp(3));
+					}
+					agent[i][2] = String.valueOf(Cursor1.getTimestamp(4));
+					duration[i] += Cursor1.getInt(5);
+
+				}
+
+				queryselect_cdr.close();
+				Cursor1.close();
+				Connection1.close();
+			}
+
+			Connection Connection3 = dataSource.getConnection();
+			PreparedStatement queryselect_cdr3 = Connection3.prepareStatement(
+					"SELECT users.extension_user as extensions, users.nama, " + "count(*) AS total_call, "
+							+ "    sum(case when disposition = 'ANSWERED' then 1 else 0 end) AS tol_answer, "
+							+ "    sum(case when disposition = 'NO ANSWER' then 1 else 0 end) AS tot_noanswer "
+							+ "FROM cdr join users on cdr.dstchannel like concat('%',users.extension_user,'%') "
+							+ "GROUP BY users.extension_user, users.nama;");
+
+			ResultSet Cursor3 = queryselect_cdr3.executeQuery();// Evaluate (Connected_Expression1)
+			System.out.print("aaaaa");
+			List<ACWJasper> ListUser1 = new ArrayList<ACWJasper>();
+
+			while (Cursor3.next()) // while there_is_next_record_in (Cursor1)
+			{
+				ACWJasper ModelCdr = new ACWJasper();
+				ModelCdr.extension = Cursor3.getString(1);
+				ModelCdr.agent_name = Cursor3.getString(2);
+				ModelCdr.start = agent[data][1];
+				ModelCdr.end = agent[data][2];
+				ModelCdr.duration = String.valueOf(duration[data]);
+				ModelCdr.disposition = String.valueOf(Cursor3.getInt(3));
+				ModelCdr.case1 = String.valueOf(Cursor3.getInt(4));
+				ModelCdr.detail = String.valueOf(Cursor3.getInt(5));
+				data++;
+				ListUser1.add(ModelCdr);
+			}
+
+			queryselect_cdr3.close();
+			Cursor3.close();
+			Connection3.close();
+
+			return ListUser1;
+
+		} else {
+
+			Calendar c = Calendar.getInstance();
+			java.sql.Date sqlStartDate = new java.sql.Date(cfm.tanggal2.getTime());
+			c.setTime(sqlStartDate);
+			c.add(Calendar.DATE, 1);
+
+			cfm.tanggal2 = new java.sql.Date(c.getTimeInMillis());
+
+			Connection Connection2 = dataSource.getConnection();
+			PreparedStatement queryselect_cdr2 = Connection2
+					.prepareStatement("SELECT users.extension_user as extensions, " + "count(*) AS total_call, "
+							+ "    sum(case when disposition = 'ANSWERED' then 1 else 0 end) AS tol_answer, "
+							+ "    sum(case when disposition = 'NO ANSWER' then 1 else 0 end) AS tot_noanswer "
+							+ "FROM cdr join users on cdr.dstchannel like concat('%',users.extension_user,'%') "
+							+ "where cdr.\"start\" between ? and ? " + "GROUP BY users.extension_user, users.nama;");
+			queryselect_cdr2.setDate(1, cfm.tanggal1);
+			queryselect_cdr2.setDate(2, cfm.tanggal2);
+
+			ResultSet Cursor2 = queryselect_cdr2.executeQuery();// Evaluate (Connected_Expression1)
+
+			int size = 0;
+			List<String> ListUser3 = new ArrayList<String>();
+			while (Cursor2.next()) // while there_is_next_record_in (Cursor1)
+			{
+				ListUser3.add(Cursor2.getString(1));
+				size++;
+			}
+
+			String agent[][] = new String[size][3];
+			int[] duration = new int[size];
+
+			queryselect_cdr2.close();
+			Cursor2.close();
+			Connection2.close();
+			int data = 0;
+			for (int i = 0; i < size; i++) {
+				Connection Connection1 = dataSource.getConnection();
+				PreparedStatement queryselect_cdr = Connection1.prepareStatement(
+						"SELECT users.extension_user as extensions, " + "users.nama, " + "cdr.\"start\" AS Start_Call, "
+								+ "cdr.\"end\" AS End_Call, " + "cdr.duration AS Duration "
+								+ "FROM cdr join users on cdr.dstchannel like concat('%',users.extension_user,'%') "
+								+ "where users.extension_user = ? and cdr.\"start\" between ? and ?  "
+								+ "order by cdr.\"start\" asc;");
+				queryselect_cdr.setString(1, ListUser3.get(i));
+				queryselect_cdr.setDate(2, cfm.tanggal1);
+				queryselect_cdr.setDate(3, cfm.tanggal2);
+				ResultSet Cursor1 = queryselect_cdr.executeQuery();// Evaluate (Connected_Expression1)
+
+				while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
+				{
+					agent[i][0] = Cursor1.getString(1);
+					if (agent[i][1] == null) {
+						agent[i][1] = String.valueOf(Cursor1.getTimestamp(3));
+					}
+					agent[i][2] = String.valueOf(Cursor1.getTimestamp(4));
+					duration[i] += Cursor1.getInt(5);
+				}
+
+				queryselect_cdr.close();
+				Cursor1.close();
+				Connection1.close();
+			}
+
+			Connection Connection3 = dataSource.getConnection();
+			PreparedStatement queryselect_cdr3 = Connection3.prepareStatement(
+					"SELECT users.extension_user as extensions, users.nama, " + "count(*) AS total_call, "
+							+ "    sum(case when disposition = 'ANSWERED' then 1 else 0 end) AS tol_answer, "
+							+ "    sum(case when disposition = 'NO ANSWER' then 1 else 0 end) AS tot_noanswer "
+							+ "FROM cdr join users on cdr.dstchannel like concat('%',users.extension_user,'%')"
+							+ "where cdr.\"start\" between ? and ?   " + "GROUP BY users.extension_user, users.nama;");
+			queryselect_cdr3.setDate(1, cfm.tanggal1);
+			queryselect_cdr3.setDate(2, cfm.tanggal2);
+			ResultSet Cursor3 = queryselect_cdr3.executeQuery();// Evaluate (Connected_Expression1)
+			System.out.print("aaaaa");
+			List<ACWJasper> ListUser1 = new ArrayList<ACWJasper>();
+
+			while (Cursor3.next()) // while there_is_next_record_in (Cursor1)
+			{
+
+				ACWJasper ModelCdr = new ACWJasper();
+				ModelCdr.extension = Cursor3.getString(1);
+				ModelCdr.agent_name = Cursor3.getString(2);
+				ModelCdr.start = agent[data][1];
+				ModelCdr.end = agent[data][2];
+				ModelCdr.duration = String.valueOf(duration[data]);
+				ModelCdr.disposition = String.valueOf(Cursor3.getInt(3));
+				ModelCdr.case1 = String.valueOf(Cursor3.getInt(4));
+				ModelCdr.detail = String.valueOf(Cursor3.getInt(5));
+
+				data++;
+				ListUser1.add(ModelCdr);
+			}
+
+			queryselect_cdr3.close();
+			Cursor3.close();
+			Connection3.close();
+
 			return ListUser1;
 
 		}
