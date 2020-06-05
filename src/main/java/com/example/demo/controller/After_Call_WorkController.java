@@ -55,6 +55,7 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/after_call_work")
@@ -91,14 +92,12 @@ public class After_Call_WorkController
 		// Connection Connection1 = DriverManager.getConnection(sk.Path_expr,
 		// sk.service_user, sk.service_password);
 		Connection Connection1 = dataSource.getConnection();
-		queryinsert_cdr = Connection1.prepareStatement("INSERT INTO public.after_call_work " + 
-				"(src, dst, \"case\", detail) " + 
-				"VALUES(?, ?, ?, ?);");
+		queryinsert_cdr = Connection1.prepareStatement(
+				"INSERT INTO public.after_call_work " + "(src, dst, \"case\", detail, dateTime) " + "VALUES(?, ?, ?, ?, now());");
 		queryinsert_cdr.setString(1, cfm.src);
 		queryinsert_cdr.setString(2, cfm.dst);
 		queryinsert_cdr.setString(3, cfm.case1);
 		queryinsert_cdr.setString(4, cfm.detail);
-		
 
 		int flag = queryinsert_cdr.executeUpdate();// Evaluate (Connected_Expression1)
 
@@ -112,42 +111,77 @@ public class After_Call_WorkController
 	@PostMapping(produces = "application/json", path = "/updateUniqueid")
 	public String updateUniqueid(@RequestBody After_Call_WorkModel cfm) throws SQLException
 	{
-		// Connection Connection1 = DriverManager.getConnection(sk.Path_expr,
-		// sk.service_user, sk.service_password);
-		Connection Connection1 = dataSource.getConnection();
-		queryselect_cdr = Connection1.prepareStatement("select uniqueid from cdr where channel like concat('%',?,'%') and dstchannel like concat('%',?,'%') and disposition = 'ANSWERED' order by \"end\" desc limit 1;");
-		queryselect_cdr.setString(1, cfm.src);
-		queryselect_cdr.setString(2, cfm.dst);
-		ResultSet Cursor1 = queryselect_cdr.executeQuery();// Evaluate (Connected_Expression1)
-		ArrayList<CdrModel> ListUser1 = new ArrayList<CdrModel>();
-		String result="";
-		while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
+		Connection Connection4 = dataSource.getConnection();
+		PreparedStatement queryselect_cdr4 = Connection4
+				.prepareStatement("select src, dst from after_call_work where uniqueid is null");
+		ResultSet Cursor4 = queryselect_cdr4.executeQuery();// Evaluate (Connected_Expression1)
+		int jumlah = 0;
+		while (Cursor4.next()) // while there_is_next_record_in (Cursor1)
 		{
-			
-			result = Cursor1.getString(1);
+			jumlah++;
 		}
 
-		queryselect_cdr.close();
-		Cursor1.close();
-		Connection1.close();
-		
-		Connection Connection2 = dataSource.getConnection();
-		PreparedStatement queryselect_cdr2 = Connection2.prepareStatement("UPDATE public.after_call_work " + 
-				"SET uniqueid = ? " + 
-				"where src = ? and dst = ? and uniqueid is null;");
-		queryselect_cdr2.setString(1, result);
-		queryselect_cdr2.setString(2, cfm.src);
-		queryselect_cdr2.setString(3, cfm.dst);
-		queryselect_cdr2.executeUpdate();// Evaluate (Connected_Expression1)
-		
+		queryselect_cdr4.close();
+		Cursor4.close();
+		Connection4.close();
 
-		queryselect_cdr.close();
-		Cursor1.close();
-		Connection1.close();
+		Connection Connection3 = dataSource.getConnection();
+		PreparedStatement queryselect_cdr3 = Connection3
+				.prepareStatement("select src, dst from after_call_work where uniqueid is null");
+		ResultSet Cursor3 = queryselect_cdr3.executeQuery();// Evaluate (Connected_Expression1)
+		String target[][] = new String[jumlah][2];
+		int test = 0;
+		while (Cursor3.next()) // while there_is_next_record_in (Cursor1)
+		{
+
+			target[test][0] = Cursor3.getString(1);
+
+			target[test][1] = Cursor3.getString(2);
+			test++;
+		}
+
+		queryselect_cdr3.close();
+		Cursor3.close();
+		Connection3.close();
+
+		for (int i = 0; i < jumlah; i++) {
+			// Connection Connection1 = DriverManager.getConnection(sk.Path_expr,
+			// sk.service_user, sk.service_password);
+			Connection Connection1 = dataSource.getConnection();
+			queryselect_cdr = Connection1.prepareStatement(
+					"select uniqueid from cdr where channel like concat('%',?,'%') and dstchannel like concat('%',?,'%') and disposition = 'ANSWERED' order by \"end\" desc limit 1;");
+			queryselect_cdr.setString(1, target[i][0]);
+			queryselect_cdr.setString(2, target[i][1]);
+			ResultSet Cursor1 = queryselect_cdr.executeQuery();// Evaluate (Connected_Expression1)
+			ArrayList<CdrModel> ListUser1 = new ArrayList<CdrModel>();
+			String result = "";
+			while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
+			{
+
+				result = Cursor1.getString(1);
+			}
+
+			queryselect_cdr.close();
+			Cursor1.close();
+			Connection1.close();
+
+			Connection Connection2 = dataSource.getConnection();
+			PreparedStatement queryselect_cdr2 = Connection2.prepareStatement("UPDATE public.after_call_work "
+					+ "SET uniqueid = ? " + "where src = ? and dst = ? and uniqueid is null;");
+			queryselect_cdr2.setString(1, result);
+			queryselect_cdr2.setString(2, target[i][0]);
+			queryselect_cdr2.setString(3, target[i][1]);
+			queryselect_cdr2.executeUpdate();// Evaluate (Connected_Expression1)
+
+			queryselect_cdr.close();
+			Cursor1.close();
+			Connection1.close();
+
+		}
 
 		return "{\"response\":\"sukses\"}";
 	}
-	
+
 	@GetMapping(produces = "application/json", path = "/getCaseType")
 	public ArrayList<CaseTypeModel> getCdr() throws SQLException
 	{
@@ -155,33 +189,32 @@ public class After_Call_WorkController
 		// sk.service_user, sk.service_password);
 		Connection Connection1 = dataSource.getConnection();
 		queryselect_cdr = Connection1.prepareStatement("select * from case_type;");
-		
+
 		ResultSet Cursor1 = queryselect_cdr.executeQuery();// Evaluate (Connected_Expression1)
 		ArrayList<CaseTypeModel> ListUser1 = new ArrayList<CaseTypeModel>();
-		String result="";
+		String result = "";
 		while (Cursor1.next()) // while there_is_next_record_in (Cursor1)
 		{
-			
+
 			CaseTypeModel ModelCdr = new CaseTypeModel();
 			ModelCdr.typecode = Cursor1.getString(1);
 			ModelCdr.case1 = Cursor1.getString(2);
-			
+
 			ListUser1.add(ModelCdr);
 		}
 
 		queryselect_cdr.close();
 		Cursor1.close();
 		Connection1.close();
-		
+
 		return ListUser1;
 	}
 
 	//
 	@Autowired
 	private ACWJasperRepository repository;
-	
-	
-	public String detailReport( CdrModel cfm) throws FileNotFoundException, JRException, SQLException
+
+	public String detailReport(CdrModel cfm) throws FileNotFoundException, JRException, SQLException
 	{
 		CdrController cdr = new CdrController(dataSource);
 		List<ACWJasper> acw = new ArrayList<>();
@@ -190,23 +223,23 @@ public class After_Call_WorkController
 		File file = ResourceUtils.getFile("classpath:report1.jrxml");
 		JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
 		JRBeanCollectionDataSource datasource1 = new JRBeanCollectionDataSource(acw);
-		Map parameters= new HashMap();
-		parameters.put("dateStart","PERIOD : "+String.valueOf(cfm.tanggal1)+" - " +String.valueOf(cfm.tanggal2));
-		parameters.put("datasource1",datasource1);
-		JasperPrint jasperPrint =  JasperFillManager.fillReport(jasperReport, parameters,new JREmptyDataSource());
-		
-		if(cfm.format.equalsIgnoreCase("html"))
-		{
-			JasperExportManager.exportReportToHtmlFile(jasperPrint,"/opt/tomcat/webapps/iswitch/detail"+cfm.extensions_user+"-"+cfm.tanggal1+"-"+cfm.tanggal2+".html");
+		Map parameters = new HashMap();
+		parameters.put("dateStart", "PERIOD : " + String.valueOf(cfm.tanggal1) + " - " + String.valueOf(cfm.tanggal2));
+		parameters.put("datasource1", datasource1);
+		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());
+
+		if (cfm.format.equalsIgnoreCase("html")) {
+			JasperExportManager.exportReportToHtmlFile(jasperPrint, "/opt/tomcat/webapps/iswitch/detail"
+					+ cfm.extensions_user + "-" + cfm.tanggal1 + "-" + cfm.tanggal2 + ".html");
 		}
-		if(cfm.format.equalsIgnoreCase("pdf"))
-		{
-			JasperExportManager.exportReportToPdfFile(jasperPrint,"/opt/tomcat/webapps/iswitch/detail"+cfm.extensions_user+"-"+cfm.tanggal1+"-"+cfm.tanggal2+".pdf");
+		if (cfm.format.equalsIgnoreCase("pdf")) {
+			JasperExportManager.exportReportToPdfFile(jasperPrint, "/opt/tomcat/webapps/iswitch/detail"
+					+ cfm.extensions_user + "-" + cfm.tanggal1 + "-" + cfm.tanggal2 + ".pdf");
 		}
-		return"";
+		return "";
 	}
-	
-	public String rekapReport( CdrModel cfm) throws FileNotFoundException, JRException, SQLException
+
+	public String rekapReport(CdrModel cfm) throws FileNotFoundException, JRException, SQLException
 	{
 		CdrController cdr = new CdrController(dataSource);
 		List<ACWJasper> acw = new ArrayList<>();
@@ -215,19 +248,19 @@ public class After_Call_WorkController
 		File file = ResourceUtils.getFile("classpath:report5.jrxml");
 		JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
 		JRBeanCollectionDataSource datasource1 = new JRBeanCollectionDataSource(acw);
-		Map parameters= new HashMap();
-		parameters.put("dateStart","PERIOD : "+String.valueOf(cfm.tanggal1)+" - " +String.valueOf(cfm.tanggal2));
-		parameters.put("datasource1",datasource1);
-		JasperPrint jasperPrint =  JasperFillManager.fillReport(jasperReport, parameters,new JREmptyDataSource());
-		if(cfm.format.equalsIgnoreCase("html"))
-		{
-			JasperExportManager.exportReportToHtmlFile(jasperPrint,"/opt/tomcat/webapps/iswitch/rekap"+cfm.tanggal1+"-"+cfm.tanggal2+".html");
+		Map parameters = new HashMap();
+		parameters.put("dateStart", "PERIOD : " + String.valueOf(cfm.tanggal1) + " - " + String.valueOf(cfm.tanggal2));
+		parameters.put("datasource1", datasource1);
+		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());
+		if (cfm.format.equalsIgnoreCase("html")) {
+			JasperExportManager.exportReportToHtmlFile(jasperPrint,
+					"/opt/tomcat/webapps/iswitch/rekap" + cfm.tanggal1 + "-" + cfm.tanggal2 + ".html");
 		}
-		if(cfm.format.equalsIgnoreCase("pdf"))
-		{
-			JasperExportManager.exportReportToPdfFile(jasperPrint,"/opt/tomcat/webapps/iswitch/rekap"+cfm.tanggal1+"-"+cfm.tanggal2+".pdf");
+		if (cfm.format.equalsIgnoreCase("pdf")) {
+			JasperExportManager.exportReportToPdfFile(jasperPrint,
+					"/opt/tomcat/webapps/iswitch/rekap" + cfm.tanggal1 + "-" + cfm.tanggal2 + ".pdf");
 		}
-		return"";
+		return "";
 	}
 
 	@GetMapping("/getACW")
@@ -235,19 +268,21 @@ public class After_Call_WorkController
 	{
 		return repository.findAll();
 	}
-	
-	@PostMapping(path="/detailReport")
-	public String generateReport( @RequestBody CdrModel cfm) throws FileNotFoundException,JRException, JRException, SQLException
+
+	@PostMapping(path = "/detailReport")
+	public String generateReport(@RequestBody CdrModel cfm)
+			throws FileNotFoundException, JRException, JRException, SQLException
 	{
 		return detailReport(cfm);
 	}
-	
-	@PostMapping(path="/rekapReport")
-	public String generateRekapReport( @RequestBody CdrModel cfm) throws FileNotFoundException,JRException, JRException, SQLException
+
+	@PostMapping(path = "/rekapReport")
+	public String generateRekapReport(@RequestBody CdrModel cfm)
+			throws FileNotFoundException, JRException, JRException, SQLException
 	{
 		return rekapReport(cfm);
 	}
-	
+
 	private String parseToStringJSON(ArrayList<String> field, ArrayList<String> values)
 	{
 		String JSONHeader = "{\n\t";
