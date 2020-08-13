@@ -42,7 +42,7 @@ public class AllSelectParameterQuery {
 	
 	public String query_password = "select users.password "
 			+ "from users  "
-			+ "where user_id = ? "; 			// where user_id
+			+ "where extension_user = ? "; 			// where user_id
 	
 	public String query_login0 = "select * "
 			+ "from users "

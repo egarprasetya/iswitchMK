@@ -23,6 +23,7 @@ public class UserModel
 	public String avatar;
 	public String websocket;
 	public String url_websocket;
+	public String role;
 	
 	// Dummy
 	public String extensions_user_baru;

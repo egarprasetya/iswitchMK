@@ -137,7 +137,7 @@ public class AllUpdateQuery {
 	
 	public String query_updatePassword = "UPDATE users "
 			+ "SET \"password\"=? "
-			+ "WHERE user_id=?;";			// user_id
+			+ "WHERE extension_user = ?;";			// user_id
 	
 	public String query_changeStatus = "UPDATE users "
 			+ "SET status=?"
